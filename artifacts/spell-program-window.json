@@ -1,0 +1,47 @@
+{
+	"combat_cpu_p95_ms": 0.54,
+	"events": {
+		"casts": 13.0,
+		"explosion_victims": 18.0,
+		"explosions": 30.0,
+		"orb_0_slot_1": 4.0,
+		"orb_0_slot_3": 3.0,
+		"orb_0_slot_5": 9.0,
+		"orb_1_slot_0": 5.0,
+		"orb_1_slot_1": 4.0,
+		"projectile_contacts": 19.0,
+		"projectiles_contacted": 19.0,
+		"projectiles_emitted": 30.0,
+		"projectiles_finished": 21.0,
+		"projectiles_finished_without_contact": 2.0,
+		"stage_casts": 25.0,
+		"strikes_scheduled": 9.0,
+		"trigger_expire": 9.0,
+		"trigger_impact": 3.0,
+		"triggers": 12.0
+	},
+	"frames": 150,
+	"note": "180 rendered frames at fixed 1/60 simulation with four trial targets. One representative program, not a full-combination performance guarantee.",
+	"peaks": {
+		"echoes": 0,
+		"projectiles": 13,
+		"strikes": 3,
+		"zones": 0
+	},
+	"recipe": [
+		[
+			"fan",
+			"bolt",
+			"impact",
+			"bloom",
+			"expire",
+			"thunder"
+		],
+		[
+			"bolt@4",
+			"bloom"
+		]
+	],
+	"render_median_ms": 16.666,
+	"render_p95_ms": 16.733
+}

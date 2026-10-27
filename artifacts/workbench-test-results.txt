@@ -1,0 +1,46 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Shop opens with editable applied recipe on the same screen
+PASS: Picking up a drag reserves no additional copies and removes nothing
+PASS: Inventory drag inserts before first attack and shifts the rest
+PASS: Equipping reserves one copy without changing ownership
+PASS: Old drag payload and exhausted stock cannot duplicate an orb
+PASS: Undo restores order and availability
+PASS: Equipped drag moves earlier by insertion, without swapping
+PASS: Incomplete edits are allowed with a specific offending slot
+PASS: Invalid draft cannot replace applied combat recipe
+PASS: Moving right accounts for removed source index
+PASS: Dropping into any inventory cell returns equipped orb without loss
+PASS: Click attaches modifier before the focused attack
+PASS: Click/right-click removal leaves owned inventory intact
+PASS: Full six-slot recipe rejects new inventory copies
+PASS: Full recipe still permits reordering existing slots
+PASS: Reset draft restores applied recipe
+PASS: Foreign or malformed payload is rejected
+PASS: New purchase enters the editable inventory immediately at correct price
+PASS: Buying preserves unfinished edits and highlights the purchased type
+PASS: Purchased orb can be inserted directly into a valid draft
+PASS: Trial creates four stationary targets using draft instead of equipping it
+PASS: Trial freezes shop timer and run progression
+PASS: Trial runs actual projectile, echo, and linked explosion hit logic
+PASS: Trial targets survive hits and cannot drop money
+PASS: Trial hits change neither run currency nor health nor kills
+PASS: Trial does not silently commit draft to combat
+PASS: Invalid edit during trial stops casting and clears old spell effects
+PASS: Repairing draft immediately recompiles trial with new modifiers
+PASS: Removing modifier updates trial immediately
+PASS: Trial supports persistent vortex fields and on-damage child spells
+PASS: Trial can own pending echoes and placed traps simultaneously
+PASS: Returning to shop removes targets, projectiles, traps, echoes, and effects
+PASS: Trial restores player pose and combat statistics
+PASS: Return preserves remaining time, purchases, and draft
+PASS: Leaving trial invalidates active drag payload
+PASS: Explicit apply during trial commits valid draft while remaining in trial
+PASS: Starting next wave uses applied recipe and no trial targets
+PASS: Timeout discards incomplete draft and uses last applied recipe
+PASS: Timeout preserves purchase and rejects stale drag
+PASS: Combat editor cancel keeps original applied recipe
+PASS: Explicit next-wave button applies valid current draft before launch
+RESULT: 41 checks, 0 failures
+

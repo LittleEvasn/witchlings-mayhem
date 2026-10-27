@@ -1,0 +1,1 @@
+{"jobs": [{"id": "mobility-relics", "bank": [["giant", "ember_path"], ["sigil", "satellite"]], "scenario": "relocation", "seed": 731, "aim": "replay", "seconds": 15, "options": {"relics": ["magnifier", "gloves", "hourglass"], "gold": 100, "profile": true}}], "quiet": true}

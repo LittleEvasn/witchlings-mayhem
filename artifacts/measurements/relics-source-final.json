@@ -1,0 +1,254 @@
+{
+	"engine": "production spell runtime",
+	"runs": [
+		{
+			"aim": "replay",
+			"arrival_plan": [],
+			"bank": [
+				[
+					"pierce",
+					"charge",
+					"bolt"
+				],
+				[
+					"frost",
+					"impact",
+					"thunder"
+				]
+			],
+			"build_id": "focus-relics",
+			"cast_interval": 0.96,
+			"clear_seconds": 4.23333333333333,
+			"completed": true,
+			"contact_rate": 0.571428571428571,
+			"economy_route": "merge",
+			"effective_dps": 141.732283464567,
+			"final_gold": 100,
+			"fire_rate": 1.0,
+			"first_damage": 0.575,
+			"initial_gold": 100,
+			"initial_health": 600.0,
+			"input_policy": "shared deterministic v2",
+			"input_trace": [
+				{
+					"at": 0.0,
+					"player": "(480.0, 430.0)",
+					"target": "(720.0, 430.0)"
+				},
+				{
+					"at": 1.008,
+					"player": "(480.0, 430.0)",
+					"target": "(720.0, 430.0)"
+				},
+				{
+					"at": 2.008,
+					"player": "(480.0, 430.0)",
+					"target": "(785.0, 430.0)"
+				},
+				{
+					"at": 3.008,
+					"player": "(480.0, 430.0)",
+					"target": "(850.0, 430.0)"
+				},
+				{
+					"at": 4.008,
+					"player": "(480.0, 430.0)",
+					"target": "(915.0, 430.0)"
+				}
+			],
+			"investment_ledger": [
+				{
+					"action": "buy",
+					"cost": 12,
+					"token": "pierce"
+				},
+				{
+					"action": "buy",
+					"cost": 18,
+					"token": "charge"
+				},
+				{
+					"action": "buy",
+					"cost": 14,
+					"token": "frost"
+				},
+				{
+					"action": "buy",
+					"cost": 16,
+					"token": "thunder"
+				}
+			],
+			"kill_times": [
+				1.55,
+				1.7,
+				1.85,
+				3.92499999999999,
+				4.07499999999999,
+				4.225
+			],
+			"kit": "sigil",
+			"mean_alive": 4.09251968503937,
+			"motion": "scenario",
+			"opening": "t0",
+			"orb_cost": 78,
+			"orb_intervals": [
+				0.96,
+				0.72
+			],
+			"pending": {
+				"echoes": 0,
+				"orbits": 0,
+				"projectiles": 1,
+				"strikes": 0,
+				"zones": 0
+			},
+			"phase_cpu_ms": {
+				"projectiles": {
+					"p50": 0.028,
+					"p95": 0.038
+				},
+				"scheduler": {
+					"p50": 0.003,
+					"p95": 0.004
+				},
+				"zones": {
+					"p50": 0.006,
+					"p95": 0.007
+				}
+			},
+			"player_final_health": 1000000.0,
+			"player_initial_health": 1000000.0,
+			"power": 1.0,
+			"profile": true,
+			"purchase_cost": 60,
+			"recipe": [
+				"pierce",
+				"charge",
+				"bolt"
+			],
+			"relic_ruleset": "relics-v1",
+			"relic_state": {
+				"casts": 11,
+				"gems": 0,
+				"kills": 0,
+				"owned": [
+					"magnifier",
+					"gloves",
+					"hourglass"
+				],
+				"shield": 0.0,
+				"speed_cooldown": 0.0,
+				"speed_left": 0.0
+			},
+			"relics": [
+				"magnifier",
+				"gloves",
+				"hourglass"
+			],
+			"ruleset": "two-orb-v1",
+			"scenario": "line",
+			"schema": 2,
+			"seconds": 4.23333333333333,
+			"seed": 731,
+			"sources": {
+				"o0/s2/primary/bolt": {
+					"damage_effective": 600.0,
+					"damage_events": 12.0,
+					"damage_overkill": 73.1999999999999,
+					"damage_raw": 673.2,
+					"kills": 6.0,
+					"orb_0_slot_2": 5.0,
+					"projectile_contacts": 12.0,
+					"projectiles_contacted": 4.0,
+					"projectiles_emitted": 5.0,
+					"projectiles_finished": 4.0,
+					"stage_casts": 5.0
+				},
+				"o0/s2/primary/bolt/relic_copy": {
+					"charged_projectiles_missed": 2.0,
+					"orb_0_slot_2": 2.0,
+					"projectiles_emitted": 2.0,
+					"projectiles_finished": 2.0,
+					"projectiles_finished_without_contact": 2.0,
+					"stage_casts": 2.0
+				},
+				"o1/s0/primary/frost": {
+					"orb_1_slot_0": 6.0,
+					"stage_casts": 6.0
+				}
+			},
+			"spawned": 6,
+			"step": 0.00833333333333333,
+			"step_cpu_ms": {
+				"p50": 0.073,
+				"p95": 0.093,
+				"p99": 0.196
+			},
+			"timeline": [
+				{
+					"alive": 6,
+					"damage": 168.3,
+					"kills": 0,
+					"projectiles": 2,
+					"seconds": 1.01,
+					"zones": 0
+				},
+				{
+					"alive": 3,
+					"damage": 300.0,
+					"kills": 3.0,
+					"projectiles": 2,
+					"seconds": 2.01,
+					"zones": 0
+				},
+				{
+					"alive": 3,
+					"damage": 356.1,
+					"kills": 3.0,
+					"projectiles": 3,
+					"seconds": 3.01,
+					"zones": 0
+				},
+				{
+					"alive": 2,
+					"damage": 512.2,
+					"kills": 4.0,
+					"projectiles": 3,
+					"seconds": 4.01,
+					"zones": 0
+				}
+			],
+			"totals": {
+				"casts": 11.0,
+				"charged_projectiles_missed": 2.0,
+				"charged_stages": 7.0,
+				"damage_effective": 600.0,
+				"damage_events": 12.0,
+				"damage_overkill": 73.1999999999999,
+				"damage_raw": 673.2,
+				"kills": 6.0,
+				"living_enemy_seconds": 17.325,
+				"orb_0_slot_2": 7.0,
+				"orb_1_slot_0": 6.0,
+				"peak_echoes": 0.0,
+				"peak_enemies": 6.0,
+				"peak_orbits": 0.0,
+				"peak_projectiles": 3.0,
+				"peak_strikes": 0.0,
+				"peak_zones": 0.0,
+				"projectile_contacts": 12.0,
+				"projectiles_contacted": 4.0,
+				"projectiles_emitted": 7.0,
+				"projectiles_finished": 6.0,
+				"projectiles_finished_without_contact": 2.0,
+				"relic_copies": 2.0,
+				"stage_casts": 13.0
+			},
+			"unique_victims": 6,
+			"wall_elapsed_ms": 40.576,
+			"window_dps": 40.0,
+			"window_seconds": 15.0
+		}
+	],
+	"schema": 2
+}

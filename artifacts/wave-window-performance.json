@@ -1,0 +1,25 @@
+{
+	"combat_cpu_p95_ms": 2.547,
+	"engine_process_p95_ms": 16.69,
+	"fixed_simulation_delta": 0.0166666666666667,
+	"frames": 180,
+	"note": "48 high-health actors, 3 shooters and 6 chargers; 180 measured rendered frames after 30 warmup. Harness runs one fixed combat tick per rendered frame, not a natural-play FPS guarantee.",
+	"peaks": {
+		"echoes": 1,
+		"effects": 48,
+		"enemies": 48,
+		"hostile": 3,
+		"projectiles": 6,
+		"zones": 18
+	},
+	"recipe": [
+		"fan",
+		"echo",
+		"vortex",
+		"impact",
+		"giant",
+		"bloom"
+	],
+	"render_frame_median_ms": 16.666,
+	"render_frame_p95_ms": 16.78
+}

@@ -1,0 +1,858 @@
+{
+  "engine": "production spell runtime",
+  "runs": [
+    {
+      "aim": "nearest",
+      "cast_interval": 0.576,
+      "clear_seconds": -1.0,
+      "completed": true,
+      "contact_rate": 0.980392156862745,
+      "effective_dps": 143.325000000002,
+      "fire_rate": 1.0,
+      "initial_health": 1000000.0,
+      "kill_times": [],
+      "mean_alive": 1.0,
+      "orb_cost": 70,
+      "pending": {
+        "echoes": 0,
+        "projectiles": 3,
+        "zones": 15
+      },
+      "power": 1.0,
+      "recipe": [
+        "seek",
+        "fan",
+        "bloom",
+        "impact",
+        "vortex"
+      ],
+      "scenario": "single",
+      "seconds": 14.9999999999998,
+      "seed": 731,
+      "sources": {
+        "primary/bloom": {
+          "damage_effective": 975.0,
+          "damage_events": 75.0,
+          "damage_overkill": 0.0,
+          "damage_raw": 975.0,
+          "explosion_victims": 75.0,
+          "explosions": 75.0,
+          "projectile_contacts": 75.0,
+          "projectiles_contacted": 75.0,
+          "projectiles_emitted": 78.0,
+          "projectiles_finished": 75.0,
+          "triggers": 75.0
+        },
+        "secondary/vortex": {
+          "damage_effective": 1174.875,
+          "damage_events": 723.0,
+          "damage_overkill": 0.0,
+          "damage_raw": 1174.875,
+          "projectile_contacts": 75.0,
+          "projectiles_contacted": 75.0,
+          "projectiles_emitted": 75.0,
+          "projectiles_finished": 75.0,
+          "zone_pulses": 723.0,
+          "zones_created": 75.0
+        }
+      },
+      "spawned": 1,
+      "step": 0.00833333333333333,
+      "timeline": [
+        {
+          "alive": 1,
+          "damage": 39.0,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 1.01,
+          "zones": 3
+        },
+        {
+          "alive": 1,
+          "damage": 99.125,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 2.01,
+          "zones": 6
+        },
+        {
+          "alive": 1,
+          "damage": 234.0,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 3.01,
+          "zones": 12
+        },
+        {
+          "alive": 1,
+          "damage": 394.875,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 4.01,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 567.125,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 5.0,
+          "zones": 18
+        },
+        {
+          "alive": 1,
+          "damage": 697.125,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 6.0,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 864.5,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 7.0,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 1038.375,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 8.0,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 1165.125,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 9.0,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 1340.625,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 10.0,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 1506.375,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 11.0,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 1681.875,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 12.01,
+          "zones": 18
+        },
+        {
+          "alive": 1,
+          "damage": 1808.625,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 13.01,
+          "zones": 15
+        },
+        {
+          "alive": 1,
+          "damage": 1976.0,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 14.01,
+          "zones": 15
+        }
+      ],
+      "totals": {
+        "casts": 26.0,
+        "damage_effective": 2149.875,
+        "damage_events": 798.0,
+        "damage_overkill": 0.0,
+        "damage_raw": 2149.875,
+        "explosion_victims": 75.0,
+        "explosions": 75.0,
+        "living_enemy_seconds": 14.9999999999998,
+        "peak_enemies": 1.0,
+        "peak_projectiles": 6.0,
+        "peak_zones": 18.0,
+        "projectile_contacts": 150.0,
+        "projectiles_contacted": 150.0,
+        "projectiles_emitted": 153.0,
+        "projectiles_finished": 150.0,
+        "triggers": 75.0,
+        "zone_pulses": 723.0,
+        "zones_created": 75.0
+      },
+      "unique_victims": 1,
+      "window_seconds": 15.0,
+      "wall_elapsed_ms": 14997.374
+    },
+    {
+      "aim": "nearest",
+      "cast_interval": 0.576,
+      "clear_seconds": 1.90833333333333,
+      "completed": true,
+      "contact_rate": 0.684210526315789,
+      "effective_dps": 282.969432314411,
+      "fire_rate": 1.0,
+      "initial_health": 540.0,
+      "kill_times": [
+        1.33333333333333,
+        1.33333333333333,
+        1.33333333333333,
+        1.33333333333333,
+        1.33333333333333,
+        1.33333333333333,
+        1.90833333333333,
+        1.90833333333333,
+        1.90833333333333
+      ],
+      "mean_alive": 7.15283842794761,
+      "orb_cost": 70,
+      "pending": {
+        "echoes": 0,
+        "projectiles": 6,
+        "zones": 6
+      },
+      "power": 1.0,
+      "recipe": [
+        "seek",
+        "fan",
+        "bloom",
+        "impact",
+        "vortex"
+      ],
+      "scenario": "cluster",
+      "seconds": 1.90833333333333,
+      "seed": 731,
+      "sources": {
+        "primary/bloom": {
+          "damage_effective": 452.25,
+          "damage_events": 42.0,
+          "damage_overkill": 93.75,
+          "damage_raw": 546.0,
+          "explosion_victims": 42.0,
+          "explosions": 7.0,
+          "kills": 9.0,
+          "projectile_contacts": 7.0,
+          "projectiles_contacted": 7.0,
+          "projectiles_emitted": 12.0,
+          "projectiles_finished": 7.0,
+          "triggers": 7.0
+        },
+        "secondary/vortex": {
+          "damage_effective": 87.75,
+          "damage_events": 54.0,
+          "damage_overkill": 0.0,
+          "damage_raw": 87.75,
+          "projectile_contacts": 6.0,
+          "projectiles_contacted": 6.0,
+          "projectiles_emitted": 7.0,
+          "projectiles_finished": 6.0,
+          "zone_pulses": 13.0,
+          "zones_created": 6.0
+        }
+      },
+      "spawned": 9,
+      "step": 0.00833333333333333,
+      "timeline": [
+        {
+          "alive": 9,
+          "damage": 234.0,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 1.01,
+          "zones": 3
+        }
+      ],
+      "totals": {
+        "casts": 4.0,
+        "damage_effective": 540.0,
+        "damage_events": 96.0,
+        "damage_overkill": 93.75,
+        "damage_raw": 633.75,
+        "explosion_victims": 42.0,
+        "explosions": 7.0,
+        "kills": 9.0,
+        "living_enemy_seconds": 13.65,
+        "peak_enemies": 9.0,
+        "peak_projectiles": 6.0,
+        "peak_zones": 6.0,
+        "projectile_contacts": 13.0,
+        "projectiles_contacted": 13.0,
+        "projectiles_emitted": 19.0,
+        "projectiles_finished": 13.0,
+        "pull_distance": 630.532928504399,
+        "pull_enemy_seconds": 6.53333333333345,
+        "triggers": 7.0,
+        "zone_pulses": 13.0,
+        "zones_created": 6.0
+      },
+      "unique_victims": 9,
+      "window_seconds": 15.0,
+      "wall_elapsed_ms": 1914.653
+    },
+    {
+      "aim": "nearest",
+      "cast_interval": 0.576,
+      "clear_seconds": 5.64166666666674,
+      "completed": true,
+      "contact_rate": 0.846153846153846,
+      "effective_dps": 106.351550960117,
+      "fire_rate": 1.0,
+      "initial_health": 600.0,
+      "kill_times": [
+        1.79166666666666,
+        1.81666666666666,
+        3.39999999999999,
+        3.45833333333332,
+        5.60000000000007,
+        5.64166666666674
+      ],
+      "mean_alive": 3.83899556868529,
+      "orb_cost": 70,
+      "pending": {
+        "echoes": 0,
+        "projectiles": 8,
+        "zones": 13
+      },
+      "power": 1.0,
+      "recipe": [
+        "seek",
+        "fan",
+        "bloom",
+        "impact",
+        "vortex"
+      ],
+      "scenario": "line",
+      "seconds": 5.64166666666674,
+      "seed": 731,
+      "sources": {
+        "primary/bloom": {
+          "damage_effective": 481.25,
+          "damage_events": 40.0,
+          "damage_overkill": 38.75,
+          "damage_raw": 520.0,
+          "explosion_victims": 40.0,
+          "explosions": 22.0,
+          "kills": 4.0,
+          "projectile_contacts": 22.0,
+          "projectiles_contacted": 22.0,
+          "projectiles_emitted": 30.0,
+          "projectiles_finished": 22.0,
+          "triggers": 22.0
+        },
+        "secondary/vortex": {
+          "damage_effective": 118.75,
+          "damage_events": 74.0,
+          "damage_overkill": 1.5,
+          "damage_raw": 120.25,
+          "kills": 2.0,
+          "projectile_contacts": 22.0,
+          "projectiles_contacted": 22.0,
+          "projectiles_emitted": 22.0,
+          "projectiles_finished": 22.0,
+          "zone_pulses": 167.0,
+          "zones_created": 22.0
+        }
+      },
+      "spawned": 6,
+      "step": 0.00833333333333333,
+      "timeline": [
+        {
+          "alive": 6,
+          "damage": 65.0,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 1.01,
+          "zones": 3
+        },
+        {
+          "alive": 4,
+          "damage": 200.0,
+          "kills": 2.0,
+          "projectiles": 5,
+          "seconds": 2.01,
+          "zones": 7
+        },
+        {
+          "alive": 4,
+          "damage": 304.0,
+          "kills": 2.0,
+          "projectiles": 6,
+          "seconds": 3.01,
+          "zones": 12
+        },
+        {
+          "alive": 2,
+          "damage": 400.0,
+          "kills": 4.0,
+          "projectiles": 6,
+          "seconds": 4.01,
+          "zones": 12
+        },
+        {
+          "alive": 2,
+          "damage": 474.75,
+          "kills": 4.0,
+          "projectiles": 9,
+          "seconds": 5.0,
+          "zones": 11
+        }
+      ],
+      "totals": {
+        "casts": 10.0,
+        "damage_effective": 600.0,
+        "damage_events": 114.0,
+        "damage_overkill": 40.25,
+        "damage_raw": 640.25,
+        "explosion_victims": 40.0,
+        "explosions": 22.0,
+        "kills": 6.0,
+        "living_enemy_seconds": 21.6583333333331,
+        "peak_enemies": 6.0,
+        "peak_projectiles": 9.0,
+        "peak_zones": 15.0,
+        "projectile_contacts": 44.0,
+        "projectiles_contacted": 44.0,
+        "projectiles_emitted": 52.0,
+        "projectiles_finished": 44.0,
+        "pull_distance": 501.076071621443,
+        "pull_enemy_seconds": 6.74166666666679,
+        "triggers": 22.0,
+        "zone_pulses": 167.0,
+        "zones_created": 22.0
+      },
+      "unique_victims": 6,
+      "window_seconds": 15.0,
+      "wall_elapsed_ms": 5646.525
+    },
+    {
+      "aim": "nearest",
+      "cast_interval": 0.576,
+      "clear_seconds": 11.3916666666667,
+      "completed": true,
+      "contact_rate": 0.866071428571429,
+      "effective_dps": 63.2040965618142,
+      "fire_rate": 1.0,
+      "initial_health": 720.0,
+      "kill_times": [
+        1.29166666666666,
+        2.58333333333333,
+        3.64166666666666,
+        4.45000000000001,
+        4.60833333333335,
+        5.99166666666675,
+        6.75833333333346,
+        7.20833333333348,
+        7.75833333333351,
+        9.00000000000013,
+        9.56666666666676,
+        11.3916666666667
+      ],
+      "mean_alive": 6.50914411119254,
+      "orb_cost": 70,
+      "pending": {
+        "echoes": 0,
+        "projectiles": 8,
+        "zones": 14
+      },
+      "power": 1.0,
+      "recipe": [
+        "seek",
+        "fan",
+        "bloom",
+        "impact",
+        "vortex"
+      ],
+      "scenario": "scatter",
+      "seconds": 11.3916666666667,
+      "seed": 731,
+      "sources": {
+        "primary/bloom": {
+          "damage_effective": 615.0,
+          "damage_events": 52.0,
+          "damage_overkill": 61.0,
+          "damage_raw": 676.0,
+          "explosion_victims": 52.0,
+          "explosions": 52.0,
+          "kills": 7.0,
+          "projectile_contacts": 52.0,
+          "projectiles_contacted": 52.0,
+          "projectiles_emitted": 60.0,
+          "projectiles_finished": 53.0,
+          "projectiles_finished_without_contact": 1.0,
+          "triggers": 52.0
+        },
+        "secondary/vortex": {
+          "damage_effective": 105.0,
+          "damage_events": 65.0,
+          "damage_overkill": 0.625,
+          "damage_raw": 105.625,
+          "kills": 5.0,
+          "projectile_contacts": 45.0,
+          "projectiles_contacted": 45.0,
+          "projectiles_emitted": 52.0,
+          "projectiles_finished": 51.0,
+          "projectiles_finished_without_contact": 6.0,
+          "zone_pulses": 494.0,
+          "zones_created": 51.0
+        }
+      },
+      "spawned": 12,
+      "step": 0.00833333333333333,
+      "timeline": [
+        {
+          "alive": 12,
+          "damage": 39.0,
+          "kills": 0,
+          "projectiles": 3,
+          "seconds": 1.01,
+          "zones": 3
+        },
+        {
+          "alive": 11,
+          "damage": 86.0,
+          "kills": 1.0,
+          "projectiles": 6,
+          "seconds": 2.01,
+          "zones": 6
+        },
+        {
+          "alive": 10,
+          "damage": 163.875,
+          "kills": 2.0,
+          "projectiles": 6,
+          "seconds": 3.01,
+          "zones": 12
+        },
+        {
+          "alive": 9,
+          "damage": 228.75,
+          "kills": 3.0,
+          "projectiles": 6,
+          "seconds": 4.01,
+          "zones": 12
+        },
+        {
+          "alive": 7,
+          "damage": 300.0,
+          "kills": 5.0,
+          "projectiles": 7,
+          "seconds": 5.0,
+          "zones": 14
+        },
+        {
+          "alive": 6,
+          "damage": 405.5,
+          "kills": 6.0,
+          "projectiles": 5,
+          "seconds": 6.0,
+          "zones": 16
+        },
+        {
+          "alive": 5,
+          "damage": 473.625,
+          "kills": 7.0,
+          "projectiles": 3,
+          "seconds": 7.0,
+          "zones": 18
+        },
+        {
+          "alive": 3,
+          "damage": 540.0,
+          "kills": 9.0,
+          "projectiles": 5,
+          "seconds": 8.0,
+          "zones": 17
+        },
+        {
+          "alive": 2,
+          "damage": 613.0,
+          "kills": 10.0,
+          "projectiles": 6,
+          "seconds": 9.0,
+          "zones": 14
+        },
+        {
+          "alive": 1,
+          "damage": 660.0,
+          "kills": 11.0,
+          "projectiles": 8,
+          "seconds": 10.0,
+          "zones": 13
+        },
+        {
+          "alive": 1,
+          "damage": 699.0,
+          "kills": 11.0,
+          "projectiles": 7,
+          "seconds": 11.0,
+          "zones": 13
+        }
+      ],
+      "totals": {
+        "casts": 20.0,
+        "damage_effective": 720.0,
+        "damage_events": 117.0,
+        "damage_overkill": 61.625,
+        "damage_raw": 781.625,
+        "explosion_victims": 52.0,
+        "explosions": 52.0,
+        "kills": 12.0,
+        "living_enemy_seconds": 74.1500000000016,
+        "peak_enemies": 12.0,
+        "peak_projectiles": 10.0,
+        "peak_zones": 21.0,
+        "projectile_contacts": 97.0,
+        "projectiles_contacted": 97.0,
+        "projectiles_emitted": 112.0,
+        "projectiles_finished": 104.0,
+        "projectiles_finished_without_contact": 7.0,
+        "pull_distance": 384.910890485415,
+        "pull_enemy_seconds": 8.50833333333349,
+        "triggers": 52.0,
+        "zone_pulses": 494.0,
+        "zones_created": 51.0
+      },
+      "unique_victims": 12,
+      "window_seconds": 15.0,
+      "wall_elapsed_ms": 11396.924
+    },
+    {
+      "aim": "nearest",
+      "cast_interval": 0.576,
+      "clear_seconds": -1.0,
+      "completed": true,
+      "contact_rate": 0.863945578231292,
+      "effective_dps": 98.9583333333347,
+      "fire_rate": 1.0,
+      "initial_health": 2240.0,
+      "kill_times": [
+        1.8,
+        3.16666666666666,
+        3.71666666666666,
+        4.68333333333336,
+        6.54166666666678,
+        7.31666666666682,
+        7.50000000000016,
+        8.69166666666681,
+        9.46666666666677,
+        9.46666666666677,
+        9.69166666666676,
+        9.69166666666676,
+        10.3083333333334,
+        11.55,
+        11.7083333333333,
+        12.3749999999999,
+        12.7416666666666,
+        13.4499999999999,
+        14.7999999999998
+      ],
+      "mean_alive": 8.86222222222231,
+      "orb_cost": 70,
+      "pending": {
+        "echoes": 0,
+        "projectiles": 4,
+        "zones": 15
+      },
+      "power": 1.0,
+      "recipe": [
+        "seek",
+        "fan",
+        "bloom",
+        "impact",
+        "vortex"
+      ],
+      "scenario": "pressure",
+      "seconds": 14.9999999999998,
+      "seed": 731,
+      "sources": {
+        "primary/bloom": {
+          "damage_effective": 1108.0,
+          "damage_events": 92.0,
+          "damage_overkill": 88.0,
+          "damage_raw": 1196.0,
+          "explosion_victims": 92.0,
+          "explosions": 69.0,
+          "kills": 11.0,
+          "projectile_contacts": 69.0,
+          "projectiles_contacted": 69.0,
+          "projectiles_emitted": 78.0,
+          "projectiles_finished": 74.0,
+          "projectiles_finished_without_contact": 5.0,
+          "triggers": 69.0
+        },
+        "secondary/vortex": {
+          "damage_effective": 376.375,
+          "damage_events": 239.0,
+          "damage_overkill": 12.0,
+          "damage_raw": 388.375,
+          "kills": 8.0,
+          "projectile_contacts": 58.0,
+          "projectiles_contacted": 58.0,
+          "projectiles_emitted": 69.0,
+          "projectiles_finished": 69.0,
+          "projectiles_finished_without_contact": 11.0,
+          "zone_pulses": 672.0,
+          "zones_created": 69.0
+        }
+      },
+      "spawned": 32,
+      "step": 0.00833333333333333,
+      "timeline": [
+        {
+          "alive": 4,
+          "damage": 0,
+          "kills": 0,
+          "projectiles": 6,
+          "seconds": 1.01,
+          "zones": 0
+        },
+        {
+          "alive": 4,
+          "damage": 118.75,
+          "kills": 1.0,
+          "projectiles": 4,
+          "seconds": 2.01,
+          "zones": 8
+        },
+        {
+          "alive": 7,
+          "damage": 138.25,
+          "kills": 1.0,
+          "projectiles": 9,
+          "seconds": 3.01,
+          "zones": 9
+        },
+        {
+          "alive": 6,
+          "damage": 210.0,
+          "kills": 3.0,
+          "projectiles": 5,
+          "seconds": 4.01,
+          "zones": 14
+        },
+        {
+          "alive": 8,
+          "damage": 286.5,
+          "kills": 4.0,
+          "projectiles": 4,
+          "seconds": 5.0,
+          "zones": 12
+        },
+        {
+          "alive": 9,
+          "damage": 299.5,
+          "kills": 4.0,
+          "projectiles": 9,
+          "seconds": 6.0,
+          "zones": 12
+        },
+        {
+          "alive": 11,
+          "damage": 428.0,
+          "kills": 5.0,
+          "projectiles": 3,
+          "seconds": 7.0,
+          "zones": 14
+        },
+        {
+          "alive": 10,
+          "damage": 517.625,
+          "kills": 7.0,
+          "projectiles": 4,
+          "seconds": 8.0,
+          "zones": 13
+        },
+        {
+          "alive": 12,
+          "damage": 586.0,
+          "kills": 8.0,
+          "projectiles": 6,
+          "seconds": 9.0,
+          "zones": 16
+        },
+        {
+          "alive": 9,
+          "damage": 909.875,
+          "kills": 12.0,
+          "projectiles": 3,
+          "seconds": 10.0,
+          "zones": 18
+        },
+        {
+          "alive": 11,
+          "damage": 1014.0,
+          "kills": 13.0,
+          "projectiles": 2,
+          "seconds": 11.0,
+          "zones": 17
+        },
+        {
+          "alive": 10,
+          "damage": 1139.375,
+          "kills": 15.0,
+          "projectiles": 4,
+          "seconds": 12.01,
+          "zones": 17
+        },
+        {
+          "alive": 11,
+          "damage": 1302.125,
+          "kills": 17.0,
+          "projectiles": 4,
+          "seconds": 13.01,
+          "zones": 14
+        },
+        {
+          "alive": 11,
+          "damage": 1357.5,
+          "kills": 18.0,
+          "projectiles": 7,
+          "seconds": 14.01,
+          "zones": 13
+        }
+      ],
+      "totals": {
+        "casts": 26.0,
+        "damage_effective": 1484.375,
+        "damage_events": 331.0,
+        "damage_overkill": 100.0,
+        "damage_raw": 1584.375,
+        "explosion_victims": 92.0,
+        "explosions": 69.0,
+        "kills": 19.0,
+        "living_enemy_seconds": 132.933333333333,
+        "peak_enemies": 14.0,
+        "peak_projectiles": 9.0,
+        "peak_zones": 21.0,
+        "player_damage": 12.0,
+        "player_hits": 1.0,
+        "projectile_contacts": 127.0,
+        "projectiles_contacted": 127.0,
+        "projectiles_emitted": 147.0,
+        "projectiles_finished": 143.0,
+        "projectiles_finished_without_contact": 16.0,
+        "pull_distance": 2763.90867328644,
+        "pull_enemy_seconds": 30.5833333333322,
+        "triggers": 69.0,
+        "zone_pulses": 672.0,
+        "zones_created": 69.0
+      },
+      "unique_victims": 25,
+      "window_seconds": 15.0,
+      "wall_elapsed_ms": 15013.3
+    }
+  ],
+  "schema": 1
+}

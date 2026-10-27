@@ -1,0 +1,12 @@
+{
+	"combat_cpu_p95_ms": 2.175,
+	"note": "Wave 4 seed 7119 after 32s without killing, then 180 rendered frames with default starter magic and scripted movement/aim; invincible. Not a natural-play difficulty or full performance guarantee.",
+	"peaks": {
+		"enemies": 48,
+		"hostile": 6,
+		"projectiles": 3
+	},
+	"render_median_ms": 16.666,
+	"render_p95_ms": 16.75,
+	"samples": 150
+}

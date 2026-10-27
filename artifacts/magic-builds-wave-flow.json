@@ -1,0 +1,620 @@
+{
+	"failures": 0,
+	"note": "Same deterministic circle pilot, nearest-target simulated mouse aim, no dash. Only first-wave runs use normal health; full-run tests explicitly use high health to check state transitions, not difficulty.",
+	"runs": [
+		{
+			"damage_taken": 60.0,
+			"flow_only_high_health": false,
+			"gold": 42,
+			"health": 55.0,
+			"kills": 22,
+			"kit": "garden",
+			"peak_enemies": 7,
+			"recipe": [
+				"graft",
+				"vortex"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 731,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 60.0,
+			"flow_only_high_health": false,
+			"gold": 43,
+			"health": 55.0,
+			"kills": 23,
+			"kit": "garden",
+			"peak_enemies": 7,
+			"recipe": [
+				"graft",
+				"vortex"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 732,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 60.0,
+			"flow_only_high_health": false,
+			"gold": 41,
+			"health": 55.0,
+			"kills": 21,
+			"kit": "garden",
+			"peak_enemies": 8,
+			"recipe": [
+				"graft",
+				"vortex"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 733,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 60.0,
+			"flow_only_high_health": true,
+			"gold": 42,
+			"health": 99955.0,
+			"kills": 22,
+			"kit": "garden",
+			"peak_enemies": 7,
+			"recipe": [
+				"graft",
+				"vortex"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 120.0,
+			"flow_only_high_health": true,
+			"gold": 88,
+			"health": 99850.0,
+			"kills": 51,
+			"kit": "garden",
+			"peak_enemies": 17,
+			"recipe": [
+				"giant",
+				"graft",
+				"vortex"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 2,
+			"won": false
+		},
+		{
+			"damage_taken": 46.0,
+			"flow_only_high_health": true,
+			"gold": 128,
+			"health": 99819.0,
+			"kills": 26,
+			"kit": "garden",
+			"peak_enemies": 9,
+			"recipe": [
+				"echo",
+				"giant",
+				"graft",
+				"vortex"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 3,
+			"won": false
+		},
+		{
+			"damage_taken": 82.0,
+			"flow_only_high_health": true,
+			"gold": 174,
+			"health": 99752.0,
+			"kills": 38,
+			"kit": "garden",
+			"peak_enemies": 20,
+			"recipe": [
+				"pierce",
+				"echo",
+				"giant",
+				"graft",
+				"vortex"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 4,
+			"won": false
+		},
+		{
+			"damage_taken": 58.0,
+			"flow_only_high_health": true,
+			"gold": 177,
+			"health": 99694.0,
+			"kills": 46,
+			"kit": "garden",
+			"peak_enemies": 9,
+			"recipe": [
+				"seek",
+				"pierce",
+				"echo",
+				"giant",
+				"graft",
+				"vortex"
+			],
+			"seconds": 119.999999999994,
+			"state": "ended",
+			"wave": 5,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": false,
+			"gold": 46,
+			"health": 100.0,
+			"kills": 26,
+			"kit": "charge",
+			"peak_enemies": 5,
+			"recipe": [
+				"charge",
+				"bloom"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 731,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 24.0,
+			"flow_only_high_health": false,
+			"gold": 46,
+			"health": 91.0,
+			"kills": 26,
+			"kit": "charge",
+			"peak_enemies": 5,
+			"recipe": [
+				"charge",
+				"bloom"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 732,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": false,
+			"gold": 46,
+			"health": 100.0,
+			"kills": 26,
+			"kit": "charge",
+			"peak_enemies": 6,
+			"recipe": [
+				"charge",
+				"bloom"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 733,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": true,
+			"gold": 46,
+			"health": 100000.0,
+			"kills": 26,
+			"kit": "charge",
+			"peak_enemies": 5,
+			"recipe": [
+				"charge",
+				"bloom"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 72.0,
+			"flow_only_high_health": true,
+			"gold": 92,
+			"health": 99943.0,
+			"kills": 49,
+			"kit": "charge",
+			"peak_enemies": 16,
+			"recipe": [
+				"giant",
+				"charge",
+				"bloom"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 2,
+			"won": false
+		},
+		{
+			"damage_taken": 34.0,
+			"flow_only_high_health": true,
+			"gold": 132,
+			"health": 99924.0,
+			"kills": 26,
+			"kit": "charge",
+			"peak_enemies": 8,
+			"recipe": [
+				"echo",
+				"giant",
+				"charge",
+				"bloom"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 3,
+			"won": false
+		},
+		{
+			"damage_taken": 32.0,
+			"flow_only_high_health": true,
+			"gold": 185,
+			"health": 99907.0,
+			"kills": 41,
+			"kit": "charge",
+			"peak_enemies": 11,
+			"recipe": [
+				"pierce",
+				"echo",
+				"giant",
+				"charge",
+				"bloom"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 4,
+			"won": false
+		},
+		{
+			"damage_taken": 30.0,
+			"flow_only_high_health": true,
+			"gold": 179,
+			"health": 99877.0,
+			"kills": 20,
+			"kit": "charge",
+			"peak_enemies": 8,
+			"recipe": [
+				"seek",
+				"pierce",
+				"echo",
+				"giant",
+				"charge",
+				"bloom"
+			],
+			"seconds": 37.0666666666658,
+			"state": "ended",
+			"wave": 5,
+			"won": true
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": false,
+			"gold": 45,
+			"health": 100.0,
+			"kills": 25,
+			"kit": "sigil",
+			"peak_enemies": 5,
+			"recipe": [
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 731,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": false,
+			"gold": 46,
+			"health": 100.0,
+			"kills": 26,
+			"kit": "sigil",
+			"peak_enemies": 5,
+			"recipe": [
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 732,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": false,
+			"gold": 46,
+			"health": 100.0,
+			"kills": 26,
+			"kit": "sigil",
+			"peak_enemies": 5,
+			"recipe": [
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 733,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": true,
+			"gold": 45,
+			"health": 100000.0,
+			"kills": 25,
+			"kit": "sigil",
+			"peak_enemies": 5,
+			"recipe": [
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": true,
+			"gold": 91,
+			"health": 100000.0,
+			"kills": 52,
+			"kit": "sigil",
+			"peak_enemies": 15,
+			"recipe": [
+				"giant",
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 2,
+			"won": false
+		},
+		{
+			"damage_taken": 44.0,
+			"flow_only_high_health": true,
+			"gold": 131,
+			"health": 99971.0,
+			"kills": 26,
+			"kit": "sigil",
+			"peak_enemies": 7,
+			"recipe": [
+				"echo",
+				"giant",
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 3,
+			"won": false
+		},
+		{
+			"damage_taken": 0.0,
+			"flow_only_high_health": true,
+			"gold": 189,
+			"health": 99986.0,
+			"kills": 46,
+			"kit": "sigil",
+			"peak_enemies": 10,
+			"recipe": [
+				"pierce",
+				"echo",
+				"giant",
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 4,
+			"won": false
+		},
+		{
+			"damage_taken": 30.0,
+			"flow_only_high_health": true,
+			"gold": 180,
+			"health": 99956.0,
+			"kills": 14,
+			"kit": "sigil",
+			"peak_enemies": 8,
+			"recipe": [
+				"pierce",
+				"echo",
+				"giant",
+				"fan",
+				"sigil",
+				"bolt"
+			],
+			"seconds": 31.0499999999995,
+			"state": "ended",
+			"wave": 5,
+			"won": true
+		},
+		{
+			"damage_taken": 36.0,
+			"flow_only_high_health": false,
+			"gold": 42,
+			"health": 79.0,
+			"kills": 22,
+			"kit": "frost",
+			"peak_enemies": 7,
+			"recipe": [
+				"frost",
+				"impact",
+				"shatter",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 731,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 48.0,
+			"flow_only_high_health": false,
+			"gold": 43,
+			"health": 67.0,
+			"kills": 23,
+			"kit": "frost",
+			"peak_enemies": 8,
+			"recipe": [
+				"frost",
+				"impact",
+				"shatter",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 732,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 48.0,
+			"flow_only_high_health": false,
+			"gold": 46,
+			"health": 67.0,
+			"kills": 26,
+			"kit": "frost",
+			"peak_enemies": 8,
+			"recipe": [
+				"frost",
+				"impact",
+				"shatter",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"seed": 733,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 36.0,
+			"flow_only_high_health": true,
+			"gold": 42,
+			"health": 99979.0,
+			"kills": 22,
+			"kit": "frost",
+			"peak_enemies": 7,
+			"recipe": [
+				"frost",
+				"impact",
+				"shatter",
+				"bolt"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 1,
+			"won": false
+		},
+		{
+			"damage_taken": 84.0,
+			"flow_only_high_health": true,
+			"gold": 86,
+			"health": 99910.0,
+			"kills": 50,
+			"kit": "frost",
+			"peak_enemies": 15,
+			"recipe": [
+				"frost",
+				"impact",
+				"shatter",
+				"thunder"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 2,
+			"won": false
+		},
+		{
+			"damage_taken": 80.0,
+			"flow_only_high_health": true,
+			"gold": 121,
+			"health": 99845.0,
+			"kills": 23,
+			"kit": "frost",
+			"peak_enemies": 10,
+			"recipe": [
+				"giant",
+				"frost",
+				"impact",
+				"shatter",
+				"thunder"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 3,
+			"won": false
+		},
+		{
+			"damage_taken": 24.0,
+			"flow_only_high_health": true,
+			"gold": 169,
+			"health": 99836.0,
+			"kills": 42,
+			"kit": "frost",
+			"peak_enemies": 12,
+			"recipe": [
+				"echo",
+				"giant",
+				"frost",
+				"impact",
+				"shatter",
+				"thunder"
+			],
+			"seconds": 44.9999999999987,
+			"state": "reward",
+			"wave": 4,
+			"won": false
+		},
+		{
+			"damage_taken": 30.0,
+			"flow_only_high_health": true,
+			"gold": 184,
+			"health": 99806.0,
+			"kills": 20,
+			"kit": "frost",
+			"peak_enemies": 8,
+			"recipe": [
+				"echo",
+				"giant",
+				"frost",
+				"impact",
+				"shatter",
+				"thunder"
+			],
+			"seconds": 51.2999999999984,
+			"state": "ended",
+			"wave": 5,
+			"won": true
+		}
+	]
+}

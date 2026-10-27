@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b67kibsn58luj"]
+
+[ext_resource type="Script" uid="uid://bf3q1oshb5mp1" path="res://scripts/game.gd" id="1"]
+
+[node name="WitchlingsMayhem" type="Node2D" unique_id=795473768]
+script = ExtResource("1")

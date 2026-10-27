@@ -1,0 +1,31 @@
+{
+	"events": {
+		"casts": 11.0,
+		"damage_effective": 768.57125,
+		"damage_events": 47.0,
+		"damage_overkill": 0.0,
+		"damage_raw": 768.57125,
+		"explosion_victims": 41.0,
+		"explosions": 39.0,
+		"orb_0_slot_1": 3.0,
+		"orb_0_slot_3": 3.0,
+		"orb_0_slot_5": 9.0,
+		"orb_1_slot_0": 4.0,
+		"orb_1_slot_1": 4.0,
+		"projectile_contacts": 18.0,
+		"projectiles_contacted": 18.0,
+		"projectiles_emitted": 26.0,
+		"projectiles_finished": 20.0,
+		"projectiles_finished_without_contact": 2.0,
+		"stage_casts": 23.0,
+		"strikes_scheduled": 9.0,
+		"trigger_expire": 9.0,
+		"trigger_impact": 3.0,
+		"triggers": 12.0
+	},
+	"note": "Three high-health live AI targets, 180 rendered frames, invincible; actual game physics path and mouse aim.",
+	"peak_projectiles": 8,
+	"state": "combat",
+	"wave": 2,
+	"wave_time": 2.99999999999999
+}

@@ -1,0 +1,9 @@
+{
+	"checks": 21,
+	"emission_seconds": 1.0,
+	"failures": 0,
+	"movement_speed": 240,
+	"radius": 24,
+	"spacing": 52.8,
+	"teleport_cutoff": 200
+}

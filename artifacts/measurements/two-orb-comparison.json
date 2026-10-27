@@ -1,0 +1,18 @@
+{
+  "paired_runs": 282,
+  "before_affected_runs": 66,
+  "after_affected_runs": 1,
+  "after_max_step_p95_ms": 3.863,
+  "after_max_step_p99_ms": 4.252,
+  "after_limit_details": [
+    {
+      "build": "meta_both",
+      "scenario": "relocation",
+      "seed": 1151,
+      "motion": "scenario",
+      "events": {
+        "zones_evicted": 40.0
+      }
+    }
+  ]
+}

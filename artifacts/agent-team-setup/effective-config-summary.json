@@ -1,0 +1,36 @@
+{
+  "model": "gpt-6.1-sol",
+  "agents": {
+    "enabled": null,
+    "max_concurrent_threads_per_session": 1,
+    "max_depth": null,
+    "default_subagent_model": "gpt-6-luna",
+    "default_subagent_reasoning_effort": "high",
+    "job_max_runtime_seconds": null,
+    "interrupt_message": null
+  },
+  "layers": [
+    {
+      "name": {
+        "type": "project",
+        "dotCodexFolder": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\.codex"
+      },
+      "version": "sha256:1903c1d2cb82fb02b30f681595e31d6aea0bf4868180aca7bc6439f0a7ae6b23"
+    },
+    {
+      "name": {
+        "type": "user",
+        "file": "C:\\Users\\user\\.codex\\config.toml",
+        "profile": null
+      },
+      "version": "sha256:f4ec77911fe780a92c2717f718a13e04b122c839d1052ddd1bc1f2c133608179"
+    },
+    {
+      "name": {
+        "type": "system",
+        "file": "C:\\ProgramData\\OpenAI\\Codex\\config.toml"
+      },
+      "version": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    }
+  ]
+}

@@ -1,0 +1,562 @@
+[
+  {
+    "name": "Angry_Smoke_Burst_White_v1_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 1518075,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Angry_Smoke_Circle_Burst_White_v1_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 2059558,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Aura_Fire_v3_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 419798,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Blood_Blast_v2_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 637105,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Blood_Burst_v10_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 3440172,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Blood_Burst_v13_A_NoBubble_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 2400821,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Blood_Burst_v3_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 630639,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Blood_Ground_Splash_Loop_v4_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 1009768,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Blue Slash v2_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 1,
+    "bytes": 977215,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Bonfire_v8_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 2919881,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Charge_Wind_Loop_White_v4_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 1214510,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Dash_Wind_White_v1_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 312055,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Explosion_Bomb_V1_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 2444895,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Fire_Burst_v4_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 1602783,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Fireball_v8_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 4935922,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Flamethrower_001_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 2993392,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Blood_Lv2_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 1187689,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Cartoon Hit_V4_B_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 287651,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Cut_V1_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 146205,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Fire_Lv1_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 823761,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Hit_Lv2_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 461569,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Muzzle_Flash_spritesheet",
+    "size": [
+      1536,
+      1536
+    ],
+    "mode": "RGBA",
+    "frames_gif": 7,
+    "bytes": 123460,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Shine_V2_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 717092,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Shockwave v2_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 559464,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Impact_Wind_White_v1_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 549444,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Jet_Fire_v6_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 3001809,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Particles_Basic_V4_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 578697,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Power_Burst_Star_V5_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 4941015,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Projectile_Bullet_spritesheet",
+    "size": [
+      1536,
+      1536
+    ],
+    "mode": "RGBA",
+    "frames_gif": 7,
+    "bytes": 255135,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Projectile_Fire_Ball_Lv1_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 3525916,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Radial_Loop_V2_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 3323869,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Smoke_Burst_White_v7_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 3812718,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Smoke_Cloud_Burst_Thick_v3_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 3500487,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Stab_V5_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 219893,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Star_Bursts_V4_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 849208,
+    "alpha_range": [
+      0,
+      254
+    ]
+  },
+  {
+    "name": "Star_Flash_V2_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 13,
+    "bytes": 1066203,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Water_Burst_v13_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 3342329,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Water_Burst_v6_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 966821,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Water_Ground_Splash_Loop_v2_A_spritesheet",
+    "size": [
+      4096,
+      4096
+    ],
+    "mode": "RGBA",
+    "frames_gif": 53,
+    "bytes": 932914,
+    "alpha_range": [
+      0,
+      255
+    ]
+  },
+  {
+    "name": "Wind_Ground_Alpha_Left_0.5_Burst_A_spritesheet",
+    "size": [
+      2048,
+      2048
+    ],
+    "mode": "RGBA",
+    "frames_gif": 1,
+    "bytes": 160333,
+    "alpha_range": [
+      0,
+      191
+    ]
+  }
+]

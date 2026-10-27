@@ -1,0 +1,88 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+{
+	"build": [
+		[
+			"seek",
+			"thunder"
+		],
+		[
+			"fan",
+			"bolt"
+		]
+	],
+	"duration_limit": 60,
+	"movement": "square, direction changes every5s, no dash",
+	"records": [
+		{
+			"hp": 0.0,
+			"kills": 30,
+			"moving": false,
+			"opportunities": {
+				"cancelled": 0,
+				"carriers": 0,
+				"escaped": 0,
+				"picked": 0,
+				"sentinels": 0
+			},
+			"peak_enemies": 10,
+			"peak_projectiles": 17,
+			"seconds": 30.82,
+			"state": "ended",
+			"wave": 1
+		},
+		{
+			"hp": 64.0,
+			"kills": 48,
+			"moving": true,
+			"opportunities": {
+				"cancelled": 0,
+				"carriers": 1,
+				"escaped": 1,
+				"picked": 0,
+				"sentinels": 0
+			},
+			"peak_enemies": 17,
+			"peak_projectiles": 18,
+			"seconds": 60.0,
+			"state": "combat",
+			"wave": 1
+		},
+		{
+			"hp": 0.0,
+			"kills": 25,
+			"moving": false,
+			"opportunities": {
+				"cancelled": 0,
+				"carriers": 0,
+				"escaped": 0,
+				"picked": 0,
+				"sentinels": 0
+			},
+			"peak_enemies": 13,
+			"peak_projectiles": 16,
+			"seconds": 23.33,
+			"state": "ended",
+			"wave": 2
+		},
+		{
+			"hp": 0.0,
+			"kills": 35,
+			"moving": true,
+			"opportunities": {
+				"cancelled": 0,
+				"carriers": 1,
+				"escaped": 0,
+				"picked": 0,
+				"sentinels": 0
+			},
+			"peak_enemies": 28,
+			"peak_projectiles": 18,
+			"seconds": 39.02,
+			"state": "ended",
+			"wave": 2
+		}
+	],
+	"seed_base": 8881
+}

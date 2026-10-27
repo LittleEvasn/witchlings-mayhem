@@ -1,0 +1,298 @@
+{
+  "schema": 1,
+  "plan": "docs/RELEASE-MASTER-PLAN-v2.md",
+  "note": "회의에서 만든 계획. 계획 등록은 구현 완료가 아니다. 기획 변경과 상업 공개는 승인 조건을 따른다.",
+  "items": [
+    {
+      "key": "release-product-scope",
+      "title": "A · 출시 상품 범위와 세 기획 결정 검토",
+      "role": "developer",
+      "phase": "A",
+      "priority": 3,
+      "state": "review",
+      "approval": true,
+      "depends_on": [],
+      "scope": "4마녀 소형 완결작, 5분 전투 출발점, 무소환 캐릭터 차이, 설계도 해금 후 실제 교정이 보이는 최종실험을 권고안으로 검토.",
+      "done": "RELEASE-MASTER-PLAN-v2의 세 제안을 사용자 판단과 함께 승인/수정/보류 기록. 문서 내부의 제안을 이미 확정된 규칙으로 취급하지 않음."
+    },
+    {
+      "key": "release-versioning",
+      "title": "기반 · 버전 관리와 복구 가능한 제작 흐름",
+      "role": "developer",
+      "phase": "B 병행",
+      "priority": 3,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [],
+      "scope": "기존 변경을 보존하며 소스 버전 관리·원본/런타임 자원 구분·내보내기 버전/진단 로그·복구 지점 마련.",
+      "done": "변경 내역과 이전 정상 상태를 복구할 수 있고 어떤 소스/자산이 어떤 빌드에 포함됐는지 식별 가능. 기존 자료 삭제 없음."
+    },
+    {
+      "key": "release-run-experience",
+      "title": "B · 루미 한 판의 성장·완성·결말 경험",
+      "role": "developer",
+      "phase": "B",
+      "priority": 3,
+      "state": "done",
+      "approval": true,
+      "depends_on": [
+        "release-product-scope"
+      ],
+      "scope": "첫 약점 발견→보상/제작으로 변화→완성 조합 활용→보스 시험→일반엔딩→복기와 재시도를 한 경로로 연결. 대표 표현 샘플 함께 적용.",
+      "done": "실제 한 판에서 내 선택과 공격 변화가 연결되고 최종 조합을 활약시킬 시간이 있는지 관찰 자료 확보. 시간/수량만으로 재미 판정하지 않음. 정식판 전체 완료와 구분.",
+      "implementation_report": "docs/LUMI-RUN-v1.md"
+    },
+    {
+      "key": "release-character-design",
+      "title": "D 준비 · 네 마녀의 공용 마법 기반 행동 설계",
+      "role": "architect",
+      "phase": "B~D",
+      "priority": 2,
+      "state": "planned",
+      "approval": true,
+      "depends_on": [
+        "release-product-scope"
+      ],
+      "scope": "루미/네라/세라/모카의 성격과 다른 운용 판단을 고유행동1개씩으로 구체화. 네라는 독립 소환체 없이 표현. 공용 마법 선택권과 기존 문법 보존.",
+      "done": "외형/성격/행동/피드백/검증 상황이 담긴 하나의 캐릭터 명세. 좁은 구체 전용 보너스나 별도 캠페인4개로 확장하지 않음."
+    },
+    {
+      "key": "release-characters",
+      "title": "D · 네 마녀의 플레이 차이와 선택 화면 구현",
+      "role": "developer",
+      "phase": "D",
+      "priority": 2,
+      "state": "planned",
+      "approval": true,
+      "depends_on": [
+        "release-character-design",
+        "release-playtest"
+      ],
+      "scope": "검증된 루미 경로를 네 마녀로 확장. 선택·고유행동·반응·결과를 연결하고 같은 마법을 다르게 운용하게 함.",
+      "done": "캐릭터별 외형/행동이 식별되고 자발적으로 다른 판단을 하게 되는지 플레이 검토. 시작 구체만 바꾼 복제로 완료 처리하지 않음."
+    },
+    {
+      "key": "release-boss-content",
+      "title": "B~D · 일반 보스와 진보스의 독립 경험",
+      "role": "developer",
+      "phase": "B~D",
+      "priority": 2,
+      "state": "planned",
+      "approval": true,
+      "depends_on": [
+        "release-product-scope"
+      ],
+      "scope": "전용 보스 외형·예고·회피/공격 기회·성격/사고와 연동하는 패턴. 일반보스부터 마감하고 진보스는 승인된 교정실험에 연결.",
+      "done": "각 보스가 다른 판단을 요구하고 완성한 조합으로 돌파 가능. 임의 마법 면역/체력벽/기존 적 확대만으로 마감하지 않음."
+    },
+    {
+      "key": "release-story-unlocks",
+      "title": "D · 일반엔딩4·교정 설계도·진엔딩 연결",
+      "role": "developer",
+      "phase": "D",
+      "priority": 2,
+      "state": "planned",
+      "approval": true,
+      "depends_on": [
+        "release-product-scope",
+        "release-characters",
+        "release-settings-profile"
+      ],
+      "scope": "짧은 공통도입·인물반응·실수엔딩4·영구 설계도 기록·최종교정실험/진엔딩. 해금 조건과 교정 장치의 의미를 실제 전투/연출로 전달.",
+      "done": "판 아이템 초기화와 영구 해금을 혼동하지 않고 조건/결말/재시작/저장복구 연결. RNG 장치 수집 숙제와 강제 슬롯 점유 없이 승인된 이야기 목표를 체감."
+    },
+    {
+      "key": "release-art-sample",
+      "title": "B · SD 아트와 게임 표현의 대표 품질 샘플",
+      "role": "developer",
+      "phase": "B",
+      "priority": 2,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-product-scope"
+      ],
+      "scope": "대표 마녀·적·보스·마법/유물 아이콘·전투/제작 화면으로 최종 화풍/가독성/동작 기준과 자산 생산 목록 작성. 사용자 제공 디자인/원본을 먼저 확인.",
+      "done": "귀여운 SD 정체성과 작은 화면 식별을 함께 만족하는 실제 대표 구간. 이후 자산을 같은 기준으로 제작할 수 있음. 맵 전체 재작업이나 고가 애니메이션 공법을 강제하지 않음."
+    },
+    {
+      "key": "release-av-finish",
+      "title": "E · 캐릭터 동작·VFX·효과음·BGM 마감",
+      "role": "developer",
+      "phase": "B~E",
+      "priority": 2,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-art-sample",
+        "release-run-experience"
+      ],
+      "scope": "캐릭터/적/보스 최소 동작, 아군/적 위험 구분, 타격/피격/제작/강화/합성 피드백, 전투/준비/보스/결과 음악과 오디오 우선순위.",
+      "done": "화풍/아이콘/소리/움직임이 같은 사건을 전달. 혼잡/음소거/효과완화에서도 읽힘. 사용 자산 출처/크레딧과 수정 가능한 원본 보존."
+    },
+    {
+      "key": "release-ui-clarity",
+      "title": "B~E · 두 오브·조합·강화·결과 UI 마감",
+      "role": "developer",
+      "phase": "B~E",
+      "priority": 2,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-product-scope"
+      ],
+      "scope": "보조 오른쪽 범위·연결 순서·강화 예상/소비·오류 해결·사망 원인·다음 목표를 일관되게 표시. 현재 드래그/되돌리기/시험 발사를 보존.",
+      "done": "지원 화면에서 읽고 조작할 수 있으며 신규 플레이어가 실시간 개발자 설명 없이 첫 제작과 다음 웨이브에 도달하는 관찰 근거."
+    },
+    {
+      "key": "release-accessibility-language",
+      "title": "E · 조작·가독성·효과 조절과 지원 언어",
+      "role": "developer",
+      "phase": "E",
+      "priority": 1,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-settings-profile",
+        "release-ui-clarity"
+      ],
+      "scope": "키 변경·창/해상도·글자/색외표시·섬광/흔들림/효과강도·음량·포커스 처리. 용어표/문자열 분리, 실제 지원 언어의 폰트/줄바꿈 검수.",
+      "done": "광고하는 입력/언어/화면 조건에서 가독성과 조작 검증. 게임패드·추가언어는 실제 지원과 검증 전 상점 약속하지 않음."
+    },
+    {
+      "key": "release-playtest",
+      "title": "C · 신규 플레이어의 한 판 이해와 재도전 관찰",
+      "role": "scout",
+      "phase": "C",
+      "priority": 2,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-run-experience",
+        "release-windows-build"
+      ],
+      "scope": "총괄/사용자가 준비한 실제 플레이 관찰의 질문·빌드/조건·막힌 지점·제작 이해·완성 빌드 사용·사망 이해·자발적 재시도를 기록/분석. 외부 사람에게 임의 연락하지 않음.",
+      "done": "사람의 실제 관찰과 코드/자동검사 근거를 구분한 개선 우선순위. AI가 플레이어를 대신해 재미를 합격 처리하지 않음."
+    },
+    {
+      "key": "release-store-rights",
+      "title": "F 병행 · 상점·게임 영상·자산 권리·콘텐츠 설문 준비",
+      "role": "scout",
+      "phase": "B~F",
+      "priority": 1,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-product-scope",
+        "release-art-sample"
+      ],
+      "scope": "실제 빌드 기반 소개/지원내용·로고/캡슐/스크린샷/영상 제작표, 출처/사용권/크레딧·생성콘텐츠 사용내역과 Steam 공식 체크리스트 조사/초안. 기존 가칭 공개명 검토.",
+      "done": "미구현 콘텐츠 광고 없이 검토 가능한 상점/설문/자료 목록과 실제 출처. 실제 계약·결제·신상/세금 제출·게시·외부연락은 사용자 승인 단계로 남김."
+    },
+    {
+      "key": "release-launch-qa",
+      "title": "E~F · 정식 콘텐츠와 출시 후보의 독립 검토",
+      "role": "reviewer",
+      "phase": "E~F",
+      "priority": 2,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-characters",
+        "release-story-unlocks",
+        "release-av-finish",
+        "release-performance",
+        "release-windows-build"
+      ],
+      "scope": "상품 약속과 실제 빌드, 진행/수량/저장·설정/독립 실행·성능·업데이트/복구 근거를 독립 검토. 총괄이 허용한 관련 검사만 지정.",
+      "done": "치명 진행/저장/실행 실패의 처리와 남은 한계 명시. 검사 개수/콘텐츠 수를 재미·상품 충분성 증거로 쓰지 않음."
+    },
+    {
+      "key": "release-launch-support",
+      "title": "F · 사용자 발매 승인과 문의·패치 운영",
+      "role": "developer",
+      "phase": "F",
+      "priority": 1,
+      "state": "planned",
+      "approval": true,
+      "depends_on": [
+        "release-launch-qa",
+        "release-store-rights"
+      ],
+      "scope": "계정/상점/빌드 승인·발매 체크리스트·릴리스노트·알려진 이슈·버그 양식·업데이트/롤백·지원 담당을 정리. 실제 외부 발매/결제/게시에는 사용자 명의 승인.",
+      "done": "승인된 버전과 출시 자료가 일치하고 실행/세이브 손실 등 우선 문제의 접수→재현→수정→관련검증→패치 흐름을 운영 가능."
+    },
+    {
+      "key": "release-boss-safety",
+      "title": "기반 · 보스 등장 실패와 완주 안전장치",
+      "role": "developer",
+      "phase": "B 병행",
+      "priority": 3,
+      "state": "done",
+      "approval": false,
+      "depends_on": [],
+      "scope": "기존 game.gd 보스 생성 반환값/재시도/중복 방지를 수정하는 이전 기술 업무. 큰 상품 계획 중 진행 안전성의 하위 항목.",
+      "done": "관련 실패 조건에서 유한 재시도/안전한 진행, 정상 승패, 중복보스 없음. 기존 제한시간 패배 규칙 보존.",
+      "implementation_report": "docs/LUMI-RUN-v1.md"
+    },
+    {
+      "key": "release-windows-build",
+      "title": "기반 · Windows 독립 실행 테스트 빌드",
+      "role": "developer",
+      "phase": "B 병행",
+      "priority": 3,
+      "state": "review",
+      "approval": false,
+      "depends_on": [
+        "release-versioning"
+      ],
+      "scope": "에디터 없는 개발중 테스트 빌드와 반복 가능한 내보내기. 개발용 MCP/측정실의 배포 포함 정책·버전/로그·경로/폰트 정리.",
+      "done": "Godot 에디터 없는 별도 환경에서 시작/전투/종료 확인. 초기 테스트 빌드를 정식 콘텐츠 완성으로 표기하지 않음.",
+      "implementation_report": "docs/LUMI-RUN-v1.md"
+    },
+    {
+      "key": "release-settings-profile",
+      "title": "기반 · 기본 설정·기록·해금 프로필 저장",
+      "role": "developer",
+      "phase": "B 병행",
+      "priority": 2,
+      "state": "review",
+      "approval": false,
+      "depends_on": [
+        "release-versioning"
+      ],
+      "scope": "음량/화면/타이틀·종료 접근과 설정/기록 프로필의 버전·백업·손상복구 기반. 이야기 해금은 승인 명세에 따라 연결.",
+      "done": "재실행 유지·초기화/복구·임시 런 아이템과 분리. 영구 스탯 성장이나 중간 저장을 임의로 추가하지 않음.",
+      "implementation_report": "docs/LUMI-RUN-v1.md"
+    },
+    {
+      "key": "release-onboarding",
+      "title": "B · 첫 조작과 첫 제작의 짧은 안내",
+      "role": "developer",
+      "phase": "B",
+      "priority": 2,
+      "state": "review",
+      "approval": false,
+      "depends_on": [
+        "release-ui-clarity"
+      ],
+      "scope": "이동/조준/자동공격/회피→마석→두오브/보조/연결→제작→다음웨이브를 필요한 순간 짧게 안내하고 재시도시 생략. README/구식 문구 최신화.",
+      "done": "긴 설명서를 읽지 않고 첫 보상/제작과 다음 웨이브까지 갈 수 있는지 실제 초보 관찰. 조합 문법/현재 재미 보존.",
+      "implementation_report": "docs/LUMI-RUN-v1.md"
+    },
+    {
+      "key": "release-performance",
+      "title": "기반 · 배포 빌드의 대표·고부하 조합 성능",
+      "role": "developer",
+      "phase": "B~E",
+      "priority": 2,
+      "state": "planned",
+      "approval": false,
+      "depends_on": [
+        "release-windows-build"
+      ],
+      "scope": "기존 극단 두 오브 조합의 CPU/렌더/메모리/생성량을 배포판 동일 조건으로 측정하고 병목 수정. 콘텐츠/아트 확장 전 대표 기준 유지.",
+      "done": "표기 대상 장비/조건에서 일반·보스·고부하 결과와 남은 한계 기록. 효과·연결을 몰래 생략하는 상한 변경으로 통과하지 않음."
+    }
+  ]
+}

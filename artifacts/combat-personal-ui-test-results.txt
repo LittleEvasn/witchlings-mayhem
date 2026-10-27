@@ -1,0 +1,60 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Persistent HUD buttons cannot capture Space dash as GUI activation
+PASS: Ranks use player distance and ignore enemies outside camera
+PASS: Target selector supports third and later orbs without adding orb slots
+PASS: Both orbs cast independently
+PASS: Orb 1 shoots nearest enemy
+PASS: Orb 2 shoots second enemy, not active UI orb target
+PASS: Cached ranks skip a target killed by previous orb in same tick
+PASS: Dead target removed before queued node deletion
+PASS: Both orbs share sole remaining target
+PASS: No target returns safe fallback
+PASS: Without enemies aim follows last movement, never cursor
+PASS: Unlinked lightning rains in player annulus, independent of cast_target
+PASS: Lightning positions randomize on successive casts
+PASS: Linked lightning retains event location
+PASS: Fusion lightning retains impact location
+PASS: Tab editor is personal state, world remains combat with no full-screen modal
+PASS: Battle HUD remains visible
+PASS: Personal drawer uses at most thirty percent of screen
+PASS: All six slots of both orbs fit in live drawer
+PASS: Combat clock and movement continue while editing
+PASS: Enemy attacks continue behind drawer
+PASS: Actual GUI drag from bag to second orb equips live spell immediately
+PASS: Undo restores both orb inventory without rewinding combat
+PASS: Removing attack allows invalid intermediate row
+PASS: Invalid row silences its orb
+PASS: Invalid row does not trap player in drawer
+PASS: Reopening and undo restores spell
+PASS: Owned relic view also leaves combat running
+PASS: First Esc closes personal window
+PASS: Second Esc opens existing solo pause
+PASS: Intermediate spell uses 18G allocation before boss
+PASS: No mid-wave reward before thirty seconds
+PASS: Mid-wave choice requires actual kills
+PASS: Eligible growth first creates carrier opportunity under latest reward rule
+PASS: Choice queues once without forcing a window
+PASS: Reward cards scroll without enlarging drawer across lower battle HUD
+PASS: Three distinct candidates stay fixed on reopen
+PASS: Personal choice grants exactly one component
+PASS: Chosen component goes to bag without replacing spells
+PASS: Duplicate reward click cannot grant twice
+PASS: Chosen component can immediately be dragged into live composition
+PASS: Next wave earns independent choice
+PASS: Wave end clears drawer but preserves already earned choice
+PASS: Pending spell survives existing relic-to-crafting flow
+PASS: Preparation choice does not start combat
+PASS: Crafting trial remains available
+PASS: Trial does not issue or consume combat choices
+PASS: Restart discards pending rewards and rejects old callbacks
+PASS: One allocated choice plus ordinary drops never exceeds original wave budget
+PASS: Unearned choice returns only withheld earned value plus clear bonus, not every ordinary drop
+PASS: Full-stock reward has explicit cash fallback
+PASS: Freeing stock after an empty offer repopulates and unlocks reward queue
+PASS: Full stock converts reserved value once
+PASS: Cash fallback cannot be duplicated
+PASS: Death discards experiment reward queue
+RESULT: 55 checks / 0 failures
+

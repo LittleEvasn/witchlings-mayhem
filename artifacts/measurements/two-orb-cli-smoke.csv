@@ -1,0 +1,2 @@
+recipe,scenario,seed,aim,window_seconds,elapsed_seconds,cost,effective_dps,raw_damage,effective_damage,overkill,kills,clear_seconds,contact_rate,casts,projectiles,explosions,zones,triggers,player_damage,mean_alive,zones_evicted,projectiles_blocked,purchase_cost,power,fire_rate,cast_interval,motion,bank,step_cpu_p95,first_damage,window_dps,ruleset
+"[[""fan@1"",""bolt""],[""thunder""]]",single,731,replay,1.0,1.0,56,45.9,45.9,45.9,0.0,0,-1.0,0.11111111111111,5.0,9.0,1.0,0,0,0,1.0,0,0,34,1.0,1.0,0.48,scenario,"[[""fan@1"",""bolt""],[""thunder""]]",0.086,0.45,45.9,two-orb-v1

@@ -1,0 +1,56 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Twenty-two orbs are defined and priced
+PASS: New orb compiles: boomerang
+PASS: New orb compiles: vortex
+PASS: New orb compiles: thorn
+PASS: New orb compiles: bounce
+PASS: New orb compiles: giant
+PASS: New orb compiles: echo
+PASS: Prefix order and duplicate modifier rules remain enforced
+PASS: Giant increases cast interval by 20 percent
+PASS: Giant on both stages penalizes the slower attack interval only once
+PASS: Child-only giant uses the slower attack interval with one giant penalty
+PASS: Reordering the same attacks cannot bypass the heavier spell's recast interval
+PASS: Echo does not add a second interval penalty
+PASS: Persistent attacks have a slower base cast interval
+PASS: Moon hits target once outbound despite overlapping frames
+PASS: Moon hits same target once returning and is caught by caster
+PASS: Returning moon follows the caster's new position, overriding homing
+PASS: Moving caster can catch returning moon
+PASS: Piercing moon reaches multiple targets; linked spell fires once across both legs
+PASS: Bounce turns toward and damages three distinct enemies
+PASS: Bounce does not repeat first-hit connector
+PASS: Two bounces then two penetrations damage five distinct enemies
+PASS: Giant expands hit radius without a hidden damage multiplier
+PASS: Giant flower explosion uses expanded area, not just a larger visual
+PASS: Fan schedules one echo volley rather than one per child
+PASS: Echo waits before firing
+PASS: Echo emits one reduced volley without recursion
+PASS: Original and echo each trigger once with finite children
+PASS: Seed installs on range end; empty field cannot trigger linked spell
+PASS: Vortex gathers enemies before its first damage pulse
+PASS: Vortex deals periodic damage; boss resists pull
+PASS: Vortex first damage triggers child only once over all pulses
+PASS: Armed thorn detonates once with area damage and one linked spell
+PASS: Unstepped thorn expires instead of accumulating forever
+PASS: Seed ricochets before installation
+PASS: Ricocheting seed eventually installs exactly one field
+PASS: Piercing seed plants at its first contact while the seed continues
+PASS: Three piercing fields conserve one seed's total damage and linked-spell strength
+PASS: Each piercing field can trigger once at its shared strength
+PASS: Extended piercing-seed flight reaches the back of a spaced enemy line
+PASS: After a first-contact trap detonates, unused two-thirds of the seed land at range end
+PASS: Piercing seed travels beyond the normal seed's flight range
+PASS: A piercing seed that contacts nothing retains its full strength at range end
+PASS: Bounce plus piercing cannot duplicate the seed's field budget
+PASS: Overlapping vortex pull speed is capped
+PASS: Every new attack works with each modifier and stays bounded
+PASS: Extreme spell spam enforces projectile, field, echo limits
+PASS: Combat apply preserves old spell snapshots until their normal end
+PASS: Wave completion clears persistent and delayed spells
+PASS: Run end clears spell objects even during delayed effects
+PASS: Boss dying inside a field safely ends run during spell iteration
+RESULT: 51 checks, 0 failures
+

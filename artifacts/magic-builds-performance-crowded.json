@@ -1,0 +1,15 @@
+{
+	"crowded": true,
+	"draw_calls": 472,
+	"enemies": 90,
+	"frame_ms_max": 19.329,
+	"frame_ms_p50": 16.668,
+	"frame_ms_p95": 17.509,
+	"frame_ms_p99": 18.436,
+	"frames": 360,
+	"note": "Rendered production runtime at fixed 60Hz simulation step; 60 warmup + 360 measured frames. 90 enemies is above ordinary wave caps. Frame time includes rendering and scheduler; CPU sample isolates gameplay update.",
+	"peak_projectiles": 6,
+	"peak_zones": 8,
+	"simulation_ms_p95": 12.73,
+	"simulation_ms_p99": 13.414
+}

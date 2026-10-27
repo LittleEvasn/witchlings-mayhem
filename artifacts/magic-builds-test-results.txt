@@ -1,0 +1,133 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Restart clears previous victory state
+PASS: 22 unique definitions and prices
+PASS: Universal modifier supported: ["graft", "bolt"]
+PASS: Universal modifier supported: ["seek", "frost"]
+PASS: Universal modifier supported: ["pierce", "thunder"]
+PASS: Universal modifier supported: ["echo", "satellite"]
+PASS: Universal modifier supported: ["bounce", "ember_path"]
+PASS: Return connector needs a returning attack
+PASS: Charge cadence penalty applied once across stages
+PASS: Kit owns valid starting recipe garden
+PASS: First shot has full cadence and no extra money garden
+PASS: Kit owns valid starting recipe charge
+PASS: First shot has full cadence and no extra money charge
+PASS: Kit owns valid starting recipe sigil
+PASS: First shot has full cadence and no extra money sigil
+PASS: Kit owns valid starting recipe frost
+PASS: First shot has full cadence and no extra money frost
+PASS: Compile ["charge", "bolt", "impact", "bloom"]
+PASS: Charge triples primary base damage
+PASS: Primary charge not inherited by child
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Three cold hits freeze ordinary enemy
+PASS: Compile ["shatter", "bolt"]
+PASS: Frozen target consumes shell for 22+30 damage
+PASS: Shell shatters once
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Refreeze grace keeps movement possible
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Boss remains mobile with breakable shell
+PASS: Compile ["sigil", "frost"]
+PASS: Compile ["sigil", "frost"]
+PASS: Compile ["sigil", "frost"]
+PASS: Compile ["sigil", "frost"]
+PASS: Compile ["sigil", "frost"]
+PASS: Compile ["sigil", "frost"]
+PASS: Six cast lineages create one sigil burst
+PASS: Compile ["sigil", "frost"]
+PASS: Unused marks expire after three seconds
+PASS: Compile ["thunder"]
+PASS: Thunder advertises before damage
+PASS: Thunder strikes chosen point after delay
+PASS: Compile ["thunder", "impact", "bolt"]
+PASS: Thunder group first impact creates exactly one child
+PASS: Compile ["frost", "expire", "bolt"]
+PASS: Cone normal end can trigger without victims
+PASS: Compile ["boomerang", "on_return", "bolt"]
+PASS: Return connector fires on actual catch
+PASS: Compile ["boomerang", "on_return", "bolt"]
+PASS: Return connector never fires on timeout
+PASS: Compile ["bolt", "expire", "bloom"]
+PASS: Boundary removal does not trigger normal expiry
+PASS: Compile ["graft", "vortex"]
+PASS: Compile ["graft", "vortex"]
+PASS: Compile ["graft", "vortex"]
+PASS: Three inputs mature one fixed-center graft field
+PASS: Grafting never refreshes lifetime
+PASS: Mature bonus applied once
+PASS: Compile ["graft", "vortex"]
+PASS: Mature field rejects further investment
+PASS: Grafted fields finish within six seconds
+PASS: Compile ["fan", "echo", "graft", "vortex"]
+PASS: Fan and echo share growth cap and merge config
+PASS: Compile ["sigil", "satellite", "expire", "bolt"]
+PASS: Compile ["satellite"]
+PASS: Compile ["satellite"]
+PASS: Orbit set count bounded without force eviction
+PASS: Orbit expiry is once per set
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Recent movement emits at most four trail patches
+PASS: Trail expires once per complete group
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Compile ["ember_path", "expire", "bolt"]
+PASS: Trail has independent twelve-patch cap
+PASS: Evicted trails create no expiry chain
+PASS: Cleanup clears states, delayed strikes and fields
+PASS: Research can select exact desired component
+PASS: Research purchase adds owned item
+PASS: Reroll cannot reset research purchase
+PASS: Four copies cover both attack groups on both orbs
+PASS: Compile ["bolt"]
+PASS: Combat apply preserves in-flight snapshots
+PASS: Unchanged apply does not reset charge
+PASS: New spell starts trial from shop
+PASS: Trial freezes shop and wave clocks
+PASS: Trial exit clears dummy status and attacks
+PASS: Killing hit completing six marks bursts at death position
+PASS: Continuous contact cannot exceed two mark mass per original cast
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Compile ["frost"]
+PASS: Compile ["fan", "shatter", "thunder"]
+PASS: Overlapping thunder lobes cannot consume one frozen shell twice
+PASS: Lethal base hit records shatter as overkill, not a second kill
+PASS: Compile ["seek", "thunder"]
+PASS: Tracked thunder locks during final 0.15s and can miss
+PASS: Compile ["graft", "thorn", "expire", "bolt"]
+PASS: Compile ["graft", "thorn", "expire", "bolt"]
+PASS: Unripe graft thorn ignores ordinary proximity activation
+PASS: Partial graft thorn detonates at lifetime and triggers once
+PASS: Compile ["graft", "vortex"]
+PASS: Compile ["graft", "vortex"]
+PASS: Different applied recipe generations never graft together
+PASS: Compile ["ember_path"]
+PASS: Compile ["charge", "ember_path"]
+PASS: Overlapping trail patches use strongest damage only
+PASS: Compile ["satellite", "expire", "bolt"]
+PASS: Primary orbit center follows player
+PASS: Compile ["frost", "expire", "satellite"]
+PASS: Secondary orbit remains at trigger position
+RESULT: 128 checks / 0 failures
+

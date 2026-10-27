@@ -1,0 +1,79 @@
+{
+  "source": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\cartoon-coffee-free-minipack-40-vfx\\Cartoon Coffee Free Minipack - 40 VFX",
+  "frame_pixels": 192,
+  "effects": {
+    "bullet": {
+      "source": "Projectile_Bullet_spritesheet.png",
+      "grid": 3,
+      "frames": 9,
+      "size": [
+        576,
+        576
+      ]
+    },
+    "explosion": {
+      "source": "Explosion_Bomb_V1_spritesheet.png",
+      "grid": 8,
+      "frames": 64,
+      "size": [
+        1536,
+        1536
+      ]
+    },
+    "wind": {
+      "source": "Charge_Wind_Loop_White_v4_A_spritesheet.png",
+      "grid": 8,
+      "frames": 64,
+      "size": [
+        1536,
+        1536
+      ]
+    },
+    "moon": {
+      "source": "Blue Slash v2_spritesheet.png",
+      "grid": 4,
+      "frames": 16,
+      "size": [
+        768,
+        768
+      ]
+    },
+    "fire": {
+      "source": "Bonfire_v8_A_spritesheet.png",
+      "grid": 8,
+      "frames": 64,
+      "size": [
+        1536,
+        1536
+      ]
+    },
+    "star": {
+      "source": "Star_Flash_V2_spritesheet.png",
+      "grid": 4,
+      "frames": 16,
+      "size": [
+        768,
+        768
+      ]
+    },
+    "impact": {
+      "source": "Impact_Hit_Lv2_spritesheet.png",
+      "grid": 4,
+      "frames": 16,
+      "size": [
+        768,
+        768
+      ]
+    },
+    "shockwave": {
+      "source": "Impact_Shockwave v2_spritesheet.png",
+      "grid": 4,
+      "frames": 16,
+      "size": [
+        768,
+        768
+      ]
+    }
+  },
+  "terms": "Project use including commercial allowed; standalone redistribution/sharing prohibited. See LICENSE-SOURCE.txt."
+}

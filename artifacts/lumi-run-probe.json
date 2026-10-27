@@ -1,0 +1,115 @@
+{
+  "assumptions": "invulnerable nearest-aim moving bot; 60Hz production steps, headless CPU only; no human fun or GPU claim",
+  "combat_total": 475.449999999896,
+  "ended": true,
+  "reports": [
+    {
+      "combat": 90.0166666666628,
+      "earned_total": 68,
+      "headless_sim_step_p95_ms": 0.808,
+      "kills": 79,
+      "money_before_preparation": 68,
+      "peak_enemies": 21,
+      "peak_projectiles": 18,
+      "recipes": [
+        [
+          "fan",
+          "sigil",
+          "bolt"
+        ],
+        []
+      ],
+      "wave": 1,
+      "won": false
+    },
+    {
+      "combat": 105.016666666718,
+      "earned_total": 152,
+      "headless_sim_step_p95_ms": 0.975,
+      "kills": 149,
+      "money_before_preparation": 112,
+      "peak_enemies": 26,
+      "peak_projectiles": 18,
+      "recipes": [
+        [
+          "fan",
+          "sigil",
+          "bolt@2"
+        ],
+        [
+          "vortex"
+        ]
+      ],
+      "wave": 2,
+      "won": false
+    },
+    {
+      "combat": 120.016666666661,
+      "earned_total": 250,
+      "headless_sim_step_p95_ms": 1.025,
+      "kills": 149,
+      "money_before_preparation": 162,
+      "peak_enemies": 26,
+      "peak_projectiles": 36,
+      "recipes": [
+        [
+          "echo",
+          "fan",
+          "sigil",
+          "bolt@4"
+        ],
+        [
+          "vortex"
+        ]
+      ],
+      "wave": 3,
+      "won": false
+    },
+    {
+      "combat": 135.016666666544,
+      "earned_total": 360,
+      "headless_sim_step_p95_ms": 0.993,
+      "kills": 190,
+      "money_before_preparation": 272,
+      "peak_enemies": 26,
+      "peak_projectiles": 36,
+      "recipes": [
+        [
+          "echo",
+          "fan",
+          "sigil",
+          "bolt@4"
+        ],
+        [
+          "vortex"
+        ]
+      ],
+      "wave": 4,
+      "won": false
+    },
+    {
+      "combat": 25.3833333333102,
+      "earned_total": 372,
+      "headless_sim_step_p95_ms": 0.822,
+      "kills": 10,
+      "money_before_preparation": 284,
+      "peak_enemies": 26,
+      "peak_projectiles": 36,
+      "recipes": [
+        [
+          "echo",
+          "fan",
+          "sigil",
+          "bolt@4"
+        ],
+        [
+          "vortex"
+        ]
+      ],
+      "wave": 5,
+      "won": true
+    }
+  ],
+  "seed": 20261026,
+  "won": true
+}

@@ -1,0 +1,134 @@
+{
+  "backup": "C:/Users/user/Desktop/Witchlings' Mayhem/witchlings' mayhem/artifacts/relics-before-20261026-115748",
+  "files": [
+    {
+      "path": "scripts/combat_meter.gd",
+      "new": false,
+      "sha256": "c2bce726a574ddb3ca64ccc4a23eb7aa8369ed90206bf0fc77d0cec188ea8716"
+    },
+    {
+      "path": "scripts/economy.gd",
+      "new": false,
+      "sha256": "81aa3a3beb27662ea99471756c015a74d6987de30f6bf7a12bcb4edb97fa91a9"
+    },
+    {
+      "path": "scripts/forge_ui.gd",
+      "new": false,
+      "sha256": "2041fec2698ea16ceabdc0f228d4609c5ef7b80fc67e61a5cac22d631ceeb4a3"
+    },
+    {
+      "path": "scripts/game.gd",
+      "new": false,
+      "sha256": "1de4655e7a95379a1324aba1bfd93e3f5035de72bfa0c80aab56c0a5ec3368d2"
+    },
+    {
+      "path": "scripts/interface.gd",
+      "new": false,
+      "sha256": "8039e20ac06161e36858ad0086aec07570dfd560da01e745e776a1e3ec241636"
+    },
+    {
+      "path": "scripts/magic_visuals.gd",
+      "new": false,
+      "sha256": "80c38c0151768e6f4f56a28d84862fcb9c87ec0a358d64a02585a838271fa98e"
+    },
+    {
+      "path": "scripts/measurement_lab.gd",
+      "new": false,
+      "sha256": "680304c6bbc4ff77584dbfffeea2ea4475d9659a9890b50dbae3e565081acf62"
+    },
+    {
+      "path": "scripts/measurement_runner.gd",
+      "new": false,
+      "sha256": "a279511f89728cdf5fb490da1b4dbe084ee995e262bfb324f908ad08bc92b45a"
+    },
+    {
+      "path": "scripts/prep_board.gd",
+      "new": false,
+      "sha256": "770a5768082fe928ffa21d3b8148bd0925ed44806feff660e2de41544abdaeb5"
+    },
+    {
+      "path": "scripts/relic_ui.gd",
+      "new": true,
+      "sha256": "4bc26e184e411c467d88ccc9ea4407d961b733470d4b1ef54bb0151685890820"
+    },
+    {
+      "path": "scripts/relic_ui.gd.uid",
+      "new": true,
+      "sha256": "b87e01faef0a8da288fa85d4ca2b096ec227665bd8d877c9cd7ca72a59cc9162"
+    },
+    {
+      "path": "scripts/relics.gd",
+      "new": true,
+      "sha256": "ba22841efa669c48a2ea1582ba95772cedeb623aa4f42e51b5b1a7ace07d755a"
+    },
+    {
+      "path": "scripts/relics.gd.uid",
+      "new": true,
+      "sha256": "73d5dca2c2361ee2fda24af6466c1cc0c4c53de42870027d1db04b704a08166d"
+    },
+    {
+      "path": "scripts/spell_behaviors.gd",
+      "new": false,
+      "sha256": "4d690d607044a8d421001cd89b900313f6dfe1676bdb0411d9dbe2cb578b63d7"
+    },
+    {
+      "path": "scripts/spell_runtime.gd",
+      "new": false,
+      "sha256": "f40a0902cd99a3f6ec721bed1aefefb6984e13619cb9cf860b0c205dd189d962"
+    },
+    {
+      "path": "scripts/spells.gd",
+      "new": false,
+      "sha256": "36064c7de81236f1ce5329adcd65ed382d1ffbd4107829aac9bc2eb9f4481cd9"
+    },
+    {
+      "path": "tests/forge_test.gd",
+      "new": false,
+      "sha256": "a9edbf5f15cc6f8ea9b1d60984692dfb9bed9d9866e06c0b3bfb56da2cf516c9"
+    },
+    {
+      "path": "tests/prep_board_test.gd",
+      "new": false,
+      "sha256": "56326fb80efb254357d7fa8800ff799f2ba7c2010c65111e271b7743408ffb4e"
+    },
+    {
+      "path": "tests/relics_test.gd",
+      "new": true,
+      "sha256": "ec4dee3237c829b739f270878df0dbaaf2fc95e1cd19b0a501321da103ea581c"
+    },
+    {
+      "path": "tests/relics_test.gd.uid",
+      "new": true,
+      "sha256": "7050c50a4da669efaff69877a69a3f93879c903ccb50e11bc3697c3776f71336"
+    },
+    {
+      "path": "tests/spell_roles_test.gd",
+      "new": false,
+      "sha256": "6121506368f47a29b79be00365322b2a9f8792ca80b18d58800338bcdc8f5427"
+    },
+    {
+      "path": "tools/measure_spells.py",
+      "new": false,
+      "sha256": "db4710611f19ec28cefd7aab6b23f72a2d48b4f26e675558b9f3fb3cf51cecbb"
+    },
+    {
+      "path": "tools/run_tests.py",
+      "new": false,
+      "sha256": "1a654e4688c8aa15579f406962ca7a305c7d908e011fb9047c409aa002625156"
+    },
+    {
+      "path": "docs/RELICS-v1.md",
+      "new": true,
+      "sha256": "08c4a87db341449f810ae132fb1f8c827f2e302a8c785f285c5a4ead9d3af9f2"
+    }
+  ],
+  "tests": {
+    "relics": "RESULT: 149 checks, 0 failures",
+    "two-orb-measurement": "RESULT: 41 checks, 0 failures",
+    "spell-program": "RESULT: 83 checks, 0 failures",
+    "spell-roles": "RESULT: 89 checks, 0 failures",
+    "modifier-upgrades": "RESULT: 292 checks, 0 failures",
+    "prep-board": "RESULT: 35 checks / 0 failures",
+    "forge": "RESULT: 203 checks / 0 failures"
+  }
+}

@@ -1,0 +1,45 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Prefix modifiers attach to correct attacks
+PASS: Reject incomplete/postfix recipe []
+PASS: Reject incomplete/postfix recipe ["fan"]
+PASS: Reject incomplete/postfix recipe ["bolt", "fan"]
+PASS: Reject incomplete/postfix recipe ["fan", "fan", "bolt"]
+PASS: Reject incomplete/postfix recipe ["bolt", "bloom"]
+PASS: Reject incomplete/postfix recipe ["impact", "bolt"]
+PASS: Reject incomplete/postfix recipe ["bolt", "impact"]
+PASS: Reject incomplete/postfix recipe ["bolt", "impact", "bloom", "impact", "bolt"]
+PASS: No target means no shots
+PASS: Nearest enemy overrides previous/mouse aim
+PASS: Dead targets are skipped
+PASS: Prefix recipe applies and clears old shots
+PASS: Prefix fan emits three projectiles
+PASS: New grammar still triggers actual child attack on first hit
+PASS: Drops now grant money without XP healing or power
+PASS: Clear collects drops and grants 20 G once
+PASS: Repeated wave completion cannot duplicate money
+PASS: Passive choice has no preparation countdown
+PASS: Free rewards are passives only
+PASS: Orb cannot be selected as passive
+PASS: Passive starts 60 second four-offer shop
+PASS: Reward callback cannot repeat
+PASS: Buy affordable orb
+PASS: Purchase deducts price and adds one copy
+PASS: Sold slot cannot be bought twice
+PASS: Insufficient money prevents purchases and rerolls
+PASS: Paid reroll costs exactly 5 G
+PASS: Stale offer callbacks cannot spend money
+PASS: Equipped copy cannot be added twice
+PASS: Removing frees copy without consuming or duplicating
+PASS: Two attacks require two owned copies
+PASS: Second copy permits same attack twice; applying stays in shop
+PASS: Shop countdown continues through editing
+PASS: Returning preserves offers and time
+PASS: Timeout discards invalid draft, preserving applied recipe and purchases
+PASS: Start callback cannot advance twice
+PASS: Combat blocks stale shop purchases
+PASS: Early start reaches final boss
+PASS: Restart resets economy and passives
+RESULT: 40 checks, 0 failures
+

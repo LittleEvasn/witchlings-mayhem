@@ -1,0 +1,1 @@
+{"jobs": [{"recipe": [["fan@1", "bolt"], ["thunder"]], "scenario": "single", "seed": 731, "aim": "replay", "seconds": 1.0, "power": 1, "fire_rate": 1, "kit": "sigil", "options": {"motion": "scenario", "economy_route": "paid"}}], "output": "C:/Users/user/Desktop/Witchlings' Mayhem/witchlings' mayhem/artifacts/measurements/two-orb-cli-smoke", "compact": false, "quiet": false}

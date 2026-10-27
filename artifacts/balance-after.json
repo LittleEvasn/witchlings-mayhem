@@ -1,0 +1,497 @@
+[
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 8,
+		"damage": 528.0,
+		"hits": 24,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 21,
+		"clear_seconds": -1.0,
+		"cost": 12,
+		"damage": 400.0,
+		"hits": 20,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 26,
+		"damage": 784.3,
+		"hits": 46,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"echo",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 14,
+		"clear_seconds": -1.0,
+		"cost": 26,
+		"damage": 260.0,
+		"hits": 13,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"giant",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 20,
+		"damage": 528.0,
+		"hits": 24,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"pierce",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 20,
+		"clear_seconds": -1.0,
+		"cost": 26,
+		"damage": 912.0,
+		"hits": 38,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"pierce",
+			"boomerang"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 20,
+		"clear_seconds": -1.0,
+		"cost": 32,
+		"damage": 1400.4,
+		"hits": 75,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"echo",
+			"boomerang"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 21,
+		"clear_seconds": -1.0,
+		"cost": 26,
+		"damage": 260.0,
+		"hits": 20,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"fan",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 22,
+		"damage": 343.2,
+		"hits": 24,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"fan",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 14,
+		"clear_seconds": -1.0,
+		"cost": 18,
+		"damage": 342.5,
+		"hits": 137,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"vortex"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 17,
+		"clear_seconds": -1.0,
+		"cost": 14,
+		"damage": 720.0,
+		"hits": 16,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"thorn"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 30,
+		"damage": 805.0,
+		"hits": 46,
+		"kills": 0,
+		"layout": "single",
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 8,
+		"damage": 402.0,
+		"hits": 24,
+		"kills": 6,
+		"layout": "cluster",
+		"recipe": [
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 7,
+		"clear_seconds": 3.7,
+		"cost": 12,
+		"damage": 405.0,
+		"hits": 27,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 16,
+		"clear_seconds": 7.27,
+		"cost": 26,
+		"damage": 405.0,
+		"hits": 27,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"echo",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 3,
+		"clear_seconds": 2.24,
+		"cost": 26,
+		"damage": 405.0,
+		"hits": 27,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"giant",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 10,
+		"clear_seconds": 4.42,
+		"cost": 20,
+		"damage": 405.0,
+		"hits": 27,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"pierce",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 4,
+		"clear_seconds": 2.07,
+		"cost": 26,
+		"damage": 405.0,
+		"hits": 18,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"pierce",
+			"boomerang"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 9,
+		"clear_seconds": 5.4,
+		"cost": 32,
+		"damage": 405.0,
+		"hits": 27,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"echo",
+			"boomerang"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 5,
+		"clear_seconds": 2.58,
+		"cost": 26,
+		"damage": 405.0,
+		"hits": 36,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"fan",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 17,
+		"clear_seconds": 7.77,
+		"cost": 22,
+		"damage": 405.0,
+		"hits": 36,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"fan",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 8,
+		"clear_seconds": 6.69,
+		"cost": 18,
+		"damage": 405.0,
+		"hits": 162,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"vortex"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 3,
+		"clear_seconds": 1.68,
+		"cost": 14,
+		"damage": 405.0,
+		"hits": 9,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"thorn"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 11,
+		"clear_seconds": 4.87,
+		"cost": 30,
+		"damage": 405.0,
+		"hits": 28,
+		"kills": 9,
+		"layout": "cluster",
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 8,
+		"damage": 416.0,
+		"hits": 23,
+		"kills": 5,
+		"layout": "line",
+		"recipe": [
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 16,
+		"clear_seconds": 8.73,
+		"cost": 12,
+		"damage": 420.0,
+		"hits": 24,
+		"kills": 6,
+		"layout": "line",
+		"recipe": [
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 17,
+		"clear_seconds": 8.12,
+		"cost": 26,
+		"damage": 420.0,
+		"hits": 30,
+		"kills": 6,
+		"layout": "line",
+		"recipe": [
+			"echo",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 13,
+		"clear_seconds": 11.08,
+		"cost": 26,
+		"damage": 420.0,
+		"hits": 24,
+		"kills": 6,
+		"layout": "line",
+		"recipe": [
+			"giant",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 10,
+		"clear_seconds": 4.57,
+		"cost": 20,
+		"damage": 420.0,
+		"hits": 24,
+		"kills": 6,
+		"layout": "line",
+		"recipe": [
+			"pierce",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 20,
+		"clear_seconds": -1.0,
+		"cost": 26,
+		"damage": 140.0,
+		"hits": 6,
+		"kills": 2,
+		"layout": "line",
+		"recipe": [
+			"pierce",
+			"boomerang"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 20,
+		"clear_seconds": -1.0,
+		"cost": 32,
+		"damage": 140.0,
+		"hits": 8,
+		"kills": 2,
+		"layout": "line",
+		"recipe": [
+			"echo",
+			"boomerang"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 21,
+		"clear_seconds": -1.0,
+		"cost": 26,
+		"damage": 415.0,
+		"hits": 35,
+		"kills": 5,
+		"layout": "line",
+		"recipe": [
+			"fan",
+			"bloom"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 26,
+		"clear_seconds": -1.0,
+		"cost": 22,
+		"damage": 322.9,
+		"hits": 23,
+		"kills": 4,
+		"layout": "line",
+		"recipe": [
+			"fan",
+			"bolt"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 14,
+		"clear_seconds": -1.0,
+		"cost": 18,
+		"damage": 210.0,
+		"hits": 84,
+		"kills": 3,
+		"layout": "line",
+		"recipe": [
+			"vortex"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 17,
+		"clear_seconds": -1.0,
+		"cost": 14,
+		"damage": 210.0,
+		"hits": 6,
+		"kills": 3,
+		"layout": "line",
+		"recipe": [
+			"thorn"
+		],
+		"seconds": 12
+	},
+	{
+		"casts": 13,
+		"clear_seconds": 6.02,
+		"cost": 30,
+		"damage": 420.0,
+		"hits": 29,
+		"kills": 6,
+		"layout": "line",
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"seconds": 12
+	}
+]

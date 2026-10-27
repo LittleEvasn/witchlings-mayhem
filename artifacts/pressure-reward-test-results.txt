@@ -1,0 +1,54 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Common enemies close distance faster while weak packs stay slower
+PASS: Charge and ranged roles appear before final mixed wave
+PASS: Only explicit warned encounters can spawn within camera
+PASS: Eligible growth announces carrier before spawning, not instant free choice
+PASS: Repeated eligibility does not queue duplicate carriers
+PASS: Spawn warning has real delay
+PASS: Single reward carrier spawns from announced location
+PASS: Carrier appears at safe warned distance
+PASS: Odd wave is individual reward enemy
+PASS: Nearby carrier flees away from player
+PASS: Fleeing carrier faces its movement rather than running backward toward player
+PASS: Fleeing carrier chooses a usable route near world corner
+PASS: Defeat drops collectible material instead of remote choice or extra currency
+PASS: Defeated carrier's material does not expire or produce escape notice
+PASS: Approach grants one choice exactly once
+PASS: Pickup and fallback share same once-per-wave identity
+PASS: Even wave uses carrier plus three existing escorts
+PASS: Distant escort maintains moving formation
+PASS: Nearby escort engages player
+PASS: Group reward waits for remaining escorts
+PASS: Clearing reward group produces only shared material, no duplicated coin pool
+PASS: Material from edge kill is moved into reachable player bounds
+PASS: Carrier expiry removes opportunity without granting immediate loot
+PASS: Missed carrier preserves earned growth at wave end
+PASS: Wave end clears tells, enemies and material state
+PASS: Moving into arrival area cancels spawn, never spawns on player
+PASS: Unsafe or capped spawn still preserves earned choice
+PASS: Simultaneous special arrivals reserve separated warning areas
+PASS: Elite and escorted carrier can coexist without blocking each other's arrival
+PASS: Pressure elite has its own warning
+PASS: One large pressure elite chases slightly slower than player
+PASS: Pressure elite simultaneous cap is one
+PASS: Super armor resists knockback without damage immunity
+PASS: Pressure elite can still freeze, with reduced control duration
+PASS: Special enemies are not silently relocated to another screen edge
+PASS: Long dash travels about328 units, not190
+PASS: Long dash leaves visible recovery window
+PASS: Rewards use separate horizontal three-card stage, not inventory drawer
+PASS: Reward stage leaves player centre and lower HUD visible
+PASS: Three options are side by side
+PASS: Movement and combat time continue during reward reveal
+PASS: Selection grants chosen material
+PASS: Selection closes reward stage and displays acquisition receipt
+PASS: Acquisition never auto-equips or duplicates
+PASS: Cards expose actual same-component upgrade opportunity
+PASS: Acquisition leads back to separate live editor
+PASS: Trial still works with new encounter controller
+PASS: Trial does not spawn field events or advance their schedules
+PASS: Restart clears all opportunity and reward state
+RESULT: 49 checks / 0 failures
+

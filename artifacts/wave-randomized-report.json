@@ -1,0 +1,111 @@
+[
+	{
+		"drop_budget": 30,
+		"duration": 45.0,
+		"max_scattered_gap": 2.66666666666667,
+		"pack_times": [
+			7.35,
+			19.05,
+			31.6666666666667,
+			42.6333333333333
+		],
+		"spawn_counts": {
+			"grouped": 24,
+			"heavy": 0,
+			"packs": 4,
+			"ranged": 0,
+			"scattered": 33,
+			"skipped": 0,
+			"spawned": 57
+		},
+		"wave": 1
+	},
+	{
+		"drop_budget": 40,
+		"duration": 45.0,
+		"max_scattered_gap": 2.06666666666667,
+		"pack_times": [
+			5.35,
+			15.1333333333333,
+			25.6,
+			34.85,
+			44.2666666666667
+		],
+		"spawn_counts": {
+			"grouped": 40,
+			"heavy": 0,
+			"packs": 5,
+			"ranged": 0,
+			"scattered": 39,
+			"skipped": 0,
+			"spawned": 79
+		},
+		"wave": 2
+	},
+	{
+		"drop_budget": 48,
+		"duration": 45.0,
+		"max_scattered_gap": 2.5,
+		"pack_times": [
+			5.35,
+			15.6666666666667,
+			27.2833333333333,
+			36.3166666666667
+		],
+		"spawn_counts": {
+			"grouped": 27,
+			"heavy": 5,
+			"packs": 4,
+			"ranged": 0,
+			"scattered": 34,
+			"skipped": 0,
+			"spawned": 61
+		},
+		"wave": 3
+	},
+	{
+		"drop_budget": 50,
+		"duration": 45.0,
+		"max_scattered_gap": 2.05,
+		"pack_times": [
+			5.35,
+			14.95,
+			24.5333333333333,
+			35.2833333333333,
+			44.5666666666667
+		],
+		"spawn_counts": {
+			"grouped": 36,
+			"heavy": 7,
+			"packs": 5,
+			"ranged": 6,
+			"scattered": 43,
+			"skipped": 0,
+			"spawned": 79
+		},
+		"wave": 4
+	},
+	{
+		"drop_budget": 24,
+		"duration": 120.0,
+		"max_scattered_gap": 4.88333333333333,
+		"pack_times": [
+			10.6833333333333,
+			29.4666666666667,
+			47.8666666666667,
+			67.6166666666667,
+			85.2166666666667,
+			102.933333333333
+		],
+		"spawn_counts": {
+			"grouped": 27,
+			"heavy": 4,
+			"packs": 6,
+			"ranged": 5,
+			"scattered": 54,
+			"skipped": 0,
+			"spawned": 81
+		},
+		"wave": 5
+	}
+]

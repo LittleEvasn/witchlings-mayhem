@@ -1,0 +1,14 @@
+{
+  "balance": "two-orb-v1",
+  "capacity": 256,
+  "baseline": "two-orb-before.json",
+  "final": "two-orb-final.json",
+  "final_comparison": "two-orb-final-comparison.json",
+  "source_backup_before": "../two-orb-balance-before-20261026-041038",
+  "source_snapshot_after": "../two-orb-balance-final-source",
+  "normal_pairs": 282,
+  "known_limited_stress": [
+    "late_double_meta",
+    "late_fan_echo"
+  ]
+}

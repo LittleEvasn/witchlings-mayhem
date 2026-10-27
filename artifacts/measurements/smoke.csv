@@ -1,0 +1,2 @@
+recipe,scenario,seed,aim,seconds,cost,effective_dps,raw_damage,effective_damage,overkill,kills,clear_seconds,contact_rate,casts,projectiles,explosions,zones,triggers,player_damage,mean_alive,zones_evicted,projectiles_blocked
+bolt,single,731,nearest,2.0,8,33.0000000000001,66.0,66.0,0.0,0,-1.0,0.6,5.0,5.0,0,0,0,0,1.0,0,0

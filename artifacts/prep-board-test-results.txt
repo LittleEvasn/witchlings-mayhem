@@ -1,0 +1,40 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Both complete six-slot rows are present simultaneously
+PASS: Preparation has no countdown, no waves or combat advance
+PASS: Starting/cancelling drag does not remove inventory or equipment
+PASS: Drop from bag targets other orb without tab switch
+PASS: New slots compile and apply immediately
+PASS: Stale drag cannot replay
+PASS: Cross-orb move preserves ownership and inserts at boundary
+PASS: Undo restores both live recipes
+PASS: Centre drop swaps across orbs
+PASS: Swap retains both original components
+PASS: Inventory centre drop replaces occupied socket
+PASS: Replaced component returns to available bag count
+PASS: Slot edges allow actual reordering
+PASS: Invalid visible row silences that orb instead of firing old recipe
+PASS: Incomplete row prevents Ready or trial
+PASS: Undo restores firing after invalid intermediate row
+PASS: Dropping onto bag removes only selected component
+PASS: Fully equipped inventory cannot create extra copy
+PASS: Stock revision invalidates old drag after purchase or crafting
+PASS: Seventh socket insertion rejected
+PASS: Full row still permits centre replacement
+PASS: Upgraded copy equips with its four-direction rank intact
+PASS: Selecting socket opens contextual item details
+PASS: Contextual upgrade accepts equipped target
+PASS: Upgrade refreshes sockets and selected detail
+PASS: Current two-orb configuration enters trial directly
+PASS: Trial keeps shop and wave progression separate
+PASS: Trial editor removes equipped component
+PASS: Trial edit immediately stops empty second orb
+PASS: Trial undo restores current spell
+PASS: Returning clears test attacks and targets
+PASS: Ready starts next wave with visible setup
+PASS: Combat editor uses same direct slots
+PASS: Closing editor retains immediate edits
+PASS: Restart clears stale selection
+RESULT: 35 checks / 0 failures
+

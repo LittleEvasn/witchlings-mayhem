@@ -1,0 +1,7 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+{"bank":[["bolt"],["bolt"]],"echoes_blocked":0,"echoes_fired":0,"emits_blocked":0,"emitted":64.0,"id":"bolt_basic","intervals":[0.48,0.48],"peak_projectiles":4.0,"projectiles_blocked":0,"raw_damage":1320.0,"seconds":14.9999999999998}
+{"bank":[["bolt@4"],["bolt@4"]],"echoes_blocked":0,"echoes_fired":0,"emits_blocked":0,"emitted":64.0,"id":"bolt_max4","intervals":[0.48,0.48],"peak_projectiles":4.0,"projectiles_blocked":0,"raw_damage":2376.0,"seconds":14.9999999999998}
+{"bank":[["giant","fan","echo","bolt"],["giant","fan","echo","bloom"]],"echoes_blocked":0,"echoes_fired":48.0,"emits_blocked":0,"emitted":288.0,"id":"fan_echo_basic","intervals":[0.576,0.6912],"peak_projectiles":41.0,"projectiles_blocked":0,"raw_damage":523.8,"seconds":14.9999999999998}
+{"bank":[["giant@4","fan@4","echo@4","bolt@4"],["giant@4","fan@4","echo@4","bloom@4"]],"echoes_blocked":0,"echoes_fired":48.0,"emits_blocked":0,"emitted":288.0,"id":"fan_echo_max4","intervals":[0.576,0.6912],"peak_projectiles":41.0,"projectiles_blocked":0,"raw_damage":1623.78,"seconds":14.9999999999998}

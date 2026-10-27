@@ -1,0 +1,6 @@
+﻿recipe,scenario,seed,aim,window_seconds,elapsed_seconds,cost,effective_dps,raw_damage,effective_damage,overkill,kills,clear_seconds,contact_rate,casts,projectiles,explosions,zones,triggers,player_damage,mean_alive,zones_evicted,projectiles_blocked,purchase_cost,power,fire_rate
+bolt,single,731,nearest,15,14.9999999999998,8,44.0000000000006,660.0,660.0,0.0,0,-1.0,0.9375,32.0,32.0,0,0,0,0,1.0,0,0,0,1,1
+bolt,single,731,nearest,15,14.9999999999998,8,44.0000000000006,660.0,660.0,0.0,0,-1.0,0.9375,32.0,32.0,0,0,0,0,1.0,0,0,0,2,1
+bolt,single,731,nearest,15,14.9999999999998,8,44.0000000000006,660.0,660.0,0.0,0,-1.0,0.9375,32.0,32.0,0,0,0,0,1.0,0,0,0,1,2
+bolt,single,731,fixed,15,14.9999999999998,8,44.0000000000006,660.0,660.0,0.0,0,-1.0,0.9375,32.0,32.0,0,0,0,0,1.0,0,0,0,1,1
+bolt,single,731,nearest,30,14.9999999999998,8,44.0000000000006,660.0,660.0,0.0,0,-1.0,0.9375,32.0,32.0,0,0,0,0,1.0,0,0,0,1,1

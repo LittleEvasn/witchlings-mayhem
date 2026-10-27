@@ -1,0 +1,185 @@
+{
+	"engine": "production spell runtime",
+	"runs": [
+		{
+			"aim": "replay",
+			"arrival_plan": [],
+			"bank": [
+				[
+					"bolt",
+					"bloom"
+				],
+				[
+					"thunder"
+				]
+			],
+			"cast_interval": 0.576,
+			"clear_seconds": -1.0,
+			"completed": true,
+			"contact_rate": 0.666666666666667,
+			"economy_route": "merge",
+			"effective_dps": 78.0000000000002,
+			"final_gold": 0,
+			"fire_rate": 1.0,
+			"first_damage": 0.450000000000001,
+			"initial_gold": 0,
+			"initial_health": 1000000.0,
+			"input_policy": "shared deterministic v2",
+			"input_trace": [
+				{
+					"at": 0.0,
+					"player": "(480.0, 430.0)",
+					"target": "(790.0, 444.0)"
+				},
+				{
+					"at": 1.008,
+					"player": "(480.0, 430.0)",
+					"target": "(801.5968, 438.6201)"
+				}
+			],
+			"investment_ledger": [
+				{
+					"action": "buy",
+					"cost": 12,
+					"token": "bloom"
+				},
+				{
+					"action": "buy",
+					"cost": 16,
+					"token": "thunder"
+				}
+			],
+			"kill_times": [],
+			"kit": "sigil",
+			"mean_alive": 1.0,
+			"motion": "scenario",
+			"opening": "t0",
+			"orb_cost": 36,
+			"orb_intervals": [
+				0.576,
+				0.9
+			],
+			"pending": {
+				"echoes": 0,
+				"orbits": 0,
+				"projectiles": 2,
+				"strikes": 1,
+				"zones": 0
+			},
+			"phase_cpu_ms": {
+
+			},
+			"player_final_health": 1000000.0,
+			"player_initial_health": 1000000.0,
+			"power": 1.0,
+			"profile": false,
+			"purchase_cost": 28,
+			"recipe": [
+				"bolt",
+				"bloom"
+			],
+			"relic_ruleset": "relics-v1",
+			"relic_state": {
+				"casts": 0,
+				"gems": 0,
+				"kills": 0,
+				"owned": [],
+				"shield": 0.0,
+				"speed_cooldown": 0.0,
+				"speed_left": 0.0
+			},
+			"relics": [],
+			"ruleset": "two-orb-v1",
+			"scenario": "single",
+			"schema": 2,
+			"seconds": 2.0,
+			"seed": 731,
+			"sources": {
+				"o0/s0/primary/bolt": {
+					"damage_effective": 44.0,
+					"damage_events": 2.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 44.0,
+					"orb_0_slot_0": 3.0,
+					"projectile_contacts": 2.0,
+					"projectiles_contacted": 2.0,
+					"projectiles_emitted": 3.0,
+					"projectiles_finished": 2.0,
+					"stage_casts": 3.0
+				},
+				"o0/s1/primary/bloom": {
+					"damage_effective": 40.0,
+					"damage_events": 2.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 40.0,
+					"explosion_victims": 2.0,
+					"explosions": 2.0,
+					"orb_0_slot_1": 3.0,
+					"projectile_contacts": 2.0,
+					"projectiles_contacted": 2.0,
+					"projectiles_emitted": 3.0,
+					"projectiles_finished": 2.0,
+					"stage_casts": 3.0
+				},
+				"o1/s0/primary/thunder": {
+					"damage_effective": 72.0,
+					"damage_events": 2.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 72.0,
+					"explosion_victims": 2.0,
+					"explosions": 2.0,
+					"orb_1_slot_0": 3.0,
+					"stage_casts": 3.0,
+					"strikes_scheduled": 3.0
+				}
+			},
+			"spawned": 1,
+			"step": 0.00833333333333333,
+			"step_cpu_ms": {
+				"p50": 0.06,
+				"p95": 0.108,
+				"p99": 0.22
+			},
+			"timeline": [
+				{
+					"alive": 1,
+					"damage": 58.0,
+					"kills": 0,
+					"projectiles": 3,
+					"seconds": 1.01,
+					"zones": 0
+				}
+			],
+			"totals": {
+				"casts": 9.0,
+				"damage_effective": 156.0,
+				"damage_events": 6.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 156.0,
+				"explosion_victims": 4.0,
+				"explosions": 4.0,
+				"living_enemy_seconds": 2.0,
+				"orb_0_slot_0": 3.0,
+				"orb_0_slot_1": 3.0,
+				"orb_1_slot_0": 3.0,
+				"peak_echoes": 0.0,
+				"peak_enemies": 1.0,
+				"peak_orbits": 0.0,
+				"peak_projectiles": 3.0,
+				"peak_strikes": 1.0,
+				"peak_zones": 0.0,
+				"projectile_contacts": 4.0,
+				"projectiles_contacted": 4.0,
+				"projectiles_emitted": 6.0,
+				"projectiles_finished": 4.0,
+				"stage_casts": 9.0,
+				"strikes_scheduled": 3.0
+			},
+			"unique_victims": 1,
+			"wall_elapsed_ms": 16.51,
+			"window_dps": 78.0,
+			"window_seconds": 2.0
+		}
+	],
+	"schema": 2
+}

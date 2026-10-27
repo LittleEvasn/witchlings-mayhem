@@ -1,0 +1,6 @@
+﻿scenario,recipe,aim,window_seconds,power,fire_rate,purchase_cost,seeds,clear_runs,clear_rate,cost,mean_effective_dps,mean_damage_per_gold,mean_kills,mean_kills_per_gold,mean_clear_seconds,mean_contact_rate,mean_received_damage,mean_alive,rank_dps,rank_damage_per_gold,rank_kills,rank_clear_time
+single,bolt,nearest,15,1,1,0.0,1,0,0.0,8.0,44.0,5.5,0.0,0.0,-1,0.9375,0.0,1.0,1,1,1,1
+single,bolt,nearest,15,2,1,0.0,1,0,0.0,8.0,44.0,5.5,0.0,0.0,-1,0.9375,0.0,1.0,1,1,1,1
+single,bolt,nearest,15,1,2,0.0,1,0,0.0,8.0,44.0,5.5,0.0,0.0,-1,0.9375,0.0,1.0,1,1,1,1
+single,bolt,fixed,15,1,1,0.0,1,0,0.0,8.0,44.0,5.5,0.0,0.0,-1,0.9375,0.0,1.0,1,1,1,1
+single,bolt,nearest,30,1,1,0.0,1,0,0.0,8.0,44.0,5.5,0.0,0.0,-1,0.9375,0.0,1.0,1,1,1,1

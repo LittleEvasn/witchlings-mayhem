@@ -1,0 +1,17 @@
+{
+  "recipes": 9,
+  "unique_pairs": 9,
+  "attacks_covered": [
+    "bloom",
+    "bolt",
+    "boomerang",
+    "ember_path",
+    "frost",
+    "satellite",
+    "thorn",
+    "thunder",
+    "vortex"
+  ],
+  "missing": [],
+  "design_only": true
+}

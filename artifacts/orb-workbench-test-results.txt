@@ -1,0 +1,221 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Attack first, modifier later automatically compiles
+PASS: Replacing attack keeps its modifiers
+PASS: Second attack automatically uses owned connector
+PASS: Swap moves full attack groups
+PASS: Whole attack group transfers to other orb without losing copies
+PASS: Undo restores BOTH orb allocations
+PASS: Switching orbs preserves drafts
+PASS: Inventory reservations span both orbs
+PASS: Cannot equip the same owned copy twice
+PASS: Apply commits both independent recipes
+PASS: Applied state contains both recipes
+PASS: Orb one fires without waiting for orb two
+PASS: Orb two follows its own cadence
+PASS: Attack ownership survives runtime contexts
+PASS: Cannot apply a loadout with no attacks in either orb
+PASS: Modifiers before or after attack both work in grouped editing
+PASS: Both orb drafts enter production trial
+PASS: Trial emits both orb spells
+PASS: Trial does not advance economy or shop time
+PASS: Trial restores both clocks and clears effects
+PASS: Switching orb rejects drag payload from previous orb
+PASS: Trial can commit a changed two-orb loadout
+PASS: Trial exit cannot bypass newly committed charge cadence
+PASS: Dragging modifier between groups preserves prefix compile order
+PASS: Transfer to an orb with two attacks rejects without losing items
+PASS: Universal compatibility: fan / bolt
+PASS: Bounded runtime: fan / bolt
+PASS: Universal compatibility: seek / bolt
+PASS: Bounded runtime: seek / bolt
+PASS: Universal compatibility: pierce / bolt
+PASS: Bounded runtime: pierce / bolt
+PASS: Universal compatibility: bounce / bolt
+PASS: Bounded runtime: bounce / bolt
+PASS: Universal compatibility: giant / bolt
+PASS: Bounded runtime: giant / bolt
+PASS: Universal compatibility: echo / bolt
+PASS: Bounded runtime: echo / bolt
+PASS: Universal compatibility: charge / bolt
+PASS: Bounded runtime: charge / bolt
+PASS: Universal compatibility: graft / bolt
+PASS: Bounded runtime: graft / bolt
+PASS: Universal compatibility: sigil / bolt
+PASS: Bounded runtime: sigil / bolt
+PASS: Universal compatibility: shatter / bolt
+PASS: Bounded runtime: shatter / bolt
+PASS: Universal compatibility: fan / bloom
+PASS: Bounded runtime: fan / bloom
+PASS: Universal compatibility: seek / bloom
+PASS: Bounded runtime: seek / bloom
+PASS: Universal compatibility: pierce / bloom
+PASS: Bounded runtime: pierce / bloom
+PASS: Universal compatibility: bounce / bloom
+PASS: Bounded runtime: bounce / bloom
+PASS: Universal compatibility: giant / bloom
+PASS: Bounded runtime: giant / bloom
+PASS: Universal compatibility: echo / bloom
+PASS: Bounded runtime: echo / bloom
+PASS: Universal compatibility: charge / bloom
+PASS: Bounded runtime: charge / bloom
+PASS: Universal compatibility: graft / bloom
+PASS: Bounded runtime: graft / bloom
+PASS: Universal compatibility: sigil / bloom
+PASS: Bounded runtime: sigil / bloom
+PASS: Universal compatibility: shatter / bloom
+PASS: Bounded runtime: shatter / bloom
+PASS: Universal compatibility: fan / boomerang
+PASS: Bounded runtime: fan / boomerang
+PASS: Universal compatibility: seek / boomerang
+PASS: Bounded runtime: seek / boomerang
+PASS: Universal compatibility: pierce / boomerang
+PASS: Bounded runtime: pierce / boomerang
+PASS: Universal compatibility: bounce / boomerang
+PASS: Bounded runtime: bounce / boomerang
+PASS: Universal compatibility: giant / boomerang
+PASS: Bounded runtime: giant / boomerang
+PASS: Universal compatibility: echo / boomerang
+PASS: Bounded runtime: echo / boomerang
+PASS: Universal compatibility: charge / boomerang
+PASS: Bounded runtime: charge / boomerang
+PASS: Universal compatibility: graft / boomerang
+PASS: Bounded runtime: graft / boomerang
+PASS: Universal compatibility: sigil / boomerang
+PASS: Bounded runtime: sigil / boomerang
+PASS: Universal compatibility: shatter / boomerang
+PASS: Bounded runtime: shatter / boomerang
+PASS: Universal compatibility: fan / vortex
+PASS: Bounded runtime: fan / vortex
+PASS: Universal compatibility: seek / vortex
+PASS: Bounded runtime: seek / vortex
+PASS: Universal compatibility: pierce / vortex
+PASS: Bounded runtime: pierce / vortex
+PASS: Universal compatibility: bounce / vortex
+PASS: Bounded runtime: bounce / vortex
+PASS: Universal compatibility: giant / vortex
+PASS: Bounded runtime: giant / vortex
+PASS: Universal compatibility: echo / vortex
+PASS: Bounded runtime: echo / vortex
+PASS: Universal compatibility: charge / vortex
+PASS: Bounded runtime: charge / vortex
+PASS: Universal compatibility: graft / vortex
+PASS: Bounded runtime: graft / vortex
+PASS: Universal compatibility: sigil / vortex
+PASS: Bounded runtime: sigil / vortex
+PASS: Universal compatibility: shatter / vortex
+PASS: Bounded runtime: shatter / vortex
+PASS: Universal compatibility: fan / thorn
+PASS: Bounded runtime: fan / thorn
+PASS: Universal compatibility: seek / thorn
+PASS: Bounded runtime: seek / thorn
+PASS: Universal compatibility: pierce / thorn
+PASS: Bounded runtime: pierce / thorn
+PASS: Universal compatibility: bounce / thorn
+PASS: Bounded runtime: bounce / thorn
+PASS: Universal compatibility: giant / thorn
+PASS: Bounded runtime: giant / thorn
+PASS: Universal compatibility: echo / thorn
+PASS: Bounded runtime: echo / thorn
+PASS: Universal compatibility: charge / thorn
+PASS: Bounded runtime: charge / thorn
+PASS: Universal compatibility: graft / thorn
+PASS: Bounded runtime: graft / thorn
+PASS: Universal compatibility: sigil / thorn
+PASS: Bounded runtime: sigil / thorn
+PASS: Universal compatibility: shatter / thorn
+PASS: Bounded runtime: shatter / thorn
+PASS: Universal compatibility: fan / frost
+PASS: Bounded runtime: fan / frost
+PASS: Universal compatibility: seek / frost
+PASS: Bounded runtime: seek / frost
+PASS: Universal compatibility: pierce / frost
+PASS: Bounded runtime: pierce / frost
+PASS: Universal compatibility: bounce / frost
+PASS: Bounded runtime: bounce / frost
+PASS: Universal compatibility: giant / frost
+PASS: Bounded runtime: giant / frost
+PASS: Universal compatibility: echo / frost
+PASS: Bounded runtime: echo / frost
+PASS: Universal compatibility: charge / frost
+PASS: Bounded runtime: charge / frost
+PASS: Universal compatibility: graft / frost
+PASS: Bounded runtime: graft / frost
+PASS: Universal compatibility: sigil / frost
+PASS: Bounded runtime: sigil / frost
+PASS: Universal compatibility: shatter / frost
+PASS: Bounded runtime: shatter / frost
+PASS: Universal compatibility: fan / thunder
+PASS: Bounded runtime: fan / thunder
+PASS: Universal compatibility: seek / thunder
+PASS: Bounded runtime: seek / thunder
+PASS: Universal compatibility: pierce / thunder
+PASS: Bounded runtime: pierce / thunder
+PASS: Universal compatibility: bounce / thunder
+PASS: Bounded runtime: bounce / thunder
+PASS: Universal compatibility: giant / thunder
+PASS: Bounded runtime: giant / thunder
+PASS: Universal compatibility: echo / thunder
+PASS: Bounded runtime: echo / thunder
+PASS: Universal compatibility: charge / thunder
+PASS: Bounded runtime: charge / thunder
+PASS: Universal compatibility: graft / thunder
+PASS: Bounded runtime: graft / thunder
+PASS: Universal compatibility: sigil / thunder
+PASS: Bounded runtime: sigil / thunder
+PASS: Universal compatibility: shatter / thunder
+PASS: Bounded runtime: shatter / thunder
+PASS: Universal compatibility: fan / satellite
+PASS: Bounded runtime: fan / satellite
+PASS: Universal compatibility: seek / satellite
+PASS: Bounded runtime: seek / satellite
+PASS: Universal compatibility: pierce / satellite
+PASS: Bounded runtime: pierce / satellite
+PASS: Universal compatibility: bounce / satellite
+PASS: Bounded runtime: bounce / satellite
+PASS: Universal compatibility: giant / satellite
+PASS: Bounded runtime: giant / satellite
+PASS: Universal compatibility: echo / satellite
+PASS: Bounded runtime: echo / satellite
+PASS: Universal compatibility: charge / satellite
+PASS: Bounded runtime: charge / satellite
+PASS: Universal compatibility: graft / satellite
+PASS: Bounded runtime: graft / satellite
+PASS: Universal compatibility: sigil / satellite
+PASS: Bounded runtime: sigil / satellite
+PASS: Universal compatibility: shatter / satellite
+PASS: Bounded runtime: shatter / satellite
+PASS: Universal compatibility: fan / ember_path
+PASS: Bounded runtime: fan / ember_path
+PASS: Universal compatibility: seek / ember_path
+PASS: Bounded runtime: seek / ember_path
+PASS: Universal compatibility: pierce / ember_path
+PASS: Bounded runtime: pierce / ember_path
+PASS: Universal compatibility: bounce / ember_path
+PASS: Bounded runtime: bounce / ember_path
+PASS: Universal compatibility: giant / ember_path
+PASS: Bounded runtime: giant / ember_path
+PASS: Universal compatibility: echo / ember_path
+PASS: Bounded runtime: echo / ember_path
+PASS: Universal compatibility: charge / ember_path
+PASS: Bounded runtime: charge / ember_path
+PASS: Universal compatibility: graft / ember_path
+PASS: Bounded runtime: graft / ember_path
+PASS: Universal compatibility: sigil / ember_path
+PASS: Bounded runtime: sigil / ember_path
+PASS: Universal compatibility: shatter / ember_path
+PASS: Bounded runtime: shatter / ember_path
+PASS: Non-field graft gathers before releasing
+PASS: Orb two cannot spend orb one's graft charge
+PASS: Third investment releases gathered damage with growth bonus
+PASS: Different orbs do not accidentally merge planted spells
+PASS: Orb one supplies shared cold state
+PASS: Orb two consumes orb one's freeze for shatter
+PASS: Echo repeats orbit sets instead of being forbidden
+PASS: Piercing lightning extends to exactly two forward targets beyond its impact area
+PASS: Seeking cone turns toward nearby enemy
+PASS: Cleanup clears new gathered charges and orbit sets
+RESULT: 216 checks / 1 failures
+
+FAIL: Cancel restores both applied orb recipes

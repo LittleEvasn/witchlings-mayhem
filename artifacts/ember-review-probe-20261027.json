@@ -1,0 +1,66 @@
+[
+  {
+    "case": "stationary",
+    "patches": 1,
+    "positions": [
+      [
+        0.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "case": "walk_one_second_240_units",
+    "history": 8,
+    "patches": 4,
+    "positions": [
+      [
+        -94.0,
+        0.0
+      ],
+      [
+        -70.0,
+        0.0
+      ],
+      [
+        -46.0,
+        0.0
+      ],
+      [
+        -22.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "case": "fan_three_branches",
+    "patches": 4,
+    "positions": [
+      [
+        -94.0,
+        0.0
+      ],
+      [
+        -70.0,
+        28.0
+      ],
+      [
+        -46.0,
+        -28.0
+      ],
+      [
+        -22.0,
+        0.0
+      ]
+    ]
+  },
+  {
+    "case": "six_four_patch_casts_both_orbs",
+    "owners": {
+      "0": 4,
+      "1": 8
+    },
+    "remaining": 12,
+    "requested": 24
+  }
+]

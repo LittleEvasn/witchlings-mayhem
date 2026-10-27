@@ -1,0 +1,2 @@
+@echo off
+start "Witchlings' Mayhem" "C:\Users\user\Desktop\Godot_v4.6.2-stable_win64.exe" --path "%~dp0."

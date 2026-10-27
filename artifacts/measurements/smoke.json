@@ -1,0 +1,73 @@
+{
+  "engine": "production spell runtime",
+  "runs": [
+    {
+      "aim": "nearest",
+      "cast_interval": 0.48,
+      "clear_seconds": -1.0,
+      "completed": true,
+      "contact_rate": 0.6,
+      "effective_dps": 33.0000000000001,
+      "fire_rate": 1.0,
+      "initial_health": 1000000.0,
+      "kill_times": [],
+      "mean_alive": 1.0,
+      "orb_cost": 8,
+      "pending": {
+        "echoes": 0,
+        "projectiles": 2,
+        "zones": 0
+      },
+      "power": 1.0,
+      "recipe": [
+        "bolt"
+      ],
+      "scenario": "single",
+      "seconds": 2.0,
+      "seed": 731,
+      "sources": {
+        "primary/bolt": {
+          "damage_effective": 66.0,
+          "damage_events": 3.0,
+          "damage_overkill": 0.0,
+          "damage_raw": 66.0,
+          "projectile_contacts": 3.0,
+          "projectiles_contacted": 3.0,
+          "projectiles_emitted": 5.0,
+          "projectiles_finished": 3.0
+        }
+      },
+      "spawned": 1,
+      "step": 0.00833333333333333,
+      "timeline": [
+        {
+          "alive": 1,
+          "damage": 22.0,
+          "kills": 0,
+          "projectiles": 2,
+          "seconds": 1.01,
+          "zones": 0
+        }
+      ],
+      "totals": {
+        "casts": 5.0,
+        "damage_effective": 66.0,
+        "damage_events": 3.0,
+        "damage_overkill": 0.0,
+        "damage_raw": 66.0,
+        "living_enemy_seconds": 2.0,
+        "peak_enemies": 1.0,
+        "peak_projectiles": 2.0,
+        "peak_zones": 0.0,
+        "projectile_contacts": 3.0,
+        "projectiles_contacted": 3.0,
+        "projectiles_emitted": 5.0,
+        "projectiles_finished": 3.0
+      },
+      "unique_victims": 1,
+      "window_seconds": 2.0,
+      "wall_elapsed_ms": 7.675
+    }
+  ],
+  "schema": 1
+}

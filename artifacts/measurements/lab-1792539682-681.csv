@@ -1,0 +1,6 @@
+recipe,scenario,seed,aim,seconds,cost,effective_dps,raw_damage,effective_damage,overkill,kills,clear_seconds,contact_rate,casts,projectiles,explosions,zones,triggers,player_damage,mean_alive,zones_evicted,projectiles_blocked
+seek > fan > bloom > impact > vortex,single,731,nearest,14.9999999999998,70,143.325000000002,2149.875,2149.875,0.0,0,-1.0,0.98039215686275,26.0,153.0,75.0,75.0,75.0,0,1.0,0,0
+seek > fan > bloom > impact > vortex,cluster,731,nearest,1.90833333333333,70,282.969432314411,633.75,540.0,93.75,9.0,1.90833333333333,0.68421052631579,4.0,19.0,7.0,6.0,7.0,0,7.15283842794761,0,0
+seek > fan > bloom > impact > vortex,line,731,nearest,5.64166666666674,70,106.351550960117,640.25,600.0,40.25,6.0,5.64166666666674,0.84615384615385,10.0,52.0,22.0,22.0,22.0,0,3.83899556868529,0,0
+seek > fan > bloom > impact > vortex,scatter,731,nearest,11.3916666666667,70,63.2040965618142,781.625,720.0,61.625,12.0,11.3916666666667,0.86607142857143,20.0,112.0,52.0,51.0,52.0,0,6.50914411119254,0,0
+seek > fan > bloom > impact > vortex,pressure,731,nearest,14.9999999999998,70,98.9583333333347,1584.375,1484.375,100.0,19.0,-1.0,0.86394557823129,26.0,147.0,69.0,69.0,69.0,12.0,8.86222222222231,0,0

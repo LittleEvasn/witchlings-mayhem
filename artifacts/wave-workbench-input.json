@@ -1,0 +1,58 @@
+[
+	{
+		"check": "Actual shop button buys new orb",
+		"ok": true
+	},
+	{
+		"check": "Actual inventory click appends an orb",
+		"ok": true
+	},
+	{
+		"check": "Engine starts native drag from equipped slot",
+		"ok": true
+	},
+	{
+		"check": "Native equipped drag inserts earlier without release-click removing another orb",
+		"ok": true
+	},
+	{
+		"check": "Native purchased-orb drag inserts into current recipe",
+		"ok": true
+	},
+	{
+		"check": "Invalid native drop cancels without loss",
+		"ok": true
+	},
+	{
+		"check": "Native drop on inventory returns equipped copy",
+		"ok": true
+	},
+	{
+		"check": "Actual trial button opens arena and compact editor",
+		"ok": true
+	},
+	{
+		"check": "Mouse aiming in trial damages targets with paused shop clock",
+		"ok": true
+	},
+	{
+		"check": "Actual return button clears targets and restores shop",
+		"ok": true
+	},
+	{
+		"check": "Native drag can be active when shop timer expires",
+		"ok": true
+	},
+	{
+		"check": "Native drag across timeout cannot change recipe or lose purchased items",
+		"ok": true
+	},
+	{
+		"check": "Combat editor retains click editing",
+		"ok": true
+	},
+	{
+		"check": "Actual Escape cancels combat edits",
+		"ok": true
+	}
+]

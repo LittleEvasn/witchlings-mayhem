@@ -1,0 +1,42 @@
+{
+	"checks": 349,
+	"failures": 0,
+	"fusion_events": {
+		"firework_trail": 1.0,
+		"frost_blossom": 1.0,
+		"frost_gate": 1.0,
+		"moon_ring": 1.0,
+		"moon_vortex": 1.0,
+		"nova_garden": 1.0,
+		"petal_return": 1.0,
+		"storm_spear": 1.0,
+		"thunder_trap": 1.0
+	},
+	"seed": 731,
+	"stress": {
+		"max_sim_ms": 11.947,
+		"p95_sim_ms": 9.518,
+		"peak_paths": 90,
+		"peak_projectiles": 126,
+		"seconds": 10,
+		"stationary_high_health_enemies": 48,
+		"totals": {
+			"damage_effective": 1883.21781376517,
+			"damage_events": 478.0,
+			"damage_overkill": 0.0,
+			"damage_raw": 1883.21781376517,
+			"echoes_fired": 80.0,
+			"echoes_scheduled": 80.0,
+			"orb_0_slot_3": 50.0,
+			"orb_1_slot_2": 50.0,
+			"path_patches": 300.0,
+			"projectile_contacts": 357.0,
+			"projectiles_contacted": 357.0,
+			"projectiles_emitted": 550.0,
+			"projectiles_finished": 440.0,
+			"projectiles_finished_without_contact": 83.0,
+			"stage_casts": 100.0
+		}
+	},
+	"version": "magic-user-v2"
+}

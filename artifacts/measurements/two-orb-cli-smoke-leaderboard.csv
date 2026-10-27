@@ -1,0 +1,2 @@
+﻿scenario,recipe,aim,window_seconds,power,fire_rate,motion,purchase_cost,seeds,clear_runs,clear_rate,cost,mean_window_dps,mean_effective_dps,mean_damage_per_gold,mean_kills,mean_kills_per_gold,mean_clear_seconds,mean_contact_rate,mean_received_damage,mean_alive,rank_dps,rank_damage_per_gold,rank_kills,rank_clear_time
+single,"[[""fan@1"",""bolt""],[""thunder""]]",replay,1.0,1.0,1.0,scenario,34.0,1,0,0.0,34.0,45.9,45.9,1.35,0.0,0.0,-1,0.11111,0.0,1.0,1,1,1,1

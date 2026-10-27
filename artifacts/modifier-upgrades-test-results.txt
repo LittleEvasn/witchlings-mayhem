@@ -1,0 +1,297 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Canonical support rank compiles without attack-rank damage: fan
+PASS: Support description uses its real effect: fan
+PASS: Canonical support rank compiles without attack-rank damage: fan@1
+PASS: Support description uses its real effect: fan@1
+PASS: Canonical support rank compiles without attack-rank damage: fan@2
+PASS: Support description uses its real effect: fan@2
+PASS: Canonical support rank compiles without attack-rank damage: fan@3
+PASS: Support description uses its real effect: fan@3
+PASS: Canonical support rank compiles without attack-rank damage: fan@4
+PASS: Support description uses its real effect: fan@4
+PASS: Support merge consumes exactly two, symmetric ranks: fan[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: fan[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: fan
+PASS: Paid support upgrade uses existing one-step cost: fan
+PASS: Canonical support rank compiles without attack-rank damage: seek
+PASS: Support description uses its real effect: seek
+PASS: Canonical support rank compiles without attack-rank damage: seek@1
+PASS: Support description uses its real effect: seek@1
+PASS: Canonical support rank compiles without attack-rank damage: seek@2
+PASS: Support description uses its real effect: seek@2
+PASS: Canonical support rank compiles without attack-rank damage: seek@3
+PASS: Support description uses its real effect: seek@3
+PASS: Canonical support rank compiles without attack-rank damage: seek@4
+PASS: Support description uses its real effect: seek@4
+PASS: Support merge consumes exactly two, symmetric ranks: seek[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: seek[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: seek
+PASS: Paid support upgrade uses existing one-step cost: seek
+PASS: Canonical support rank compiles without attack-rank damage: pierce
+PASS: Support description uses its real effect: pierce
+PASS: Canonical support rank compiles without attack-rank damage: pierce@1
+PASS: Support description uses its real effect: pierce@1
+PASS: Canonical support rank compiles without attack-rank damage: pierce@2
+PASS: Support description uses its real effect: pierce@2
+PASS: Canonical support rank compiles without attack-rank damage: pierce@3
+PASS: Support description uses its real effect: pierce@3
+PASS: Canonical support rank compiles without attack-rank damage: pierce@4
+PASS: Support description uses its real effect: pierce@4
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: pierce[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: pierce
+PASS: Paid support upgrade uses existing one-step cost: pierce
+PASS: Canonical support rank compiles without attack-rank damage: bounce
+PASS: Support description uses its real effect: bounce
+PASS: Canonical support rank compiles without attack-rank damage: bounce@1
+PASS: Support description uses its real effect: bounce@1
+PASS: Canonical support rank compiles without attack-rank damage: bounce@2
+PASS: Support description uses its real effect: bounce@2
+PASS: Canonical support rank compiles without attack-rank damage: bounce@3
+PASS: Support description uses its real effect: bounce@3
+PASS: Canonical support rank compiles without attack-rank damage: bounce@4
+PASS: Support description uses its real effect: bounce@4
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: bounce[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: bounce
+PASS: Paid support upgrade uses existing one-step cost: bounce
+PASS: Canonical support rank compiles without attack-rank damage: giant
+PASS: Support description uses its real effect: giant
+PASS: Canonical support rank compiles without attack-rank damage: giant@1
+PASS: Support description uses its real effect: giant@1
+PASS: Canonical support rank compiles without attack-rank damage: giant@2
+PASS: Support description uses its real effect: giant@2
+PASS: Canonical support rank compiles without attack-rank damage: giant@3
+PASS: Support description uses its real effect: giant@3
+PASS: Canonical support rank compiles without attack-rank damage: giant@4
+PASS: Support description uses its real effect: giant@4
+PASS: Support merge consumes exactly two, symmetric ranks: giant[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: giant[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: giant
+PASS: Paid support upgrade uses existing one-step cost: giant
+PASS: Canonical support rank compiles without attack-rank damage: echo
+PASS: Support description uses its real effect: echo
+PASS: Canonical support rank compiles without attack-rank damage: echo@1
+PASS: Support description uses its real effect: echo@1
+PASS: Canonical support rank compiles without attack-rank damage: echo@2
+PASS: Support description uses its real effect: echo@2
+PASS: Canonical support rank compiles without attack-rank damage: echo@3
+PASS: Support description uses its real effect: echo@3
+PASS: Canonical support rank compiles without attack-rank damage: echo@4
+PASS: Support description uses its real effect: echo@4
+PASS: Support merge consumes exactly two, symmetric ranks: echo[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: echo[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: echo
+PASS: Paid support upgrade uses existing one-step cost: echo
+PASS: Canonical support rank compiles without attack-rank damage: charge
+PASS: Support description uses its real effect: charge
+PASS: Canonical support rank compiles without attack-rank damage: charge@1
+PASS: Support description uses its real effect: charge@1
+PASS: Canonical support rank compiles without attack-rank damage: charge@2
+PASS: Support description uses its real effect: charge@2
+PASS: Canonical support rank compiles without attack-rank damage: charge@3
+PASS: Support description uses its real effect: charge@3
+PASS: Canonical support rank compiles without attack-rank damage: charge@4
+PASS: Support description uses its real effect: charge@4
+PASS: Support merge consumes exactly two, symmetric ranks: charge[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: charge[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: charge
+PASS: Paid support upgrade uses existing one-step cost: charge
+PASS: Canonical support rank compiles without attack-rank damage: sigil
+PASS: Support description uses its real effect: sigil
+PASS: Canonical support rank compiles without attack-rank damage: sigil@1
+PASS: Support description uses its real effect: sigil@1
+PASS: Canonical support rank compiles without attack-rank damage: sigil@2
+PASS: Support description uses its real effect: sigil@2
+PASS: Canonical support rank compiles without attack-rank damage: sigil@3
+PASS: Support description uses its real effect: sigil@3
+PASS: Canonical support rank compiles without attack-rank damage: sigil@4
+PASS: Support description uses its real effect: sigil@4
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[0, 0, 1]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[1, 0, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[2, 0, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[3, 0, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[1, 1, 2]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[2, 1, 3]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[2, 2, 4]
+PASS: Support merge consumes exactly two, symmetric ranks: sigil[2, 2, 4]
+PASS: Over-cap support merge consumes nothing: sigil
+PASS: Paid support upgrade uses existing one-step cost: sigil
+PASS: Reject noncanonical/support-ineligible rank: fan@0
+PASS: Reject noncanonical/support-ineligible rank: fan@5
+PASS: Reject noncanonical/support-ineligible rank: fan@01
+PASS: Reject noncanonical/support-ineligible rank: fan@-1
+PASS: Reject noncanonical/support-ineligible rank: fan@1@1
+PASS: Reject noncanonical/support-ineligible rank: impact@1
+PASS: Reject noncanonical/support-ineligible rank: expire@4
+PASS: Reject noncanonical/support-ineligible rank: storm_spear@1
+PASS: Supports cannot become attack fusions and connectors cannot upgrade
+PASS: Different support types cannot merge
+PASS: Mixed support count/rank formula: fan[0]
+PASS: Mixed support count/rank formula: fan[0, 0]
+PASS: Mixed support count/rank formula: fan[2]
+PASS: Mixed support count/rank formula: fan[1, 1]
+PASS: Mixed support count/rank formula: fan[4, 0]
+PASS: Mixed support count/rank formula: seek[0]
+PASS: Mixed support count/rank formula: seek[0, 0]
+PASS: Mixed support count/rank formula: seek[2]
+PASS: Mixed support count/rank formula: seek[1, 1]
+PASS: Mixed support count/rank formula: seek[4, 0]
+PASS: Mixed support count/rank formula: pierce[0]
+PASS: Mixed support count/rank formula: pierce[0, 0]
+PASS: Mixed support count/rank formula: pierce[2]
+PASS: Mixed support count/rank formula: pierce[1, 1]
+PASS: Mixed support count/rank formula: pierce[4, 0]
+PASS: Mixed support count/rank formula: bounce[0]
+PASS: Mixed support count/rank formula: bounce[0, 0]
+PASS: Mixed support count/rank formula: bounce[2]
+PASS: Mixed support count/rank formula: bounce[1, 1]
+PASS: Mixed support count/rank formula: bounce[4, 0]
+PASS: Mixed support count/rank formula: giant[0]
+PASS: Mixed support count/rank formula: giant[0, 0]
+PASS: Mixed support count/rank formula: giant[2]
+PASS: Mixed support count/rank formula: giant[1, 1]
+PASS: Mixed support count/rank formula: giant[4, 0]
+PASS: Mixed support count/rank formula: charge[0]
+PASS: Mixed support count/rank formula: charge[0, 0]
+PASS: Mixed support count/rank formula: charge[2]
+PASS: Mixed support count/rank formula: charge[1, 1]
+PASS: Mixed support count/rank formula: charge[4, 0]
+PASS: Mixed support count/rank formula: sigil[0]
+PASS: Mixed support count/rank formula: sigil[0, 0]
+PASS: Mixed support count/rank formula: sigil[2]
+PASS: Mixed support count/rank formula: sigil[1, 1]
+PASS: Mixed support count/rank formula: sigil[4, 0]
+PASS: Each echo copy retains its rank and strongest repeat is scheduled first
+PASS: Reordering identical supports with different ranks preserves combined effect
+PASS: Support ranks do not add cooldown penalties beyond equipped counts
+PASS: Each attack and linked child uses only its own right-side scope
+PASS: Ranked fan affects actual damage while preserving three branches
+PASS: Ranked giant changes real collision radius
+PASS: Ranked charge scales actual damage exactly once
+PASS: Base homing cannot acquire the distant test target
+PASS: Ranked homing acquires and turns toward a genuinely reachable distant target
+PASS: Pierce rank affects post-first contacts without buffing the first hit
+PASS: Piercing flower applies rank to later explosions, not a generic attack rank
+PASS: Returning projectile resets first-contact rank bonus per leg
+PASS: Piercing installation rank improves damage without duplicating growth or payload budget: vortex
+PASS: Piercing installation rank improves damage without duplicating growth or payload budget: thorn
+PASS: Cold cone rank improves only the additional piercing targets
+PASS: Ranked support reaches the existing directional extension: thunder
+PASS: Ranked support reaches the existing directional extension: satellite
+PASS: Ranked support reaches the existing directional extension: ember_path
+PASS: Ranked chain is 60 then 36 percent without generating new spells
+PASS: Ranked echo fires one 55-percent real repeat without self-repeating
+PASS: Ranked sigil increases actual marks with unchanged direct penalty
+PASS: Ranked sigil preserves the per-lineage ceiling across repeated hits
+PASS: Mixed sigil ranks share the maximum lineage ceiling instead of resetting it
+PASS: Intrinsic fusion disables cached fan/echo and applies ranked charge once
+PASS: Equipped supports in both orbs can merge
+PASS: Cross-orb merge replaces target and consumes only real material
+PASS: Spare support material is used before another orb's equipped copy
+PASS: Consuming a support never removes the surrounding attack connector
+PASS: Merge preview includes the earlier support consumed as material and its lost scope
+PASS: Paid preview affects only the selected duplicate slot's right-side scope
+PASS: Paid upgrade targets inspected duplicate slot rather than the first matching support
+PASS: Support crafting invalidates stale drags and consumed-item Undo
+PASS: Upgraded supports immediately enter firing trial
+PASS: Trial uses current combined base and upgraded fan factors
+PASS: Support trial leaves wave and shop progress frozen
+PASS: Support trial clears scheduled effects on exit
+PASS: Selection stays on upgraded slot even when an earlier slot already owns the output rank
+PASS: Visible over-cap support merge preserves equipped and spare items
+PASS: Unaffordable upgrade still previews its real benefit without permitting payment
+RESULT: 292 checks, 0 failures
+

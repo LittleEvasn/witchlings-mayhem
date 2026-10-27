@@ -1,0 +1,43 @@
+{
+	"bank": [
+		[
+			"fan@4",
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		[
+			"bolt"
+		]
+	],
+	"first_shots": [
+		{
+			"attack": "bolt",
+			"damage": 18.7,
+			"orb": 0
+		},
+		{
+			"attack": "bolt",
+			"damage": 18.7,
+			"orb": 0
+		},
+		{
+			"attack": "bolt",
+			"damage": 18.7,
+			"orb": 0
+		},
+		{
+			"attack": "bolt",
+			"damage": 22.0,
+			"orb": 1
+		}
+	],
+	"gold": 100,
+	"impact_links": 3.0,
+	"shop_time": 60.0,
+	"stage_casts": 10.0,
+	"trial_damage": 199.55,
+	"trial_hits": 14,
+	"trial_ready": true,
+	"wave_time": 0.0
+}

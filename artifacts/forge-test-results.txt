@@ -1,0 +1,209 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Ranked copy compiles: bolt
+PASS: Ranked copy compiles: bolt@1
+PASS: Ranked copy compiles: bolt@2
+PASS: Ranked copy compiles: bolt@3
+PASS: Ranked copy compiles: bolt@4
+PASS: Ranked copy compiles: bloom
+PASS: Ranked copy compiles: bloom@1
+PASS: Ranked copy compiles: bloom@2
+PASS: Ranked copy compiles: bloom@3
+PASS: Ranked copy compiles: bloom@4
+PASS: Ranked copy compiles: boomerang
+PASS: Ranked copy compiles: boomerang@1
+PASS: Ranked copy compiles: boomerang@2
+PASS: Ranked copy compiles: boomerang@3
+PASS: Ranked copy compiles: boomerang@4
+PASS: Ranked copy compiles: vortex
+PASS: Ranked copy compiles: vortex@1
+PASS: Ranked copy compiles: vortex@2
+PASS: Ranked copy compiles: vortex@3
+PASS: Ranked copy compiles: vortex@4
+PASS: Ranked copy compiles: thorn
+PASS: Ranked copy compiles: thorn@1
+PASS: Ranked copy compiles: thorn@2
+PASS: Ranked copy compiles: thorn@3
+PASS: Ranked copy compiles: thorn@4
+PASS: Ranked copy compiles: frost
+PASS: Ranked copy compiles: frost@1
+PASS: Ranked copy compiles: frost@2
+PASS: Ranked copy compiles: frost@3
+PASS: Ranked copy compiles: frost@4
+PASS: Ranked copy compiles: thunder
+PASS: Ranked copy compiles: thunder@1
+PASS: Ranked copy compiles: thunder@2
+PASS: Ranked copy compiles: thunder@3
+PASS: Ranked copy compiles: thunder@4
+PASS: Ranked copy compiles: satellite
+PASS: Ranked copy compiles: satellite@1
+PASS: Ranked copy compiles: satellite@2
+PASS: Ranked copy compiles: satellite@3
+PASS: Ranked copy compiles: satellite@4
+PASS: Ranked copy compiles: ember_path
+PASS: Ranked copy compiles: ember_path@1
+PASS: Ranked copy compiles: ember_path@2
+PASS: Ranked copy compiles: ember_path@3
+PASS: Ranked copy compiles: ember_path@4
+PASS: Reject noncanonical or unsupported rank bolt@5
+PASS: Reject noncanonical or unsupported rank bolt@-1
+PASS: Reject noncanonical or unsupported rank bolt@01
+PASS: Reject noncanonical or unsupported rank bolt@1@1
+PASS: Reject noncanonical or unsupported rank impact@1
+PASS: Reject noncanonical or unsupported rank garbage@4
+PASS: Fusion order independent: storm_spear
+PASS: Fusion accepts modifier storm_spear / fan
+PASS: Fusion accepts modifier storm_spear / seek
+PASS: Fusion accepts modifier storm_spear / pierce
+PASS: Fusion accepts modifier storm_spear / bounce
+PASS: Fusion accepts modifier storm_spear / giant
+PASS: Fusion accepts modifier storm_spear / echo
+PASS: Fusion accepts modifier storm_spear / charge
+PASS: Fusion accepts modifier storm_spear / sigil
+PASS: Fusion order independent: nova_garden
+PASS: Fusion accepts modifier nova_garden / fan
+PASS: Fusion accepts modifier nova_garden / seek
+PASS: Fusion accepts modifier nova_garden / pierce
+PASS: Fusion accepts modifier nova_garden / bounce
+PASS: Fusion accepts modifier nova_garden / giant
+PASS: Fusion accepts modifier nova_garden / echo
+PASS: Fusion accepts modifier nova_garden / charge
+PASS: Fusion accepts modifier nova_garden / sigil
+PASS: Fusion order independent: moon_ring
+PASS: Fusion accepts modifier moon_ring / fan
+PASS: Fusion accepts modifier moon_ring / seek
+PASS: Fusion accepts modifier moon_ring / pierce
+PASS: Fusion accepts modifier moon_ring / bounce
+PASS: Fusion accepts modifier moon_ring / giant
+PASS: Fusion accepts modifier moon_ring / echo
+PASS: Fusion accepts modifier moon_ring / charge
+PASS: Fusion accepts modifier moon_ring / sigil
+PASS: Fusion order independent: frost_blossom
+PASS: Fusion accepts modifier frost_blossom / fan
+PASS: Fusion accepts modifier frost_blossom / seek
+PASS: Fusion accepts modifier frost_blossom / pierce
+PASS: Fusion accepts modifier frost_blossom / bounce
+PASS: Fusion accepts modifier frost_blossom / giant
+PASS: Fusion accepts modifier frost_blossom / echo
+PASS: Fusion accepts modifier frost_blossom / charge
+PASS: Fusion accepts modifier frost_blossom / sigil
+PASS: Fusion order independent: firework_trail
+PASS: Fusion accepts modifier firework_trail / fan
+PASS: Fusion accepts modifier firework_trail / seek
+PASS: Fusion accepts modifier firework_trail / pierce
+PASS: Fusion accepts modifier firework_trail / bounce
+PASS: Fusion accepts modifier firework_trail / giant
+PASS: Fusion accepts modifier firework_trail / echo
+PASS: Fusion accepts modifier firework_trail / charge
+PASS: Fusion accepts modifier firework_trail / sigil
+PASS: Evolved returning spell uses the shared normal-end connector
+PASS: Two equipped copies merge atomically
+PASS: Duplicate merge consumes two and creates one without money
+PASS: Target slot upgrades, consumed second slot clears, support retained
+PASS: Stale craft click cannot repeat transaction
+PASS: Paid upgrade to +2 uses quoted money
+PASS: Paid upgrade to +3 uses quoted money
+PASS: Paid upgrade to +4 uses quoted money
+PASS: Equipped upgrades persist and consumed items cannot return through Undo
+PASS: Craft invalidates old drag payload
+PASS: Max-rank rejection changes no inventory or money
+PASS: Two +4 attacks fuse
+PASS: Fusion keeps target supports and consumes both individual ingredients
+PASS: Fused recipe enters actual trial
+PASS: Cannot craft during trial
+PASS: Preparation never expires and retains confirmed fusion
+PASS: Ready launches with confirmed fusion
+PASS: Insufficient currency transaction is atomic
+PASS: Base target and ranked material follow the symmetric +1 rule
+PASS: Reversing base/ranked roles produces the same rank
+PASS: Unupgraded fusion rejected
+PASS: Crafting a bag item preserves an unfinished, silent live draft
+PASS: Shop cap counts twelve copies across all ranks
+PASS: Merging frees capacity to buy ingredients again
+PASS: Storm fusion leaves at least 40 G within pre-boss income ceiling
+ECONOMY: storm fusion paid route 184 G; drop+clear ceiling 248 G; remainder 64 G
+PASS: Compile ["bolt@4"]
+PASS: +4 produces 1.8x actual base projectile damage
+PASS: Existing projectile retains rank snapshot
+PASS: Compile ["storm_spear"]
+PASS: Storm spear schedules one lightning despite intrinsic pierce
+PASS: Fusion lightning resolves actual damage
+PASS: Compile ["nova_garden"]
+PASS: Nova creates an actual pulling field
+PASS: Nova explodes on natural expiry
+PASS: Compile ["moon_ring"]
+PASS: Returning moon creates a defensive satellite
+PASS: Compile ["frost_blossom"]
+PASS: Ice trap actually freezes affected enemies
+PASS: Compile ["firework_trail"]
+PASS: Each fire trail patch bursts only once, then ticks normally
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "storm_spear", "impact", "bolt@4"]
+PASS: Fusion fan/echo/connector stays bounded: storm_spear
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "nova_garden", "impact", "bolt@4"]
+PASS: Fusion fan/echo/connector stays bounded: nova_garden
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "moon_ring", "impact", "bolt@4"]
+PASS: Fusion fan/echo/connector stays bounded: moon_ring
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "frost_blossom", "impact", "bolt@4"]
+PASS: Fusion fan/echo/connector stays bounded: frost_blossom
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Compile ["fan", "echo", "firework_trail", "impact", "bolt@4"]
+PASS: Fusion fan/echo/connector stays bounded: firework_trail
+PASS: Cleanup removes evolved spells
+PASS: New run resets upgrades, fusions and forge selection
+RESULT: 203 checks / 0 failures
+

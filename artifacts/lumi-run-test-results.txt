@@ -1,0 +1,67 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Combat cap: 10 minutes
+PASS: Nonboss combat: 7m30
+PASS: Wave, chapter and forecast share timing and name 1
+PASS: Wave, chapter and forecast share timing and name 2
+PASS: Wave, chapter and forecast share timing and name 3
+PASS: Wave, chapter and forecast share timing and name 4
+PASS: Wave, chapter and forecast share timing and name 5
+PASS: Intro freezes combat and spawning
+PASS: Intro preserves chosen kit
+PASS: Combat Tab editing is included in preparation/editing clock
+PASS: Timed wave reaches reward and clears pending 1
+PASS: No duplicate clear grant 1
+PASS: Relic enters crafting 1
+PASS: Unlimited preparation without combat clock 1
+PASS: Trial opens 1
+PASS: Trial restores clocks, gold and relics 1
+PASS: Manual Ready starts wave 1
+PASS: Timed wave reaches reward and clears pending 2
+PASS: No duplicate clear grant 2
+PASS: Relic enters crafting 2
+PASS: Unlimited preparation without combat clock 2
+PASS: Trial opens 2
+PASS: Trial restores clocks, gold and relics 2
+PASS: Manual Ready starts wave 2
+PASS: Timed wave reaches reward and clears pending 3
+PASS: No duplicate clear grant 3
+PASS: Relic enters crafting 3
+PASS: Unlimited preparation without combat clock 3
+PASS: Trial opens 3
+PASS: Trial restores clocks, gold and relics 3
+PASS: Manual Ready starts wave 3
+PASS: Timed wave reaches reward and clears pending 4
+PASS: No duplicate clear grant 4
+PASS: Relic enters crafting 4
+PASS: Unlimited preparation without combat clock 4
+PASS: Trial opens 4
+PASS: Trial restores clocks, gold and relics 4
+PASS: Manual Ready starts wave 4
+PASS: Fifth wave spawns boss
+PASS: Fan warns before firing
+PASS: Fan direction stays locked
+PASS: Ground strike targets old position and is dodgeable
+PASS: Dash warns before moving
+PASS: Dash begins after warning
+PASS: Half health phase and all three attacks
+PASS: Boss death cleans attacks and ends run
+PASS: Results retain both orbs and growth steps
+PASS: Title cleans encounter
+PASS: Retry resets run-local progression
+PASS: Deterministic fallback when random boss spawn fails
+PASS: Recovery never duplicates boss
+PASS: Timeout has explicit failure ending
+PASS: Death has distinct ending
+PASS: Fatal boss circle safely cleans the in-progress attack
+PASS: Preboss budget can fund +4 pair plus support choices
+PASS: Structurally corrupt records rejected before rendering or backup
+PASS: Profile saves
+PASS: Profile reopens clue and record
+PASS: Corrupt primary recovers backup
+PASS: Music exists: prepare
+PASS: Music exists: combat
+PASS: Music exists: boss
+RESULT: 62 checks, 0 failures
+

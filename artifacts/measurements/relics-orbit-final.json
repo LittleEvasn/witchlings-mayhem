@@ -1,0 +1,544 @@
+{
+	"engine": "production spell runtime",
+	"runs": [
+		{
+			"aim": "replay",
+			"arrival_plan": [
+				{
+					"at": 0.0,
+					"pos": "(1191.219, 120.0)"
+				},
+				{
+					"at": 0.14,
+					"pos": "(1395.0, 564.2186)"
+				},
+				{
+					"at": 0.28,
+					"pos": "(1395.0, 265.8248)"
+				},
+				{
+					"at": 0.42,
+					"pos": "(910.125, 755.0)"
+				},
+				{
+					"at": 2.0,
+					"pos": "(1395.0, 669.253)"
+				},
+				{
+					"at": 2.14,
+					"pos": "(646.3947, 120.0)"
+				},
+				{
+					"at": 2.28,
+					"pos": "(448.2141, 120.0)"
+				},
+				{
+					"at": 2.42,
+					"pos": "(45.0, 389.9896)"
+				},
+				{
+					"at": 4.0,
+					"pos": "(1395.0, 496.1636)"
+				},
+				{
+					"at": 4.14,
+					"pos": "(45.0, 623.0262)"
+				},
+				{
+					"at": 4.28,
+					"pos": "(898.4003, 755.0)"
+				},
+				{
+					"at": 4.42,
+					"pos": "(1395.0, 430.4071)"
+				},
+				{
+					"at": 6.0,
+					"pos": "(1395.0, 286.0604)"
+				},
+				{
+					"at": 6.14,
+					"pos": "(45.0, 477.7281)"
+				},
+				{
+					"at": 6.28,
+					"pos": "(1395.0, 414.5622)"
+				},
+				{
+					"at": 6.42,
+					"pos": "(1395.0, 275.8558)"
+				},
+				{
+					"at": 8.0,
+					"pos": "(45.0, 317.4012)"
+				},
+				{
+					"at": 8.14,
+					"pos": "(724.0703, 120.0)"
+				},
+				{
+					"at": 8.28,
+					"pos": "(1395.0, 662.5452)"
+				},
+				{
+					"at": 8.42,
+					"pos": "(1395.0, 488.7928)"
+				},
+				{
+					"at": 10.0,
+					"pos": "(1225.016, 755.0)"
+				},
+				{
+					"at": 10.14,
+					"pos": "(45.0, 342.0854)"
+				},
+				{
+					"at": 10.28,
+					"pos": "(1395.0, 478.2713)"
+				},
+				{
+					"at": 10.42,
+					"pos": "(675.9019, 755.0)"
+				},
+				{
+					"at": 12.0,
+					"pos": "(45.0, 645.1368)"
+				},
+				{
+					"at": 12.14,
+					"pos": "(1395.0, 610.4401)"
+				},
+				{
+					"at": 12.28,
+					"pos": "(45.0, 457.8017)"
+				},
+				{
+					"at": 12.42,
+					"pos": "(1175.705, 120.0)"
+				},
+				{
+					"at": 14.0,
+					"pos": "(1395.0, 340.0903)"
+				},
+				{
+					"at": 14.14,
+					"pos": "(1395.0, 481.2097)"
+				},
+				{
+					"at": 14.28,
+					"pos": "(569.8881, 755.0)"
+				},
+				{
+					"at": 14.42,
+					"pos": "(1087.859, 120.0)"
+				}
+			],
+			"bank": [
+				[
+					"giant",
+					"ember_path"
+				],
+				[
+					"sigil",
+					"satellite"
+				]
+			],
+			"build_id": "mobility-relics",
+			"cast_interval": 0.96,
+			"clear_seconds": -1.0,
+			"completed": true,
+			"contact_rate": 0.0,
+			"economy_route": "merge",
+			"effective_dps": 66.7316000000008,
+			"final_gold": 105,
+			"fire_rate": 1.0,
+			"first_damage": 1.95,
+			"initial_gold": 100,
+			"initial_health": 2240.0,
+			"input_policy": "shared deterministic v2",
+			"input_trace": [
+				{
+					"at": 0.0,
+					"player": "(980.0, 430.0)",
+					"target": "(1122.325, 665.3051)"
+				},
+				{
+					"at": 1.008,
+					"player": "(917.8785, 533.7869)",
+					"target": "(846.468, 799.3534)"
+				},
+				{
+					"at": 2.008,
+					"player": "(762.6961, 587.8279)",
+					"target": "(522.4382, 721.623)"
+				},
+				{
+					"at": 3.008,
+					"player": "(587.433, 567.64)",
+					"target": "(324.0649, 488.5056)"
+				},
+				{
+					"at": 4.008,
+					"player": "(474.5183, 482.7178)",
+					"target": "(347.7955, 238.6556)"
+				},
+				{
+					"at": 5.0,
+					"player": "(476.5212, 373.8747)",
+					"target": "(561.5707, 112.3568)"
+				},
+				{
+					"at": 6.0,
+					"player": "(592.5322, 290.5479)",
+					"target": "(839.3881, 169.3572)"
+				},
+				{
+					"at": 7.0,
+					"player": "(768.4932, 272.8076)",
+					"target": "(1027.416, 365.4568)"
+				},
+				{
+					"at": 8.0,
+					"player": "(921.6471, 328.9973)",
+					"target": "(1035.578, 579.2867)"
+				},
+				{
+					"at": 9.0,
+					"player": "(979.9633, 432.6902)",
+					"target": "(879.793, 688.7975)"
+				},
+				{
+					"at": 10.0,
+					"player": "(916.0146, 535.1179)",
+					"target": "(662.5052, 641.6917)"
+				},
+				{
+					"at": 11.0,
+					"player": "(759.8772, 588.1069)",
+					"target": "(506.8041, 480.5011)"
+				},
+				{
+					"at": 12.008,
+					"player": "(583.6911, 566.2488)",
+					"target": "(486.2771, 309.0806)"
+				},
+				{
+					"at": 13.008,
+					"player": "(473.1126, 480.1703)",
+					"target": "(589.7251, 231.1191)"
+				},
+				{
+					"at": 14.008,
+					"player": "(478.6491, 370.4959)",
+					"target": "(738.5522, 280.6328)"
+				}
+			],
+			"investment_ledger": [
+				{
+					"action": "buy",
+					"cost": 14,
+					"token": "giant"
+				},
+				{
+					"action": "buy",
+					"cost": 14,
+					"token": "ember_path"
+				},
+				{
+					"action": "buy",
+					"cost": 16,
+					"token": "satellite"
+				}
+			],
+			"kill_times": [
+				8.92500000000013,
+				9.50833333333343,
+				10.2583333333334,
+				12.125,
+				12.4916666666666,
+				13.3916666666665,
+				13.4416666666665,
+				14.3666666666665,
+				14.4249999999998
+			],
+			"kit": "sigil",
+			"mean_alive": 14.8733333333337,
+			"motion": "scenario",
+			"opening": "t0",
+			"orb_cost": 62,
+			"orb_intervals": [
+				0.96,
+				0.88
+			],
+			"pending": {
+				"echoes": 0,
+				"orbits": 3,
+				"projectiles": 0,
+				"strikes": 0,
+				"zones": 7
+			},
+			"phase_cpu_ms": {
+				"projectiles": {
+					"p50": 0.047,
+					"p95": 0.098
+				},
+				"scheduler": {
+					"p50": 0.003,
+					"p95": 0.004
+				},
+				"zones": {
+					"p50": 0.019,
+					"p95": 0.044
+				}
+			},
+			"player_final_health": 999892.0,
+			"player_initial_health": 1000000.0,
+			"power": 1.0,
+			"profile": true,
+			"purchase_cost": 44,
+			"recipe": [
+				"giant",
+				"ember_path"
+			],
+			"relic_ruleset": "relics-v1",
+			"relic_state": {
+				"casts": 33,
+				"gems": 0,
+				"kills": 0,
+				"owned": [
+					"magnifier",
+					"gloves",
+					"hourglass"
+				],
+				"shield": 0.0,
+				"speed_cooldown": 0.0,
+				"speed_left": 0.0
+			},
+			"relics": [
+				"magnifier",
+				"gloves",
+				"hourglass"
+			],
+			"ruleset": "two-orb-v1",
+			"scenario": "relocation",
+			"schema": 2,
+			"seconds": 14.9999999999998,
+			"seed": 731,
+			"sources": {
+				"o0/s1/primary/ember_path": {
+					"damage_effective": 632.211,
+					"damage_events": 138.0,
+					"damage_overkill": 12.9389999999999,
+					"damage_raw": 645.15,
+					"kills": 6.0,
+					"orb_0_slot_1": 16.0,
+					"path_patches": 59.0,
+					"stage_casts": 16.0
+				},
+				"o0/s1/primary/ember_path/relic_copy": {
+					"orb_0_slot_1": 5.0,
+					"path_patches": 19.0,
+					"stage_casts": 5.0
+				},
+				"o1/s1/primary/satellite": {
+					"damage_effective": 297.375,
+					"damage_events": 23.0,
+					"damage_overkill": 1.73999999999998,
+					"damage_raw": 299.115,
+					"kills": 1.0,
+					"marks_added": 23.0,
+					"orb_1_slot_1": 17.0,
+					"orbit_contacts": 23.0,
+					"orbits_blocked": 5.0,
+					"orbits_created": 12.0,
+					"stage_casts": 17.0
+				},
+				"o1/s1/primary/satellite/relic_copy": {
+					"damage_effective": 45.044,
+					"damage_events": 9.0,
+					"damage_overkill": 1.77399999999999,
+					"damage_raw": 46.818,
+					"kills": 1.0,
+					"marks_added": 9.0,
+					"orb_1_slot_1": 3.0,
+					"orbit_contacts": 9.0,
+					"orbits_created": 3.0,
+					"stage_casts": 3.0
+				},
+				"o1/s1/primary/satellite/relic_copy/sigil": {
+					"damage_effective": 7.52685714285715,
+					"damage_events": 0.571428571428572,
+					"damage_overkill": 6.75314285714285,
+					"damage_raw": 14.28,
+					"explosion_victims": 2.0,
+					"explosions": 1.0,
+					"sigil_bursts": 1.0
+				},
+				"o1/s1/primary/satellite/sigil": {
+					"damage_effective": 18.8171428571429,
+					"damage_events": 1.42857142857143,
+					"damage_overkill": 16.8828571428571,
+					"damage_raw": 35.7,
+					"kills": 1.0
+				}
+			},
+			"spawned": 32,
+			"step": 0.00833333333333333,
+			"step_cpu_ms": {
+				"p50": 0.288,
+				"p95": 0.458,
+				"p99": 0.637
+			},
+			"timeline": [
+				{
+					"alive": 4,
+					"damage": 0,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 1.01,
+					"zones": 9
+				},
+				{
+					"alive": 4,
+					"damage": 13.005,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 2.01,
+					"zones": 12
+				},
+				{
+					"alive": 8,
+					"damage": 22.355,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 3.01,
+					"zones": 12
+				},
+				{
+					"alive": 8,
+					"damage": 36.38,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 4.01,
+					"zones": 12
+				},
+				{
+					"alive": 12,
+					"damage": 50.405,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 5.0,
+					"zones": 10
+				},
+				{
+					"alive": 12,
+					"damage": 50.405,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 6.0,
+					"zones": 10
+				},
+				{
+					"alive": 16,
+					"damage": 109.14,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 7.0,
+					"zones": 12
+				},
+				{
+					"alive": 16,
+					"damage": 181.9,
+					"kills": 0,
+					"projectiles": 0,
+					"seconds": 8.0,
+					"zones": 12
+				},
+				{
+					"alive": 19,
+					"damage": 279.95,
+					"kills": 1.0,
+					"projectiles": 0,
+					"seconds": 9.0,
+					"zones": 12
+				},
+				{
+					"alive": 18,
+					"damage": 422.71,
+					"kills": 2.0,
+					"projectiles": 0,
+					"seconds": 10.0,
+					"zones": 12
+				},
+				{
+					"alive": 21,
+					"damage": 494.750000000001,
+					"kills": 3.0,
+					"projectiles": 0,
+					"seconds": 11.0,
+					"zones": 8
+				},
+				{
+					"alive": 21,
+					"damage": 637.669,
+					"kills": 3.0,
+					"projectiles": 0,
+					"seconds": 12.01,
+					"zones": 8
+				},
+				{
+					"alive": 23,
+					"damage": 789.619999999999,
+					"kills": 5.0,
+					"projectiles": 0,
+					"seconds": 13.01,
+					"zones": 8
+				},
+				{
+					"alive": 21,
+					"damage": 931.727999999998,
+					"kills": 7.0,
+					"projectiles": 0,
+					"seconds": 14.01,
+					"zones": 7
+				}
+			],
+			"totals": {
+				"casts": 33.0,
+				"damage_effective": 1000.974,
+				"damage_events": 172.0,
+				"damage_overkill": 40.0889999999999,
+				"damage_raw": 1041.063,
+				"explosion_victims": 2.0,
+				"explosions": 1.0,
+				"kills": 9.0,
+				"living_enemy_seconds": 223.100000000003,
+				"marks_added": 32.0,
+				"marks_expired": 5.0,
+				"orb_0_slot_1": 21.0,
+				"orb_1_slot_1": 20.0,
+				"orbit_contacts": 32.0,
+				"orbits_blocked": 5.0,
+				"orbits_created": 15.0,
+				"path_patches": 78.0,
+				"peak_echoes": 0.0,
+				"peak_enemies": 24.0,
+				"peak_orbits": 4.0,
+				"peak_projectiles": 0.0,
+				"peak_strikes": 0.0,
+				"peak_zones": 12.0,
+				"player_damage": 108.0,
+				"player_hits": 9.0,
+				"relic_copies": 8.0,
+				"shield_absorbed": 0.0,
+				"sigil_bursts": 1.0,
+				"stage_casts": 41.0
+			},
+			"unique_victims": 19,
+			"wall_elapsed_ms": 528.589,
+			"window_dps": 66.7315999999999,
+			"window_seconds": 15.0
+		}
+	],
+	"schema": 2
+}

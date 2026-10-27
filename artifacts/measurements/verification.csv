@@ -1,0 +1,3 @@
+recipe,scenario,seed,aim,window_seconds,elapsed_seconds,cost,effective_dps,raw_damage,effective_damage,overkill,kills,clear_seconds,contact_rate,casts,projectiles,explosions,zones,triggers,player_damage,mean_alive,zones_evicted,projectiles_blocked,purchase_cost,power,fire_rate,cast_interval
+seek > fan > bloom > impact > vortex,pressure,731,nearest,4.0,3.99999999999999,70,28.3062500000001,114.5625,113.225,1.33749999999999,1.0,-1.0,0.75,4.0,20.0,8.0,8.0,8.0,0,5.16458333333336,0,0,46,1.0,1.0,0.864
+seek > fan > bloom > impact > vortex,pressure,731,nearest,4.0,3.99999999999999,70,28.3062500000001,114.5625,113.225,1.33749999999999,1.0,-1.0,0.75,4.0,20.0,8.0,8.0,8.0,0,5.16458333333336,0,0,46,1.0,1.0,0.864

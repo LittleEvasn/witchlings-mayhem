@@ -1,0 +1,989 @@
+{
+	"engine": "production spell runtime",
+	"runs": [
+		{
+			"aim": "replay",
+			"arrival_plan": [],
+			"bank": [
+				[
+					"seek",
+					"fan",
+					"echo",
+					"bloom",
+					"impact",
+					"vortex"
+				],
+				[
+					"bolt"
+				]
+			],
+			"build_id": "meta_both",
+			"cast_interval": 0.864,
+			"clear_seconds": -1.0,
+			"completed": true,
+			"contact_rate": 0.984827586206897,
+			"economy_route": "merge",
+			"effective_dps": 125.831469999994,
+			"fire_rate": 1.0,
+			"first_damage": 0.575,
+			"initial_health": 1000000.0,
+			"input_policy": "shared deterministic v2",
+			"input_trace": [
+				{
+					"at": 0.0,
+					"player": "(480.0, 430.0)",
+					"target": "(790.0, 444.0)"
+				},
+				{
+					"at": 1.008,
+					"player": "(480.0, 430.0)",
+					"target": "(801.5968, 438.6201)"
+				},
+				{
+					"at": 2.008,
+					"player": "(480.0, 430.0)",
+					"target": "(796.0743, 426.717)"
+				},
+				{
+					"at": 3.008,
+					"player": "(480.0, 430.0)",
+					"target": "(781.6529, 417.2985)"
+				},
+				{
+					"at": 4.008,
+					"player": "(480.0, 430.0)",
+					"target": "(779.4601, 417.4922)"
+				},
+				{
+					"at": 5.0,
+					"player": "(480.0, 430.0)",
+					"target": "(792.5814, 427.0489)"
+				},
+				{
+					"at": 6.0,
+					"player": "(480.0, 430.0)",
+					"target": "(801.9825, 438.8857)"
+				},
+				{
+					"at": 7.0,
+					"player": "(480.0, 430.0)",
+					"target": "(793.8292, 443.998)"
+				},
+				{
+					"at": 8.0,
+					"player": "(480.0, 430.0)",
+					"target": "(780.0661, 438.5169)"
+				},
+				{
+					"at": 9.0,
+					"player": "(480.0, 430.0)",
+					"target": "(780.8562, 426.5904)"
+				},
+				{
+					"at": 10.0,
+					"player": "(480.0, 430.0)",
+					"target": "(795.042, 417.2442)"
+				},
+				{
+					"at": 11.0,
+					"player": "(480.0, 430.0)",
+					"target": "(801.8412, 417.5513)"
+				},
+				{
+					"at": 12.008,
+					"player": "(480.0, 430.0)",
+					"target": "(791.1638, 427.3824)"
+				},
+				{
+					"at": 13.008,
+					"player": "(480.0, 430.0)",
+					"target": "(778.8031, 439.1461)"
+				},
+				{
+					"at": 14.008,
+					"player": "(480.0, 430.0)",
+					"target": "(782.8459, 443.9882)"
+				}
+			],
+			"investment_ledger": [
+				{
+					"action": "buy",
+					"cost": 16,
+					"token": "seek"
+				},
+				{
+					"action": "buy",
+					"cost": 18,
+					"token": "echo"
+				},
+				{
+					"action": "buy",
+					"cost": 12,
+					"token": "bloom"
+				},
+				{
+					"action": "buy",
+					"cost": 18,
+					"token": "vortex"
+				}
+			],
+			"kill_times": [],
+			"kit": "sigil",
+			"mean_alive": 1.0,
+			"motion": "scenario",
+			"opening": "t0",
+			"orb_cost": 96,
+			"orb_intervals": [
+				0.864,
+				0.48
+			],
+			"pending": {
+				"echoes": 3,
+				"orbits": 0,
+				"projectiles": 11,
+				"strikes": 0,
+				"zones": 117
+			},
+			"phase_cpu_ms": {
+				"projectiles": {
+					"p50": 0.085,
+					"p95": 0.91
+				},
+				"scheduler": {
+					"p50": 0.003,
+					"p95": 0.004
+				},
+				"zones": {
+					"p50": 1.525,
+					"p95": 1.855
+				}
+			},
+			"power": 1.0,
+			"profile": true,
+			"purchase_cost": 64,
+			"recipe": [
+				"seek",
+				"fan",
+				"echo",
+				"bloom",
+				"impact",
+				"vortex"
+			],
+			"scenario": "single",
+			"schema": 2,
+			"seconds": 14.9999999999998,
+			"seed": 731,
+			"sources": {
+				"o0/s3/primary/bloom": {
+					"damage_effective": 408.0,
+					"damage_events": 51.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 408.0,
+					"echoes_scheduled": 18.0,
+					"explosion_victims": 51.0,
+					"explosions": 51.0,
+					"orb_0_slot_3": 18.0,
+					"projectile_contacts": 51.0,
+					"projectiles_contacted": 51.0,
+					"projectiles_emitted": 54.0,
+					"projectiles_finished": 51.0,
+					"stage_casts": 18.0,
+					"trigger_impact": 51.0,
+					"triggers": 51.0
+				},
+				"o0/s3/primary/bloom/echo": {
+					"damage_effective": 134.4,
+					"damage_events": 48.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 134.4,
+					"echoes_fired": 18.0,
+					"explosion_victims": 48.0,
+					"explosions": 48.0,
+					"orb_0_slot_3": 18.0,
+					"projectile_contacts": 48.0,
+					"projectiles_contacted": 48.0,
+					"projectiles_emitted": 54.0,
+					"projectiles_finished": 48.0,
+					"stage_casts": 18.0,
+					"trigger_impact": 48.0,
+					"triggers": 48.0
+				},
+				"o0/s5/chain/vortex": {
+					"damage_effective": 379.079999999992,
+					"damage_events": 1458.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 379.079999999992,
+					"echoes_scheduled": 51.0,
+					"garden_merges": 136.0,
+					"orb_0_slot_5": 51.0,
+					"projectile_contacts": 153.0,
+					"projectiles_contacted": 153.0,
+					"projectiles_emitted": 153.0,
+					"projectiles_finished": 153.0,
+					"stage_casts": 51.0,
+					"zone_pulses": 1458.0,
+					"zones_created": 153.0
+				},
+				"o0/s5/chain/vortex/echo": {
+					"damage_effective": 305.992050000012,
+					"damage_events": 4281.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 305.992050000012,
+					"echoes_fired": 96.0,
+					"echoes_scheduled": 48.0,
+					"garden_merges": 400.0,
+					"orb_0_slot_5": 144.0,
+					"projectile_contacts": 432.0,
+					"projectiles_contacted": 432.0,
+					"projectiles_emitted": 432.0,
+					"projectiles_finished": 432.0,
+					"stage_casts": 144.0,
+					"zone_pulses": 4281.0,
+					"zones_created": 432.0
+				},
+				"o1/s0/primary/bolt": {
+					"damage_effective": 660.0,
+					"damage_events": 30.0,
+					"damage_overkill": 0.0,
+					"damage_raw": 660.0,
+					"orb_1_slot_0": 32.0,
+					"projectile_contacts": 30.0,
+					"projectiles_contacted": 30.0,
+					"projectiles_emitted": 32.0,
+					"projectiles_finished": 30.0,
+					"stage_casts": 32.0
+				}
+			},
+			"spawned": 1,
+			"step": 0.00833333333333333,
+			"step_cpu_ms": {
+				"p50": 1.692,
+				"p95": 2.409,
+				"p99": 3.423
+			},
+			"timeline": [
+				{
+					"alive": 1,
+					"damage": 22.0,
+					"kills": 0,
+					"projectiles": 11,
+					"seconds": 1.01,
+					"zones": 0
+				},
+				{
+					"alive": 1,
+					"damage": 132.98265,
+					"kills": 0,
+					"projectiles": 11,
+					"seconds": 2.01,
+					"zones": 45
+				},
+				{
+					"alive": 1,
+					"damage": 269.34855,
+					"kills": 0,
+					"projectiles": 13,
+					"seconds": 3.01,
+					"zones": 87
+				},
+				{
+					"alive": 1,
+					"damage": 394.713050000003,
+					"kills": 0,
+					"projectiles": 7,
+					"seconds": 4.01,
+					"zones": 135
+				},
+				{
+					"alive": 1,
+					"damage": 526.553500000005,
+					"kills": 0,
+					"projectiles": 7,
+					"seconds": 5.0,
+					"zones": 135
+				},
+				{
+					"alive": 1,
+					"damage": 655.862850000002,
+					"kills": 0,
+					"projectiles": 7,
+					"seconds": 6.0,
+					"zones": 129
+				},
+				{
+					"alive": 1,
+					"damage": 786.256399999998,
+					"kills": 0,
+					"projectiles": 10,
+					"seconds": 7.0,
+					"zones": 117
+				},
+				{
+					"alive": 1,
+					"damage": 916.536849999995,
+					"kills": 0,
+					"projectiles": 13,
+					"seconds": 8.0,
+					"zones": 108
+				},
+				{
+					"alive": 1,
+					"damage": 1069.76819999999,
+					"kills": 0,
+					"projectiles": 10,
+					"seconds": 9.0,
+					"zones": 117
+				},
+				{
+					"alive": 1,
+					"damage": 1209.91309999997,
+					"kills": 0,
+					"projectiles": 7,
+					"seconds": 10.0,
+					"zones": 135
+				},
+				{
+					"alive": 1,
+					"damage": 1341.67554999996,
+					"kills": 0,
+					"projectiles": 7,
+					"seconds": 11.0,
+					"zones": 144
+				},
+				{
+					"alive": 1,
+					"damage": 1472.21534999994,
+					"kills": 0,
+					"projectiles": 7,
+					"seconds": 12.01,
+					"zones": 135
+				},
+				{
+					"alive": 1,
+					"damage": 1604.05579999992,
+					"kills": 0,
+					"projectiles": 10,
+					"seconds": 13.01,
+					"zones": 117
+				},
+				{
+					"alive": 1,
+					"damage": 1733.0102499999,
+					"kills": 0,
+					"projectiles": 10,
+					"seconds": 14.01,
+					"zones": 108
+				}
+			],
+			"totals": {
+				"casts": 50.0,
+				"damage_effective": 1887.47204999989,
+				"damage_events": 5868.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 1887.47204999989,
+				"echoes_fired": 114.0,
+				"echoes_scheduled": 117.0,
+				"explosion_victims": 99.0,
+				"explosions": 99.0,
+				"garden_merges": 536.0,
+				"living_enemy_seconds": 14.9999999999998,
+				"orb_0_slot_3": 36.0,
+				"orb_0_slot_5": 195.0,
+				"orb_1_slot_0": 32.0,
+				"peak_echoes": 5.0,
+				"peak_enemies": 1.0,
+				"peak_orbits": 0.0,
+				"peak_projectiles": 17.0,
+				"peak_strikes": 0.0,
+				"peak_zones": 144.0,
+				"projectile_contacts": 714.0,
+				"projectiles_contacted": 714.0,
+				"projectiles_emitted": 725.0,
+				"projectiles_finished": 714.0,
+				"stage_casts": 263.0,
+				"trigger_impact": 99.0,
+				"triggers": 99.0,
+				"zone_pulses": 5739.0,
+				"zones_created": 585.0
+			},
+			"unique_victims": 1,
+			"wall_elapsed_ms": 2870.905,
+			"window_dps": 125.831469999993,
+			"window_seconds": 15.0
+		},
+		{
+			"aim": "replay",
+			"arrival_plan": [
+				{
+					"at": 0.0,
+					"pos": "(1191.219, 120.0)"
+				},
+				{
+					"at": 0.14,
+					"pos": "(1395.0, 564.2186)"
+				},
+				{
+					"at": 0.28,
+					"pos": "(1395.0, 265.8248)"
+				},
+				{
+					"at": 0.42,
+					"pos": "(910.125, 755.0)"
+				},
+				{
+					"at": 2.0,
+					"pos": "(1395.0, 669.253)"
+				},
+				{
+					"at": 2.14,
+					"pos": "(646.3947, 120.0)"
+				},
+				{
+					"at": 2.28,
+					"pos": "(448.2141, 120.0)"
+				},
+				{
+					"at": 2.42,
+					"pos": "(45.0, 389.9896)"
+				},
+				{
+					"at": 4.0,
+					"pos": "(1395.0, 496.1636)"
+				},
+				{
+					"at": 4.14,
+					"pos": "(45.0, 623.0262)"
+				},
+				{
+					"at": 4.28,
+					"pos": "(898.4003, 755.0)"
+				},
+				{
+					"at": 4.42,
+					"pos": "(1395.0, 430.4071)"
+				},
+				{
+					"at": 6.0,
+					"pos": "(1395.0, 286.0604)"
+				},
+				{
+					"at": 6.14,
+					"pos": "(45.0, 477.7281)"
+				},
+				{
+					"at": 6.28,
+					"pos": "(1395.0, 414.5622)"
+				},
+				{
+					"at": 6.42,
+					"pos": "(1395.0, 275.8558)"
+				},
+				{
+					"at": 8.0,
+					"pos": "(45.0, 317.4012)"
+				},
+				{
+					"at": 8.14,
+					"pos": "(724.0703, 120.0)"
+				},
+				{
+					"at": 8.28,
+					"pos": "(1395.0, 662.5452)"
+				},
+				{
+					"at": 8.42,
+					"pos": "(1395.0, 488.7928)"
+				},
+				{
+					"at": 10.0,
+					"pos": "(1225.016, 755.0)"
+				},
+				{
+					"at": 10.14,
+					"pos": "(45.0, 342.0854)"
+				},
+				{
+					"at": 10.28,
+					"pos": "(1395.0, 478.2713)"
+				},
+				{
+					"at": 10.42,
+					"pos": "(675.9019, 755.0)"
+				},
+				{
+					"at": 12.0,
+					"pos": "(45.0, 645.1368)"
+				},
+				{
+					"at": 12.14,
+					"pos": "(1395.0, 610.4401)"
+				},
+				{
+					"at": 12.28,
+					"pos": "(45.0, 457.8017)"
+				},
+				{
+					"at": 12.42,
+					"pos": "(1175.705, 120.0)"
+				},
+				{
+					"at": 14.0,
+					"pos": "(1395.0, 340.0903)"
+				},
+				{
+					"at": 14.14,
+					"pos": "(1395.0, 481.2097)"
+				},
+				{
+					"at": 14.28,
+					"pos": "(569.8881, 755.0)"
+				},
+				{
+					"at": 14.42,
+					"pos": "(1087.859, 120.0)"
+				}
+			],
+			"bank": [
+				[
+					"seek",
+					"fan",
+					"echo",
+					"bloom",
+					"impact",
+					"vortex"
+				],
+				[
+					"bolt"
+				]
+			],
+			"build_id": "meta_both",
+			"cast_interval": 0.864,
+			"clear_seconds": -1.0,
+			"completed": true,
+			"contact_rate": 0.702743902439024,
+			"economy_route": "merge",
+			"effective_dps": 91.439319999996,
+			"fire_rate": 1.0,
+			"first_damage": 1.00833333333333,
+			"initial_health": 2240.0,
+			"input_policy": "shared deterministic v2",
+			"input_trace": [
+				{
+					"at": 0.0,
+					"player": "(840.0, 430.0)",
+					"target": "(982.3254, 665.3051)"
+				},
+				{
+					"at": 1.008,
+					"player": "(811.3286, 488.3802)",
+					"target": "(739.9181, 753.9467)"
+				},
+				{
+					"at": 2.008,
+					"player": "(739.7059, 518.7782)",
+					"target": "(499.4479, 652.5734)"
+				},
+				{
+					"at": 3.008,
+					"player": "(658.8152, 507.4225)",
+					"target": "(395.4471, 428.2882)"
+				},
+				{
+					"at": 4.008,
+					"player": "(606.7007, 459.6537)",
+					"target": "(479.9779, 215.5916)"
+				},
+				{
+					"at": 5.0,
+					"player": "(607.6252, 398.4295)",
+					"target": "(692.6747, 136.9117)"
+				},
+				{
+					"at": 6.0,
+					"player": "(661.1687, 351.5582)",
+					"target": "(908.0245, 230.3675)"
+				},
+				{
+					"at": 7.0,
+					"player": "(742.3815, 341.5793)",
+					"target": "(1001.304, 434.2285)"
+				},
+				{
+					"at": 8.0,
+					"player": "(813.0679, 373.186)",
+					"target": "(926.9987, 623.4753)"
+				},
+				{
+					"at": 9.0,
+					"player": "(839.983, 431.5132)",
+					"target": "(739.8127, 687.6205)"
+				},
+				{
+					"at": 10.0,
+					"player": "(810.4683, 489.1288)",
+					"target": "(556.9589, 595.7026)"
+				},
+				{
+					"at": 11.0,
+					"player": "(738.4048, 518.9351)",
+					"target": "(485.3318, 411.3293)"
+				},
+				{
+					"at": 12.008,
+					"player": "(657.0882, 506.64)",
+					"target": "(559.6742, 249.4717)"
+				},
+				{
+					"at": 13.008,
+					"player": "(606.052, 458.2208)",
+					"target": "(722.6645, 209.1696)"
+				},
+				{
+					"at": 14.008,
+					"player": "(608.6073, 396.529)",
+					"target": "(868.5104, 306.6658)"
+				}
+			],
+			"investment_ledger": [
+				{
+					"action": "buy",
+					"cost": 16,
+					"token": "seek"
+				},
+				{
+					"action": "buy",
+					"cost": 18,
+					"token": "echo"
+				},
+				{
+					"action": "buy",
+					"cost": 12,
+					"token": "bloom"
+				},
+				{
+					"action": "buy",
+					"cost": 18,
+					"token": "vortex"
+				}
+			],
+			"kill_times": [
+				1.71666666666666,
+				5.31666666666672,
+				5.6583333333334,
+				6.92500000000013,
+				7.18333333333348,
+				7.54166666666683,
+				8.60000000000015,
+				9.00833333333346,
+				10.4166666666667,
+				11.975,
+				11.9833333333333,
+				12.1749999999999,
+				12.5166666666666,
+				13.4666666666665,
+				13.5749999999999,
+				13.8916666666665,
+				14.7416666666665
+			],
+			"kit": "sigil",
+			"mean_alive": 10.7238888888889,
+			"motion": "scenario",
+			"opening": "t0",
+			"orb_cost": 96,
+			"orb_intervals": [
+				0.864,
+				0.48
+			],
+			"pending": {
+				"echoes": 4,
+				"orbits": 0,
+				"projectiles": 26,
+				"strikes": 0,
+				"zones": 118
+			},
+			"phase_cpu_ms": {
+				"projectiles": {
+					"p50": 0.226,
+					"p95": 0.776
+				},
+				"scheduler": {
+					"p50": 0.003,
+					"p95": 0.004
+				},
+				"zones": {
+					"p50": 1.759,
+					"p95": 3.04
+				}
+			},
+			"power": 1.0,
+			"profile": true,
+			"purchase_cost": 64,
+			"recipe": [
+				"seek",
+				"fan",
+				"echo",
+				"bloom",
+				"impact",
+				"vortex"
+			],
+			"scenario": "pressure",
+			"schema": 2,
+			"seconds": 14.9999999999998,
+			"seed": 731,
+			"sources": {
+				"o0/s3/primary/bloom": {
+					"damage_effective": 421.648,
+					"damage_events": 55.0,
+					"damage_overkill": 18.3519999999998,
+					"damage_raw": 440.0,
+					"echoes_scheduled": 18.0,
+					"explosion_victims": 55.0,
+					"explosions": 49.0,
+					"kills": 5.0,
+					"orb_0_slot_3": 18.0,
+					"projectile_contacts": 47.0,
+					"projectiles_contacted": 47.0,
+					"projectiles_emitted": 54.0,
+					"projectiles_finished": 51.0,
+					"projectiles_finished_without_contact": 4.0,
+					"stage_casts": 18.0,
+					"trigger_impact": 47.0,
+					"triggers": 47.0
+				},
+				"o0/s3/primary/bloom/echo": {
+					"damage_effective": 177.892,
+					"damage_events": 64.0,
+					"damage_overkill": 1.30799999999996,
+					"damage_raw": 179.2,
+					"echoes_fired": 18.0,
+					"explosion_victims": 64.0,
+					"explosions": 42.0,
+					"kills": 2.0,
+					"orb_0_slot_3": 18.0,
+					"projectile_contacts": 41.0,
+					"projectiles_contacted": 41.0,
+					"projectiles_emitted": 54.0,
+					"projectiles_finished": 49.0,
+					"projectiles_finished_without_contact": 8.0,
+					"stage_casts": 18.0,
+					"trigger_impact": 41.0,
+					"triggers": 41.0
+				},
+				"o0/s5/chain/vortex": {
+					"damage_effective": 299.315299999995,
+					"damage_events": 1153.0,
+					"damage_overkill": 0.464699999999803,
+					"damage_raw": 299.779999999995,
+					"echoes_scheduled": 47.0,
+					"garden_merges": 102.0,
+					"kills": 4.0,
+					"orb_0_slot_5": 47.0,
+					"projectile_contacts": 100.0,
+					"projectiles_contacted": 100.0,
+					"projectiles_emitted": 141.0,
+					"projectiles_finished": 138.0,
+					"projectiles_finished_without_contact": 38.0,
+					"stage_casts": 47.0,
+					"zone_pulses": 1314.0,
+					"zones_created": 138.0
+				},
+				"o0/s5/chain/vortex/echo": {
+					"damage_effective": 303.134500000012,
+					"damage_events": 4235.0,
+					"damage_overkill": 0.150299999999993,
+					"damage_raw": 303.284800000012,
+					"echoes_fired": 84.0,
+					"echoes_scheduled": 41.0,
+					"garden_merges": 315.0,
+					"kills": 5.0,
+					"orb_0_slot_5": 125.0,
+					"projectile_contacts": 265.0,
+					"projectiles_contacted": 265.0,
+					"projectiles_emitted": 375.0,
+					"projectiles_finished": 364.0,
+					"projectiles_finished_without_contact": 99.0,
+					"stage_casts": 125.0,
+					"zone_pulses": 3576.0,
+					"zones_created": 364.0
+				},
+				"o1/s0/primary/bolt": {
+					"damage_effective": 169.6,
+					"damage_events": 8.0,
+					"damage_overkill": 6.39999999999999,
+					"damage_raw": 176.0,
+					"kills": 1.0,
+					"orb_1_slot_0": 32.0,
+					"projectile_contacts": 8.0,
+					"projectiles_contacted": 8.0,
+					"projectiles_emitted": 32.0,
+					"projectiles_finished": 28.0,
+					"projectiles_finished_without_contact": 20.0,
+					"stage_casts": 32.0
+				}
+			},
+			"spawned": 32,
+			"step": 0.00833333333333333,
+			"step_cpu_ms": {
+				"p50": 2.357,
+				"p95": 3.627,
+				"p99": 3.993
+			},
+			"timeline": [
+				{
+					"alive": 4,
+					"damage": 8.0,
+					"kills": 0,
+					"projectiles": 14,
+					"seconds": 1.01,
+					"zones": 0
+				},
+				{
+					"alive": 3,
+					"damage": 70.0,
+					"kills": 1.0,
+					"projectiles": 32,
+					"seconds": 2.01,
+					"zones": 29
+				},
+				{
+					"alive": 7,
+					"damage": 70.0,
+					"kills": 1.0,
+					"projectiles": 19,
+					"seconds": 3.01,
+					"zones": 48
+				},
+				{
+					"alive": 7,
+					"damage": 70.0,
+					"kills": 1.0,
+					"projectiles": 20,
+					"seconds": 4.01,
+					"zones": 48
+				},
+				{
+					"alive": 11,
+					"damage": 217.0071,
+					"kills": 1.0,
+					"projectiles": 37,
+					"seconds": 5.0,
+					"zones": 84
+				},
+				{
+					"alive": 9,
+					"damage": 285.506150000001,
+					"kills": 3.0,
+					"projectiles": 27,
+					"seconds": 6.0,
+					"zones": 108
+				},
+				{
+					"alive": 12,
+					"damage": 374.185850000002,
+					"kills": 4.0,
+					"projectiles": 6,
+					"seconds": 7.0,
+					"zones": 168
+				},
+				{
+					"alive": 10,
+					"damage": 510.760300000003,
+					"kills": 6.0,
+					"projectiles": 22,
+					"seconds": 8.0,
+					"zones": 118
+				},
+				{
+					"alive": 13,
+					"damage": 602.430050000001,
+					"kills": 7.0,
+					"projectiles": 32,
+					"seconds": 9.0,
+					"zones": 121
+				},
+				{
+					"alive": 12,
+					"damage": 689.586749999996,
+					"kills": 8.0,
+					"projectiles": 10,
+					"seconds": 10.0,
+					"zones": 104
+				},
+				{
+					"alive": 15,
+					"damage": 823.64799999999,
+					"kills": 9.0,
+					"projectiles": 16,
+					"seconds": 11.0,
+					"zones": 109
+				},
+				{
+					"alive": 13,
+					"damage": 1052.39654999997,
+					"kills": 11.0,
+					"projectiles": 24,
+					"seconds": 12.01,
+					"zones": 107
+				},
+				{
+					"alive": 15,
+					"damage": 1191.80029999995,
+					"kills": 13.0,
+					"projectiles": 29,
+					"seconds": 13.01,
+					"zones": 115
+				},
+				{
+					"alive": 12,
+					"damage": 1275.65029999992,
+					"kills": 16.0,
+					"projectiles": 18,
+					"seconds": 14.01,
+					"zones": 127
+				}
+			],
+			"totals": {
+				"casts": 50.0,
+				"damage_effective": 1371.58979999992,
+				"damage_events": 5515.0,
+				"damage_overkill": 26.6749999999996,
+				"damage_raw": 1398.26479999992,
+				"echoes_fired": 102.0,
+				"echoes_scheduled": 106.0,
+				"explosion_victims": 119.0,
+				"explosions": 91.0,
+				"garden_merges": 417.0,
+				"kills": 17.0,
+				"living_enemy_seconds": 160.858333333332,
+				"orb_0_slot_3": 36.0,
+				"orb_0_slot_5": 172.0,
+				"orb_1_slot_0": 32.0,
+				"peak_echoes": 7.0,
+				"peak_enemies": 16.0,
+				"peak_orbits": 0.0,
+				"peak_projectiles": 59.0,
+				"peak_strikes": 0.0,
+				"peak_zones": 168.0,
+				"player_damage": 36.0,
+				"player_hits": 3.0,
+				"projectile_contacts": 461.0,
+				"projectiles_contacted": 461.0,
+				"projectiles_emitted": 656.0,
+				"projectiles_finished": 630.0,
+				"projectiles_finished_without_contact": 169.0,
+				"pull_distance": 5256.55695081502,
+				"pull_enemy_seconds": 53.6916666666643,
+				"stage_casts": 240.0,
+				"trigger_impact": 88.0,
+				"triggers": 88.0,
+				"zone_pulses": 4890.0,
+				"zones_created": 502.0
+			},
+			"unique_victims": 23,
+			"wall_elapsed_ms": 3669.008,
+			"window_dps": 91.4393199999947,
+			"window_seconds": 15.0
+		}
+	],
+	"schema": 2
+}

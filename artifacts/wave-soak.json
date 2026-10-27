@@ -1,0 +1,52 @@
+[
+	{
+		"peak": 26,
+		"ranged_peak": 0,
+		"scheduler": {
+			"packs": 6,
+			"skipped": 0,
+			"spawned": 26
+		},
+		"wave": 1
+	},
+	{
+		"peak": 46,
+		"ranged_peak": 0,
+		"scheduler": {
+			"packs": 6,
+			"skipped": 12,
+			"spawned": 46
+		},
+		"wave": 2
+	},
+	{
+		"peak": 24,
+		"ranged_peak": 0,
+		"scheduler": {
+			"packs": 6,
+			"skipped": 2,
+			"spawned": 24
+		},
+		"wave": 3
+	},
+	{
+		"peak": 44,
+		"ranged_peak": 3,
+		"scheduler": {
+			"packs": 6,
+			"skipped": 3,
+			"spawned": 44
+		},
+		"wave": 4
+	},
+	{
+		"peak": 40,
+		"ranged_peak": 2,
+		"scheduler": {
+			"packs": 8,
+			"skipped": 7,
+			"spawned": 39
+		},
+		"wave": 5
+	}
+]

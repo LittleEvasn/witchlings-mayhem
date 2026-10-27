@@ -1,0 +1,25 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Independent arrivals use every edge: [6, 8, 7, 11]
+PASS: Arrivals do not overlap bodies
+PASS: Pack size follows wave data
+PASS: One pack shares a local entrance
+PASS: Pack members arrive across time, not one overlapping instant
+PASS: Subsequent packs change direction instead of a fixed entrance
+PASS: Moving pack members clear space for the rest
+PASS: Queued pack rechecks safety at arrival: (112.0, 112.0)
+PASS: Queued pack rechecks safety at arrival: (4688.0, 112.0)
+PASS: Queued pack rechecks safety at arrival: (112.0, 3488.0)
+PASS: Queued pack rechecks safety at arrival: (4688.0, 3488.0)
+PASS: Queued pack rechecks safety at arrival: (2400.0, 1800.0)
+PASS: Total enemy cap
+PASS: Capped requests are discarded, never backlogged
+PASS: Ranged enemy cap
+PASS: Charging elite cap
+PASS: Boss safely relocates if player occupies its preferred entrance
+PASS: Trial cannot consume arrivals
+PASS: Run end clears and disables scheduler
+PASS: Long frame skips both missed streams without catch-up burst
+RESULT: 20 checks, 0 failures
+

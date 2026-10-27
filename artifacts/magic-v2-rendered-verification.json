@@ -1,0 +1,27 @@
+{
+	"fixture": "48 stationary high-health enemies; invulnerable player; fixed 1/60 simulation; two upgraded orbs",
+	"frame_p95_ms": 16.712,
+	"frames": 180,
+	"gui_paid_upgrade": true,
+	"peak_paths": 3,
+	"peak_projectiles": 73,
+	"seed": 731,
+	"simulation_p95_ms": 4.943,
+	"totals": {
+		"casts": 10.0,
+		"damage_effective": 1394.46153846154,
+		"damage_events": 263.0,
+		"damage_overkill": 0.0,
+		"damage_raw": 1394.46153846154,
+		"echoes_fired": 23.0,
+		"echoes_scheduled": 28.0,
+		"orb_0_slot_3": 30.0,
+		"orb_1_slot_0": 3.0,
+		"path_patches": 3.0,
+		"projectile_contacts": 263.0,
+		"projectiles_contacted": 263.0,
+		"projectiles_emitted": 330.0,
+		"projectiles_finished": 263.0,
+		"stage_casts": 33.0
+	}
+}

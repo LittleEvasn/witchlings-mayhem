@@ -1,0 +1,19 @@
+[
+  "economy.gd",
+  "forge_ui.gd",
+  "fusion_effects.gd",
+  "game.gd",
+  "magic_visuals.gd",
+  "measurement_cost.gd",
+  "measurement_lab.gd",
+  "modifier_effects.gd",
+  "prep_board.gd",
+  "reward_reveal.gd",
+  "run_content.gd",
+  "spells.gd",
+  "spell_behaviors.gd",
+  "spell_progression.gd",
+  "spell_role_migration.gd",
+  "spell_runtime.gd",
+  "waves.gd"
+]

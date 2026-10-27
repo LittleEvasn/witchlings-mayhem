@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "art_direction_brief": "docs/SPELL-CATALOG-AND-UPGRADES-3-v1.md",
+  "status": "planning-only-no-assets-acquired",
+  "technical_frame": {
+    "engine": "Godot 4.6.2 GL Compatibility, 2D",
+    "output": "1920x1080",
+    "logical_view": "1600x900",
+    "format": "RGBA PNG strips or sheets; frame count and sheet dimensions to verify per selected source",
+    "frame_size_candidates": [128, 256, 512],
+    "filtering": "linear, non-pixel art; verify at game size",
+    "animation_rate_candidates": "12-24 fps; tune per animation",
+    "rights": "No pack purchased or imported. Per-file source and license must be recorded after selection."
+  },
+  "candidate_sources": [
+    {"creator":"CartoonCoffee","url":"https://cartooncoffee.itch.io/deluxe-spritesheets","format_verified":"HD sprite sheets advertised for Godot and other engines","license_summary":"Creator page allows commercial projects and in-project modification; standalone redistribution prohibited","preview_verified":false,"purchased":false},
+    {"creator":"G@mingAssets","url":"https://gmingassets.itch.io/cartoon-combat-vfx-free-sample","format_verified":"Publisher advertises 4 sample effects, PNG at 128/256, sprite sheets and frames","license_summary":"Publisher allows commercial use, prohibits asset redistribution and AI training; AI-assisted SVG creation disclosed","preview_verified":false,"downloaded":false}
+  ],
+  "verification_defaults": {"native_scale_reviewed":false,"in_engine_reviewed":false,"technical_checks_passed":false,"approved_by":""},
+  "assets": [
+    {"id":"bolt","role":"star projectile and star hit","path":"","status":"planned","anchor":"centre; forward right","palette":"mint/cream","collision":"projectile core; scale with rank"},
+    {"id":"bloom","role":"flower bomb projectile and petal explosion","path":"","status":"planned","anchor":"centre","palette":"peach/cream","collision":"blast radius matches petals"},
+    {"id":"boomerang","role":"rotating crescent and return trail","path":"","status":"planned","anchor":"centre; forward right","palette":"lavender/cream","collision":"blade; outward and return legs"},
+    {"id":"vortex","role":"seed, spinning loop, release","path":"","status":"planned","anchor":"centre","palette":"violet","collision":"visible ground radius"},
+    {"id":"thorn","role":"seed, armed flower trap, thorn burst","path":"","status":"planned","anchor":"centre","palette":"leaf green/cream","collision":"trigger and blast area"},
+    {"id":"frost","role":"cone breath, frozen shell, shatter","path":"","status":"planned","anchor":"cone origin left; shell centre","palette":"ice blue/white","collision":"cone angle and reach"},
+    {"id":"thunder","role":"ground warning, descending strike, residual spark","path":"","status":"planned","anchor":"ground impact point","palette":"pale gold","collision":"strike circle"},
+    {"id":"satellite","role":"moonlight orbital body and brief contact flash","path":"","status":"planned","anchor":"centre","palette":"periwinkle/cream","collision":"orbital body, not whole ring"},
+    {"id":"ember_path","role":"looping ember patch and end fade","path":"","status":"planned","anchor":"centre","palette":"peach/orange","collision":"ground patch"},
+    {"id":"shared-feedback","role":"cast flash, hit, mark buildup/burst, link activation, upgrade feedback","path":"","status":"planned","anchor":"per event centre","palette":"follows source spell; hostile warnings remain distinct","collision":"presentation only unless existing spell hit area"},
+    {"id":"storm_spear","role":"completed fusion","path":"","status":"planned-composite","components":["bolt","thunder"]},
+    {"id":"nova_garden","role":"completed fusion","path":"","status":"planned-composite","components":["vortex","bloom"]},
+    {"id":"moon_ring","role":"completed fusion","path":"","status":"planned-composite","components":["boomerang","satellite"]},
+    {"id":"frost_blossom","role":"completed fusion","path":"","status":"planned-composite","components":["thorn","frost"]},
+    {"id":"firework_trail","role":"completed fusion","path":"","status":"planned-composite","components":["ember_path","bloom"]}
+  ]
+}

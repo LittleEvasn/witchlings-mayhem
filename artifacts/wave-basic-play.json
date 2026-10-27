@@ -1,0 +1,92 @@
+[
+	{
+		"boss_won": false,
+		"clear_reward_if_survived": 20,
+		"drop_money": 24,
+		"kills": 24,
+		"note": "Fixed orbit, scripted nearest-target mouse-equivalent aim, no dash; fresh 100HP per wave. Not a continuous run or human-play difficulty rating.",
+		"peak_enemies": 5,
+		"power": 1.0,
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"remaining_hp": 100.0,
+		"seconds": 45.0,
+		"state": "combat",
+		"wave": 1
+	},
+	{
+		"boss_won": false,
+		"clear_reward_if_survived": 20,
+		"drop_money": 40,
+		"kills": 56,
+		"note": "Fixed orbit, scripted nearest-target mouse-equivalent aim, no dash; fresh 100HP per wave. Not a continuous run or human-play difficulty rating.",
+		"peak_enemies": 12,
+		"power": 1.25,
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"remaining_hp": 100.0,
+		"seconds": 45.0,
+		"state": "combat",
+		"wave": 2
+	},
+	{
+		"boss_won": false,
+		"clear_reward_if_survived": 20,
+		"drop_money": 36,
+		"kills": 24,
+		"note": "Fixed orbit, scripted nearest-target mouse-equivalent aim, no dash; fresh 100HP per wave. Not a continuous run or human-play difficulty rating.",
+		"peak_enemies": 4,
+		"power": 1.5,
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"remaining_hp": 78.0,
+		"seconds": 45.0,
+		"state": "combat",
+		"wave": 3
+	},
+	{
+		"boss_won": false,
+		"clear_reward_if_survived": 20,
+		"drop_money": 50,
+		"kills": 47,
+		"note": "Fixed orbit, scripted nearest-target mouse-equivalent aim, no dash; fresh 100HP per wave. Not a continuous run or human-play difficulty rating.",
+		"peak_enemies": 9,
+		"power": 1.75,
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"remaining_hp": 100.0,
+		"seconds": 45.0,
+		"state": "combat",
+		"wave": 4
+	},
+	{
+		"boss_won": true,
+		"clear_reward_if_survived": 0,
+		"drop_money": 16,
+		"kills": 14,
+		"note": "Fixed orbit, scripted nearest-target mouse-equivalent aim, no dash; fresh 100HP per wave. Not a continuous run or human-play difficulty rating.",
+		"peak_enemies": 7,
+		"power": 2.0,
+		"recipe": [
+			"bolt",
+			"impact",
+			"bloom"
+		],
+		"remaining_hp": 70.0,
+		"seconds": 26.58,
+		"state": "ended",
+		"wave": 5
+	}
+]

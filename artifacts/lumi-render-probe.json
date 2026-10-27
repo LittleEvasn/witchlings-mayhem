@@ -1,0 +1,8 @@
+{
+  "enemies": 48,
+  "fixture": "two upgraded orb programs, wave4; 100 rendered frames; invulnerable fixed mouse aim",
+  "frame_p95_ms": 17.944,
+  "projectiles": 16,
+  "state": "combat",
+  "zones": 0
+}

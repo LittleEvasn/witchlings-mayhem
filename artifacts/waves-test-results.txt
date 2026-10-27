@@ -1,0 +1,106 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+[godot_ai game_helper] registered mcp capture (debugger active=false, logger=true)
+PASS: Wave 1 seed 1843: safe continuous scattered pressure
+PASS: Wave 1 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Early waves remain melee only
+PASS: Wave 2 seed 1843: safe continuous scattered pressure
+PASS: Wave 2 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Early waves remain melee only
+PASS: Wave 3 seed 1843: safe continuous scattered pressure
+PASS: Wave 3 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Wave 4 seed 1843: safe continuous scattered pressure
+PASS: Wave 4 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Late wave includes ranged pressure
+PASS: Wave 5 seed 1843: safe continuous scattered pressure
+PASS: Wave 5 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Late wave includes ranged pressure
+PASS: Wave 1 seed 7119: safe continuous scattered pressure
+PASS: Wave 1 seed 7119: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Early waves remain melee only
+PASS: Wave 2 seed 7119: safe continuous scattered pressure
+PASS: Wave 2 seed 7119: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Early waves remain melee only
+PASS: Wave 3 seed 7119: safe continuous scattered pressure
+PASS: Wave 3 seed 7119: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Wave 4 seed 7119: safe continuous scattered pressure
+PASS: Wave 4 seed 7119: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Late wave includes ranged pressure
+PASS: Wave 5 seed 7119: safe continuous scattered pressure
+PASS: Wave 5 seed 7119: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Late wave includes ranged pressure
+PASS: Wave 1 seed 1843: safe continuous scattered pressure
+PASS: Wave 1 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Early waves remain melee only
+PASS: Wave 2 seed 1843: safe continuous scattered pressure
+PASS: Wave 2 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Early waves remain melee only
+PASS: Wave 3 seed 1843: safe continuous scattered pressure
+PASS: Wave 3 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Wave 4 seed 1843: safe continuous scattered pressure
+PASS: Wave 4 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Late wave includes ranged pressure
+PASS: Wave 5 seed 1843: safe continuous scattered pressure
+PASS: Wave 5 seed 1843: intermittent groups also arrive
+PASS: Wave duration stops all arrivals
+PASS: More enemies do not inflate wave money cap
+PASS: Late wave includes charging elites
+PASS: Late wave includes ranged pressure
+PASS: Same seed reproduces schedules and composition
+PASS: Different seed changes schedules and composition
+PASS: Wave 1 full-duration no-kill AI: caps and cleanup, peak 28
+PASS: Wave 2 full-duration no-kill AI: caps and cleanup, peak 46
+PASS: Wave 3 full-duration no-kill AI: caps and cleanup, peak 40
+PASS: Wave 4 full-duration no-kill AI: caps and cleanup, peak 48
+PASS: Wave 5 full-duration no-kill AI: caps and cleanup, peak 40
+PASS: Ranged attack keeps its windup
+PASS: Ranged aim locks before firing; moving sideways can evade
+PASS: Elite keeps pre-charge warning
+PASS: Elite charges after warning
+PASS: 48G drop budget + existing 20G clear reward
+PASS: Shop forecast shares actual wave data
+PASS: Shop trial opens
+PASS: Trial does not progress combat or shopping time
+PASS: Ready begins a clean randomized next wave
+PASS: Wave end clears queued group and enemy shots
+PASS: Fifth wave still starts with boss
+PASS: Boss death still completes run and cancels scheduler
+PASS: Restart clears old actors and resumes first wave
+RESULT: 101 checks, 0 failures
+

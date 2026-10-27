@@ -1,0 +1,46 @@
+[
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\scripts\\game.gd",
+    "Hash": "2260BD66F70D9BCAA62FEB9438136FE9EDD4A564FDFDCE7CFB11AD37975A944C"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\scripts\\interface.gd",
+    "Hash": "BDFBCD688C33094536979BCCA24805A9B8AA7347FE8E7C3F69D09A5D8068178B"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\scripts\\prep_board.gd",
+    "Hash": "6E472CA88C981F236A2DCD708A3427B73A7F3852034F580233A3E471B8DB4D51"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\scripts\\spells.gd",
+    "Hash": "36064C7DE81236F1CE5329ADCD65ED382D1FFBD4107829AAC9BC2EB9F4481CD9"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\scripts\\spell_behaviors.gd",
+    "Hash": "4D690D607044A8D421001CD89B900313F6DFE1676BDB0411D9DBE2CB578B63D7"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\scripts\\waves.gd",
+    "Hash": "F8D8CB436BEE40D28740E54B76E257584C7FD66D351C1F53CD747FD8ADABCBE3"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\scripts\\relic_ui.gd",
+    "Hash": "4BC26E184E411C467D88CCC9EA4407D961B733470D4B1EF54BB0151685890820"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\tools\\run_tests.py",
+    "Hash": "C4587CCD55C6E6D4CB9B4375BA21D09D7A0B8345A3A3927F4D2525B89915D791"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\AGENTS.md",
+    "Hash": "65EE7F25485A2179FF212CF79C8FF2F4A846535BDC9C7DB3A012CFBF9A6EE112"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\docs\\PROJECT-HANDOFF.md",
+    "Hash": "6672BD46688B4FCEF57935B6715EAF0840BF6C3C8589006B4FC7EDD9956D39EF"
+  },
+  {
+    "Path": "C:\\Users\\user\\Desktop\\Witchlings' Mayhem\\witchlings' mayhem\\docs\\AGENT-OPERATIONS.md",
+    "Hash": "2AD97E7F74A96D2C58F427B3FD5ACBB0311781884822F2ECFC42BECCF2DC6D5D"
+  }
+]
