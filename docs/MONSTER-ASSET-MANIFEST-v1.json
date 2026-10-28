@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "purpose": "Design manifest only. No new game assets produced/imported.",
+  "art_direction_brief": "docs/MONSTER-SPRITE-PLAN-v1.md",
+  "assets": [
+    {
+      "id": "leaf_jelly",
+      "display_name": "잎 젤리",
+      "role": "chaser",
+      "path": "assets/art/characters.png",
+      "planned_directory": "assets/art/enemies/leaf_jelly/",
+      "status": "existing_prototype",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "existing_generated_atlas",
+        "record": "assets/art/GENERATION.md",
+        "license": "See existing provenance; new source terms must be recorded"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "ink_bat",
+      "display_name": "먹물 박쥐",
+      "role": "flanker/ranged",
+      "path": "assets/art/characters.png",
+      "planned_directory": "assets/art/enemies/ink_bat/",
+      "status": "existing_prototype",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "existing_generated_atlas",
+        "record": "assets/art/GENERATION.md",
+        "license": "See existing provenance; new source terms must be recorded"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "armored_beetle",
+      "display_name": "갑주 딱정벌레",
+      "role": "charger",
+      "path": "assets/art/characters.png",
+      "planned_directory": "assets/art/enemies/armored_beetle/",
+      "status": "existing_prototype",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "existing_generated_atlas",
+        "record": "assets/art/GENERATION.md",
+        "license": "See existing provenance; new source terms must be recorded"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "answer_sheet",
+      "display_name": "달리는 답안지",
+      "role": "fast_chaser",
+      "path": null,
+      "planned_directory": "assets/art/enemies/answer_sheet/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "inkpot",
+      "display_name": "잉크단지",
+      "role": "slow_chaser/hazard",
+      "path": null,
+      "planned_directory": "assets/art/enemies/inkpot/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "clockwork_rabbit",
+      "display_name": "태엽 토끼",
+      "role": "hopper",
+      "path": null,
+      "planned_directory": "assets/art/enemies/clockwork_rabbit/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "walking_cauldron",
+      "display_name": "걸어다니는 가마솥",
+      "role": "pressure_elite",
+      "path": null,
+      "planned_directory": "assets/art/enemies/walking_cauldron/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "spore_bell",
+      "display_name": "포자 방울버섯",
+      "role": "ranged",
+      "path": null,
+      "planned_directory": "assets/art/enemies/spore_bell/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "shield_book",
+      "display_name": "방패 마도서",
+      "role": "front_guard",
+      "path": null,
+      "planned_directory": "assets/art/enemies/shield_book/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "running_candle",
+      "display_name": "뛰는 촛대",
+      "role": "suicide_charger",
+      "path": null,
+      "planned_directory": "assets/art/enemies/running_candle/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "stone_thief",
+      "display_name": "마석 도둑 주머니",
+      "role": "reward_flee",
+      "path": null,
+      "planned_directory": "assets/art/enemies/stone_thief/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    },
+    {
+      "id": "supply_cart",
+      "display_name": "보급 손수레",
+      "role": "reward_patrol",
+      "path": null,
+      "planned_directory": "assets/art/enemies/supply_cart/",
+      "status": "planned_not_produced",
+      "technical": {
+        "new_source_canvas": [
+          512,
+          512
+        ],
+        "alpha": true,
+        "anchor": [
+          256,
+          420
+        ],
+        "animation_plan": {
+          "idle": 2,
+          "run": 4,
+          "hit": 1,
+          "death": 3
+        },
+        "filtering": "linear_for_non_pixel_SD",
+        "collision": "body_only_manual; do not use full opaque bounds"
+      },
+      "visual_locks": [
+        "current SD characters atlas",
+        "rounded silhouette",
+        "restrained dark outline",
+        "simple three-tone shading",
+        "front three-quarter",
+        "shared foot anchor"
+      ],
+      "source": {
+        "kind": "not_selected",
+        "record": null,
+        "license": "undetermined; no asset acquired"
+      },
+      "verification": {
+        "native_scale_reviewed": false,
+        "in_engine_reviewed": false,
+        "technical_checks_passed": false,
+        "approved_by": null
+      }
+    }
+  ]
+}
