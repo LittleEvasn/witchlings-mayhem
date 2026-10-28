@@ -1,5 +1,6 @@
 extends RefCounted
 ## Magic v2: rank changes geometry/response; duplicate modifiers add their contributions.
+const P=preload("res://scripts/spell_progression.gd")
 const BALANCE_VERSION := "magic-user-v2"
 const VALUES := {
 	"fan":[3,4,5,6],"seek":[0.35,0.55,0.8,1.05],"pierce":[2,3,4,5],
@@ -7,10 +8,15 @@ const VALUES := {
 }
 static func resolve(stage: Dictionary) -> Dictionary:
 	var result := {}
+	var expanded: Array=[]
+	for entry in stage.get("modifiers",[]):
+		if P.is_support(entry.id):
+			for effect in P.FUSIONS[entry.id].get("effects",[]): expanded.append({"id":effect[0],"rank":effect[1]})
+		else: expanded.append(entry)
 	for id in VALUES:
 		var count := int(stage.get(id,0))
 		var ranks: Array = []
-		for entry in stage.get("modifiers",[]):
+		for entry in expanded:
 			if entry.id==id and ranks.size()<count: ranks.append(clampi(int(entry.rank),0,3))
 		while ranks.size()<count: ranks.append(0)
 		var e := {"count":count,"value":1.0,"targets":0,"extra":0,"repeats":[],"range":1.0,"size":1.0,"knockback":0.0,"distance":160.0,"cooldown":1.0}
@@ -47,7 +53,9 @@ static func resolve(stage: Dictionary) -> Dictionary:
 				e.distance = 0.0
 				for r in ranks: e.distance += [160.0,180.0,200.0,220.0][r]/count
 		if id=="giant": e.cooldown = pow(1.2,count)
-		if id=="charge": e.cooldown = pow(2.5,count)
+		if id=="charge":
+			e.cooldown = pow(2.5,count)
+			e.knockback += 40*int(stage.get("compressed_star",0))
 		result[id] = e
 	return result
 static func profile(stage: Dictionary, id: String) -> Dictionary:

@@ -11,8 +11,19 @@ const FUSIONS := {
 	"frost_gate":{"name":"별서리 관문","parents":["bolt","frost"],"base":"bolt","interval":0.9,"color":Color("a4efff"),"desc":"별빛탄의 첫 명중 지점에서 냉기 부채꼴 방출"},
 	"thunder_trap":{"name":"천둥꽃 덫","parents":["thunder","thorn"],"base":"thorn","interval":1.0,"color":Color("ffe7a3"),"desc":"적을 감지한 덫 자리에 고정된 낙뢰 세 번"},
 	"moon_vortex":{"name":"달무리 소용돌이","parents":["vortex","satellite"],"base":"vortex","interval":1.1,"color":Color("d3c4ff"),"desc":"적을 당기는 소용돌이 가장자리에서 위성 공전"},
-	"petal_return":{"name":"꽃잎 귀환","parents":["boomerang","bloom"],"base":"boomerang","interval":0.9,"color":Color("ffb6d7"),"desc":"도탄 명중점에 꽃봉오리 · 귀환을 시작하면 차례로 폭발"}
+	"petal_return":{"name":"꽃잎 귀환","parents":["boomerang","bloom"],"base":"boomerang","interval":0.9,"color":Color("ffb6d7"),"desc":"도탄 명중점에 꽃봉오리 · 귀환을 시작하면 차례로 폭발"},
+	"wave_split":{"name":"파상 분열","kind":"modifier","parents":["fan","echo"],"base":"fan","effects":[["fan",0]],"color":Color("a5d9ff"),"desc":"갈래 공격을 0.24초 간격으로 세 차례 펼침 · 세 파동에 위력 분배"},
+	"swarm_seek":{"name":"군집 추적","kind":"modifier","parents":["fan","seek"],"base":"fan","effects":[["fan",0],["seek",1]],"color":Color("a8efe2"),"desc":"갈라진 공격이 서로 다른 가까운 적을 나눠 조준 · 표적 부족 시 공유"},
+	"chase_pierce":{"name":"추격 관통","kind":"modifier","parents":["pierce","seek"],"base":"pierce","effects":[["pierce",2],["seek",1]],"color":Color("f7dfa1"),"desc":"추가 관통 4명 · 명중 뒤 다음 적으로 제한 회전 · 고정 공격은 다음 배치만 추격"},
+	"leap_pierce":{"name":"도약 관통","kind":"modifier","parents":["pierce","bounce"],"base":"pierce","effects":[["pierce",2]],"color":Color("ffd99c"),"desc":"추가 관통 4명 · 정상 종료 위치에서 주변 최대 3명에게 위력 50% 파급 · 재연결 없음"},
+	"compressed_star":{"name":"압축 거성","kind":"modifier","parents":["giant","charge"],"base":"charge","effects":[["giant",0],["charge",3]],"color":Color("ffb1c6"),"desc":"크기 ×2.16 · 피해 ×3 · 첫 밀침 100 · 순환 대기 ×3"},
+	"growing_echo":{"name":"커지는 메아리","kind":"modifier","parents":["giant","echo"],"base":"echo","effects":[],"color":Color("c6a3ff"),"desc":"0.25초 뒤 크기 ×1.3, 0.5초 뒤 ×1.7로 반복 · 각 위력 45% · 재복제 없음"},
+	"echo_chain":{"name":"잔향 연쇄","kind":"modifier","parents":["bounce","echo"],"base":"bounce","effects":[["bounce",3]],"color":Color("ffd99c"),"desc":"최대 5명 연쇄 · 0.35초 뒤 타격했던 자리 재타격 · 해당 연쇄 위력 50%, 재탐색 없음"},
+	"dual_event":{"name":"이중 사건","kind":"connector","parents":["impact","expire"],"base":"impact","color":Color("ff9cae"),"desc":"첫 명중과 정상 소멸 때 뒤 주문을 각 한 번 · 직접 후속 위력 각각 50%"},
+	"delayed_ignition":{"name":"지연 점화","kind":"connector","parents":["impact","echo"],"base":"impact","color":Color("ffc79f"),"desc":"첫 명중한 자리에 0.6초 뒤 뒤 주문을 한 번 · 직접 후속 위력 100%"}
 }
+static func fusion_kind(id: String) -> String: return str(FUSIONS.get(id,{}).get("kind","attack"))
+static func is_support(id: String) -> bool: return is_fused(id) and fusion_kind(id)!="attack"
 static func base_id(token: String) -> String: return token.get_slice("@",0)
 static func rank(token: String) -> int:
 	return int(token.get_slice("@",1)) if "@" in token else 0
@@ -28,9 +39,9 @@ static func fusion_for(a: String, b: String) -> String:
 static func paid_cost(base_price: int, level: int) -> int:
 	return ceili(base_price*(0.5+0.25*level))
 static func damage_multiplier(token: String) -> float:
-	return 1.8 if is_fused(token) else 1.0
+	return 1.8 if is_fused(token) and not is_support(token) else 1.0
 static func scale_multiplier(token: String) -> float:
-	return 1.16 if is_fused(token) else 1.0
+	return 1.16 if is_fused(token) and not is_support(token) else 1.0
 
 # Symmetric combination: base adds one rank; two ranked copies sum their ranks.
 static func merge_rank(a: String, b: String) -> int:
@@ -87,4 +98,6 @@ static func attack_text(token: String) -> String:
 	return "완성형 합성 · 추가 강화 없음"
 
 static func connector_power(token: String) -> float:
+	if token=="delayed_ignition": return 1.0
+	if token=="dual_event": return 0.5
 	return [0.5,0.65,0.8,1.0][clampi(rank(token),0,MAX_RANK)]

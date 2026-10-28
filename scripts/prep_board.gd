@@ -4,7 +4,11 @@ const Slot = preload("res://scripts/prep_slot.gd")
 const Progression = preload("res://scripts/spell_progression.gd")
 const Crafting = preload("res://scripts/crafting_board.gd")
 const GLYPHS := {"bolt":"✦","bloom":"✿","boomerang":"☽","vortex":"◎","thorn":"♧","frost":"❄","thunder":"ϟ","satellite":"◉","ember_path":"♨","fan":"⋔","seek":"⌖","pierce":"↠","bounce":"↗","giant":"↟","echo":"≋","charge":"◆","impact":"→","expire":"◷","storm_spear":"ϟ↠","nova_garden":"✿◎","moon_ring":"☽◉","frost_blossom":"❄✿","firework_trail":"♨✿","frost_gate":"✦❄","thunder_trap":"ϟ♧","moon_vortex":"◎◉","petal_return":"☽✿"}
-static func glyph(id: String) -> String: return GLYPHS.get(Progression.base_id(id),"✧")
+static func glyph(id: String) -> String:
+	if Progression.is_support(id):
+		var parents: Array=Progression.FUSIONS[id].parents
+		return GLYPHS.get(parents[0],"✧")+GLYPHS.get(parents[1],"✧")
+	return GLYPHS.get(Progression.base_id(id),"✧")
 static func short_name(id: String) -> String:
 	var data := Spells.definition(id)
 	return data.name.replace(" +%d" % Progression.rank(id),"").replace(" ✧","")
@@ -111,7 +115,7 @@ static func bag(ui: CanvasLayer, rect: Rect2, columns := 8) -> void:
 	scroll.size=rect.size-Vector2(24,24)
 	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
 	bg.add_child(scroll)
-	if ui.game.state=="shop":
+	if ui.modal.get_meta("craft_drawer",false):
 		scroll.name="CraftBagScroll"
 		scroll.set_deferred("scroll_vertical",ui.bag_scroll)
 		scroll.get_v_scroll_bar().value_changed.connect(func(value):ui.bag_scroll=int(value))
@@ -121,11 +125,12 @@ static func bag(ui: CanvasLayer, rect: Rect2, columns := 8) -> void:
 	grid.add_theme_constant_override("v_separation",8)
 	scroll.add_child(grid)
 	var w:=floorf((rect.size.x-42-(columns-1)*8)/columns)
+	var h:=70.0 if ui.modal.get_meta("craft_drawer",false) else 84.0
 	for id in ui.game.economy.inventory:
 		if ui.game.economy.inventory[id]<=0: continue
-		if ui.game.state=="shop" and ui.bag_filter!="all" and Spells.definition(id).kind!=ui.bag_filter: continue
-		var c:=cell(ui,grid,id,Rect2(0,0,w,84),-1,-1,true)
-		c.custom_minimum_size=Vector2(w,84)
+		if ui.modal.get_meta("craft_drawer",false) and ui.bag_filter!="all" and Spells.definition(id).kind!=ui.bag_filter: continue
+		var c:=cell(ui,grid,id,Rect2(0,0,w,h),-1,-1,true)
+		c.custom_minimum_size=Vector2(w,h)
 
 static func build(ui: CanvasLayer, shop: bool) -> void:
 	if shop:
@@ -238,7 +243,7 @@ static func detail(ui: CanvasLayer, crafting := true) -> void:
 	explanation.max_lines_visible=4
 	explanation.tooltip_text=part.desc
 	if part.kind=="modifier":
-		explanation.text=Spells.MODIFIER_NOTES[Progression.base_id(id)]+"\n"+Spells.modifier_token_text(id)
+		explanation.text=Spells.MODIFIER_NOTES.get(Progression.base_id(id),"완성 보조 · 오른쪽 공격에 적용")+"\n"+Spells.modifier_token_text(id)
 		explanation.max_lines_visible=4
 	ui.button(ui.modal,"오브 %d에 끼우기" % (g.active_orb+1),Rect2(1006,505,354,38),func():g.board_quick_equip(id),true,17).disabled=g.remaining_part(id)<=0
 	if crafting and Spells.upgradeable(id):
@@ -355,22 +360,4 @@ static func research(ui: CanvasLayer) -> void:
 		button.tooltip_text=Spells.definition(id).desc
 
 static func trial(ui: CanvasLayer) -> void:
-	ui.close_modal()
-	ui.hud.visible=false
-	ui.modal=Control.new()
-	ui.modal.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	ui.root.add_child(ui.modal)
-	ui.panel(ui.modal,Rect2(36,20,1368,78),Color("131c2a"))
-	ui.label(ui.modal,"시험 발사",Vector2(60,31),23,ui.MINT)
-	ui.trial_stats_label=ui.label(ui.modal,"",Vector2(250,43),15,ui.TEXT,890)
-	ui.button(ui.modal,"준비대로 · Esc",Rect2(1180,36,198,42),ui.game.end_trial,false,17)
-	ui.panel(ui.modal,Rect2(36,535,1368,345),Color("131c2a"))
-	row(ui,0,Vector2(60,544),true)
-	row(ui,1,Vector2(60,664),true)
-	ui.label(ui.modal,"가방",Vector2(906,548),18,ui.TEXT)
-	bag(ui,Rect2(896,580,484,210),5)
-	var undo: Button=ui.button(ui.modal,"↶ 되돌리기",Rect2(60,792,160,38),ui.game.undo_draft,false,16)
-	undo.disabled=ui.game.edit_history.is_empty()
-	ui.label(ui.modal,"가까운 표적 자동 조준 · 슬롯 변경은 즉시 반영",Vector2(250,802),14,ui.MUTED)
-	ui.label(ui.modal,"구체를 끌어 옮기세요 · 상세 효과는 마우스를 올려 확인",Vector2(904,808),12,ui.MUTED,450)
-	ui.update_trial_stats()
+	Crafting.build(ui,true)

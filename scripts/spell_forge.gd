@@ -39,7 +39,8 @@ static func reconcile(bank: Array, target: String, quote: Dictionary, preferred:
 		remove.reverse()
 		for index in remove: result[orb].remove_at(index)
 		if not remove.is_empty():
-			while not result[orb].is_empty() and Spells.definition(result[orb].back()).kind!="attack": result[orb].pop_back()
+			# Only orphaned event links are removed. Unfinished support drafts remain editable.
+			while not result[orb].is_empty() and Spells.definition(result[orb].back()).kind=="connector": result[orb].pop_back()
 		if orb==chosen_orb and chosen_slot>=0:
 			var shifted: int = chosen_slot-remove.filter(func(index):return index<chosen_slot).size()
 			if shifted>=0 and shifted<result[orb].size() and result[orb][shifted]==quote.output:

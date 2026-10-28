@@ -1,5 +1,6 @@
 extends RefCounted
 ## State effects and non-projectile attacks share the production runtime and cast lineage.
+const MAX_STRIKES := 128
 const DIRECT_DAMAGE := {"frost":10.0,"thunder":36.0,"satellite":18.0,"ember_path":5.5}
 var runtime_ref: WeakRef
 var runtime: RefCounted:
@@ -161,6 +162,7 @@ func chain(c: Dictionary, at: Vector2, victim: Node2D, amount: float, cold: floa
   hit(target,amount*share,Vector2.ZERO,arc,cold*share)
   flash({"kind":"arc","pos":origin,"to":target.position,"life":0.18})
   runtime.track("chain_hits",c.meter_source)
+  runtime.support.chain_echo(c,target.position,amount*share)
   if not game.magic_active(): return
   origin = target.position
 func area(c: Dictionary, at: Vector2, damage: float, radius: float) -> int:
@@ -170,6 +172,9 @@ func area(c: Dictionary, at: Vector2, damage: float, radius: float) -> int:
  var count := 0
  runtime.track("explosions",c.meter_source)
  game.ring(at,radius,game.Spells.PARTS[c.attack].color,0.3)
+ # One visual per area event, never one sprite per victim. Does not affect damage.
+ if c.attack in ["bloom","thunder"]:
+  flash({"kind":"vfx","effect":"explosion" if c.attack=="bloom" else "shockwave","pos":at,"diameter":radius*2.4,"life":0.4,"total":0.4})
  for enemy in victims:
   hit(enemy,damage,at.direction_to(enemy.position),c)
   count += 1
@@ -188,16 +193,19 @@ func special(c: Dictionary) -> void:
    var victims: Array = game.nearby(c.pos,length+45)
    victims.sort_custom(func(a,b):return c.pos.distance_squared_to(a.position)<c.pos.distance_squared_to(b.position))
    var contacts: Array = []
+   var cone_dirs: Array=[]
+   for i in game.Spells.branches(stage):
+    var angle: float=(i-(game.Spells.branches(stage)-1)*.5)*.48
+    cone_dirs.append(runtime.support.branch_direction(stage,c.pos,c.dir.rotated(angle),i))
    for enemy in victims:
     if enemy.dead or c.pos.distance_to(enemy.position)>length+enemy.radius: continue
     var offset: Vector2 = enemy.position-c.pos
     var inside := false
-    for i in game.Spells.branches(stage):
-     var angle: float = (i-(game.Spells.branches(stage)-1)*0.5)*0.48
-     if absf(c.dir.rotated(angle).angle_to(offset))<=half_angle: inside = true
+    for direction in cone_dirs:
+     if absf(direction.angle_to(offset))<=half_angle: inside = true
     if not inside: continue
     contacts.append(enemy)
-    if contacts.size()>=(int(game.Spells.attack_data(stage).targets)+int(game.Spells.Effects.profile(stage,"pierce").targets)): break
+    if contacts.size()>=(int(game.Spells.attack_data(stage).targets)+(0 if stage.get("chase_pierce",0)>0 else int(game.Spells.Effects.profile(stage,"pierce").targets))): break
    c["contact_exclusions"] = {}
    for enemy in contacts: c.contact_exclusions[enemy.get_instance_id()] = true
    for index in contacts.size():
@@ -206,10 +214,17 @@ func special(c: Dictionary) -> void:
     hit(enemy,amount,c.dir,c,c.factor)
     if not game.magic_active(): return
     runtime.trigger(c,enemy.position)
-   flash({"kind":"cone","pos":c.pos,"dir":c.dir,"radius":length,"fan":stage.fan,"branches":game.Spells.branches(stage),"half_angle":half_angle,"life":0.22})
+    if not game.magic_active(): return
+   flash({"kind":"cone","pos":c.pos,"dir":c.dir,"radius":length,"fan":stage.fan,"branches":game.Spells.branches(stage),"half_angle":half_angle,"directions":cone_dirs,"life":0.22})
+   if stage.get("chase_pierce",0)>0 and not contacts.is_empty():
+    c["chain_exclusions"]=c.contact_exclusions
+    extra_links(c,contacts.back().position,contacts.back())
    runtime.trigger(c,c.pos+c.dir*length,"expire")
+   if not game.magic_active(): return
+   runtime.support.terminal(c,c.pos+c.dir*length)
+   if not game.magic_active(): return
   "thunder":
-   if strikes.size()>=32:
+   if strikes.size()>=MAX_STRIKES:
     runtime.track("strikes_blocked",c.meter_source)
     return
    # Root lightning rains around the player; connectors/fusion keep their event location.
@@ -221,7 +236,13 @@ func special(c: Dictionary) -> void:
    var points: Array = []
    for i in game.Spells.branches(stage):
     var point: Vector2 = center+c.dir.orthogonal()*((i-(game.Spells.branches(stage)-1)*0.5)*70)
-    points.append({"pos":point,"target":game.nearest_enemy(point,160*game.Spells.Effects.profile(stage,"seek").range) if stage.seek else null})
+    var target: Node2D=game.nearest_enemy(point,160*game.Spells.Effects.profile(stage,"seek").range) if stage.seek else null
+    if stage.get("swarm_seek",0)>0 or stage.get("chase_pierce",0)>0:
+     var choices: Array=runtime.support.targets(center,360)
+     if not choices.is_empty():
+      target=choices[i%choices.size()]
+      point=center.move_toward(target.position,180)
+    points.append({"pos":point,"target":target})
    c["points"] = points
    c["center"] = center
    c["life"] = 0.45
@@ -272,14 +293,20 @@ func update_strikes(delta: float) -> void:
    var contacts := area(c,point.pos,36*damage_scale(c),c.strike_radius)
    if contacts>0:
     runtime.trigger(c,point.pos)
+    if not game.magic_active(): return
     extra_links(c,point.pos,null,true,false,c.strike_radius)
    if not game.magic_active(): return
    for enemy in game.nearby(point.pos,c.strike_radius+45):
     if enemy.position.distance_to(point.pos)<=c.strike_radius+enemy.radius:
      hit_ids[enemy.get_instance_id()] = true
      runtime.trigger(c,point.pos)
+     if not game.magic_active(): return
    flash({"kind":"lightning","pos":point.pos,"life":0.2})
-  if c.pulses_left==0: runtime.trigger(c,c.center,"expire")
+  if c.pulses_left==0:
+   runtime.trigger(c,c.center,"expire")
+   if not game.magic_active(): return
+   runtime.support.terminal(c,c.center)
+   if not game.magic_active(): return
 func update_orbits(delta: float) -> void:
  for i in range(orbits.size()-1,-1,-1):
   var c: Dictionary = orbits[i]
@@ -289,6 +316,9 @@ func update_orbits(delta: float) -> void:
   if c.life<=0:
    orbits.remove_at(i)
    runtime.trigger(c,c.bodies.back() if not c.bodies.is_empty() else c.pos,"expire")
+   if not game.magic_active(): return
+   runtime.support.terminal(c,c.pos)
+   if not game.magic_active(): return
    continue
   if c.stage.get("_follow_player",false) or not c.stage.get("_linked",false): c.pos = game.player.position
   c.bodies.clear()
@@ -300,6 +330,9 @@ func update_orbits(delta: float) -> void:
   for n in int(c.body_count):
    var angle: float = c.age*TAU+n*TAU/c.body_count+c.orbit_offset
    var point: Vector2 = c.pos+Vector2.RIGHT.rotated(angle)*c.orbit_radius
+   if c.stage.get("swarm_seek",0)>0:
+    var choices: Array=runtime.support.targets(c.pos,220)
+    if not choices.is_empty(): point=point.move_toward(choices[n%choices.size()].position,24)
    c.bodies.append(point)
   c["contact_exclusions"] = {}
   for point in c.bodies:
@@ -316,6 +349,7 @@ func update_orbits(delta: float) -> void:
     extra_links(c,enemy.position,enemy)
     runtime.track("orbit_contacts",c.meter_source)
     runtime.trigger(c,enemy.position)
+    if not game.magic_active(): return
   for id in c.hits.keys():
    if clock-c.hits[id]>1: c.hits.erase(id)
 func path_contains(zone: Dictionary, point: Vector2, extra: float = 0.0) -> bool:
@@ -369,7 +403,11 @@ func update_trails(delta: float) -> void:
   if c.emit_left<=0:
    c.emitting = false
    trail_emitters.remove_at(index)
-   if c.remaining==0 and not c.cancelled: runtime.trigger(c,c.last_pos,"expire")
+   if c.remaining==0 and not c.cancelled:
+    runtime.trigger(c,c.last_pos,"expire")
+    if not game.magic_active(): return
+    runtime.support.terminal(c,c.last_pos)
+    if not game.magic_active(): return
 
 func stamp_path(c: Dictionary, at: Vector2, tangent: Vector2) -> void:
  var tracks: int = game.Spells.branches(c.stage)
@@ -379,7 +417,7 @@ func stamp_path(c: Dictionary, at: Vector2, tangent: Vector2) -> void:
    runtime.track("paths_blocked",c.meter_source)
    c.cancelled = true
    continue
-  var point: Vector2 = at+tangent.orthogonal()*(n-(tracks-1)*0.5)*data.radius*c.scale*2.2
+  var point: Vector2 = runtime.support.stamp_point(c,at)+tangent.orthogonal()*(n-(tracks-1)*0.5)*data.radius*c.scale*2.2
   var zone := c.duplicate()
   zone.merge({"kind":"ember_path","pos":point,"path_points":[point],"span":0.0,"radius":data.radius*c.scale,"damage":DIRECT_DAMAGE.ember_path*damage_scale(c),"life":data.life,"age":0.0,"pulse":0.3,"group":c},true)
   c.remaining += 1
@@ -390,7 +428,11 @@ func end_path(zone: Dictionary, normal: bool) -> void:
  var group: Dictionary = zone.group
  group.remaining -= 1
  if not normal: group.cancelled = true
- if group.remaining==0 and not group.get("emitting",false) and not group.cancelled: runtime.trigger(group,group.last_pos,"expire")
+ if group.remaining==0 and not group.get("emitting",false) and not group.cancelled:
+  runtime.trigger(group,group.last_pos,"expire")
+  if not game.magic_active(): return
+  runtime.support.terminal(group,group.last_pos)
+  if not game.magic_active(): return
 func register_garden(zone: Dictionary) -> void:
  var key := str([zone.generation,zone.owner_orb,zone.stage.get("slot",-1),zone.stage.get("source_id",zone.attack),zone.stage.get("modifiers",[])])
  zone["garden_key"] = key
@@ -443,7 +485,7 @@ func extra_links(c: Dictionary, at: Vector2, victim: Node2D, pierce := true, _bo
  for mode in ["pierce"]:
   if not c.stage.get(mode,false) or (mode=="pierce" and not pierce) or c.get("linked_"+mode,false): continue
   c["linked_"+mode] = true
-  var seen := {}
+  var seen: Dictionary=c.get("chain_exclusions",{}).duplicate()
   if victim!=null: seen[victim.get_instance_id()]=true
   var origin := at
   for n in int(game.Spells.Effects.profile(c.stage,mode).targets):
@@ -454,7 +496,7 @@ func extra_links(c: Dictionary, at: Vector2, victim: Node2D, pierce := true, _bo
     if enemy.dead or seen.has(enemy.get_instance_id()): continue
     var offset: Vector2 = enemy.position-origin
     if n==0 and mode=="pierce" and offset.length()<=skip_radius+enemy.radius: continue
-    if mode=="pierce" and (offset.dot(c.dir)<12 or absf(offset.cross(c.dir))>35): continue
+    if mode=="pierce" and int(c.stage.get("chase_pierce",0))==0 and (offset.dot(c.dir)<12 or absf(offset.cross(c.dir))>35): continue
     target = enemy
     break
    if target==null: break

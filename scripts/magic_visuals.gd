@@ -1,8 +1,17 @@
 extends Node2D
-## Cheap, bounded vector VFX. Combat hit shapes match the visible rings/bolts.
+## Licensed sprite accents; rings retain the actual combat footprints.
+const CartoonVFX = preload("res://scripts/cartoon_vfx.gd")
+var vfx := CartoonVFX.new()
+var ring_unit: PackedVector2Array=[]
 var game: Node2D
 
+func _ready() -> void:
+	for n in 33: ring_unit.append(Vector2.RIGHT.rotated(n*TAU/32))
+	# Pay the six selected texture loads at scene entry, never on the first hit.
+	for key in ["bullet","explosion","moon","fire","star","shockwave"]: vfx.texture(key)
+
 func _draw() -> void:
+	vfx.draws = 0
 	if game.encounters!=null: game.encounters.draw(self)
 	if game.boss_encounter!=null: game.boss_encounter.tells(self)
 	_draw_specials()
@@ -31,6 +40,7 @@ func _draw() -> void:
 			for n in int(zone.tier): draw_arc(pos,9+n*6,0,TAU,24,Color(c,0.8),2,true)
 		if zone.kind=="ember_path":
 			draw_circle(pos,radius,Color(c,0.18*alpha))
+			vfx.draw(self,"fire",pos,radius*3.0,zone.age,Color(1,1,1,alpha),0,0,true)
 			continue
 		if zone.kind == "vortex":
 			for arm in 3:
@@ -50,9 +60,11 @@ func _draw() -> void:
 		if p.attack == "boomerang":
 			for bud in p.get("buds",[]): draw_circle(bud,6,Color("ffb6d7"))
 			var angle: float = p.age*11
-			draw_arc(pos,p.radius,angle,angle+PI*1.45,20,c,p.radius*0.5,true)
+			if not vfx.draw(self,"moon",pos,p.radius*4.0,.12+fmod(p.age,.20),Color.WHITE,0,angle):
+				draw_arc(pos,p.radius,angle,angle+PI*1.45,20,c,p.radius*0.5,true)
 			draw_line(pos-p.dir*20,pos,Color(c,0.3),3,true)
 			continue
+		if p.attack=="bolt" and vfx.draw(self,"bullet",pos-p.dir*p.radius*2.0,p.radius*8.0,p.age,Color.WHITE,0,p.dir.angle()): continue
 		draw_line(pos-p.dir*18,pos,c*Color(1,1,1,0.3),p.radius*2.6,true)
 		draw_circle(pos,p.radius*2,Color(c,0.12))
 		draw_circle(pos,p.radius,c)
@@ -65,15 +77,26 @@ func _draw() -> void:
 		var pos: Vector2 = gem.pos
 		var r := 5.0
 		draw_colored_polygon(PackedVector2Array([pos+Vector2(0,-r),pos+Vector2(r,0),pos+Vector2(0,r),pos+Vector2(-r,0)]),Color("bae9ff"))
+	var outlines:=PackedVector2Array()
+	var colors:=PackedColorArray()
 	for fx in game.effects:
-		var f: float = fx.life / fx.total
-		var col: Color = fx.color
-		col.a = f * 0.8
-		if fx.kind == "ring":
-			draw_circle(fx.pos,fx.radius*(1-f*0.2),Color(col, f*0.12))
-			draw_arc(fx.pos,fx.radius*(1-f*0.2),0,TAU,32,col,2.5,true)
+		var f: float=fx.life/fx.total
+		var col: Color=fx.color
+		col.a=f*.8
+		if fx.kind=="ring":
+			var radius: float=fx.radius*(1-f*.2)
+			draw_circle(fx.pos,radius,Color(col,f*.12))
+			append_ring(outlines,fx.pos,radius)
+			for n in 32: colors.append(col)
 		else:
-			draw_line(fx.pos,fx.pos-fx.vel*0.035,col,2,true)
+			outlines.append(fx.pos);outlines.append(fx.pos-fx.vel*.035)
+			colors.append(col)
+	if not outlines.is_empty(): draw_multiline_colors(outlines,colors,2.5,false)
+
+func append_ring(points: PackedVector2Array, at: Vector2, radius: float) -> void:
+	for n in 32:
+		points.append(at+ring_unit[n]*radius)
+		points.append(at+ring_unit[n+1]*radius)
 
 func _draw_specials() -> void:
 	var b: RefCounted = game.magic.behavior
@@ -92,27 +115,39 @@ func _draw_specials() -> void:
 			var r: float = s.enemy.radius+7
 			draw_polyline(PackedVector2Array([pos+Vector2(0,-r),pos+Vector2(r,0),pos+Vector2(0,r),pos-Vector2(r,0),pos-Vector2(0,r)]),Color("b8eaff"),2,true)
 		elif s.cold>=1: draw_arc(pos,s.enemy.radius+4,0,PI,16,Color("b8eaff"),2,true)
+	var tell_lines:=PackedVector2Array()
 	for strike in b.strikes:
 		for point in strike.points:
-			var r: float = strike.strike_radius
-			draw_arc(point.pos,r,0,TAU,32,Color("ffe7a3"),2,true)
-			draw_line(point.pos-Vector2(8,0),point.pos+Vector2(8,0),Color("ffe7a3"),2,true)
-			draw_circle(point.pos,maxf(2,r*(1-strike.life/0.45)),Color(1,0.9,0.6,0.1))
+			var r: float=strike.strike_radius
+			draw_circle(point.pos,maxf(2,r*(1-strike.life/.45)),Color(1,.9,.6,.1))
+			append_ring(tell_lines,point.pos,r)
+			tell_lines.append(point.pos-Vector2(8,0));tell_lines.append(point.pos+Vector2(8,0))
+	if not tell_lines.is_empty(): draw_multiline(tell_lines,Color("ffe7a3"),2,false)
 	for orbit in b.orbits:
 		draw_arc(orbit.pos,orbit.orbit_radius,0,TAU,48,Color(0.7,0.8,1,0.1),1,true)
 		for point in orbit.bodies:
-			draw_circle(point,12*orbit.scale,Color("b8c9ff"))
-			draw_circle(point,5*orbit.scale,Color("fff8e8"))
+			if not vfx.draw(self,"star",point,48*orbit.scale,orbit.age):
+				draw_circle(point,12*orbit.scale,Color("b8c9ff"))
+				draw_circle(point,5*orbit.scale,Color("fff8e8"))
+	var lightning_lines:=PackedVector2Array()
+	var chain_lines:=PackedVector2Array()
 	for f in b.flashes:
 		match f.kind:
+			"vfx": vfx.draw(self,f.effect,f.pos,f.diameter,f.total-f.life,Color.WHITE,f.total)
 			"cone":
 				var count: int = f.get("branches",3 if f.fan else 1)
 				var half: float = f.get("half_angle",PI/6)
 				for n in count:
-					var angle: float = f.dir.angle()+(n-(count-1)*.5)*.48
+					var angle: float = f.directions[n].angle() if f.has("directions") else f.dir.angle()+(n-(count-1)*.5)*.48
 					var points := PackedVector2Array([f.pos])
 					for j in 13: points.append(f.pos+Vector2.RIGHT.rotated(angle-half+j*half/6)*f.radius)
 					draw_colored_polygon(points,Color(0.65,0.9,1,0.13))
 					draw_arc(f.pos,f.radius,angle-half,angle+half,16,Color("b8eaff"),2,true)
-			"lightning": draw_polyline(PackedVector2Array([f.pos+Vector2(14,-150),f.pos+Vector2(-12,-65),f.pos+Vector2(12,-70),f.pos]),Color("ffe7a3"),5,true)
-			"arc": draw_line(f.pos,f.to,Color("ffe7a3"),2,true)
+			"lightning":
+				var points: Array=[f.pos+Vector2(14,-150),f.pos+Vector2(-12,-65),f.pos+Vector2(12,-70),f.pos]
+				for n in 3:
+					lightning_lines.append(points[n]);lightning_lines.append(points[n+1])
+			"arc":
+				chain_lines.append(f.pos);chain_lines.append(f.to)
+	if not lightning_lines.is_empty(): draw_multiline(lightning_lines,Color("ffe7a3"),5,false)
+	if not chain_lines.is_empty(): draw_multiline(chain_lines,Color("ffe7a3"),2,false)

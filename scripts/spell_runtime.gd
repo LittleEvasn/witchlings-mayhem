@@ -11,6 +11,8 @@ const PROFILE := {
 }
 const Behaviors = preload("res://scripts/spell_behaviors.gd")
 const FusionEffects = preload("res://scripts/fusion_effects.gd")
+const SupportFusions=preload("res://scripts/support_fusions.gd")
+var support: RefCounted
 var fusion: RefCounted
 var behavior: RefCounted
 const MAX_EMITS_PER_TICK := 64
@@ -28,6 +30,7 @@ func _init(owner_game: Node2D) -> void:
 	game = owner_game
 	behavior = Behaviors.new(self)
 	fusion = FusionEffects.new(self)
+	support = SupportFusions.new(self)
 
 func begin_tick() -> void:
 	emits_this_tick = 0
@@ -40,6 +43,7 @@ func clear() -> void:
 	echoes.clear()
 	behavior.clear()
 	fusion.clear()
+	support.clear()
 	generation += 1
 
 func track(event: String, source := "", value := 1.0) -> void:
@@ -85,7 +89,8 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 	# Keep the inherited spell factor separate from the caster's power snapshot.
 	# Factor carries the parent's partition, not its connector potency. This stage
 	# partitions that inherited budget once among its own outgoing branches.
-	var shot_factor: float = factor*game.Spells.Effects.value(stage,"fan")
+	var pattern: Dictionary=support.repetitions(stage)
+	var shot_factor: float = factor*float(pattern.primary)*game.Spells.Effects.value(stage,"fan")
 	var ctx: Dictionary = behavior.context(stage,origin,direction,follow,shot_factor,power,meter_stage,meter_echo,lineage,emitted_generation)
 	var strength: float = behavior.damage_scale(ctx)
 	if target_point==Vector2.INF: target_point = game.cast_target
@@ -102,8 +107,18 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 		var copy := stage.duplicate(true)
 		copy.echo = 0
 		copy["_echo_copy"] = true
-		echoes.append({"stage":copy,"origin":origin,"direction":direction,"follow":follow.duplicate(true),"factor":factor*float(repeats[repeat]),"power":power,"delay":0.18*(repeat+1),"meter_stage":meter_stage,"lineage":lineage,"generation":emitted_generation,"target_point":target_point})
+		echoes.append({"stage":copy,"origin":origin,"direction":direction,"follow":follow.duplicate(true),"factor":factor*float(pattern.primary)*float(repeats[repeat]),"power":power,"delay":0.18*(repeat+1),"meter_stage":meter_stage,"lineage":lineage,"generation":emitted_generation,"target_point":target_point})
 		track("echoes_scheduled",source)
+	for repeat in pattern.copies:
+		if echoes.size()>=MAX_ECHOES:
+			track("echoes_blocked",source)
+			continue
+		var copy:=stage.duplicate(true)
+		copy.echo=0
+		copy["_echo_copy"]=true
+		copy["_support_scale"]=float(stage.get("_support_scale",1.0))*repeat.scale
+		echoes.append({"stage":copy,"origin":origin,"direction":direction,"follow":follow.duplicate(true),"factor":factor*repeat.factor,"power":power,"delay":repeat.delay,"meter_stage":meter_stage,"lineage":lineage,"generation":emitted_generation,"target_point":target_point})
+		track("support_repeats_scheduled",source)
 	if not PROFILE.has(stage.attack):
 		behavior.special(ctx)
 		return
@@ -115,20 +130,20 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 			track("projectiles_blocked",source,count-i)
 			break
 		track("projectiles_emitted",source)
-		var dir := direction.rotated(deg_to_rad(float(angles[i])))
+		var dir: Vector2 = support.branch_direction(stage,origin,direction.rotated(deg_to_rad(float(angles[i]))),i)
 		var projectile := ctx.duplicate(true)
 		projectile.merge({"pos":origin,"dir":dir,"speed":spec.speed,"damage":spec.damage*strength,
 			"attack":stage.attack,"radius":spec.radius*scale,"life":spec.life*(2.0 if seed_portions > 1 else 1.0),"seek":stage.seek,
 			"pierce":int(game.Spells.Effects.profile(stage,"pierce").targets),
 			"follow":follow.duplicate(),"triggered":false,"hit":{},"target":null,"seek_clock":0.0,
-			"strength":strength,"scale":scale,"power":power,"child_factor":shot_factor,
+			"strength":strength,"scale":scale,"power":power,"child_factor":shot_factor,"swarm_index":i,
 			"seed_portion_count":seed_portions,"seed_portions":seed_portions,
 			"meter_source":source,"meter_echo":meter_echo,"meter_contacted":false,
 			"age":0.0,"returning":false,"leg_hits":0,"leg_limit":1+int(game.Spells.Effects.profile(stage,"pierce").targets)},true)
 		game.projectiles.append(projectile)
 		if stage.attack=="boomerang":
 			projectile["ricochets"] = game.Spells.attack_data(stage).ricochets
-			projectile["outbound_limit"] = 1.0+0.6*projectile.ricochets
+			projectile["outbound_limit"] = 1.0+0.6*projectile.ricochets+(.3*projectile.pierce if stage.get("chase_pierce",0)>0 else 0.0)
 			projectile["buds"] = []
 			var target: Node2D = game.nearest_enemy(origin+dir*220,260,{})
 			if target!=null and dir.dot(origin.direction_to(target.position))<=0.5: target = null
@@ -139,33 +154,49 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 func update_echoes(delta: float) -> void:
 	behavior.update(delta)
 	fusion.update(delta)
+	support.update(delta)
 	if not game.magic_active(): return
 	for i in range(echoes.size()-1,-1,-1):
 		var echo: Dictionary = echoes[i]
 		echo.delay -= delta
 		if echo.delay <= 0:
 			echoes.remove_at(i)
+			if echo.generation!=generation: continue
 			track("echoes_fired",source_for(echo.stage,echo.meter_stage,true))
 			emit(echo.stage,echo.origin,echo.direction,echo.follow,echo.factor,echo.power,echo.meter_stage,true,echo.lineage,echo.generation,echo.target_point)
 
 func trigger(source: Dictionary, at: Vector2, event := "impact") -> void:
-	if source.get("connector","impact") != event: return
-	if source.triggered or source.follow.is_empty(): return
-	source.triggered = true
-	# Child carries its own compiled modifier scope and next event, never the parent's flags.
+	var mode: String=source.get("connector","impact")
+	if mode in ["dual_event","delayed_ignition"] and source.get("generation",generation)!=generation: return
+	if mode=="dual_event":
+		if event not in ["impact","expire"]: return
+	elif ("impact" if mode=="delayed_ignition" else mode)!=event: return
+	if source.follow.is_empty(): return
+	if mode=="dual_event":
+		if not source.has("events"): source["events"]={}
+		if source.events.has(event): return
+		source.events[event]=true
+	else:
+		if source.triggered: return
+		source.triggered=true
 	track("triggers",source.get("meter_source",""))
 	track("trigger_"+event,source.get("meter_source",""))
-	var direction: Vector2 = game.aim if source.get("returned",false) else source.get("original_dir",source.dir)
-	var child: Dictionary = source.follow.duplicate(true)
-	child["_orb"] = source.get("owner_orb",0)
-	child["_linked"] = true
-	child["_relic_scale"] = source.stage.get("_relic_scale",1.0)
-	child["_relic_copy"] = source.stage.get("_relic_copy",false)
-	child["_depth"] = int(source.stage.get("_depth",0))+1
-	child["_connector_potency"] = float(source.stage.get("connector_power",0.5))
-	child["_echo_copy"] = source.stage.get("_echo_copy",false)
-	emit(child,at,direction,game.Spells.follow(child),source.child_factor,source.get("child_power",source.power),"chain",source.get("meter_echo",false),source.get("cast_id",-1),source.get("generation",generation),at)
-	game.metrics.triggers += 1
+	var direction: Vector2=game.aim if source.get("returned",false) else source.get("original_dir",source.dir)
+	var child: Dictionary=source.follow.duplicate(true)
+	child["_orb"]=source.get("owner_orb",0)
+	child["_linked"]=true
+	child["_relic_scale"]=source.stage.get("_relic_scale",1.0)
+	child["_relic_copy"]=source.stage.get("_relic_copy",false)
+	child["_depth"]=int(source.stage.get("_depth",0))+1
+	child["_connector_potency"]=1.0 if mode=="dual_event" else float(source.stage.get("connector_power",0.5))
+	var child_budget: float=source.child_factor*(.5 if mode=="dual_event" else 1.0)
+	child["_echo_copy"]=source.stage.get("_echo_copy",false)
+	if mode=="delayed_ignition":
+		support.schedule({"kind":"child","stage":child,"pos":at,"direction":direction,"factor":source.child_factor,"power":source.get("child_power",source.power),"echo":source.get("meter_echo",false),"lineage":source.get("cast_id",-1),"delay":.6,"generation":source.get("generation",generation),"source":{"meter_source":source.get("meter_source","")}})
+		track("delayed_children_scheduled",source.get("meter_source",""))
+	else:
+		emit(child,at,direction,game.Spells.follow(child),child_budget,source.get("child_power",source.power),"chain",source.get("meter_echo",false),source.get("cast_id",-1),source.get("generation",generation),at)
+	game.metrics.triggers+=1
 	game.ring(at,25,Color("ff9cae"),0.2)
 
 func moon_leg(p: Dictionary, endpoint: Vector2, target: Node2D = null) -> void:
@@ -188,6 +219,13 @@ func turn_back(p: Dictionary) -> void:
 
 func moon_contact(p: Dictionary, at: Vector2) -> void:
 	if p.returning: return
+	if p.stage.get("chase_pierce",0)>0 and p.pierce>0:
+		var choices: Array=support.targets(at,260,p.hit)
+		if not choices.is_empty():
+			p.pierce-=1
+			moon_leg(p,choices[0].position,choices[0])
+			track("chase_retargets",p.meter_source)
+			return
 	if p.stage.get("fusion","")=="petal_return": p.buds.append(at)
 	if p.ricochets<=0:
 		turn_back(p)
@@ -234,7 +272,11 @@ func update_projectiles(delta: float) -> void:
 			if seed: install(p)
 			elif p.attack == "bloom": behavior.area(p,p.pos,p.damage,game.Spells.attack_data(p.stage).radius*p.scale)
 			if not game.magic_active(): return
-			if not seed: trigger(p,p.pos,"expire")
+			if not seed:
+				trigger(p,p.pos,"expire")
+				if not game.magic_active(): return
+				support.terminal(p,p.pos)
+				if not game.magic_active(): return
 			finish_projectile(p)
 			game.projectiles.remove_at(index)
 			continue
@@ -246,6 +288,9 @@ func update_projectiles(delta: float) -> void:
 				if not game.magic_active(): return
 				p["returned"] = true
 				trigger(p,game.player.position,"expire")
+				if not game.magic_active(): return
+				support.terminal(p,game.player.position)
+				if not game.magic_active(): return
 				finish_projectile(p)
 				game.projectiles.remove_at(index)
 				continue
@@ -266,6 +311,9 @@ func update_projectiles(delta: float) -> void:
 				if p.seek_clock<=0:
 					p.seek_clock = 0.15
 					p.target = game.nearest_enemy(p.pos,260*game.Spells.Effects.profile(p.stage,"seek").range,p.hit)
+					if p.stage.get("swarm_seek",0)>0:
+						var choices: Array=support.targets(p.pos,320,p.hit)
+						if not choices.is_empty(): p.target=choices[int(p.swarm_index)%choices.size()]
 				if is_instance_valid(p.target) and not p.target.dead:
 					var desired: Vector2 = p.pos.direction_to(p.target.position)
 					p.dir = p.dir.rotated(clampf(p.dir.angle_to(desired),-delta*3.0*game.Spells.seek_strength(p.stage),delta*3.0*game.Spells.seek_strength(p.stage)))
@@ -292,6 +340,7 @@ func update_projectiles(delta: float) -> void:
 					fusion.event(p,"impact",nearest)
 					if not game.magic_active(): return
 					trigger(p,nearest)
+					if not game.magic_active(): return
 				elif p.seed_portion_count > 1:
 					p.pos = nearest
 					install(p,1)
@@ -307,6 +356,7 @@ func update_projectiles(delta: float) -> void:
 					break
 				else:
 					p.pierce -= 1
+					if p.pierce>=0: support.retarget(p)
 					if p.pierce < 0:
 						if seed:
 							p.pos = nearest
@@ -315,7 +365,11 @@ func update_projectiles(delta: float) -> void:
 						break
 		if consumed or (not moon and not game.projectile_bounds().has_point(p.pos)):
 			if seed and consumed: install(p)
-			if consumed and not seed: trigger(p,p.pos,"expire")
+			if consumed and not seed:
+				trigger(p,p.pos,"expire")
+				if not game.magic_active(): return
+				support.terminal(p,p.pos)
+				if not game.magic_active(): return
 			finish_projectile(p)
 			game.projectiles.remove_at(index)
 
@@ -383,6 +437,7 @@ func update_zones(delta: float) -> void:
 					behavior.hit(enemy,amount,Vector2.ZERO,zone)
 					if not game.magic_active(): return
 					trigger(zone,enemy.position)
+					if not game.magic_active(): return
 		else:
 			var activated := false
 			if zone.age>=0.25 and not ending:
@@ -398,12 +453,16 @@ func update_zones(delta: float) -> void:
 					behavior.hit(enemy,amount,Vector2.ZERO,zone,3.0 if zone.stage.get("fusion","")=="frost_blossom" else 0.0)
 					if not game.magic_active(): return
 					trigger(zone,enemy.position)
+					if not game.magic_active(): return
 				ending = true
 		if ending:
 			remove_zone(zone)
 			fusion.event(zone,"expire",zone.pos)
 			if not game.magic_active(): return
 			trigger(zone,zone.pos,"expire")
+			if not game.magic_active(): return
+			support.terminal(zone,zone.pos)
+			if not game.magic_active(): return
 	for pair in path_hits.values():
 		var zone: Dictionary = pair.zone
 		var enemy: Node2D = pair.enemy
@@ -422,6 +481,7 @@ func update_zones(delta: float) -> void:
 		fusion.event(zone,"path_contact",enemy.position)
 		if not game.magic_active(): return
 		trigger(zone.group,enemy.position)
+		if not game.magic_active(): return
 		behavior.extra_links(zone.group,enemy.position,enemy)
 	for zone in path_ended: behavior.end_path(zone,true)
 	behavior.refresh_gardens()

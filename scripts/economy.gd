@@ -102,7 +102,7 @@ func craft_quote(action: String, target: String, material := "") -> Dictionary:
    output = Progression.key(Progression.base_id(target),level+1)
   "fuse":
    output = Progression.fusion_for(target,material)
-   if output.is_empty(): return {"ok":false,"error":"도감에 있는 서로 다른 공격 마법 두 개가 모두 +3여야 해."}
+   if output.is_empty(): return {"ok":false,"error":"도감의 지정 재료 두 개가 모두 +3여야 해."}
    consumed.append(material)
    cost = Progression.FUSION_COST
   _: return fail

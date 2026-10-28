@@ -56,7 +56,7 @@ func run() -> void:
 	g.sound_enabled = false
 	g.set_physics_process(false)
 	await process_frame
-	check(Spells.PARTS.size()==18 and P.FUSIONS.size()==9,"18 basic spell types and nine fusions")
+	check(Spells.PARTS.size()==18 and P.FUSIONS.keys().filter(func(id):return P.fusion_kind(id)=="attack").size()==9,"18 basic spell types and nine fusions")
 	check(not Spells.has_part("sigil") and not Economy.PRICES.has("sigil"),"Sigil is unavailable")
 	for id in Spells.PARTS:
 		for r in 4:
@@ -182,6 +182,7 @@ func run() -> void:
 	# Every fusion is crafted from two +3 physical items and must produce its own observable event.
 	var covered := {}
 	for id in P.FUSIONS:
+		if P.fusion_kind(id)!="attack": continue
 		var data: Dictionary = P.FUSIONS[id]
 		var eco := Economy.new()
 		var a := P.key(data.parents[0],3)

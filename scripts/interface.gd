@@ -3,6 +3,8 @@ const Spells = preload("res://scripts/spells.gd")
 const Board = preload("res://scripts/prep_board.gd")
 const RelicUI = preload("res://scripts/relic_ui.gd")
 const RunUI = preload("res://scripts/run_ui.gd")
+const FrontFlow = preload("res://scripts/front_flow.gd")
+const CollectionUI = preload("res://scripts/collection_ui.gd")
 const PersonalWindow = preload("res://scripts/personal_window.gd")
 const RewardReveal = preload("res://scripts/reward_reveal.gd")
 const DESIGN_SIZE := Vector2(1440,900)
@@ -13,6 +15,8 @@ const TEXT := Color("f5f0e6")
 const MUTED := Color("a9b6c6")
 const MINT := Color("a8efe2")
 const PINK := Color("ff9cae")
+## Assign the purchased GUI Theme here; null deliberately keeps neutral layout scaffolding.
+@export var crafting_theme: Theme
 var game: Node2D
 var root: Control
 var modal: Control
@@ -25,6 +29,7 @@ var shop_clock_label: Label
 var time_label: Label
 var wave_label: Label
 var stats_label: Label
+var controls_hint: Label
 var dash_label: Label
 var notice_label: Label
 var objective_label: Label
@@ -52,6 +57,13 @@ var personal_danger: Label
 var spell_reward_button: Button
 var reward_receipt: Control
 var encounter_hint: Label
+var front_screen := ""
+var setup_kit := "sigil"
+var setup_intro := true
+var intro_index := 0
+var collection_kind := "spell"
+var collection_selected := ""
+var collection_origin := "title"
 
 func inspect_item(id: String, orb_index := -1, slot := -1) -> void:
 	inspected_orb=orb_index
@@ -112,7 +124,7 @@ func _ready() -> void:
 	boss_label = label(hud,"끝없는 모범답안",Vector2(580,104),15,PINK,280)
 	boss_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	dash_label = label(hud,"Space  회피 준비",Vector2(34,839),17,MINT)
-	label(hud,"WASD 이동  ·  가까운 적 조준\n자동 시전  ·  M 효과음",Vector2(1180,829),15,MUTED)
+	controls_hint=label(hud,"WASD 이동  ·  가까운 적 조준\n자동 시전  ·  M 효과음",Vector2(1180,829),15,MUTED)
 	spell_reward_button=button(hud,"마법 선택",Rect2(22,151,190,38),func():game.open_personal("reward"),true,16)
 	spell_reward_button.name="SpellRewardBadge"
 	spell_reward_button.focus_mode=Control.FOCUS_NONE
@@ -126,6 +138,9 @@ func _ready() -> void:
 
 func _resize_modal_shade() -> void:
 	if not is_instance_valid(modal): return
+	if modal.get_meta("craft_drawer",false):
+		refresh_workbench.call_deferred()
+		return
 	var shade := modal.get_node_or_null("ModalShade") as ColorRect
 	if not is_instance_valid(shade): return
 	# Modal contents use design coordinates; the input-blocking shade covers
@@ -230,11 +245,11 @@ func update_hud() -> void:
 	dash_label.modulate.a = 1.0 if game.dash_cooldown <= 0 else 0.6
 	notice_label.text = game.notice if game.notice_left > 0 else ""
 	objective_label.text = game.RunContent.chapter(game.wave).goal
-	objective_label.visible = game.notice_left<=0
+	objective_label.visible = game.notice_left<=0 and not (is_instance_valid(modal) and modal.get_meta("craft_drawer",false))
 	if game.wave==1 and game.wave_time<18: objective_label.text="WASD 이동 · 가까운 적 자동 조준 · Space 회피 · Tab 실시간 조합"
 	spell_reward_button.visible=not game.combat_rewards.pending.is_empty()
 	spell_reward_button.text="마법 선택 %d"%game.combat_rewards.pending.size()
-	spell_reward_button.disabled=game.state!="combat"
+	spell_reward_button.disabled=game.state not in ["combat","shop"]
 	encounter_hint.text=game.encounters.hint()
 	if is_instance_valid(personal_danger):
 		var obscured:=0
@@ -278,6 +293,8 @@ func rebuild_recipe() -> void:
 				item.tooltip_text=Spells.definition(id).name+"\n"+Spells.definition(id).desc
 
 func close_modal() -> void:
+	front_screen=""
+	game.player.visible=true
 	close_reward_receipt()
 	game.personal_tab=""
 	close_personal_visual()
@@ -289,6 +306,9 @@ func close_modal() -> void:
 		modal.queue_free()
 	modal = null
 	hud.visible = true
+	if is_instance_valid(recipe_bar): recipe_bar.visible = true
+	for hud_label in [stats_label,notice_label,objective_label,encounter_hint,controls_hint]:
+		if is_instance_valid(hud_label): hud_label.visible=true
 	update_hud()
 
 func new_modal(rect: Rect2) -> Control:
@@ -319,21 +339,13 @@ func portrait(parent: Node, rect: Rect2) -> void:
 	parent.add_child(pic)
 
 func show_title() -> void:
-	new_modal(Rect2(155,116,1130,668))
-	hud.visible = false
-	label(modal,"W I T C H L I N G S '   M A Y H E M",Vector2(214,163),17,MINT)
-	label(modal,"마녀들의\n사고현장",Vector2(208,208),56,TEXT)
-	label(modal,"루미의 실험\n교수님이 돌아오기 전에 사고를 수습하자.",Vector2(214,373),23,MUTED)
-	label(modal,"자동으로 쏘고, 마석을 모아 나만의 주문을 만들기.\n전투 → 유물 보상 → 구체 제작대 → 다음 실습",Vector2(214,467),19,TEXT)
-	button(modal,"첫 실습 시작    →",Rect2(214,563,350,62),show_kits,true,23)
-	button(modal,"실험 기록",Rect2(214,638,170,42),show_records,false,18)
-	button(modal,"설정",Rect2(394,638,170,42),func():show_settings(true),false,18)
-	label(modal,"WASD 이동   /   가까운 적 자동 조준   /   자동 시전\nSpace 회피   /   Tab 마법 조합   /   Esc 일시정지",Vector2(214,702),16,MUTED)
-	portrait(modal,Rect2(787,177,405,410))
-	panel(modal,Rect2(790,602,390,108),Color("252b3e"))
-	label(modal,"한 판 · 전투 최대 10분 + 자유 제작",Vector2(812,616),16,MINT)
-	label(modal,"수습 성공 %d회  ·  %s" % [game.profile.data.wins,"멈춤 조건의 단서 발견" if game.profile.data.lumi_clue else "아직 밝혀내지 못한 실수"],Vector2(812,650),17,TEXT,340)
-	label(modal,"LUMI EXPERIMENT  0.9",Vector2(993,740),13,MUTED)
+	FrontFlow.title(self)
+
+func front_back() -> void: FrontFlow.back(self)
+
+func focus_front(reference: WeakRef) -> void:
+	var target=reference.get_ref()
+	if is_instance_valid(target) and target.is_inside_tree(): target.grab_focus()
 
 func show_rewards() -> void:
 	RelicUI.rewards(self)
@@ -416,7 +428,17 @@ func update_shop_clock() -> void:
 	pass # Preparation has no countdown.
 
 func show_shop() -> void:
+	if game.state=="shop": game.save_checkpoint()
 	Board.build(self,true)
+
+func show_collection(origin := "title") -> void:
+	if not game.state in ["title","shop"]: return
+	collection_origin=origin
+	CollectionUI.build(self)
+
+func close_collection() -> void:
+	if collection_origin=="shop" and game.state=="shop": show_shop()
+	else: game.return_title()
 
 func show_trial() -> void:
 	Board.trial(self)
@@ -444,20 +466,7 @@ func show_records() -> void: RunUI.records(self)
 func show_settings(from_title: bool) -> void: RunUI.settings(self,from_title)
 
 func show_kits() -> void:
-	if game.state=="trial": game._clear_trial()
-	game.state = "title"
-	new_modal(Rect2(120,160,1200,580))
-	hud.visible = false
-	label(modal,"루미 · 오늘은 어떤 주문으로 시작할까?",Vector2(160,195),30,MINT)
-	label(modal,"시작 부품만 달라져. 제작대에서 다른 실험으로 자유롭게 바꿀 수 있어.",Vector2(160,250),18,MUTED)
-	var index := 0
-	for id in game.Economy.KITS:
-		var kit: Dictionary = game.Economy.KITS[id]
-		var x := 160+index*285
-		panel(modal,Rect2(x,305,265,310),PANEL)
-		label(modal,kit.name,Vector2(x+18,327),24,MINT)
-		label(modal,kit.note,Vector2(x+18,377),18,TEXT,225)
-		label(modal,Spells.describe(kit.recipe),Vector2(x+18,445),16,MUTED,225)
-		button(modal,"이 실험으로 시작",Rect2(x+18,550,229,44),func():game.begin_lumi_run(id),true,17)
-		index += 1
-	label(modal,"공통 지급: 별빛탄 · 명중 후  /  마나 없이 자동 시전  /  가까운 적 자동 조준",Vector2(160,660),17,MUTED)
+	if game.state!="title": game.return_title()
+	setup_kit=game.selected_kit
+	setup_intro=not game.profile.data.intro_seen
+	FrontFlow.prepare(self)

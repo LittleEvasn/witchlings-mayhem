@@ -15,6 +15,7 @@ const Interface = preload("res://scripts/interface.gd")
 const ArenaWorld = preload("res://scripts/arena_world.gd")
 const RunContent = preload("res://scripts/run_content.gd")
 const PlayerProfile = preload("res://scripts/player_profile.gd")
+const RunCheckpoint = preload("res://scripts/run_checkpoint.gd")
 const BossEncounter = preload("res://scripts/boss_encounter.gd")
 const AutoTargeting = preload("res://scripts/auto_targeting.gd")
 const CombatRewards = preload("res://scripts/combat_rewards.gd")
@@ -101,6 +102,11 @@ var run_record: Dictionary = {}
 var wave_records: Array = []
 var prep_elapsed := 0.0
 var profile := PlayerProfile.new()
+var checkpoint_store := RunCheckpoint.new()
+var checkpoint_loading := false
+var checkpoint_clock := 0.0
+var checkpoint_message := ""
+var run_id := ""
 var record_runs := DisplayServer.get_name()!="headless"
 var boss_encounter: RefCounted
 var boss_spawn_wait := 0.0
@@ -120,6 +126,7 @@ var rng := RandomNumberGenerator.new()
 var metrics := {"casts":0,"triggers":0,"hits":0,"peak_projectiles":0,"peak_enemies":0}
 
 func _ready() -> void:
+	get_tree().auto_accept_quit=false
 	rng.randomize()
 	economy.relics = relics
 	_bind_inputs()
@@ -162,14 +169,18 @@ func _ready() -> void:
 	ui.show_title()
 	if not profile.warning.is_empty(): announce(profile.warning,6)
 
-func begin_lumi_run(kit: String) -> void:
-	start_run(kit)
+func begin_lumi_run(kit: String, play_intro := true) -> void:
+	if not start_run(kit): return
 	state="intro"
 	set_music("prepare")
-	ui.show_intro()
+	ui.intro_index=0
+	if play_intro: ui.show_intro()
+	else: begin_combat()
 
 func begin_combat() -> void:
 	if state!="intro": return
+	profile.data.intro_seen=true
+	if record_runs and meter==null: profile.save_profile()
 	state="combat"
 	ui.close_modal()
 	set_music("combat")
@@ -188,6 +199,54 @@ func save_settings() -> void:
 	profile.data.music=false
 	if record_runs: profile.save_profile()
 
+func discover_owned() -> void:
+	if checkpoint_loading or meter!=null: return
+	if profile.discover(economy.inventory.keys(),relics.owned) and record_runs: profile.save_profile()
+
+func checkpoint_info() -> Dictionary:
+	return checkpoint_store.load_data() if record_runs else {}
+
+func save_checkpoint() -> bool:
+	if not record_runs or checkpoint_loading or meter!=null: return true
+	if state!="shop": return false
+	discover_owned()
+	var ok: bool=checkpoint_store.write(RunCheckpoint.capture(self))
+	checkpoint_message="제작 상태 자동 저장 · 준비 완료 후에는 전투 중 저장하지 않아요." if ok else checkpoint_store.warning
+	return ok
+
+func resume_checkpoint() -> bool:
+	if state!="title": return false
+	var saved:=checkpoint_info()
+	if saved.is_empty() or saved.run_id in profile.data.completed_ids:
+		checkpoint_message="이어할 제작 상태가 없어요." if checkpoint_store.warning.is_empty() else checkpoint_store.warning
+		ui.show_title()
+		return false
+	checkpoint_loading=true
+	return_title()
+	start_run(saved.kit)
+	RunCheckpoint.apply(self,saved)
+	checkpoint_loading=false
+	discover_owned()
+	checkpoint_message="제작 상태를 이어왔어요. 다음은 %d웨이브예요."%(wave+1)
+	ui.rebuild_recipe()
+	ui.show_shop()
+	return true
+
+func save_and_title() -> void:
+	if state=="trial": end_trial()
+	if state!="shop": return
+	return_title()
+
+func request_quit() -> void:
+	if state=="trial": end_trial()
+	if state=="shop" and not save_checkpoint():
+		ui.show_shop()
+		return
+	get_tree().quit()
+
+func _notification(what: int) -> void:
+	if what==NOTIFICATION_WM_CLOSE_REQUEST and is_instance_valid(ui): request_quit()
+
 func _exit_tree() -> void:
 	# A looping playback can otherwise retain its stream during engine shutdown.
 	if is_instance_valid(music_player):
@@ -199,6 +258,11 @@ func _exit_tree() -> void:
 			channel.stream=null
 
 func return_title() -> void:
+	if not checkpoint_loading:
+		if state=="trial": end_trial()
+		if state=="shop" and not save_checkpoint():
+			ui.show_shop()
+			return
 	close_personal()
 	encounters.clear()
 	combat_rewards.reset(0)
@@ -214,6 +278,13 @@ func return_title() -> void:
 	grid.clear()
 	boss_ref=null
 	state="title"
+	set_arena_profile("scroll")
+	player.position=FIELD.get_center()
+	player.moving=false
+	player.facing_left=false
+	player.modulate=Color.WHITE
+	player.flash=0
+	_sync_camera()
 	set_music("prepare")
 	ui.show_title()
 
@@ -267,6 +338,13 @@ func _bind_inputs() -> void:
 			InputMap.action_add_event(action,event)
 
 func _input(event: InputEvent) -> void:
+	if not ui.front_screen.is_empty():
+		if event is InputEventKey and event.echo: return
+		if event.is_action_pressed("pause_game"):
+			ui.front_back()
+			get_viewport().set_input_as_handled()
+		# Front screens use Tab for GUI focus; it must not invoke the combat editor.
+		return
 	# Tab/Esc must reach the game even while a drawer button or slot owns GUI input.
 	if event.is_action_pressed("recipe") or event.is_action_pressed("pause_game") or event.is_action_pressed("mute"):
 		_unhandled_input(event)
@@ -300,13 +378,23 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif state == "edit": cancel_editor()
 		elif state == "trial": end_trial()
 
-func start_run(kit := "") -> void:
+func start_run(kit := "") -> bool:
+	if record_runs and not checkpoint_loading and not checkpoint_store.close():
+		checkpoint_message=checkpoint_store.warning
+		return false
+	run_id=Crypto.new().generate_random_bytes(16).hex_encode()
+	checkpoint_clock=0
+	checkpoint_message=""
 	close_personal()
 	encounters.begin_wave()
 	combat_rewards.reset(rng.randi())
 	role_migration_receipt = {}
 	ui.selected_item=""
 	ui.board_panel="shop"
+	ui.craft_tab="craft"
+	ui.bag_filter="all"
+	ui.bag_scroll=0
+	ui.catalog_scroll.clear()
 	shop_tab = "shop"
 	forge_target = ""
 	forge_material = ""
@@ -368,11 +456,15 @@ func start_run(kit := "") -> void:
 	player.position = FIELD.get_center() if arena_profile=="scroll" else Vector2(720,450)
 	_sync_camera()
 	player.modulate = Color.WHITE
+	player.moving=false
+	player.flash=0
 	state = "combat"
 	set_music("combat")
 	ui.close_modal()
 	ui.rebuild_recipe()
 	announce("실습 시작!  가까운 적 자동 조준 · Space 회피 · Tab 실시간 조합",5)
+	discover_owned()
+	return true
 
 func _physics_process(delta: float) -> void:
 	# Preparation ends only with the player's Ready button.
@@ -381,6 +473,11 @@ func _physics_process(delta: float) -> void:
 		return
 	if state != "combat":
 		if state in ["shop","edit"]: prep_elapsed+=delta
+		if state=="shop":
+			checkpoint_clock+=delta
+			if checkpoint_clock>=5:
+				checkpoint_clock=0
+				save_checkpoint()
 		player.animate(delta * 0.5)
 		return
 	if wave==5 and not is_instance_valid(boss_ref):
@@ -503,6 +600,7 @@ func cast_delay(delay: float) -> float:
 
 func acquire_relic(id: String) -> bool:
 	if not relics.acquire(id): return false
+	discover_owned()
 	announce("유물 완성 · "+Relics.definition(id).name)
 	ui.refresh_relics()
 	return true
@@ -864,6 +962,7 @@ func buy_orb(index: int, revision: int) -> bool:
 	if state != "shop" or shop_time <= 0: return false
 	if not economy.buy(index,revision): return false
 	purchased_orb = economy.offers[index].id
+	discover_owned()
 	shop_message = "%s 제작 완료 · 아래 보유 목록에서 끌어 넣고 시험해봐." % Spells.definition(purchased_orb).name
 	ui.show_shop()
 	play_sound("reward")
@@ -924,6 +1023,7 @@ func craft_spell(action: String, target: String, material: String, expected_revi
 	forge_material = ""
 	forge_message = "%s 완성 · %d G 사용 · 장착·여분 수량 반영" % [Spells.definition(receipt.output).name,receipt.cost]
 	purchased_orb = receipt.output
+	discover_owned()
 	ui.selected_item=receipt.output
 	ui.inspected_orb=output_location.orb
 	ui.inspected_slot=output_location.slot
@@ -943,6 +1043,11 @@ func reroll_shop(revision: int) -> bool:
 
 func start_next_wave() -> void:
 	if not is_shopping(): return
+	# Retire BOTH save mirrors before any combat reward can be earned.
+	if record_runs and not checkpoint_store.close():
+		checkpoint_message=checkpoint_store.warning
+		ui.show_shop()
+		return
 	# Timeout never equips an unfinished draft or consumes purchased copies.
 	var discarded := has_draft_changes()
 	edit_revision += 1
@@ -1091,6 +1196,7 @@ func claim_spell_reward(reward_id: String, id: String, revision: int) -> bool:
 		if not personal_tab.is_empty(): ui.show_personal.call_deferred()
 		return false
 	purchased_orb=id
+	discover_owned()
 	ui.selected_item=id
 	ui.inspected_orb=-1
 	ui.inspected_slot=-1
@@ -1103,7 +1209,7 @@ func claim_spell_reward(reward_id: String, id: String, revision: int) -> bool:
 	return true
 
 func migrate_spell_roles() -> bool:
-	# No disk run-save exists yet. This also handles imported/debug run state.
+	# Disk saves validate the content version; this handles imported/debug run state.
 	var plan := RoleMigration.plan(economy.inventory,orb_recipes,orb_drafts)
 	var old_offer: bool = economy.offers.any(func(o):return o.get("id","") in ["graft","shatter","sigil","on_return"])
 	if not plan.changed and not old_offer: return false
@@ -1158,6 +1264,7 @@ func _draft_changed() -> void:
 	_sync_orb()
 	edit_revision += 1
 	_commit_live_board()
+	if state=="shop": save_checkpoint()
 	if state=="trial":
 		clear_magic()
 		effects.clear()
@@ -1430,7 +1537,10 @@ func magic_active() -> bool:
 func start_trial() -> bool:
 	migrate_spell_roles()
 	if state != "shop" or not valid_draft() or shop_time <= 0: return false
+	if not save_checkpoint(): return false
 	trial_snapshot = {"position":player.position,"aim":aim,"facing":player.facing_left,"moving":player.moving,"metrics":metrics.duplicate(),"dash_left":dash_left,"dash_cooldown":dash_cooldown,"cast_clock":cast_clock,"orb_clocks":orb_clocks.duplicate(),"orb_cursors":orb_cursors.duplicate(),"relics":relics.snapshot(),"hp":hp,"rng_state":rng.state,"gold":economy.gold,"arena_profile":arena_profile}
+	trial_snapshot["dash_direction"]=dash_direction
+	trial_snapshot["invincible"]=invincible
 	trial_damage = 0
 	trial_hits = 0
 	_refresh_trial_orbs()
@@ -1492,6 +1602,8 @@ func _clear_trial() -> void:
 		metrics = trial_snapshot.metrics
 		dash_left = trial_snapshot.dash_left
 		dash_cooldown = trial_snapshot.dash_cooldown
+		dash_direction = trial_snapshot.get("dash_direction",dash_direction)
+		invincible = trial_snapshot.get("invincible",invincible)
 		orb_clocks = trial_snapshot.orb_clocks
 		orb_cursors = trial_snapshot.get("orb_cursors",[0,0])
 		cast_clock = orb_clocks[active_orb]
@@ -1539,7 +1651,9 @@ func end_run(won: bool) -> void:
 	gems.clear()
 	boss_encounter.clear()
 	run_record={"won":won,"character":"lumi","kit":selected_kit,"combat":elapsed,"preparation":prep_elapsed,"kills":kills,"earned":economy.total_earned,"wave":wave,"reason":end_reason,"recipes":orb_recipes.duplicate(true),"relics":relics.owned.duplicate(),"waves":wave_records.duplicate(true)}
+	run_record["run_id"]=run_id
 	if record_runs and meter==null:
+		checkpoint_store.close()
 		profile.record_run(run_record)
 		profile.save_profile()
 	set_music("prepare")

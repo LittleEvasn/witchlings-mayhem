@@ -58,7 +58,7 @@ static func branches(stage: Dictionary) -> int:
 	return 1+int(Effects.profile(stage,"fan").extra)
 
 static func scale(stage: Dictionary) -> float:
-	return Effects.value(stage,"giant")*float(Effects.profile(stage,"charge").size)*float(stage.get("_growth",1.0))*float(stage.get("rank_scale",1.0))*float(stage.get("_relic_scale",1.0))
+	return Effects.value(stage,"giant")*float(Effects.profile(stage,"charge").size)*float(stage.get("_growth",1.0))*float(stage.get("rank_scale",1.0))*float(stage.get("_relic_scale",1.0))*float(stage.get("_support_scale",1.0))
 
 static func seek_strength(stage: Dictionary) -> float:
 	return Effects.value(stage,"seek")
@@ -83,9 +83,10 @@ static func definition(id: String) -> Dictionary:
 		return {"name":"알 수 없는 구체","kind":"unknown","color":Color.GRAY,"desc":""}
 	if Progression.is_fused(id):
 		var d: Dictionary = Progression.FUSIONS[id].duplicate()
-		d["kind"] = "attack"
+		d["kind"] = Progression.fusion_kind(id)
 		d.name += " ✧"
-		d.desc += "\n합성 완성 · 고유 행동 · 보조 부착 가능"
+		d.desc += "\n완성 합성 · 추가 강화 없음"
+		if d.kind=="modifier": d.desc += "\n같은 오브의 오른쪽 모든 공격에 적용"
 		return d
 	var d: Dictionary = PARTS[Progression.base_id(id)].duplicate()
 	var level := Progression.rank(id)
@@ -104,15 +105,22 @@ static func definition(id: String) -> Dictionary:
 static func upgradeable(id: String) -> bool:
 	return has_part(id) and not Progression.is_fused(id) and definition(id).kind in ["attack","modifier","connector"]
 
+static func populate_modifiers(stage: Dictionary) -> void:
+	for mod in stage.modifiers:
+		stage[mod.id]=int(stage.get(mod.id,0))+1
+		if Progression.is_support(mod.id):
+			for effect in Progression.FUSIONS[mod.id].get("effects",[]): stage[effect[0]]+=1
+
 static func modifier_token_stage(id: String) -> Dictionary:
 	var stage := blank_stage()
 	var base := Progression.base_id(id)
-	stage[base] = 1
 	stage.modifiers = [Progression.modifier_record(id)]
+	populate_modifiers(stage)
 	stage["modifier_effects"] = Effects.resolve(stage)
 	return stage
 
 static func modifier_token_text(id: String) -> String:
+	if Progression.is_support(id): return Progression.FUSIONS[id].desc
 	return Effects.text(modifier_token_stage(id),Progression.base_id(id))
 
 static func modifier_effect_text(stage: Dictionary, id: String) -> String:
@@ -176,7 +184,7 @@ static func compile(recipe: Array) -> Dictionary:
 			stage.modifiers = modifiers.duplicate(true)
 			stage.root = pending.is_empty()
 			stage["_linked"] = not stage.root
-			for mod in modifiers: stage[mod.id] += 1
+			populate_modifiers(stage)
 			stage["modifier_effects"] = Effects.resolve(stage)
 			if fused: stage["interval"] = Progression.FUSIONS[id].interval
 			if not pending.is_empty():
@@ -216,12 +224,12 @@ static func describe(recipe: Array) -> String:
 		if not names.is_empty(): text = "/".join(names)+" "+text
 		if not chunks.is_empty():
 			var previous: Dictionary = result.stages[chunks.size()-1]
-			text = (" — "+PARTS[previous.connector].name+" → " if not stage.root else " → 순차 → ")+text
+			text = (" — "+definition(previous.connector).name+" → " if not stage.root else " → 순차 → ")+text
 		chunks.append(text)
 	return "".join(chunks)
 
 static func compatible(mod: String, attack: String) -> bool:
-	return has_part(mod) and PARTS.has(Progression.base_id(mod)) and PARTS[Progression.base_id(mod)].kind=="modifier" and has_part(attack) and definition(attack).kind=="attack"
+	return has_part(mod) and definition(mod).kind=="modifier" and has_part(attack) and definition(attack).kind=="attack"
 
 static func tags(id: String) -> Array:
 	if Progression.is_fused(id): id = Progression.FUSIONS[id].base

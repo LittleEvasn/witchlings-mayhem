@@ -4,3 +4,7 @@
 
 # Local build output
 /artifacts/builds/
+
+# Local screenshots, captures and generated test logs (already tracked evidence remains tracked).
+/artifacts/*
+!/artifacts/.gitignore

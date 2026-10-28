@@ -17,6 +17,7 @@ static func build(ui: CanvasLayer) -> void:
 	ui.close_personal_visual()
 	var g: Node2D=ui.game
 	g.combat_rewards.refresh_options()
+	if g.state=="shop": g.save_checkpoint()
 	var panel:=PanelContainer.new()
 	panel.name="SpellRewardStage"
 	ui.root.add_child(panel)
@@ -35,7 +36,7 @@ static func build(ui: CanvasLayer) -> void:
 	column.add_child(header)
 	Helpers.text(ui,header,"새 주문의 재료를 발견했어!",23,ui.MINT).size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	Helpers.button(ui,header,"나중에 · Esc",g.close_personal).size_flags_horizontal=Control.SIZE_SHRINK_END
-	var caption:=Helpers.text(ui,column,"하나를 골라 이번 조합을 바꿔봐 · 선택 중에도 이동/회피/자동 시전",13,ui.MUTED)
+	var caption:=Helpers.text(ui,column,"미수령 재료 하나 선택 · 결과는 제작 상태와 함께 저장해요" if g.state=="shop" else "하나를 골라 이번 조합을 바꿔봐 · 선택 중에도 이동/회피/자동 시전",13,ui.MUTED)
 	caption.name="RewardCaption"
 	var row:=HBoxContainer.new()
 	row.name="RewardChoices"

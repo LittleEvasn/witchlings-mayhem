@@ -106,7 +106,11 @@ func _draw() -> void:
 		var selected: bool = not id.is_empty() and id==ui.selected_item
 		var available: bool = not inventory or ui.game.remaining_part(id)>0
 		var bg := Color("2b3348") if hover else Color("121a2b")
-		draw_style_box(ui.box(bg,color if selected or hover else color.darkened(0.55),2 if selected else 1,12),Rect2(Vector2.ZERO,size))
+		var skin: StyleBox
+		var state_name := "selected" if selected else "hover" if hover else "normal"
+		if ui.crafting_theme!=null and ui.crafting_theme.has_stylebox(state_name,"CraftSlot"):
+			skin=ui.crafting_theme.get_stylebox(state_name,"CraftSlot")
+		draw_style_box(skin if skin!=null else ui.box(bg,color if selected or hover else color.darkened(0.55),2 if selected else 1,12),Rect2(Vector2.ZERO,size))
 		if not id.is_empty():
 			var center := Vector2(size.x*0.5,size.y*0.40)
 			draw_circle(center,size.y*0.27,Color(color,0.12 if available else 0.04))
