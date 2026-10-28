@@ -214,7 +214,7 @@ static func effect_preview(ui: CanvasLayer, id: String, quote: Dictionary, compa
 	var selected_slot: int = ui.inspected_slot if ui.inspected_orb==g.active_orb else -1
 	var after: Array = g.Forge.reconcile(g.orb_drafts,id,quote,g.active_orb,selected_slot)
 	var lines: PackedStringArray = []
-	for orb in 2:
+	for orb in g.orb_recipes.size():
 		var left := Spells.compile(g.orb_drafts[orb])
 		var right := Spells.compile(after[orb])
 		if not left.ok or not right.ok: continue
@@ -260,7 +260,7 @@ static func detail(ui: CanvasLayer, crafting := true) -> void:
 			var token := Progression.key(Progression.base_id(id),level)
 			var count: int = g.economy.inventory.get(token,0)-(1 if token==id else 0)
 			if count<=0: continue
-			var equipped: int = g.orb_drafts[0].count(token)+g.orb_drafts[1].count(token)
+			var equipped: int = g.equipped_count(token)
 			options.add_item("%s · 재료 %d개 / 장착 %d개" % [Spells.definition(token).name,count,equipped])
 			var item := options.item_count-1
 			options.set_item_metadata(item,token)

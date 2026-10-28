@@ -6,7 +6,9 @@ static func reconcile(bank: Array, target: String, quote: Dictionary, preferred:
 	output_location.clear()
 	output_location["orb"] = -1
 	output_location["slot"] = -1
-	var order: Array = [preferred,1-preferred]
+	var order: Array = [preferred]
+	for i in bank.size():
+		if i!=preferred: order.append(i)
 	var chosen_orb := preferred
 	var chosen_slot := target_slot
 	if chosen_slot<0 or chosen_slot>=result[preferred].size() or result[preferred][chosen_slot]!=target:

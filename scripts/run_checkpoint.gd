@@ -34,6 +34,7 @@ static func capture(g: Node2D) -> Dictionary:
 		"hp":g.hp,"max_hp":g.max_hp,"power":g.power,"fire_rate":g.fire_rate,"kills":g.kills,"wave_kills":g.wave_kills,
 		"position":[g.player.position.x,g.player.position.y],"aim":[g.aim.x,g.aim.y],"last_move":[g.last_move.x,g.last_move.y],
 		"dash_direction":[g.dash_direction.x,g.dash_direction.y],"dash_left":g.dash_left,"dash_cooldown":g.dash_cooldown,"invincible":g.invincible,
+		"run_rules":"survival-30-v1","orb_upgrades":g.orb_upgrades.duplicate(),"workshop_relics":g.workshop_relics.duplicate(),
 		"orbs":g.orb_recipes.duplicate(true),"drafts":g.orb_drafts.duplicate(true),"active_orb":g.active_orb,"history":g.edit_history.duplicate(true),
 		"economy":{"gold":g.economy.gold,"earned":g.economy.total_earned,"inventory":inventory,"offers":g.economy.offers.duplicate(true),"research_sold":g.economy.research_sold},
 		"relics":relics,"rng":rng_data(g.rng),"relic_rng":rng_data(g.relics.rng),"reward_rng":rng_data(g.combat_rewards.rng),
@@ -56,7 +57,7 @@ static func token(id: Variant) -> bool:
 	return P.base_id(id) in Spells.PARTS and id==P.key(P.base_id(id),P.rank(id)) and P.rank(id)>=0 and P.rank(id)<=3
 
 static func bank(value: Variant, inventory: Dictionary) -> bool:
-	if not value is Array or value.size()!=2: return false
+	if not value is Array or not value.size() in [2,3]: return false
 	for parts in value:
 		if not string_list(parts,6): return false
 		for id in parts:
@@ -81,7 +82,16 @@ static func valid(data: Variant) -> bool:
 		if not number(data.get(key),0,1e9,true): return false
 	for key in ["hp","max_hp","power","fire_rate"]:
 		if not number(data.get(key),.001,1.0e6): return false
-	if data.hp>data.max_hp or not number(data.get("active_orb"),0,1,true): return false
+	if data.hp>data.max_hp: return false
+	if not data.get("orbs") is Array or not number(data.get("active_orb"),0,data.orbs.size()-1,true): return false
+	if not data.has("run_rules") and data.orbs.size()!=2: return false
+	if data.has("run_rules"):
+		if data.run_rules!="survival-30-v1" or not data.get("orb_upgrades") is Array or data.orb_upgrades.size()!=data.orbs.size(): return false
+		for rank in data.orb_upgrades:
+			if not number(rank,0,3,true): return false
+		if not string_list(data.get("workshop_relics"),3): return false
+		for id in data.workshop_relics:
+			if id not in Relics.DEFINITIONS: return false
 	for key in ["position","aim","last_move","dash_direction"]:
 		if not data.get(key) is Array or data[key].size()!=2: return false
 		for axis in data[key]:
@@ -92,7 +102,7 @@ static func valid(data: Variant) -> bool:
 	if not econ.get("inventory") is Dictionary or econ.inventory.size()>100: return false
 	for id in econ.inventory:
 		if not token(id) or not number(econ.inventory[id],1,100000,true): return false
-	if not bank(data.get("orbs"),econ.inventory) or not bank(data.get("drafts"),econ.inventory): return false
+	if not bank(data.get("orbs"),econ.inventory) or not bank(data.get("drafts"),econ.inventory) or data.orbs.size()!=data.drafts.size(): return false
 	if not econ.get("research_sold") is bool or not econ.get("offers") is Array or not econ.offers.size() in [4,5]: return false
 	for i in econ.offers.size():
 		var offer: Variant=econ.offers[i]
@@ -125,14 +135,14 @@ static func valid(data: Variant) -> bool:
 	seen.clear()
 	for item in rewards.pending:
 		if data.has("growth"):
-			if not item is Dictionary or not item.get("id") is String or item.id in seen or not number(item.get("level"),2,100000,true): return false
+			if not item is Dictionary or not item.get("id") is String or item.id in seen or not number(item.get("level"),1 if item.get("source","")=="chest" else 2,100000,true): return false
 			seen.append(item.id)
 			if not string_list(item.get("options"),3): return false
 			var unique_options: Array=[]
 			for id in item.options:
 				if id in unique_options: return false
 				unique_options.append(id)
-				if id not in Economy.PRICES and id not in ["gold","heal"] and not (id.begins_with("relic:") and id.trim_prefix("relic:") in Relics.DEFINITIONS): return false
+				if id not in Economy.PRICES and id not in ["gold","heal"] and not (id.begins_with("relic:") and id.trim_prefix("relic:") in Relics.DEFINITIONS) and not (item.get("source","")=="chest" and id.begins_with("fuse:") and id.trim_prefix("fuse:") in P.FUSIONS): return false
 			continue
 		if not item is Dictionary or not number(item.get("wave"),1,data.wave,true) or not item.get("id") is String or item.id in seen: return false
 		seen.append(item.id)
@@ -153,11 +163,11 @@ static func valid(data: Variant) -> bool:
 			if fusion not in P.FUSIONS: return false
 	if not data.get("history") is Array or data.history.size()>30: return false
 	for item in data.history:
-		if not item is Dictionary or not bank(item.get("drafts"),econ.inventory) or not number(item.get("orb"),0,1,true) or not number(item.get("group"),0,5,true): return false
+		if not item is Dictionary or not bank(item.get("drafts"),econ.inventory) or not number(item.get("orb"),0,data.orbs.size()-1,true) or not number(item.get("group"),0,5,true): return false
 	if not data.get("waves") is Array or data.waves.size()!=int(data.wave): return false
 	for i in data.waves.size():
 		var item: Variant=data.waves[i]
-		if not item is Dictionary or item.get("wave")!=i+1 or not item.get("recipes") is Array or item.recipes.size()!=2: return false
+		if not item is Dictionary or item.get("wave")!=i+1 or not item.get("recipes") is Array or not item.recipes.size() in [2,3]: return false
 		for key in ["seconds","kills","earned"]:
 			if not number(item.get(key)): return false
 		for parts in item.recipes:
@@ -236,8 +246,21 @@ static func apply(g: Node2D, data: Dictionary) -> void:
 	g.active_orb=int(data.active_orb)
 	g.orb_recipes=data.orbs.duplicate(true)
 	g.orb_drafts=data.drafts.duplicate(true)
-	g.orb_compiled=[[],[]]
-	for i in 2:
+	g.orb_upgrades=data.get("orb_upgrades",[0,0]).duplicate()
+	for i in g.orb_upgrades.size(): g.orb_upgrades[i]=int(g.orb_upgrades[i])
+	g.workshop_relics=data.get("workshop_relics",[]).duplicate()
+	g.final_boss_started=false
+	g.clear_chests()
+	# Old short-wave checkpoints resume at the matching six-minute preparation.
+	if not data.has("run_rules"):
+		g.elapsed=float(g.wave)*Content.REST_SECONDS
+		g.wave_time=Content.REST_SECONDS
+	g.orb_compiled=[]
+	g.orb_trial=[]
+	for _i in g.orb_recipes.size():
+		g.orb_compiled.append([])
+		g.orb_trial.append([])
+	for i in g.orb_recipes.size():
 		var compiled: Dictionary=Spells.compile(g.orb_recipes[i])
 		g.orb_compiled[i]=compiled.stages if compiled.ok else []
 	g.recipe=g.orb_recipes[g.active_orb].duplicate()
@@ -300,7 +323,7 @@ static func apply(g: Node2D, data: Dictionary) -> void:
 	g.ui.merge_material=""
 	g.ui.inspected_orb=-1
 	g.ui.inspected_slot=-1
-	g.ui.craft_tab=view.get("craft_tab","bag") if view.get("craft_tab") in ["bag","craft","fusion","research"] else "bag"
+	g.ui.craft_tab=view.get("craft_tab","bag") if view.get("craft_tab") in ["bag","craft","fusion","research","workshop"] else "bag"
 	g.ui.bag_filter=view.get("bag_filter","all") if view.get("bag_filter") in ["all","attack","modifier","connector"] else "all"
 	g.ui.bag_scroll=int(view.get("bag_scroll",0)) if number(view.get("bag_scroll",0),0,100000,true) else 0
 	g.ui.board_panel="fusion" if g.ui.craft_tab=="fusion" else "item"

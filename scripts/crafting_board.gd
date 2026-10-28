@@ -34,7 +34,10 @@ static func build(ui: CanvasLayer, trial := false) -> void:
 	ui.label(ui.modal,"%d 마석"%g.economy.gold,Vector2(x+335,58),18,ui.MINT)
 	var owned: Button = ui.button(ui.modal,"유물 %d"%g.relics.owned.size(),Rect2(x+230,54,90,30),ui.show_relics,false,14)
 	owned.disabled = trial
-	for orb in 2: orb_row(ui,orb,Vector2(x+22,106+orb*104))
+	if g.orb_recipes.size()>2:
+		ui.button(ui.modal,"오브 %d/%d ↻"%[g.active_orb+1,g.orb_recipes.size()],Rect2(x+118,54,100,30),func():g.select_orb((g.active_orb+1)%g.orb_recipes.size()),false,13).name="TrialCycleOrb"
+	var shown: Array=[0,1] if g.orb_recipes.size()==2 else [g.active_orb,(g.active_orb+1)%g.orb_recipes.size()]
+	for row in shown.size(): orb_row(ui,shown[row],Vector2(x+22,106+row*104))
 	var active: String = "bag" if trial else ui.craft_tab
 	for i in 3:
 		var tab: Array = [["bag","가방"],["craft","제작"],["fusion","합성 도감"]][i]

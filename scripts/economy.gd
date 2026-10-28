@@ -128,11 +128,7 @@ func craft_quote(action: String, target: String, material := "") -> Dictionary:
    if relics!=null and relics.has("toolbox"): cost = ceili(cost*.8)
    output = Progression.key(Progression.base_id(target),level+1)
   "fuse":
-   output = Progression.fusion_for(target,material)
-   if output.is_empty(): return {"ok":false,"error":"도감의 지정 재료 두 개가 모두 +3여야 해."}
-   if output in fusion_history or inventory.get(output,0)>0: return {"ok":false,"error":"이번 실험에서 이미 완성한 합성이야."}
-   consumed.append(material)
-   cost = Progression.FUSION_COST
+   return {"ok":false,"error":"두 재료가 +3이면 다음 보상 상자에서 합성을 선택할 수 있어."}
   _: return fail
  var after := inventory.duplicate()
  for token in consumed:
@@ -142,6 +138,18 @@ func craft_quote(action: String, target: String, material := "") -> Dictionary:
  after[output] = int(after.get(output,0))+1
  if gold<cost: return {"ok":false,"error":"마석(G)이 부족해. 필요 %d G / 보유 %d G" % [cost,gold],"cost":cost,"output":output,"inventory":after,"consumed":consumed}
  return {"ok":true,"error":"","cost":cost,"output":output,"consumed":consumed,"inventory":after}
+
+func fusion_quote(id: String) -> Dictionary:
+ if id not in Progression.FUSIONS or id in fusion_history or inventory.get(id,0)>0: return {"ok":false}
+ var consumed: Array=[]
+ var after := inventory.duplicate()
+ for base in Progression.FUSIONS[id].parents:
+  var token := Progression.key(base,3)
+  if after.get(token,0)!=1: return {"ok":false}
+  consumed.append(token)
+  after.erase(token)
+ after[id]=1
+ return {"ok":true,"output":id,"consumed":consumed,"inventory":after,"cost":0}
 
 func craft(action: String, target: String, material: String, expected_revision: int) -> Dictionary:
  if expected_revision!=revision: return {"ok":false,"error":"목록이 변경됐어. 다시 선택해줘."}

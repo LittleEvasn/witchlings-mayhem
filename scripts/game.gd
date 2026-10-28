@@ -10,6 +10,7 @@ const Relics = preload("res://scripts/relics.gd")
 const SHOP_SECONDS := 60.0
 const SpellRuntime = preload("res://scripts/spell_runtime.gd")
 const Actor = preload("res://scripts/actor.gd")
+const ActorOverlays=preload("res://scripts/actor_overlays.gd")
 const Visuals = preload("res://scripts/magic_visuals.gd")
 const Interface = preload("res://scripts/interface.gd")
 const ArenaWorld = preload("res://scripts/arena_world.gd")
@@ -22,7 +23,7 @@ const CombatRewards = preload("res://scripts/combat_rewards.gd")
 const FieldEncounters = preload("res://scripts/field_encounters.gd")
 const FIELD := Rect2(0,0,4800,3600)
 const FIXED_FIELD := Rect2(72,115,1296,656)
-const MAX_ENEMIES := 90
+const MAX_ENEMIES := 320
 const MAX_PROJECTILES := 180
 const GRID_SIZE := 96.0
 
@@ -110,6 +111,12 @@ var run_id := ""
 var record_runs := DisplayServer.get_name()!="headless"
 var boss_encounter: RefCounted
 var boss_spawn_wait := 0.0
+var final_boss_started := false
+var chests: Array = []
+var orb_upgrades: Array = [0,0]
+var workshop_relics: Array = []
+var actor_shadows: Node2D
+var actor_health: Node2D
 var music_enabled := false
 var music_player: AudioStreamPlayer
 var music_phase := ""
@@ -135,6 +142,7 @@ func _ready() -> void:
 	add_child(arena)
 	arena.configure(FIELD)
 	actors = Node2D.new()
+	actors.y_sort_enabled=true
 	add_child(actors)
 	player = Actor.new()
 	actors.add_child(player)
@@ -151,6 +159,15 @@ func _ready() -> void:
 	visuals.game = self
 	visuals.z_index = 4000
 	add_child(visuals)
+	actor_shadows=ActorOverlays.new()
+	actor_shadows.game=self
+	actor_shadows.shadows=true
+	actor_shadows.z_index=-1
+	add_child(actor_shadows)
+	actor_health=ActorOverlays.new()
+	actor_health.game=self
+	actor_health.z_index=3995
+	add_child(actor_health)
 	director = Waves.new(self)
 	combat_rewards = CombatRewards.new(self)
 	encounters = FieldEncounters.new(self)
@@ -275,6 +292,7 @@ func return_title() -> void:
 	gems.clear()
 	for enemy in enemies: enemy.queue_free()
 	enemies.clear()
+	clear_chests()
 	grid.clear()
 	boss_ref=null
 	state="title"
@@ -403,6 +421,10 @@ func start_run(kit := "") -> bool:
 	forge_material = ""
 	forge_message = ""
 	result_win = false
+	final_boss_started=false
+	orb_upgrades=[0,0]
+	workshop_relics.clear()
+	clear_chests()
 	end_reason=""
 	run_record.clear()
 	wave_records.clear()
@@ -428,7 +450,8 @@ func start_run(kit := "") -> bool:
 	orb_recipes = [recipe.duplicate(),[]]
 	orb_drafts = orb_recipes.duplicate(true)
 	orb_compiled = [Spells.compile(recipe).stages,[]]
-	orb_trial = [[],[]]
+	orb_trial = []
+	for _i in orb_recipes.size(): orb_trial.append([])
 	orb_clocks = [Spells.interval(orb_compiled[0]),0.0]
 	orb_cursors = [0,0]
 	draft = recipe.duplicate()
@@ -486,11 +509,17 @@ func _physics_process(delta: float) -> void:
 				save_checkpoint()
 		player.animate(delta * 0.5)
 		return
-	if wave==5 and not is_instance_valid(boss_ref):
+	if wave<5 and wave_time>=RunContent.REST_SECONDS:
+		complete_wave()
+		return
+	if wave==5 and not final_boss_started and elapsed>=RunContent.RUN_SECONDS:
+		begin_final_boss()
+	if final_boss_started and not is_instance_valid(boss_ref):
 		# Missing boss never consumes the player's fight time. Retry independently of spawn streams.
 		boss_spawn_wait+=delta
 		if _ensure_boss(): boss_spawn_wait=0
 		else: return
+	if not final_boss_started: delta=minf(delta,maxf(0,RunContent.REST_SECONDS-wave_time))
 	elapsed += delta
 	wave_time += delta
 	relics.tick(delta)
@@ -509,7 +538,7 @@ func _physics_process(delta: float) -> void:
 	var walk := player_bounds()
 	player.position = player.position.clamp(walk.position,walk.end)
 	_sync_camera()
-	_update_auto_aim()
+	# Orb targeting is updated only when an orb actually casts.
 	player.moving = movement.length_squared() > 0.01 or dash_left > 0
 	player.facing_left = aim.x < 0
 	player.animate(delta)
@@ -535,13 +564,13 @@ func _physics_process(delta: float) -> void:
 	if combat_rewards.paused():
 		ui.update_hud()
 		return
-	if wave < 5 and wave_time >= Waves.config(wave).duration: complete_wave()
-	elif wave == 5 and wave_time >= Waves.config(wave).duration:
-		end_reason="교수님이 돌아올 때까지 폭주를 멈추지 못했어."
-		end_run(false)
+	if wave < 5 and wave_time >= RunContent.REST_SECONDS: complete_wave()
+	elif wave==5 and not final_boss_started and elapsed>=RunContent.RUN_SECONDS: begin_final_boss()
 	metrics.peak_projectiles = maxi(metrics.peak_projectiles,projectiles.size())
 	metrics.peak_enemies = maxi(metrics.peak_enemies,enemies.size())
 	visuals.queue_redraw()
+	actor_shadows.queue_redraw()
+	actor_health.queue_redraw()
 	ui_clock += delta
 	if ui_clock >= 0.1:
 		ui_clock = 0
@@ -587,6 +616,8 @@ func clear_magic() -> void:
 	projectiles.clear()
 	magic.clear()
 	if is_instance_valid(visuals): visuals.queue_redraw()
+	actor_shadows.queue_redraw()
+	actor_health.queue_redraw()
 
 func emit_stage(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictionary, factor: float, target_point := Vector2.INF) -> void:
 	if not magic_active(): return
@@ -653,10 +684,71 @@ func damage_enemy(enemy: Node2D, amount: float, direction: Vector2, source := ""
 			ring(player.position,30,Color("a8efe2"),.3)
 			magic.track("relic_shield_gained")
 		encounters.died(enemy)
+		if enemy.role=="sentinel": drop_chest(enemy.position)
 		var coins: int = 0 if enemy.role in ["carrier","escort"] else director.reward(enemy.kind)
 		if coins > 0: gems.append({"pos":enemy.position,"value":coins})
 		burst(enemy.position,Color("dfb6f5"),5)
 		if enemy.boss: end_run(true)
+
+func clear_chests() -> void:
+	for chest in chests:
+		if is_instance_valid(chest.label): chest.label.queue_free()
+	chests.clear()
+
+func drop_chest(at: Vector2) -> void:
+	var label:=Label.new()
+	label.text="▣ 보상 상자"
+	label.add_theme_font_size_override("font_size",20)
+	label.add_theme_color_override("font_color",Color("ffe7a3"))
+	label.add_theme_color_override("font_outline_color",Color("171d2b"))
+	label.add_theme_constant_override("outline_size",5)
+	label.position=at+Vector2(-50,-28)
+	actors.add_child(label)
+	chests.append({"pos":at,"label":label})
+	ring(at,32,Color("ffe7a3"),1)
+
+func collect_chests(all := false) -> void:
+	for i in range(chests.size()-1,-1,-1):
+		if not all and chests[i].pos.distance_squared_to(player.position)>70.0*70.0: continue
+		combat_rewards.queue_chest()
+		chests[i].label.queue_free()
+		chests.remove_at(i)
+
+func claim_fusion(id: String) -> bool:
+	_sync_orb()
+	var quote: Dictionary=economy.fusion_quote(id)
+	if not quote.ok: return false
+	var target: String=quote.consumed[0]
+	var applied:=Forge.reconcile(orb_recipes,target,quote,active_orb)
+	var edited:=Forge.reconcile(orb_drafts,target,quote,active_orb)
+	if not Forge.valid(applied,quote.inventory) or not Forge.valid(edited,quote.inventory): return false
+	economy.inventory=quote.inventory
+	economy.fusion_history.append(id)
+	economy.revision+=1
+	orb_recipes=applied
+	orb_drafts=edited
+	for i in orb_recipes.size():
+		var parsed:=Spells.compile(applied[i])
+		orb_compiled[i]=parsed.stages if parsed.ok else []
+	recipe=orb_recipes[active_orb].duplicate()
+	draft=orb_drafts[active_orb].duplicate()
+	compiled=orb_compiled[active_orb]
+	edit_history.clear()
+	edit_revision+=1
+	magic.generation+=1
+	_reset_orb_clocks()
+	ui.selected_item=id
+	return true
+
+func begin_final_boss() -> void:
+	final_boss_started=true
+	clear_magic()
+	hostile_shots.clear()
+	boss_encounter.clear()
+	_ensure_boss()
+	director.reset()
+	set_music("boss")
+	announce("30분 생존! 마지막 폭주를 멈추면 승리야.",6)
 
 func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, role := "normal") -> Node2D:
 	var config: Dictionary = Waves.config(wave)
@@ -693,7 +785,7 @@ func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, 
 	if role=="swarm": enemy.speed=Waves.SWARM_SPEED+wave*2
 	if role=="carrier": enemy.hp=85+wave*12; enemy.speed=185; enemy.radius=22
 	if role=="escort": enemy.hp=35*float(config.hp_scale); enemy.speed=145
-	if role=="sentinel": enemy.hp=280+wave*45; enemy.speed=192+wave*3
+	if role=="sentinel": enemy.hp=(350+elapsed*1.5); enemy.speed=192+wave*3
 	if role == "line": enemy.speed += 8
 	if role!="carrier": enemy.radius = radius
 	enemy.cooldown = rng.randf_range(1.4,2.8)
@@ -777,15 +869,18 @@ func _update_enemies(delta: float) -> void:
 				enemy.windup = 0.8
 				enemy.charge_direction = direction
 				enemy.cooldown = 3.8
-		# Local separation prevents a single unreadable pile without an O(n²) whole-world pass.
-		var separation := Vector2.ZERO
-		for other in nearby(enemy.position,50):
-			if other == enemy or other.dead: continue
-			var offset: Vector2 = enemy.position-other.position
-			var d2 := offset.length_squared()
-			if d2 > 0.1 and d2 < pow(enemy.radius+other.radius,2):
-				separation += offset.normalized()*35
-		enemy.position += (velocity+separation.limit_length(60))*delta*status_speed
+		# Cache local steering at 10Hz; movement/attacks still simulate every physics tick.
+		enemy.separation_left-=delta
+		if enemy.separation_left<=0:
+			enemy.separation_left=.10
+			var separation := Vector2.ZERO
+			for other in nearby(enemy.position,50):
+				if other==enemy or other.dead: continue
+				var offset: Vector2=enemy.position-other.position
+				var d2:=offset.length_squared()
+				if d2>.1 and d2<pow(enemy.radius+other.radius,2): separation+=offset.normalized()*35
+			enemy.separation_velocity=separation.limit_length(60)
+		enemy.position+=(velocity+enemy.separation_velocity)*delta*status_speed
 		var bounds := enemy_bounds()
 		enemy.position = enemy.position.clamp(bounds.position,bounds.end)
 		enemy.moving = velocity.length_squared() > 1
@@ -849,6 +944,7 @@ func _update_hostile_shots(delta: float) -> void:
 		elif shot.life <= 0 or not projectile_bounds().has_point(shot.pos): hostile_shots.remove_at(i)
 
 func _update_gems(delta: float) -> void:
+	collect_chests()
 	for i in range(gems.size()-1,-1,-1):
 		var gem: Dictionary = gems[i]
 		var distance: float = gem.pos.distance_to(player.position)
@@ -913,6 +1009,11 @@ func _remove_dead() -> void:
 
 func complete_wave() -> void:
 	if state != "combat" or wave >= 5: return
+	collect_chests(true)
+	for gem in gems: gain_money(gem.value,true)
+	gems.clear()
+	combat_rewards.tick()
+	if combat_rewards.paused(): return
 	close_personal()
 	combat_rewards.finish_wave()
 	encounters.clear()
@@ -939,6 +1040,8 @@ func complete_wave() -> void:
 	reward_options.clear()
 	_enter_preparation()
 	visuals.queue_redraw()
+	actor_shadows.queue_redraw()
+	actor_health.queue_redraw()
 	play_sound("reward")
 
 func choose_reward(id: String) -> void:
@@ -961,11 +1064,60 @@ func _enter_preparation() -> void:
 	shop_message = RunContent.chapter(wave).craft
 	ui.board_panel="shop"
 	economy.roll(rng,recipe)
+	workshop_relics=relics.choices(rng)
 	state = "shop"
 	ui.show_shop()
 
 func is_shopping() -> bool:
 	return state == "shop" or (state == "edit" and previous_state == "shop")
+
+func orb_delay(delay: float, index: int) -> float:
+	return cast_delay(delay)/(1.0+float(orb_upgrades[index])*.1)
+
+func equipped_count(id: String, use_draft := true) -> int:
+	var count:=0
+	for parts in (orb_drafts if use_draft else orb_recipes): count+=parts.count(id)
+	return count
+
+func other_orb_parts() -> Array:
+	var parts: Array=[]
+	for i in orb_drafts.size():
+		if i!=active_orb: parts.append_array(orb_drafts[i])
+	return parts
+
+func workshop_buy(action: String, revision: int, expected_orb := -1) -> bool:
+	if state!="shop" or revision!=economy.revision: return false
+	var price := 0
+	if action=="orb":
+		if orb_recipes.size()>=3: return false
+		price=180
+	elif action=="upgrade":
+		if expected_orb!=active_orb: return false
+		if orb_upgrades[active_orb]>=3: return false
+		price=60*(int(orb_upgrades[active_orb])+1)
+	elif action.begins_with("relic:"):
+		var id:=action.trim_prefix("relic:")
+		if not id in workshop_relics or relics.has(id): return false
+		price=80
+	else: return false
+	if economy.gold<price: return false
+	economy.gold-=price
+	economy.revision+=1
+	if action=="orb":
+		orb_recipes.append([])
+		orb_drafts.append([])
+		orb_compiled.append([])
+		orb_trial.append([])
+		orb_clocks.append(0.0)
+		orb_cursors.append(0)
+		orb_upgrades.append(0)
+		edit_history.clear()
+		edit_revision+=1
+	elif action=="upgrade": orb_upgrades[active_orb]+=1
+	else: acquire_relic(action.trim_prefix("relic:"))
+	ui.rebuild_recipe()
+	ui.show_shop()
+	return true
 
 func buy_orb(index: int, revision: int) -> bool:
 	if state != "shop" or shop_time <= 0: return false
@@ -1018,10 +1170,10 @@ func craft_spell(action: String, target: String, material: String, expected_revi
 	if not receipt.ok: return false
 	orb_recipes = applied
 	orb_drafts = edited
-	for i in 2:
+	for i in orb_recipes.size():
 		orb_compiled[i] = Spells.compile(applied[i]).stages if not applied[i].is_empty() else []
 		orb_cursors[i] = 0
-		orb_clocks[i] = maxf(orb_clocks[i],cast_delay(Spells.interval(orb_compiled[i])))
+		orb_clocks[i] = maxf(orb_clocks[i],orb_delay(Spells.interval(orb_compiled[i]),i))
 	recipe = orb_recipes[active_orb].duplicate()
 	draft = orb_drafts[active_orb].duplicate()
 	compiled = orb_compiled[active_orb]
@@ -1079,14 +1231,8 @@ func start_next_wave() -> void:
 	cast_clock = cast_delay(Spells.interval(trial_stages if state=="trial" else compiled))
 	invincible = 1
 	ui.close_modal()
-	if wave == 5:
-		boss_encounter.clear()
-		_ensure_boss()
-		set_music("boss")
-		announce("끝없는 모범답안 · 예고를 피하며 폭주를 멈추자!",5)
-	else:
-		set_music("combat")
-		announce(RunContent.chapter(wave).lumi,5)
+	set_music("combat")
+	announce(RunContent.chapter(wave).lumi,5)
 	if discarded: announce("준비 시간 종료 · 미적용 편집은 취소했어. 기존 주문과 제작한 구체는 유지돼.",5)
 
 func editing_recipe() -> bool:
@@ -1098,7 +1244,7 @@ func _sync_orb() -> void:
 
 func reserved_parts() -> Array:
 	var all_parts: Array = []
-	for i in 2: all_parts.append_array(draft if i==active_orb else orb_drafts[i])
+	for i in orb_recipes.size(): all_parts.append_array(draft if i==active_orb else orb_drafts[i])
 	return all_parts
 
 func remaining_part(id: String) -> int:
@@ -1118,7 +1264,7 @@ func valid_draft() -> bool:
 	return present and economy.owns_recipe(reserved_parts())
 
 func select_orb(index: int) -> void:
-	if not editing_recipe() or index==active_orb or index<0 or index>1: return
+	if not editing_recipe() or index==active_orb or index<0 or index>=orb_recipes.size(): return
 	_sync_orb()
 	active_orb = index
 	workbench_message = ""
@@ -1136,15 +1282,25 @@ func focus_group(index: int) -> void:
 	ui.refresh_workbench.call_deferred()
 
 func orb_position(index: int) -> Vector2:
-	return player.position+Vector2(-34 if index==0 else 34,-19+sin(elapsed*2.5+index*PI)*5)
+	return player.position+([Vector2(-36,-19),Vector2(36,-19),Vector2(0,-65)][index])+Vector2(0,sin(elapsed*2.5+index*PI)*5)
 
 func _reset_orb_clocks() -> void:
-	orb_cursors = [0,0]
-	for i in 2: orb_clocks[i] = cast_delay(Spells.interval(orb_compiled[i]))
+	orb_cursors.resize(orb_recipes.size())
+	orb_cursors.fill(0)
+	orb_clocks.resize(orb_recipes.size())
+	for i in orb_recipes.size(): orb_clocks[i] = orb_delay(Spells.interval(orb_compiled[i]),i)
 	cast_clock = orb_clocks[active_orb]
 
 func _tick_orbs(delta: float, allow_cast := true) -> void:
 	magic.begin_tick()
+	var due := false
+	for i in orb_compiled.size():
+		var scheduled: Array=orb_trial[i] if state=="trial" else orb_compiled[i]
+		if not scheduled.is_empty() and float(orb_clocks[i])<=delta: due=true
+	if not due:
+		for i in orb_clocks.size(): orb_clocks[i]=maxf(-.1,float(orb_clocks[i])-delta)
+		cast_clock=orb_clocks[active_orb]
+		return
 	var targets: Array=AutoTargeting.ranked(self)
 	_update_auto_aim(targets)
 	for i in orb_compiled.size():
@@ -1164,7 +1320,7 @@ func _tick_orbs(delta: float, allow_cast := true) -> void:
 		if not magic_active(): return
 		metrics.casts += 1
 		orb_cursors[i] = command.cursor
-		orb_clocks[i] = cast_delay(command.delay)
+		orb_clocks[i] = orb_delay(command.delay,i)
 		play_sound("cast")
 	cast_clock = orb_clocks[active_orb]
 
@@ -1286,19 +1442,23 @@ func migrate_spell_roles() -> bool:
 		elif offer.get("id","")=="on_return": offer.id = "expire"
 	orb_recipes = plan.applied
 	orb_drafts = plan.drafts
-	orb_compiled = [[],[]]
-	for i in 2:
+	orb_compiled = []
+	for _i in orb_recipes.size(): orb_compiled.append([])
+	for i in orb_recipes.size():
 		var parsed := Spells.compile(orb_recipes[i])
 		orb_compiled[i] = parsed.stages if parsed.ok else []
-	orb_cursors = [0,0]
-	orb_clocks = [cast_delay(Spells.interval(orb_compiled[0])),cast_delay(Spells.interval(orb_compiled[1]))]
+	orb_cursors.resize(orb_recipes.size())
+	orb_cursors.fill(0)
+	orb_clocks.resize(orb_recipes.size())
+	for i in orb_recipes.size(): orb_clocks[i]=orb_delay(Spells.interval(orb_compiled[i]),i)
 	recipe = orb_recipes[active_orb].duplicate()
 	draft = orb_drafts[active_orb].duplicate()
 	compiled = orb_compiled[active_orb]
 	cast_clock = orb_clocks[active_orb]
 	edit_history.clear()
 	trial_snapshot.clear()
-	orb_trial = [[],[]]
+	orb_trial = []
+	for _i in orb_recipes.size(): orb_trial.append([])
 	trial_stages.clear()
 	edit_revision += 1
 	forge_target = ""
@@ -1332,14 +1492,14 @@ func _draft_changed() -> void:
 
 func _commit_live_board() -> void:
 	# The visible slots are authoritative. Incomplete rows are silent, never the old spell.
-	for i in 2:
+	for i in orb_recipes.size():
 		var different: bool = orb_recipes[i]!=orb_drafts[i]
 		var result := Spells.compile(orb_drafts[i])
 		orb_recipes[i] = orb_drafts[i].duplicate()
 		orb_compiled[i] = result.stages if result.ok else []
 		if different:
 			orb_cursors[i] = 0
-			orb_clocks[i] = maxf(orb_clocks[i],cast_delay(Spells.interval(orb_compiled[i])))
+			orb_clocks[i] = maxf(orb_clocks[i],orb_delay(Spells.interval(orb_compiled[i]),i))
 			if not trial_snapshot.is_empty():
 				trial_snapshot.orb_clocks[i] = orb_clocks[i]
 				trial_snapshot.orb_cursors[i] = 0
@@ -1352,7 +1512,7 @@ func board_data(id: String, orb_index := -1, slot := -1) -> Dictionary:
 	if not editing_recipe() or not Spells.has_part(id): return {}
 	_sync_orb()
 	if orb_index>=0:
-		if orb_index>1 or slot<0 or slot>=orb_drafts[orb_index].size() or orb_drafts[orb_index][slot]!=id: return {}
+		if orb_index>=orb_recipes.size() or slot<0 or slot>=orb_drafts[orb_index].size() or orb_drafts[orb_index][slot]!=id: return {}
 	elif remaining_part(id)<=0: return {}
 	return {"kind":"board_orb","owner":get_instance_id(),"revision":edit_revision,"stock":economy.revision,"id":id,"orb":orb_index,"slot":slot}
 
@@ -1360,13 +1520,13 @@ func board_plan(data: Variant, target: int, boundary: int, replace := false) -> 
 	if not editing_recipe() or not data is Dictionary: return {}
 	if data.get("kind","")!="board_orb" or data.get("owner",0)!=get_instance_id() or data.get("revision",-1)!=edit_revision or data.get("stock",-1)!=economy.revision: return {}
 	var id: String = data.get("id","")
-	if not Spells.has_part(id) or target < -1 or target > 1: return {}
+	if not Spells.has_part(id) or target < -1 or target >= orb_recipes.size(): return {}
 	_sync_orb()
 	var bank: Array = orb_drafts.duplicate(true)
 	var src: int = data.get("orb",-1)
 	var index: int = data.get("slot",-1)
 	if src>=0:
-		if src>1 or index<0 or index>=bank[src].size() or bank[src][index]!=id: return {}
+		if src>=orb_recipes.size() or index<0 or index>=bank[src].size() or bank[src][index]!=id: return {}
 	elif remaining_part(id)<=0 or target<0: return {}
 	if target<0:
 		bank[src].remove_at(index)
@@ -1380,8 +1540,11 @@ func board_plan(data: Variant, target: int, boundary: int, replace := false) -> 
 			bank[src].remove_at(index)
 			if src==target and index<boundary: boundary -= 1
 		bank[target].insert(clampi(boundary,0,bank[target].size()),id)
-	var all_parts: Array = bank[0]+bank[1]
-	if bank[0].size()>6 or bank[1].size()>6 or not economy.owns_recipe(all_parts): return {}
+	var all_parts: Array = []
+	for row in bank:
+		if row.size()>6: return {}
+		all_parts.append_array(row)
+	if not economy.owns_recipe(all_parts): return {}
 	return {"bank":bank}
 
 func board_drop(data: Variant, target: int, boundary: int, replace := false) -> bool:
@@ -1421,17 +1584,19 @@ func board_close() -> void:
 
 func _refresh_trial_orbs() -> void:
 	_sync_orb()
-	orb_cursors = [0,0]
-	for i in 2:
+	orb_cursors.resize(orb_recipes.size())
+	orb_cursors.fill(0)
+	orb_clocks.resize(orb_recipes.size())
+	for i in orb_recipes.size():
 		var result := Spells.compile(orb_drafts[i])
 		orb_trial[i] = result.stages if result.ok and economy.owns_recipe(reserved_parts()) else []
-		orb_clocks[i] = cast_delay(Spells.interval(orb_trial[i]))
+		orb_clocks[i] = orb_delay(Spells.interval(orb_trial[i]),i)
 	trial_stages = orb_trial[active_orb]
 	cast_clock = orb_clocks[active_orb]
 
 func _accept_group_recipe(next: Array) -> bool:
 	var all_parts: Array = []
-	for i in 2: all_parts.append_array(next if i==active_orb else orb_drafts[i])
+	for i in orb_recipes.size(): all_parts.append_array(next if i==active_orb else orb_drafts[i])
 	if next.size()>6:
 		workbench_message = "이 오브는 최대 6칸이야. 보조를 빼거나 다른 오브로 옮겨봐."
 		ui.refresh_workbench.call_deferred()
@@ -1475,12 +1640,12 @@ func move_group_to_other(index: int) -> void:
 	var src := Workbench.unpack(draft)
 	if index<0 or index>=src.groups.size(): return
 	var tokens: Array = src.groups[index].tokens
-	var next: Array = orb_drafts[1-active_orb]+tokens
+	var next: Array = orb_drafts[(active_orb+1)%orb_recipes.size()]+tokens
 	if next.size()>6: return
 	_remember_draft()
 	src.groups.remove_at(index)
 	draft = Workbench.pack(src)
-	orb_drafts[1-active_orb] = next
+	orb_drafts[(active_orb+1)%orb_recipes.size()] = next
 	_draft_changed()
 
 func remove_part(index: int) -> void:
@@ -1544,11 +1709,11 @@ func recommend_recipe() -> void:
 	if not editing_recipe(): return
 	_remember_draft()
 	var start: Array = Economy.KITS[selected_kit].recipe.duplicate()
-	if economy.owns_recipe(start+orb_drafts[1-active_orb]): draft = start
+	if economy.owns_recipe(start+other_orb_parts()): draft = start
 	else: draft = []
 	for id in ["giant","echo","pierce","seek"]:
 		var next: Array = [id]+draft
-		if Spells.compile(next).ok and economy.owns_recipe(next+orb_drafts[1-active_orb]): draft = next
+		if Spells.compile(next).ok and economy.owns_recipe(next+other_orb_parts()): draft = next
 	_draft_changed()
 
 func select_research(id: String, revision: int) -> void:
@@ -1557,13 +1722,13 @@ func select_research(id: String, revision: int) -> void:
 func apply_recipe() -> bool:
 	if not editing_recipe() or not valid_draft(): return false
 	var changed := orb_recipes != orb_drafts
-	for i in 2:
+	for i in orb_recipes.size():
 		var parts: Array = orb_drafts[i]
 		var different: bool = parts != orb_recipes[i]
 		orb_compiled[i] = Spells.compile(parts).stages if not parts.is_empty() else []
-		if different: orb_clocks[i] = maxf(orb_clocks[i],cast_delay(Spells.interval(orb_compiled[i])))
+		if different: orb_clocks[i] = maxf(orb_clocks[i],orb_delay(Spells.interval(orb_compiled[i]),i))
 		if different and not trial_snapshot.is_empty():
-			trial_snapshot.orb_clocks[i] = maxf(trial_snapshot.orb_clocks[i],cast_delay(Spells.interval(orb_compiled[i])))
+			trial_snapshot.orb_clocks[i] = maxf(trial_snapshot.orb_clocks[i],orb_delay(Spells.interval(orb_compiled[i]),i))
 	orb_recipes = orb_drafts.duplicate(true)
 	recipe = orb_recipes[active_orb].duplicate()
 	compiled = orb_compiled[active_orb]
@@ -1573,7 +1738,7 @@ func apply_recipe() -> bool:
 	edit_revision += 1
 	if state=="edit": leave_editor()
 	else:
-		shop_message = "두 오브의 주문을 적용했어. 함께 시험하거나 출발해봐."
+		shop_message = "오브들의 주문을 적용했어. 함께 시험하거나 출발해봐."
 		ui.refresh_workbench.call_deferred()
 	return true
 
@@ -1641,6 +1806,8 @@ func _update_trial(delta: float) -> void:
 	magic.update_zones(delta)
 	_update_effects(delta)
 	visuals.queue_redraw()
+	actor_shadows.queue_redraw()
+	actor_health.queue_redraw()
 	ui.update_trial_stats()
 
 func _clear_trial() -> void:
@@ -1650,7 +1817,8 @@ func _clear_trial() -> void:
 	enemies.clear()
 	grid.clear()
 	trial_stages = []
-	orb_trial = [[],[]]
+	orb_trial = []
+	for _i in orb_recipes.size(): orb_trial.append([])
 	if not trial_snapshot.is_empty():
 		player.position = trial_snapshot.position
 		aim = trial_snapshot.aim

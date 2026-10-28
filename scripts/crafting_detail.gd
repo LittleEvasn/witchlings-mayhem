@@ -69,7 +69,7 @@ static func wide_fusion(ui: CanvasLayer, at: Vector2) -> void:
 		Look.text(ui,ui.modal,"보유 %d / 1"%count,at+Vector2(40+i*170,514),14,Look.PURPLE if count>0 else Color("b36683"),142)
 	var q: Dictionary=g.economy.craft_quote("fuse",a,b)
 	var revision: int=g.economy.revision
-	var button:=Look.button(ui,ui.modal,"합성하기 · 12 마석",Rect2(at+Vector2(24,574),Vector2(318,40)),func():g.craft_spell("fuse",a,b,revision),true,20)
+	var button:=Look.button(ui,ui.modal,"+3 재료 두 개 → 보상 상자에서 합성",Rect2(at+Vector2(24,574),Vector2(318,40)),func():pass,true,16)
 	button.name="ForgeFusion"
 	button.disabled=not q.ok
 	button.tooltip_text=q.error if not q.ok else "재료 두 개를 소비해 완성 구체 한 개를 얻어요. 장착 중인 실물도 소비돼요."
@@ -102,7 +102,7 @@ static func item(ui: CanvasLayer, x: float, crafting: bool) -> void:
 		var token: String=P.key(P.base_id(id),level)
 		var count: int=g.economy.inventory.get(token,0)-(1 if token==id else 0)
 		if count<=0: continue
-		var equipped: int=g.orb_drafts[0].count(token)+g.orb_drafts[1].count(token)
+		var equipped: int=g.equipped_count(token)
 		options.add_item("%s · %d개 / 장착 %d개"%[Spells.definition(token).name,count,equipped])
 		var index:=options.item_count-1
 		options.set_item_metadata(index,token)
@@ -150,7 +150,7 @@ static func fusion(ui: CanvasLayer, x: float) -> void:
 	var desc: Label=ui.label(ui.modal,recipe.desc,Vector2(x+24,710),13,ui.TEXT,472)
 	desc.max_lines_visible=2
 	desc.tooltip_text=q.error if not q.ok else "재료 두 개를 소비해 완성 구체 한 개를 얻어요. 장착 중인 실물도 소비돼요."
-	var button: Button=ui.button(ui.modal,"합성하기 · 12 마석",Rect2(x+24,754,474,34),func():g.craft_spell("fuse",a,b,revision),true,16)
+	var button: Button=ui.button(ui.modal,"보상 상자에서 합성",Rect2(x+24,754,474,34),func():g.craft_spell("fuse",a,b,revision),true,16)
 	button.name="ForgeFusion"
 	button.disabled=not q.ok
 	button.tooltip_text=desc.tooltip_text

@@ -1,16 +1,18 @@
 extends RefCounted
 ## The Lumi route. Combat excludes preparation/trial; personal combat editing stays live.
 const VERSION := "lumi-magic-v2"
+const RUN_SECONDS := 1800.0
+const REST_SECONDS := 360.0
 const CHAPTERS := [
-	{"title":"숙제를 대신해 줄 마법", "goal":"실패작을 물리치고 첫 제작 재료 모으기", "duration":60.0,"budget":48,
+	{"title":"숙제를 대신해 줄 마법", "goal":"마석으로 성장하며 6분까지 생존", "duration":360.0,"budget":0,
 		"lumi":"숙제만 부탁했는데… 왜 나한테 달려오는 거야?", "craft":"오브 2에도 공격을 넣어볼까? 새 구체는 직접 지정 제작할 수도 있어."},
-	{"title":"멈추지 않는 주문", "goal":"무리를 헤치며 두 오브의 조합 키우기", "duration":75.0,"budget":64,
-		"lumi":"좋아. 실패작의 마석이면 우리 주문도 고칠 수 있겠어.", "craft":"자주 쓰는 공격이나 보조를 강화해보자. 같은 구체를 붙이거나 마석으로 +1."},
-	{"title":"빠뜨린 안전장치", "goal":"돌진을 피하고 주력 조합 완성하기", "duration":90.0,"budget":78,
-		"lumi":"아. ‘더 좋은 주문을 만들어’라고만 했네. 멈추라는 말은…", "craft":"다음은 완성한 주문을 써볼 차례야. 서로 다른 두 +3 공격은 합성 도감도 확인해봐."},
-	{"title":"이번 주문은 우리 편", "goal":"완성한 조합으로 혼성 무리 돌파하기", "duration":105.0,"budget":90,
-		"lumi":"이번에는 우리가 만든 주문으로 끝내자!", "craft":"마지막 준비야. 체력을 확인하고, 시험 발사로 두 오브가 함께 작동하는지 보자."},
-	{"title":"끝없는 모범답안", "goal":"폭주한 마법 조수를 쓰러뜨리기", "duration":150.0,"target_seconds":120.0,"budget":24,
+	{"title":"멈추지 않는 주문", "goal":"두 오브의 조합을 키우며 12분까지 생존", "duration":360.0,"budget":0,
+		"lumi":"좋아. 실패작의 마석이면 우리 주문도 고칠 수 있겠어.", "craft":"자주 쓰는 공격이나 보조를 강화해보자. 중복 획득이나 마석으로 +1."},
+	{"title":"빠뜨린 안전장치", "goal":"상자로 합성하고 18분까지 생존", "duration":360.0,"budget":0,
+		"lumi":"아. ‘더 좋은 주문을 만들어’라고만 했네. 멈추라는 말은…", "craft":"다음은 완성한 주문을 써볼 차례야. 지정된 +3 두 구체를 모으면 보상 상자에서 합성을 골라봐."},
+	{"title":"이번 주문은 우리 편", "goal":"밀려드는 무리를 헤치며 24분까지 생존", "duration":360.0,"budget":0,
+		"lumi":"이번에는 우리가 만든 주문으로 끝내자!", "craft":"마지막 준비야. 체력을 확인하고, 시험 발사로 오브들이 함께 작동하는지 보자."},
+	{"title":"끝없는 모범답안", "goal":"30분 생존 후 폭주한 마법 조수를 처치", "duration":360.0,"budget":0,
 		"lumi":"완벽한 숙제보다, 지금 멈추는 게 먼저야!", "craft":""}
 ]
 const INTRO := [

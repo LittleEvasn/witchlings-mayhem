@@ -1,5 +1,7 @@
 extends Node2D
 ## One generated atlas; animation here is bounce/lean, not a claimed walk cycle.
+var batched_overlays := true
+var overlay_active := false
 var role := "normal"
 var shot_windup := 0.0
 var shot_direction := Vector2.RIGHT
@@ -23,11 +25,14 @@ var facing_left := false
 var sprite: Sprite2D
 var art_scale := 1.0
 var seed_phase := 0.0
+var separation_left := 0.0
+var separation_velocity := Vector2.ZERO
 
 func setup(texture: Texture2D, actor_kind: int, is_boss := false) -> void:
 	kind = actor_kind
 	boss = is_boss
 	seed_phase = randf() * TAU
+	separation_left=fmod(seed_phase,.1)
 	sprite = Sprite2D.new()
 	var atlas := AtlasTexture.new()
 	atlas.atlas = texture
@@ -61,7 +66,7 @@ func setup(texture: Texture2D, actor_kind: int, is_boss := false) -> void:
 		nameplate.add_theme_color_override("font_outline_color",Color("151d2b"))
 		nameplate.add_theme_constant_override("outline_size",4)
 		add_child(nameplate)
-	z_index = int(position.y)
+	z_index = 0
 
 func animate(delta: float) -> void:
 	age += delta
@@ -73,13 +78,16 @@ func animate(delta: float) -> void:
 	sprite.flip_h = facing_left
 	sprite.rotation = bob * 0.045 if moving else 0.0
 	sprite.modulate = Color(2.2,1.7,1.7) if flash > 0 else visual_tint
-	z_index = int(position.y)
-	queue_redraw()
+	z_index = 0
+	var needs_overlay: bool=not batched_overlays or kind==0 or role in ["carrier","sentinel"] or windup>0 or shot_windup>0
+	if needs_overlay or overlay_active: queue_redraw()
+	overlay_active=needs_overlay
 
 func _draw() -> void:
-	draw_set_transform(Vector2.ZERO,0,Vector2(1,0.36))
-	draw_circle(Vector2(0,5),radius,Color(0.05,0.04,0.12,0.3))
-	draw_set_transform(Vector2.ZERO)
+	if not batched_overlays:
+		draw_set_transform(Vector2.ZERO,0,Vector2(1,0.36))
+		draw_circle(Vector2(0,5),radius,Color(0.05,0.04,0.12,0.3))
+		draw_set_transform(Vector2.ZERO)
 	if role in ["carrier","sentinel"]:
 		draw_arc(Vector2.ZERO,radius+5,0,TAU,36,visual_tint,2,true)
 	if kind == 0:
@@ -90,7 +98,7 @@ func _draw() -> void:
 	if shot_windup > 0:
 		draw_arc(Vector2.ZERO,radius+8,0,TAU,32,Color("ffb174"),2.5,true)
 		draw_line(Vector2.ZERO,shot_direction*170,Color(1,0.66,0.45,0.7),2,true)
-	if hp < max_hp and kind != 0 and not boss:
+	if not batched_overlays and hp < max_hp and kind != 0 and not boss:
 		var y: float=-78 if role=="sentinel" else -47
 		draw_line(Vector2(-16,y),Vector2(16,y),Color("242132"),4)
 		draw_line(Vector2(-16,y),Vector2(-16+32*hp/max_hp,y),Color("ff9cae"),3)

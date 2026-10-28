@@ -246,6 +246,8 @@ func update_hud() -> void:
 	money_label.text = "%d G" % game.economy.gold
 	time_label.text = "%02d:%02d" % [floori(game.elapsed/60.0),int(game.elapsed)%60]
 	wave_label.text = "%d / 5  ·  %s" % [game.wave,game.RunContent.clock(maxf(0,game.Waves.config(game.wave).duration-game.wave_time))]
+	if game.final_boss_started: wave_label.text="최종 보스 · 처치하면 승리"
+	else: wave_label.text="%s까지 · %s"%["최종 보스" if game.wave==5 else "제작 휴식",game.RunContent.clock(maxf(0,360-game.wave_time))]
 	wave_label.tooltip_text=game.RunContent.chapter(game.wave).title+"\n"+game.RunContent.chapter(game.wave).goal
 	stats_label.text = "처치 %d  ·  위력 ×%.2f" % [game.kills,game.caster_power()]
 	shield_label.text = "보호막 %.0f / 10" % game.relics.shield if game.relics.has("soul_coat") else ""
@@ -278,13 +280,13 @@ func clear_children(node: Node) -> void:
 
 func rebuild_recipe() -> void:
 	clear_children(recipe_bar)
-	panel(recipe_bar,Rect2(324,806,792,80),Color(0.08,0.10,0.16,0.96))
-	button(recipe_bar,"Tab  마법",Rect2(340,828,120,36),func():
+	panel(recipe_bar,Rect2(240,806,1120,80),Color(0.08,0.10,0.16,0.96))
+	button(recipe_bar,"Tab  마법",Rect2(252,828,120,36),func():
 		if game.state=="combat": game.open_editor()
 	,false,16)
-	for i in 2:
+	for i in game.orb_recipes.size():
 		var parts: Array = game.orb_recipes[i]
-		var x:=480+i*308
+		var x: int=390+i*(308 if game.orb_recipes.size()==2 else 300)
 		var color: Color=MINT if i==0 else PINK
 		var invalid: bool=not parts.is_empty() and not Spells.compile(parts).ok
 		if invalid: color=PINK
@@ -456,7 +458,7 @@ func show_trial() -> void:
 
 func update_trial_stats() -> void:
 	if is_instance_valid(trial_stats_label):
-		trial_stats_label.text = "피해 %.0f  ·  명중 %d  |  가까운 순서대로 두 오브 자동 조준" % [game.trial_damage,game.trial_hits]
+		trial_stats_label.text = "피해 %.0f  ·  명중 %d  |  가까운 순서대로 오브 자동 조준" % [game.trial_damage,game.trial_hits]
 		trial_stats_label.tooltip_text = "시험 표적은 반격·드롭 없음. 독립 주문은 0.12초 간격으로 순차 시전. 한 바퀴 후 대기는 가장 느린 주문과 보조 효과를 따른다."
 
 func show_pause() -> void:

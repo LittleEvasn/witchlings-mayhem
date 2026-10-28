@@ -89,13 +89,13 @@ static func build(ui: CanvasLayer) -> void:
 				var effect: String=P.attack_text(token) if selected_data.kind=="attack" else Spells.modifier_token_text(token) if selected_data.kind=="modifier" else "후속 주문 위력 %.0f%% · 첫 사건 1회"%(P.connector_power(token)*100)
 				text(ui,column,("기본" if rank==0 else "+%d"%rank)+" · "+effect,16,ui.TEXT)
 	else:
-		text(ui,column,"시작 조합이나 전투 보상·제작으로 구체를 얻으면 기록돼요." if kind=="spell" else "웨이브를 마친 뒤 유물을 획득하면 기록돼요." if kind=="relic" else "지정 재료를 +3까지 강화하고 제작함에서 완성 합성을 해보세요.",17,ui.MUTED)
+		text(ui,column,"시작 조합이나 전투 보상·제작으로 구체를 얻으면 기록돼요." if kind=="spell" else "레벨업 보상이나 제작으로 유물을 얻으면 기록돼요." if kind=="relic" else "지정 재료를 +3까지 강화한 뒤 보상 상자에서 합성을 골라보세요.",17,ui.MUTED)
 	if kind=="fusion":
 		text(ui,column,"합성 재료 힌트",18,ui.MINT)
 		for parent in P.FUSIONS[selected].parents:
 			var b: Button=ui.button(column,Spells.definition(parent).name+" +3  →",Rect2(0,0,430,42),func():ui.collection_kind="spell";ui.collection_selected=parent;build(ui),false,17)
 			b.custom_minimum_size=Vector2(430,42)
-		text(ui,column,"두 구체 실물 + 12 마석 · 완성 합성은 추가 강화 없음",15,ui.MUTED)
+		text(ui,column,"지정 +3 두 개 → 보상 상자에서 무료 합성 · 한 판에 한 번",15,ui.MUTED)
 	elif kind=="spell":
 		for fusion in P.FUSIONS:
 			if selected not in P.FUSIONS[fusion].parents: continue

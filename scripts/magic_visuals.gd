@@ -16,7 +16,7 @@ func _draw() -> void:
 	if game.boss_encounter!=null: game.boss_encounter.tells(self)
 	_draw_specials()
 	if game.state in ["combat","trial","edit","shop"]:
-		for i in 2:
+		for i in game.orb_recipes.size():
 			var pos: Vector2 = game.orb_position(i)
 			var color := Color("a8efe2") if i==0 else Color("ff9cae")
 			var occupied: bool = not (game.orb_drafts[i] if game.state=="trial" else game.orb_recipes[i]).is_empty()
@@ -25,7 +25,7 @@ func _draw() -> void:
 			draw_circle(pos-Vector2(2,2),3,Color("fff8e8"))
 			var stages: Array = game.orb_trial[i] if game.state=="trial" else game.orb_compiled[i]
 			if not stages.is_empty():
-				var progress := clampf(1-float(game.orb_clocks[i])/game.cast_delay(game.Spells.interval(stages)),0,1)
+				var progress := clampf(1-float(game.orb_clocks[i])/game.orb_delay(game.Spells.interval(stages),i),0,1)
 				draw_arc(pos,12,-PI/2,-PI/2+TAU*progress,24,Color(color,0.7),1.5,true)
 	for zone in game.magic.zones:
 		if not zone.get("garden_leader",true): continue
@@ -105,7 +105,7 @@ func _draw_specials() -> void:
 	for stage in stages:
 		if stage.get("charge",false): charged = true
 	if charged and game.magic_active():
-		var interval: float = game.cast_delay(game.Spells.interval(stages))
+		var interval: float = game.orb_delay(game.Spells.interval(stages),game.active_orb)
 		var progress := clampf(1-game.cast_clock/interval,0,1)
 		draw_arc(game.player.position,28,-PI/2,-PI/2+TAU*progress,32,Color("ffe7a3"),4 if game.cast_clock<0.15 else 2,true)
 	for s in b.statuses.values():

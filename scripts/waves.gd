@@ -3,16 +3,16 @@ const RunContent = preload("res://scripts/run_content.gd")
 ## Two independent randomized streams: scattered arrivals and occasional local packs.
 ## Cadence is adapted to our five-wave arena; no fixed entrance or advance warning.
 const WAVES := [
-	{"title":"첫 실습", "hint":"주변에서 꾸준히 접근 · 가끔 작은 무리", "duration":45.0, "cap":28, "ranged_cap":0, "heavy_cap":0, "hp_scale":1.0, "drop_budget":30,
-		"normal_interval":[2.0,2.8], "normal_count":[1,2], "weights":[80,20,0,0], "first_pack":[7.0,9.0], "pack_interval":[10.0,13.0], "pack_count":[5,7], "pack_swarm":0.5, "elite_chance":0.0, "escort_chance":0.0},
-	{"title":"우르르 소동", "hint":"약한 무리와 긴 돌진 · 단독 압박 정예", "duration":45.0, "cap":46, "ranged_cap":0, "heavy_cap":1, "hp_scale":1.12, "drop_budget":40,
-		"normal_interval":[1.5,2.1], "normal_count":[1,2], "weights":[35,60,0,5], "first_pack":[5.0,7.0], "pack_interval":[8.5,11.5], "pack_count":[7,10], "pack_swarm":1.0, "elite_chance":0.15, "escort_chance":0.0},
-	{"title":"돌진 주의", "hint":"추격·긴 돌진과 소수 사격 적", "duration":45.0, "cap":40, "ranged_cap":2, "heavy_cap":2, "hp_scale":1.25, "drop_budget":48,
-		"normal_interval":[1.8,2.4], "normal_count":[1,2], "weights":[57,25,12,6], "first_pack":[5.0,7.0], "pack_interval":[9.0,12.0], "pack_count":[6,9], "pack_swarm":0.55, "elite_chance":0.35, "escort_chance":0.3},
-	{"title":"혼성 소동", "hint":"분산된 근접 적 + 무리·정예·원거리 적", "duration":45.0, "cap":48, "ranged_cap":3, "heavy_cap":3, "hp_scale":1.38, "drop_budget":50,
-		"normal_interval":[1.4,2.0], "normal_count":[1,2], "weights":[58,24,12,6], "first_pack":[5.0,7.0], "pack_interval":[9.0,12.0], "pack_count":[7,10], "pack_swarm":0.55, "elite_chance":0.5, "escort_chance":0.65},
-	{"title":"균열의 수호자", "hint":"보스 + 계속 흩어져 오는 지원병 · 가끔 작은 무리", "duration":120.0, "cap":40, "ranged_cap":2, "heavy_cap":2, "hp_scale":1.5, "drop_budget":24,
-		"normal_interval":[3.5,4.8], "normal_count":[1,2], "weights":[65,25,8,2], "first_pack":[10.0,14.0], "pack_interval":[16.0,21.0], "pack_count":[4,6], "pack_swarm":0.7, "elite_chance":0.25, "escort_chance":0.35}
+	{"title":"첫 실습", "hint":"주변에서 꾸준히 접근 · 가끔 작은 무리", "duration":360.0, "cap":80, "ranged_cap":0, "heavy_cap":1, "hp_scale":1, "drop_budget":0,
+		"normal_interval":[2.0,2.8], "normal_count":[1,2], "weights":[60,38,0,2], "first_pack":[15.0,20.0], "pack_interval":[12.0,18.0], "pack_count":[8,12], "pack_swarm":0.5, "elite_chance":0.0, "escort_chance":0.0},
+	{"title":"우르르 소동", "hint":"약한 무리와 긴 돌진 · 단독 압박 정예", "duration":360.0, "cap":150, "ranged_cap":2, "heavy_cap":3, "hp_scale":1.5, "drop_budget":0,
+		"normal_interval":[1.5,2.1], "normal_count":[1,2], "weights":[25,67,3,5], "first_pack":[15.0,20.0], "pack_interval":[12.0,18.0], "pack_count":[11,16], "pack_swarm":1.0, "elite_chance":0.15, "escort_chance":0.0},
+	{"title":"돌진 주의", "hint":"추격·긴 돌진과 소수 사격 적", "duration":360.0, "cap":220, "ranged_cap":4, "heavy_cap":4, "hp_scale":2.2, "drop_budget":0,
+		"normal_interval":[1.8,2.4], "normal_count":[1,2], "weights":[20,68,5,7], "first_pack":[15.0,20.0], "pack_interval":[12.0,18.0], "pack_count":[14,20], "pack_swarm":0.55, "elite_chance":0.35, "escort_chance":0.3},
+	{"title":"혼성 소동", "hint":"분산된 근접 적 + 무리·정예·원거리 적", "duration":360.0, "cap":280, "ranged_cap":6, "heavy_cap":6, "hp_scale":3, "drop_budget":0,
+		"normal_interval":[1.4,2.0], "normal_count":[1,2], "weights":[15,70,6,9], "first_pack":[15.0,20.0], "pack_interval":[12.0,18.0], "pack_count":[17,24], "pack_swarm":0.55, "elite_chance":0.5, "escort_chance":0.65},
+	{"title":"마지막 폭주", "hint":"대규모 혼성 무리 · 30분에 최종 보스", "duration":360.0, "cap":300, "ranged_cap":8, "heavy_cap":8, "hp_scale":4, "drop_budget":0,
+		"normal_interval":[3.5,4.8], "normal_count":[1,2], "weights":[10,72,8,10], "first_pack":[15.0,20.0], "pack_interval":[12.0,18.0], "pack_count":[20,28], "pack_swarm":0.7, "elite_chance":0.25, "escort_chance":0.35}
 ]
 const ENEMY_HEALTH := [0.0,25.0,34.0,180.0]
 const ENEMY_SPEED := [0.0,142.0,90.0,120.0]
@@ -21,7 +21,7 @@ const CHARGE_SECONDS := .95
 const CHARGE_SPEED := 345.0
 const CHARGE_RECOVERY := .65
 const SWARM_HEALTH := 18.0
-const BOSS_HEALTH := 3000.0
+const BOSS_HEALTH := 30000.0
 const SAFE_DISTANCE := 220.0
 const PACK_SPREAD := 120.0
 const STALE_SECONDS := 0.5
@@ -34,6 +34,8 @@ var last_time := 0.0
 var pending: Array = []
 var dropped := 0
 var potential := 0
+var drop_counter := 0
+var next_elite := 120.0
 var stats: Dictionary = {}
 
 func _init(owner_game: Node2D) -> void:
@@ -41,17 +43,13 @@ func _init(owner_game: Node2D) -> void:
 	reset()
 
 static func config(number: int) -> Dictionary:
-	var result: Dictionary=WAVES[clampi(number-1,0,WAVES.size()-1)].duplicate(true)
-	var chapter:=RunContent.chapter(number)
-	result.title=chapter.title
-	result.duration=chapter.duration
-	result.drop_budget=chapter.budget
-	# Keep the number of spawn opportunities/reward budget when shortening a wave.
-	var previous_duration: float = [90.0,105.0,120.0,135.0,150.0][clampi(number-1,0,4)]
-	var cadence: float = chapter.duration/previous_duration
-	for key in ["normal_interval","first_pack","pack_interval"]:
-		for i in result[key].size(): result[key][i] *= cadence
-	return result
+	return WAVES[clampi(number-1,0,4)].duplicate(true)
+
+static func population(seconds: float) -> int:
+	var t:=clampf(seconds,0,1800)
+	var points: Array=[15,70,140,210,270,300]
+	var index:=mini(4,int(t/360))
+	return roundi(lerpf(points[index],points[index+1],fmod(t,360)/360.0)) if t<1800 else 180
 
 static func forecast(number: int) -> String:
 	var c := config(number)
@@ -61,8 +59,10 @@ func reset() -> void:
 	clear()
 	enabled = true
 	last_time = 0.0
-	next_normal = game.rng.randf_range(0.65,1.0)
-	next_pack = roll_range(config(game.wave).first_pack)
+	next_normal = game.wave_time+0.5
+	next_elite=(floorf(game.elapsed/120.0)+1)*120.0
+	drop_counter=0
+	next_pack = game.wave_time+roll_range(config(game.wave).first_pack)
 	dropped = 0
 	potential = 0
 	stats = {"spawned":0,"skipped":0,"packs":0,"scattered":0,"grouped":0,"heavy":0,"ranged":0}
@@ -86,7 +86,7 @@ func update() -> void:
 	if game.state != "combat": return
 	var c := config(game.wave)
 	var now: float = game.wave_time
-	if now >= c.duration:
+	if now >= c.duration and not game.final_boss_started:
 		clear()
 		return
 	# Resume from the present after a hitch; neither stream accumulates spawn debt.
@@ -99,11 +99,18 @@ func update() -> void:
 		last_time = now
 		return
 	last_time = now
+	if enabled and game.elapsed>=next_elite and not game.final_boss_started:
+		var elite: Node2D=game.spawn_enemy(3,false,Vector2.INF,"sentinel")
+		next_elite=game.elapsed+(120.0 if elite!=null else 1.0)
 	if enabled and now >= next_normal:
-		for i in game.rng.randi_range(c.normal_count[0],c.normal_count[1]):
-			var choice := choose_normal()
+		var living: int=game.enemies.size()
+		var desired:=population(game.elapsed)
+		var count:=clampi(desired-living,1,10)
+		if living>=int(c.cap): count=0
+		for i in count:
+			var choice:=choose_normal()
 			spawn(choice.kind,choice.role,Vector2.INF,false)
-		next_normal = now+normal_interval()
+		next_normal=now+.25
 	if enabled and now >= next_pack:
 		schedule_pack()
 		next_pack = now+roll_range(c.pack_interval)
@@ -219,9 +226,9 @@ func schedule_pack() -> void:
 	stats.packs += 1
 
 func reward(kind: int) -> int:
-	potential=mini(int(config(game.wave).drop_budget),potential+(3 if kind==3 else 1))
-	var reservation: int=game.combat_rewards.reserved(game.wave) if game.combat_rewards!=null else 0
-	var remaining := maxi(0,int(config(game.wave).drop_budget)-reservation-dropped)
-	var coins := mini(3 if kind == 3 else 1,remaining)
-	dropped += coins
+	# No fixed per-wave currency ceiling: kills remain useful for the entire run.
+	drop_counter+=1
+	var coins:=3 if kind==3 else (1 if drop_counter%3==0 else 0)
+	dropped+=coins
+	potential=dropped
 	return coins

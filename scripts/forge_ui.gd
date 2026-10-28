@@ -31,7 +31,7 @@ static func build(ui: CanvasLayer) -> void:
 	ids.sort()
 	for id in ids:
 		var count: int = g.economy.inventory[id]
-		var equipped: int = g.orb_recipes[0].count(id)+g.orb_recipes[1].count(id)
+		var equipped: int = g.equipped_count(id,false)
 		var b := row(ui,list,"%s ×%d%s" % [Spells.definition(id).name,count," · 장착" if equipped>0 else ""],func():g.select_forge_item(id),id==g.forge_target,46)
 		b.tooltip_text = Spells.definition(id).desc
 	if ids.is_empty(): ui.label(list,"강화할 구체가 없어.",Vector2.ZERO,16,ui.MUTED)
@@ -44,7 +44,7 @@ static func build(ui: CanvasLayer) -> void:
 	var note := "같은 종류끼리 강화 · 완성형 합성은 추가 강화 없음"
 	if is_fusion and not fusion_id.is_empty():
 		title = Spells.definition(fusion_id).name
-		note = Spells.definition(target).name+" + "+Spells.definition(material).name+" → 한 개 · 12 G"
+		note = Spells.definition(target).name+" + "+Spells.definition(material).name+" → 보상 상자에서 한 개"
 	elif not target.is_empty():
 		title = Spells.definition(target).name
 		note = Spells.definition(target).desc

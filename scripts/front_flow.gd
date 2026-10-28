@@ -213,15 +213,16 @@ static func results(ui: CanvasLayer) -> void:
 		ui.panel(ui.modal,Rect2(x,279,182,77),ui.PANEL)
 		ui.label(ui.modal,stats[i][0],Vector2(x+14,286),14,ui.MUTED)
 		ui.label(ui.modal,stats[i][1],Vector2(x+14,313),25,ui.TEXT)
-	for orb in 2:
-		var x:=560+orb*395
-		ui.panel(ui.modal,Rect2(x,379,375,222),ui.INK)
+	for orb in g.orb_recipes.size():
+		var x: int=560+orb*(395 if g.orb_recipes.size()==2 else 260)
+		ui.panel(ui.modal,Rect2(x,379,375 if g.orb_recipes.size()==2 else 250,222),ui.INK)
 		var heading: Label=ui.label(ui.modal,"오브 %d"%(orb+1),Vector2(x+18,392),21,ui.MINT if orb==0 else ui.PINK)
 		heading.name="ResultOrb%d"%orb
 		for slot in 6:
 			var id: String=g.orb_recipes[orb][slot] if slot<g.orb_recipes[orb].size() else ""
-			var tile: Control=token(ui,id,Vector2(x+18+(slot%3)*112,432+int(slot/3)*75),slot)
+			var tile: Control=token(ui,id,Vector2(x+18+(slot%3)*(112 if g.orb_recipes.size()==2 else 72),432+int(slot/3)*75),slot)
 			tile.name="ResultSlot%d_%d"%[orb,slot]
+			if g.orb_recipes.size()==3: tile.scale=Vector2(.68,1)
 	var names: Array=[]
 	for id in g.relics.owned: names.append(Relics.definition(id).name)
 	var relic_text: String="이번 유물 · "+(" / ".join(names) if not names.is_empty() else "없음")

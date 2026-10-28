@@ -43,21 +43,32 @@ func gain_xp(amount: int) -> void:
 		serial+=1
 		pending.append({"id":"xp:%d:%d"%[run_serial,serial],"level":level,"source":"level","options":[]})
 	revision+=1
-func candidates() -> Array:
+func candidates(chest := false) -> Array:
 	var pool: Array=[]
 	for id in game.Economy.PRICES:
-		if game.economy.can_stock(id): pool.append(id)
-	for id in game.Relics.DEFINITIONS:
-		if not game.relics.has(id): pool.append("relic:"+id)
+		if game.economy.can_stock(id) and (not chest or not game.economy.owned_token(id).is_empty()): pool.append(id)
+	if chest:
+		for id in game.Spells.Progression.FUSIONS:
+			if game.economy.fusion_quote(id).ok: pool.append("fuse:"+id)
+	else:
+		for id in game.Relics.DEFINITIONS:
+			if not game.relics.has(id): pool.append("relic:"+id)
 	return pool
 func weight(id: String) -> float:
 	return OWNED_WEIGHT if not id.begins_with("relic:") and not game.economy.owned_token(id).is_empty() else 1.0
-func fill_options(existing: Array) -> Array:
-	var pool := candidates()
+func fill_options(existing: Array, chest := false) -> Array:
+	var pool := candidates(chest)
 	var options: Array=[]
 	for id in existing:
 		if id in pool and not id in options: options.append(id)
 	for id in options: pool.erase(id)
+	if chest and not options.any(func(id):return id.begins_with("fuse:")):
+		var fusions: Array=pool.filter(func(id):return id.begins_with("fuse:"))
+		if not fusions.is_empty():
+			if options.size()==3: options.pop_back()
+			var fusion: String=fusions[rng.randi_range(0,fusions.size()-1)]
+			options.push_front(fusion)
+			pool.erase(fusion)
 	while options.size()<3 and not pool.is_empty():
 		var total := 0.0
 		for id in pool: total+=weight(id)
@@ -85,10 +96,15 @@ func issue(_number: int, _source := "carrier") -> bool:
 	gain_xp(6)
 	tick()
 	return true
+
+func queue_chest() -> void:
+	serial+=1
+	pending.append({"id":"chest:%d:%d"%[run_serial,serial],"level":level,"source":"chest","options":[]})
+	revision+=1
 func refresh_options() -> void:
 	if pending.is_empty(): return
 	var first: Dictionary=pending[0]
-	var next:=fill_options(first.options)
+	var next:=fill_options(first.options,first.get("source","")=="chest")
 	if next==first.options: return
 	first.options=next
 	revision+=1
@@ -96,7 +112,11 @@ func choose(reward_id: String, id: String, expected_revision: int) -> bool:
 	if game.state!="combat" or stage!="choice" or pending.is_empty() or expected_revision!=revision: return false
 	var first: Dictionary=pending[0]
 	if reward_id!=first.id or not id in first.options: return false
-	if id=="gold":
+	if id.begins_with("fuse:"):
+		var fused:=id.trim_prefix("fuse:")
+		if first.get("source","")!="chest" or not game.claim_fusion(fused): return false
+		receipt=game.Spells.definition(fused).name+" 합성 완성!"
+	elif id=="gold":
 		game.economy.grant(GOLD_REWARD)
 		receipt="마석 %d 획득"%GOLD_REWARD
 	elif id=="heal":

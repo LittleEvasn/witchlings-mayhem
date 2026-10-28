@@ -8,7 +8,8 @@ static func build(ui: CanvasLayer) -> void:
 	var root: Control=ui.new_modal(Rect2(205,250,1030,410))
 	root.name="LevelRewardScreen"
 	var shown_level: int=rewards.pending[0].level if rewards.stage=="choice" and not rewards.pending.is_empty() else rewards.level
-	ui.label(root,"레벨 %d"%shown_level,Vector2(237,270),29,ui.MINT)
+	var chest: bool=rewards.stage=="choice" and not rewards.pending.is_empty() and rewards.pending[0].get("source","")=="chest"
+	ui.label(root,"보상 상자" if chest else "레벨 %d"%shown_level,Vector2(237,270),29,ui.MINT)
 	ui.label(root,"선택하는 동안 전투는 멈춰요",Vector2(237,333),16,ui.MUTED)
 	if rewards.stage=="ready":
 		ui.label(root,rewards.receipt,Vector2(237,389),26,ui.TEXT,960)
@@ -38,7 +39,13 @@ static func build(ui: CanvasLayer) -> void:
 		var title := ""
 		var desc := ""
 		var action := "획득"
-		if choice.begins_with("relic:"):
+		if choice.begins_with("fuse:"):
+			var fusion_id:=choice.trim_prefix("fuse:")
+			var d: Dictionary=g.Spells.definition(fusion_id)
+			title=d.name
+			desc=" + ".join(g.Spells.Progression.FUSIONS[fusion_id].parents.map(func(p):return g.Spells.definition(p).name+" +3"))+" → 완성"
+			action="두 재료를 합성"
+		elif choice.begins_with("relic:"):
 			var d: Dictionary=g.Relics.definition(choice.trim_prefix("relic:"))
 			title=d.name
 			desc=d.desc
@@ -61,6 +68,7 @@ static func build(ui: CanvasLayer) -> void:
 		emblem.mouse_filter=Control.MOUSE_FILTER_IGNORE
 		column.add_child(emblem)
 		if g.Spells.has_part(choice): Look.icon(ui,emblem,choice,Rect2(116,0,42,42))
+		elif choice.begins_with("fuse:"): Look.icon(ui,emblem,choice.trim_prefix("fuse:"),Rect2(116,0,42,42))
 		elif choice.begins_with("relic:"):
 			ui.Board.centered(ui,emblem,g.Relics.definition(choice.trim_prefix("relic:")).glyph,Rect2(116,0,42,42),28,ui.MINT)
 		H.text(ui,column,title,22,ui.MINT)
