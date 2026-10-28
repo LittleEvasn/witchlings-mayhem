@@ -2,7 +2,7 @@ extends RefCounted
 const Spells = preload("res://scripts/spells.gd")
 ## Tokens reserve fungible inventory copies. Keep equipped copies when spare stock pays.
 static func reconcile(bank: Array, target: String, quote: Dictionary, preferred: int, target_slot := -1, output_location: Dictionary = {}) -> Array:
-	var result: Array = bank.duplicate(true)
+	var result: Array = Spells.fixed_bank(bank)
 	output_location.clear()
 	output_location["orb"] = -1
 	output_location["slot"] = -1
@@ -26,6 +26,7 @@ static func reconcile(bank: Array, target: String, quote: Dictionary, preferred:
 		var original: Array = result[orb].duplicate()
 		for index in original.size():
 			var token: String = original[index]
+			if token.is_empty(): continue
 			counts[token] = int(counts.get(token,0))+1
 			if counts[token]<=int(quote.inventory.get(token,0)): continue
 			remove.append(index)
@@ -37,17 +38,11 @@ static func reconcile(bank: Array, target: String, quote: Dictionary, preferred:
 					while neighbour>=0 and neighbour<original.size() and Spells.definition(original[neighbour]).kind!="attack":
 						if Spells.definition(original[neighbour]).kind=="connector" and not neighbour in remove: remove.append(neighbour)
 						neighbour += step
-		remove.sort()
-		remove.reverse()
-		for index in remove: result[orb].remove_at(index)
-		if not remove.is_empty():
-			# Only orphaned event links are removed. Unfinished support drafts remain editable.
-			while not result[orb].is_empty() and Spells.definition(result[orb].back()).kind=="connector": result[orb].pop_back()
-		if orb==chosen_orb and chosen_slot>=0:
-			var shifted: int = chosen_slot-remove.filter(func(index):return index<chosen_slot).size()
-			if shifted>=0 and shifted<result[orb].size() and result[orb][shifted]==quote.output:
-				output_location.orb = orb
-				output_location.slot = shifted
+		for index in remove: result[orb][index] = ""
+		if orb==chosen_orb and chosen_slot>=0 and result[orb][chosen_slot]==quote.output:
+			output_location.orb = orb
+			output_location.slot = chosen_slot
+
 	return result
 
 static func valid(bank: Array, inventory: Dictionary) -> bool:
@@ -55,6 +50,7 @@ static func valid(bank: Array, inventory: Dictionary) -> bool:
 	for parts in bank:
 		if parts.size()>6: return false
 		for id in parts:
+			if id=="": continue
 			counts[id] = int(counts.get(id,0))+1
 			if not Spells.has_part(id) or counts[id]>int(inventory.get(id,0)): return false
 	# An unfinished draft remains editable and silent, including after crafting.

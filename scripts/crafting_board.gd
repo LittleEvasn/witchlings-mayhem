@@ -81,8 +81,7 @@ static func orb_row(ui: CanvasLayer, index: int, at: Vector2) -> void:
 	button.name="OrbSelect%d"%index
 	button.add_theme_color_override("font_color",color)
 	var result: Dictionary = Spells.compile(parts)
-	var summary: String = Spells.describe(parts) if not parts.is_empty() else "구체를 넣으면 함께 공격해요"
-	if not result.ok and not parts.is_empty(): summary="! "+result.error
+	var summary: String = Spells.describe(parts) if Spells.has_content(parts) else "구체를 넣으면 함께 공격해요"
 	var label: Label=ui.label(ui.modal,summary,at+Vector2(96,3),12,color,374)
 	label.name="ProgramSummary%d"%index
 	label.max_lines_visible=1
@@ -94,10 +93,6 @@ static func orb_row(ui: CanvasLayer, index: int, at: Vector2) -> void:
 		if parts[slot]==ui.selected_item and Spells.definition(parts[slot]).kind=="modifier" and (ui.inspected_slot<0 or (ui.inspected_orb==index and ui.inspected_slot==slot)):
 			for affected in Spells.affected_slots(parts,slot):
 				ui.modal.get_node("Socket_%d_%d"%[index,affected]).set_meta("affected",true)
-	if not result.ok and not parts.is_empty():
-		var bad: Control=ui.modal.get_node("Socket_%d_%d"%[index,result.error_index])
-		bad.set_meta("invalid",true)
-		bad.tooltip_text=result.error
 
 static func scrolling(ui: CanvasLayer, key: String, rect: Rect2) -> VBoxContainer:
 	var scroll:=ScrollContainer.new()

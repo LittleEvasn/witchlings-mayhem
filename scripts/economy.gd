@@ -39,6 +39,7 @@ func grant(value: int) -> void:
 func remaining(id: String, reserved: Array) -> int: return maxi(0,int(inventory.get(id,0))-reserved.count(id))
 func owns_recipe(recipe: Array) -> bool:
  for id in recipe:
+  if id=="": continue
   if recipe.count(id)>int(inventory.get(id,0)): return false
  return true
 static func purchase_cost(recipe: Array, selected := "sigil") -> int:
@@ -218,7 +219,7 @@ func reroll(rng: RandomNumberGenerator, recipe: Array = []) -> bool:
  return true
 
 func fits_recipe(id: String, recipe: Array) -> bool:
- if recipe.is_empty(): return true
+ if not Spells.has_content(recipe): return true
  var kind: String = Spells.PARTS[id].kind
  for index in recipe.size():
   var old_kind: String = Spells.definition(recipe[index]).kind
@@ -226,10 +227,9 @@ func fits_recipe(id: String, recipe: Array) -> bool:
    var changed := recipe.duplicate()
    changed[index] = id
    if Spells.compile(changed).ok: return true
- if kind=="modifier":
-  for index in range(recipe.size()+1):
-   var inserted := recipe.duplicate()
-   inserted.insert(index,id)
-   if Spells.compile(inserted).ok: return true
- if kind=="connector" and Spells.compile(recipe+[id,"bolt"]).ok: return true
+ for index in recipe.size():
+  if recipe[index]!="": continue
+  var placed := recipe.duplicate()
+  placed[index]=id
+  if Spells.compile(placed).ok: return true
  return false

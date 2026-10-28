@@ -444,10 +444,10 @@ func start_run(kit := "") -> bool:
 	effects.clear()
 	gems.clear()
 	grid.clear()
-	recipe = Economy.KITS[selected_kit].recipe.duplicate()
+	recipe = Spells.fixed_slots(Economy.KITS[selected_kit].recipe)
 	active_orb = 0
 	selected_group = 0
-	orb_recipes = [recipe.duplicate(),[]]
+	orb_recipes = [recipe.duplicate(),Spells.fixed_slots([])]
 	orb_drafts = orb_recipes.duplicate(true)
 	orb_compiled = [Spells.compile(recipe).stages,[]]
 	orb_trial = []
@@ -729,7 +729,7 @@ func claim_fusion(id: String) -> bool:
 	orb_drafts=edited
 	for i in orb_recipes.size():
 		var parsed:=Spells.compile(applied[i])
-		orb_compiled[i]=parsed.stages if parsed.ok else []
+		orb_compiled[i]=parsed.stages
 	recipe=orb_recipes[active_orb].duplicate()
 	draft=orb_drafts[active_orb].duplicate()
 	compiled=orb_compiled[active_orb]
@@ -1104,8 +1104,8 @@ func workshop_buy(action: String, revision: int, expected_orb := -1) -> bool:
 	economy.gold-=price
 	economy.revision+=1
 	if action=="orb":
-		orb_recipes.append([])
-		orb_drafts.append([])
+		orb_recipes.append(Spells.fixed_slots([]))
+		orb_drafts.append(Spells.fixed_slots([]))
 		orb_compiled.append([])
 		orb_trial.append([])
 		orb_clocks.append(0.0)
@@ -1239,13 +1239,17 @@ func editing_recipe() -> bool:
 	return state in ["shop","edit","trial"] or (state=="combat" and personal_tab=="inventory")
 
 func _sync_orb() -> void:
+	orb_recipes = Spells.fixed_bank(orb_recipes)
+	orb_drafts = Spells.fixed_bank(orb_drafts)
+	recipe = Spells.fixed_slots(recipe)
+	draft = Spells.fixed_slots(draft)
 	orb_recipes[active_orb] = recipe.duplicate()
 	orb_drafts[active_orb] = draft.duplicate()
 
 func reserved_parts() -> Array:
 	var all_parts: Array = []
 	for i in orb_recipes.size(): all_parts.append_array(draft if i==active_orb else orb_drafts[i])
-	return all_parts
+	return all_parts.filter(func(id):return id!="")
 
 func remaining_part(id: String) -> int:
 	return economy.remaining(id,reserved_parts())
@@ -1256,12 +1260,7 @@ func has_draft_changes() -> bool:
 
 func valid_draft() -> bool:
 	_sync_orb()
-	var present := false
-	for parts in orb_drafts:
-		if parts.is_empty(): continue
-		present = true
-		if not Spells.compile(parts).ok: return false
-	return present and economy.owns_recipe(reserved_parts())
+	return Forge.valid(orb_drafts,economy.inventory)
 
 func select_orb(index: int) -> void:
 	if not editing_recipe() or index==active_orb or index<0 or index>=orb_recipes.size(): return
@@ -1387,7 +1386,7 @@ func apply_acquisition(receipt: Dictionary) -> void:
 					if parts[i]==old: parts[i]=output
 	for i in orb_recipes.size():
 		var parsed:=Spells.compile(orb_recipes[i])
-		orb_compiled[i]=parsed.stages if parsed.ok else []
+		orb_compiled[i]=parsed.stages
 	recipe=orb_recipes[active_orb].duplicate()
 	draft=orb_drafts[active_orb].duplicate()
 	compiled=orb_compiled[active_orb]
@@ -1400,6 +1399,8 @@ func apply_acquisition(receipt: Dictionary) -> void:
 
 func normalize_owned_spells() -> void:
 	_sync_orb()
+	var before_applied: Array=orb_recipes.duplicate(true)
+	var before_edited: Array=orb_drafts.duplicate(true)
 	var migration: Dictionary=economy.normalize_owned()
 	for bank in [orb_recipes,orb_drafts]:
 		for orb in bank.size():
@@ -1413,11 +1414,11 @@ func normalize_owned_spells() -> void:
 	orb_drafts=Forge.reconcile(orb_drafts,"",quote,active_orb)
 	for i in orb_recipes.size():
 		var parsed:=Spells.compile(orb_recipes[i])
-		orb_compiled[i]=parsed.stages if parsed.ok else []
+		orb_compiled[i]=parsed.stages
 	recipe=orb_recipes[active_orb].duplicate()
 	draft=orb_drafts[active_orb].duplicate()
 	compiled=orb_compiled[active_orb]
-	edit_history.clear()
+	if migration.changed or orb_recipes!=before_applied or orb_drafts!=before_edited: edit_history.clear()
 	edit_revision+=1
 	if migration.changed: checkpoint_message="이전 중복 구체를 자동 강화로 정리했어요. 초과 투자 %d마석 반환."%migration.refund
 
@@ -1446,7 +1447,7 @@ func migrate_spell_roles() -> bool:
 	for _i in orb_recipes.size(): orb_compiled.append([])
 	for i in orb_recipes.size():
 		var parsed := Spells.compile(orb_recipes[i])
-		orb_compiled[i] = parsed.stages if parsed.ok else []
+		orb_compiled[i] = parsed.stages
 	orb_cursors.resize(orb_recipes.size())
 	orb_cursors.fill(0)
 	orb_clocks.resize(orb_recipes.size())
@@ -1491,12 +1492,12 @@ func _draft_changed() -> void:
 	ui.refresh_workbench.call_deferred()
 
 func _commit_live_board() -> void:
-	# The visible slots are authoritative. Incomplete rows are silent, never the old spell.
+	# The visible slots are authoritative. Only invalid segments stop, never stale spells.
 	for i in orb_recipes.size():
 		var different: bool = orb_recipes[i]!=orb_drafts[i]
 		var result := Spells.compile(orb_drafts[i])
 		orb_recipes[i] = orb_drafts[i].duplicate()
-		orb_compiled[i] = result.stages if result.ok else []
+		orb_compiled[i] = result.stages
 		if different:
 			orb_cursors[i] = 0
 			orb_clocks[i] = maxf(orb_clocks[i],orb_delay(Spells.interval(orb_compiled[i]),i))
@@ -1529,17 +1530,14 @@ func board_plan(data: Variant, target: int, boundary: int, replace := false) -> 
 		if src>=orb_recipes.size() or index<0 or index>=bank[src].size() or bank[src][index]!=id: return {}
 	elif remaining_part(id)<=0 or target<0: return {}
 	if target<0:
-		bank[src].remove_at(index)
-	elif replace and boundary>=0 and boundary<bank[target].size():
+		bank[src][index] = ""
+	else:
+		if boundary<0 or boundary>=Spells.SLOT_COUNT: return {}
+		if src==target and index==boundary: return {"bank":bank}
 		var old: String = bank[target][boundary]
 		bank[target][boundary] = id
 		if src>=0: bank[src][index] = old
-	else:
-		if boundary<0 or boundary>6: return {}
-		if src>=0:
-			bank[src].remove_at(index)
-			if src==target and index<boundary: boundary -= 1
-		bank[target].insert(clampi(boundary,0,bank[target].size()),id)
+
 	var all_parts: Array = []
 	for row in bank:
 		if row.size()>6: return {}
@@ -1561,13 +1559,15 @@ func board_drop(data: Variant, target: int, boundary: int, replace := false) -> 
 	return true
 
 func board_quick_equip(id: String) -> void:
-	var at := draft.size()
+	_sync_orb()
+	var at := draft.find("")
 	if Spells.definition(id).kind=="modifier":
 		for i in draft.size():
-			if Spells.definition(draft[i]).kind=="attack":
-				at = i
+			if Spells.has_part(draft[i]) and Spells.definition(draft[i]).kind=="attack":
+				for empty in i:
+					if draft[empty]=="": at=empty; break
 				break
-	if not board_drop(board_data(id),active_orb,at):
+	if at<0 or not board_drop(board_data(id),active_orb,at):
 		workbench_message = "빈칸이나 남은 구체가 없어. 장착한 구체를 가방으로 빼줘."
 		ui.refresh_workbench.call_deferred()
 
@@ -1577,7 +1577,7 @@ func board_close() -> void:
 		return
 	if state!="edit": return
 	if not valid_draft():
-		workbench_message = "표시된 조합을 완성하거나 비운 뒤 계속할 수 있어. 공격 하나는 남겨줘."
+		workbench_message = "보유 수량과 장착 상태가 맞지 않아. 구체를 확인해줘."
 		ui.show_editor()
 		return
 	leave_editor()
@@ -1589,7 +1589,7 @@ func _refresh_trial_orbs() -> void:
 	orb_clocks.resize(orb_recipes.size())
 	for i in orb_recipes.size():
 		var result := Spells.compile(orb_drafts[i])
-		orb_trial[i] = result.stages if result.ok and economy.owns_recipe(reserved_parts()) else []
+		orb_trial[i] = result.stages if economy.owns_recipe(reserved_parts()) else []
 		orb_clocks[i] = orb_delay(Spells.interval(orb_trial[i]),i)
 	trial_stages = orb_trial[active_orb]
 	cast_clock = orb_clocks[active_orb]
@@ -1607,7 +1607,7 @@ func _accept_group_recipe(next: Array) -> bool:
 		return false
 	if next==draft: return true
 	_remember_draft()
-	draft = next
+	draft = Spells.fixed_slots(next)
 	workbench_message = ""
 	_draft_changed()
 	return true
@@ -1626,7 +1626,7 @@ func can_drop_group_part(data: Variant, target: int) -> bool:
 
 func drop_group_part(data: Variant, target: int) -> bool:
 	if not can_drop_group_part(data,target): return false
-	return drop_orb(data,clampi(target,0,draft.size()))
+	return drop_orb(data,target)
 
 func swap_groups() -> void:
 	if not editing_recipe(): return
@@ -1639,19 +1639,23 @@ func move_group_to_other(index: int) -> void:
 	_sync_orb()
 	var src := Workbench.unpack(draft)
 	if index<0 or index>=src.groups.size(): return
-	var tokens: Array = src.groups[index].tokens
-	var next: Array = orb_drafts[(active_orb+1)%orb_recipes.size()]+tokens
-	if next.size()>6: return
+	var tokens: Array = src.groups[index].tokens.filter(func(id):return id!="")
+	var target: int = (active_orb+1)%orb_recipes.size()
+	var next: Array = Spells.fixed_slots(orb_drafts[target])
+	if next.count("")<tokens.size(): return
 	_remember_draft()
-	src.groups.remove_at(index)
-	draft = Workbench.pack(src)
-	orb_drafts[(active_orb+1)%orb_recipes.size()] = next
+	for token in tokens: next[next.find("")]=token
+	var offset := 0
+	for n in index: offset += src.groups[n].tokens.size()
+	for n in src.groups[index].tokens.size(): draft[offset+n]=""
+	orb_drafts[target] = next
 	_draft_changed()
 
 func remove_part(index: int) -> void:
 	if not editing_recipe() or index < 0 or index >= draft.size(): return
 	_remember_draft()
-	draft.remove_at(index)
+	if draft[index]=="": return
+	draft[index] = ""
 	_draft_changed()
 
 func orb_drag_data(id: String, source_index: int) -> Dictionary:
@@ -1663,28 +1667,15 @@ func orb_drag_data(id: String, source_index: int) -> Dictionary:
 
 func can_drop_orb(data: Variant, boundary: int, to_inventory := false) -> bool:
 	if not editing_recipe() or not data is Dictionary: return false
-	if data.get("kind","") != "recipe_orb" or data.get("owner",0) != get_instance_id() or data.get("revision",-1) != edit_revision: return false
-	var id: String = data.get("id","")
+	if data.get("kind","")!="recipe_orb" or data.get("owner",0)!=get_instance_id() or data.get("revision",-1)!=edit_revision: return false
 	var source: int = data.get("source",-1)
-	if not Spells.has_part(id): return false
-	if source >= 0:
-		if source >= draft.size() or draft[source] != id: return false
-		return to_inventory or (boundary >= 0 and boundary <= 6)
-	return not to_inventory and boundary >= 0 and boundary <= 6 and draft.size() < 6 and remaining_part(id) > 0
+	var payload := board_data(data.get("id",""),active_orb if source>=0 else -1,source)
+	return not board_plan(payload,-1 if to_inventory else active_orb,boundary,true).is_empty()
 
 func drop_orb(data: Variant, boundary: int, to_inventory := false) -> bool:
 	if not can_drop_orb(data,boundary,to_inventory): return false
 	var source: int = data.source
-	var next := draft.duplicate()
-	if source >= 0:
-		next.remove_at(source)
-		if source < boundary: boundary -= 1
-	if not to_inventory: next.insert(clampi(boundary,0,next.size()),data.id)
-	if next == draft: return true
-	_remember_draft()
-	draft = next
-	_draft_changed()
-	return true
+	return board_drop(board_data(data.id,active_orb if source>=0 else -1,source),-1 if to_inventory else active_orb,boundary,true)
 
 func undo_draft() -> void:
 	if not editing_recipe() or edit_history.is_empty(): return
@@ -1712,7 +1703,7 @@ func recommend_recipe() -> void:
 	if economy.owns_recipe(start+other_orb_parts()): draft = start
 	else: draft = []
 	for id in ["giant","echo","pierce","seek"]:
-		var next: Array = [id]+draft
+		var next: Array = [id]+draft.filter(func(token):return token!="")
 		if Spells.compile(next).ok and economy.owns_recipe(next+other_orb_parts()): draft = next
 	_draft_changed()
 
@@ -1938,5 +1929,8 @@ func clear_group(index: int) -> void:
 	if not editing_recipe(): return
 	var model := Workbench.unpack(draft)
 	if index<0 or index>=model.groups.size(): return
-	model.groups.remove_at(index)
-	_accept_group_recipe(Workbench.pack(model))
+	var offset := 0
+	for n in index: offset += model.groups[n].tokens.size()
+	var next := draft.duplicate()
+	for n in model.groups[index].tokens.size(): next[offset+n]=""
+	_accept_group_recipe(next)

@@ -1,5 +1,5 @@
 extends Control
-## Shared inventory/socket control. Edges insert; the centre swaps/replaces.
+## Shared inventory/socket control. Every drop addresses one fixed slot.
 const Look = preload("res://scripts/mayhem_skin.gd")
 const Spells = preload("res://scripts/spells.gd")
 var ui: CanvasLayer
@@ -60,12 +60,8 @@ func _get_drag_data(_at: Vector2) -> Variant:
 	modulate.a=0.4
 	return data
 
-func target(at: Vector2) -> Dictionary:
-	if inventory: return {"orb":-1,"at":0,"replace":false}
-	var parts: Array = ui.game.draft if orb_index==ui.game.active_orb else ui.game.orb_drafts[orb_index]
-	var full := slot<parts.size()
-	var replace := full and at.x>size.x*0.25 and at.x<size.x*0.75
-	return {"orb":orb_index,"at":mini(parts.size(),slot+(1 if full and at.x>=size.x*0.75 else 0)),"replace":replace}
+func target(_at: Vector2) -> Dictionary:
+	return {"orb":-1 if inventory else orb_index,"at":0 if inventory else slot,"replace":true}
 
 func _can_drop_data(at: Vector2, data: Variant) -> bool:
 	if read_only: return false
@@ -80,8 +76,7 @@ func _process(_delta: float) -> void:
 	var next := -1
 	if get_viewport().gui_is_dragging() and Rect2(Vector2.ZERO,size).has_point(get_local_mouse_position()):
 		if _can_drop_data(get_local_mouse_position(),get_viewport().gui_get_drag_data()):
-			var t := target(get_local_mouse_position())
-			next=2 if inventory or t.replace else (0 if get_local_mouse_position().x<size.x*0.5 else 1)
+			next=2
 	if next!=marker: marker=next; queue_redraw()
 
 func _notification(what: int) -> void:
@@ -111,6 +106,7 @@ func _draw() -> void:
 			draw_circle(center,size.y*0.27,Color(color,0.12 if available else 0.04))
 			draw_arc(center,size.y*0.27,0,TAU,40,Color(color,0.4 if available else 0.1),1.0,true)
 	if get_meta("affected",false): draw_style_box(ui.box(Color(0.6,1,0.9,0.10),ui.MINT,3,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
+	if get_meta("inactive",false): draw_style_box(ui.box(Color(0.25,0.25,0.3,0.35),ui.MUTED,2,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
 	if get_meta("invalid",false): draw_style_box(ui.box(Color(1,0.3,0.5,0.08),ui.PINK,3,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
 	if marker==2: draw_style_box(ui.box(Color(0.6,1,0.9,0.12),ui.MINT,2,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
 	elif marker>=0:

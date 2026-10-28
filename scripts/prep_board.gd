@@ -55,6 +55,13 @@ static func cell(ui: CanvasLayer, parent: Node, id: String, rect: Rect2, orb := 
 				var flash := c.create_tween()
 				c.modulate=Color(1.5,1.5,1.5)
 				flash.tween_property(c,"modulate",Color.WHITE,0.45)
+	if orb>=0:
+		var diagnostic := Spells.slot_diagnostic(Spells.compile(ui.game.orb_drafts[orb]),index)
+		if not diagnostic.is_empty():
+			c.set_meta("inactive",diagnostic.severity=="inactive")
+			c.set_meta("invalid",diagnostic.severity!="inactive")
+			c.tooltip_text=diagnostic.reason
+			ui.label(c,"!",Vector2(rect.size.x-15,1),13,ui.PINK,14)
 	return c
 
 static func row(ui: CanvasLayer, index: int, at: Vector2, compact := false, width_override := 0.0) -> void:
@@ -91,12 +98,9 @@ static func row(ui: CanvasLayer, index: int, at: Vector2, compact := false, widt
 	for affected in selected_slots:
 		var target: Control = ui.modal.get_node_or_null("Socket_%d_%d" % [index,affected])
 		if target: target.set_meta("affected",true);target.queue_redraw()
-	if not result.ok and not parts.is_empty():
-		var invalid: Control = ui.modal.get_node_or_null("Socket_%d_%d" % [index,result.error_index])
-		if invalid: invalid.set_meta("invalid",true);invalid.tooltip_text=result.error;invalid.queue_redraw()
 
 	var text := "구체를 넣으면 이 오브도 함께 공격해요."
-	if not parts.is_empty(): text=Spells.describe(parts) if result.ok else "! "+result.error
+	if Spells.has_content(parts): text=Spells.describe(parts)
 	var l: Label=ui.label(ui.modal,text,Vector2(x,at.y+(83 if compact else 116)),12 if compact else 15,color if result.ok or parts.is_empty() else ui.PINK,width-(x-at.x)-18)
 	l.max_lines_visible=1
 	l.name="ProgramSummary%d" % index
@@ -157,7 +161,7 @@ static func build(ui: CanvasLayer, shop: bool) -> void:
 	undo.disabled=g.edit_history.is_empty()
 	bag(ui,Rect2(64,558,900,218))
 	var note: String=g.workbench_message
-	if note.is_empty(): note="칸 가운데: 교체  ·  칸 가장자리: 사이에 넣기  ·  가방으로 빼면 해제"
+	if note.is_empty(): note="빈칸: 이동  ·  구체 위: 교환  ·  가방으로 빼면 해제"
 	ui.label(ui.modal,note,Vector2(66,788),13,ui.PINK if not g.workbench_message.is_empty() else ui.MUTED,890).max_lines_visible=2
 	ui.panel(ui.modal,Rect2(990,150,386,626),Color("111a29"))
 	if shop:

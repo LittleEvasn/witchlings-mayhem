@@ -288,16 +288,17 @@ func rebuild_recipe() -> void:
 		var parts: Array = game.orb_recipes[i]
 		var x: int=390+i*(308 if game.orb_recipes.size()==2 else 300)
 		var color: Color=MINT if i==0 else PINK
-		var invalid: bool=not parts.is_empty() and not Spells.compile(parts).ok
+		var result: Dictionary=Spells.compile(parts)
+		var invalid: bool=not result.ok
 		if invalid: color=PINK
 		var orb: Panel=panel(recipe_bar,Rect2(x,824,42,42))
-		orb.tooltip_text="조합 오류 · 이 오브는 시전하지 않아요" if invalid else "%d번째 가까운 적 자동 조준"%[i+1]
+		orb.tooltip_text=Spells.describe(parts) if invalid else "%d번째 가까운 적 자동 조준"%[i+1]
 		orb.add_theme_stylebox_override("panel",box(Color("273040"),color,2,24))
 		Board.centered(self,orb,"!" if invalid else str(i+1),Rect2(0,0,42,42),18,color)
 		for n in 6:
 			var p:=Vector2(x+49+n*39,827)
 			panel(recipe_bar,Rect2(p,Vector2(35,36)),INK)
-			if n<parts.size():
+			if n<parts.size() and not str(parts[n]).is_empty():
 				var id: String=parts[n]
 				var item: Label=Board.centered(self,recipe_bar,Board.glyph(id),Rect2(p,Vector2(35,36)),18,Spells.definition(id).color)
 				item.mouse_filter=Control.MOUSE_FILTER_STOP

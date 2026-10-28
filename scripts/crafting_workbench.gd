@@ -92,27 +92,22 @@ static func orb_row(ui: CanvasLayer, index: int, at: Vector2) -> void:
 	var g: Node2D=ui.game
 	var parts: Array=g.orb_drafts[index]
 	var color: Color=Look.MINT if index==0 else Look.PINK
-	var tray:=Look.card(ui,ui.modal,Rect2(at,Vector2(598,94)),Color("f1eaf5"),23,0)
+	var tray:=Look.card(ui,ui.modal,Rect2(at,Vector2(598,86)),Color("f1eaf5"),23,0)
 	tray.add_theme_stylebox_override("panel",Look.style(Color("f1eaf5"),Look.PURPLE if g.active_orb==index else Look.LINE,23))
 	var b:=Look.button(ui,ui.modal,str(index+1),Rect2(at+Vector2(10,18),Vector2(54,54)),func():g.select_orb(index),false,28)
 	b.name="OrbSelect%d"%index
 	b.add_theme_stylebox_override("normal",Look.style(color,Look.PURPLE if g.active_orb==index else Look.LINE,40))
 	b.tooltip_text="오브 %d · 클릭해서 편집할 오브 선택"%(index+1)
 	for slot in 6:
-		ui.Board.cell(ui,ui.modal,str(parts[slot]) if slot<parts.size() else "",Rect2(at+Vector2(80+slot*84,8),Vector2(77,78)),index,slot)
+		ui.Board.cell(ui,ui.modal,str(parts[slot]) if slot<parts.size() else "",Rect2(at+Vector2(80+slot*84,8),Vector2(77,70)),index,slot)
 	var result: Dictionary=Spells.compile(parts)
-	var summary: String=Spells.describe(parts) if not parts.is_empty() else "아직 빈 오브예요. 구체를 끌어 넣어보세요."
-	if not result.ok and not parts.is_empty(): summary="! "+result.error
-	var l:=Look.text(ui,ui.modal,summary,at+Vector2(5,96),11,Look.MUTED,588)
+	var summary: String=Spells.describe(parts) if Spells.has_content(parts) else "아직 빈 오브예요. 구체를 끌어 넣어보세요."
+	var l:=Look.text(ui,ui.modal,summary,at+Vector2(5,88),12,Look.MUTED,588)
 	l.name="ProgramSummary%d"%index
 	Look.bounded(l)
 	for slot in parts.size():
 		if parts[slot]==ui.selected_item and Spells.definition(parts[slot]).kind=="modifier" and (ui.inspected_slot<0 or (ui.inspected_orb==index and ui.inspected_slot==slot)):
 			for affected in Spells.affected_slots(parts,slot): ui.modal.get_node("Socket_%d_%d"%[index,affected]).set_meta("affected",true)
-	if not result.ok and not parts.is_empty():
-		var bad: Control=ui.modal.get_node("Socket_%d_%d"%[index,result.error_index])
-		bad.set_meta("invalid",true)
-		bad.tooltip_text=result.error
 
 static func grid(ui: CanvasLayer, key: String, rect: Rect2, columns: int) -> GridContainer:
 	var scroll:=ScrollContainer.new()

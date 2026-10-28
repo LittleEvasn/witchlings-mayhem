@@ -61,7 +61,7 @@ static func bank(value: Variant, inventory: Dictionary) -> bool:
 	for parts in value:
 		if not string_list(parts,6): return false
 		for id in parts:
-			if not token(id): return false
+			if id!="" and not token(id): return false
 	# An incomplete, silent program is a legitimate editing state.
 	return Forge.valid(value,inventory)
 
@@ -173,7 +173,7 @@ static func valid(data: Variant) -> bool:
 		for parts in item.recipes:
 			if not string_list(parts,6): return false
 			for id in parts:
-				if not token(id): return false
+				if id!="" and not token(id): return false
 	if not data.get("metrics") is Dictionary: return false
 	for key in ["casts","triggers","hits","peak_projectiles","peak_enemies"]:
 		if not number(data.metrics.get(key)): return false
@@ -244,8 +244,8 @@ static func apply(g: Node2D, data: Dictionary) -> void:
 	for key in ["wave_time","elapsed","prep_elapsed","hp","max_hp","power","fire_rate","dash_left","dash_cooldown","invincible"]: g.set(key,float(data[key]))
 	g.run_id=data.run_id
 	g.active_orb=int(data.active_orb)
-	g.orb_recipes=data.orbs.duplicate(true)
-	g.orb_drafts=data.drafts.duplicate(true)
+	g.orb_recipes=Spells.fixed_bank(data.orbs)
+	g.orb_drafts=Spells.fixed_bank(data.drafts)
 	g.orb_upgrades=data.get("orb_upgrades",[0,0]).duplicate()
 	for i in g.orb_upgrades.size(): g.orb_upgrades[i]=int(g.orb_upgrades[i])
 	g.workshop_relics=data.get("workshop_relics",[]).duplicate()
@@ -262,12 +262,13 @@ static func apply(g: Node2D, data: Dictionary) -> void:
 		g.orb_trial.append([])
 	for i in g.orb_recipes.size():
 		var compiled: Dictionary=Spells.compile(g.orb_recipes[i])
-		g.orb_compiled[i]=compiled.stages if compiled.ok else []
+		g.orb_compiled[i]=compiled.stages
 	g.recipe=g.orb_recipes[g.active_orb].duplicate()
 	g.draft=g.orb_drafts[g.active_orb].duplicate()
 	g.compiled=g.orb_compiled[g.active_orb]
 	g.edit_history=data.history.duplicate(true)
 	for item in g.edit_history:
+		item.drafts=Spells.fixed_bank(item.drafts)
 		item.orb=int(item.orb)
 		item.group=int(item.group)
 	g.economy.inventory.clear()

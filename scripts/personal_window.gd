@@ -72,7 +72,6 @@ static func inventory(ui: CanvasLayer, parent: Node) -> void:
 			var id: String=parts[slot] if slot<parts.size() else ""
 			var cell: Control=ui.Board.cell(ui,row,id,Rect2(0,0,56,58),index,slot)
 			cell.custom_minimum_size=Vector2(56,58)
-			if not parts.is_empty() and not result.ok and result.error_index==slot: cell.set_meta("invalid",true)
 			if ui.inspected_orb==index and ui.inspected_slot>=0 and ui.inspected_slot<parts.size():
 				if slot in g.Spells.affected_slots(parts,ui.inspected_slot): cell.set_meta("affected",true)
 		var error:=text(ui,parent,result.error if not result.ok and not parts.is_empty() else "",12,ui.PINK)
@@ -111,7 +110,7 @@ static func inventory(ui: CanvasLayer, parent: Node) -> void:
 		description.max_lines_visible=3
 		description.tooltip_text=d.desc
 	else: text(ui,parent,"구체 선택 → 빈칸 클릭 / 끌어서 순서 변경",13,ui.MUTED)
-	var note:=text(ui,parent,g.workbench_message if not g.workbench_message.is_empty() else "가운데 교체 · 가장자리 삽입 · 우클릭 해제",12,ui.PINK if not g.workbench_message.is_empty() else ui.MUTED)
+	var note:=text(ui,parent,g.workbench_message if not g.workbench_message.is_empty() else "빈칸 이동 · 구체 위 교환 · 우클릭 해제",12,ui.PINK if not g.workbench_message.is_empty() else ui.MUTED)
 	note.max_lines_visible=2
 
 static func relics(ui: CanvasLayer, parent: Node) -> void:

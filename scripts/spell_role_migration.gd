@@ -8,7 +8,7 @@ static func recipe(parts: Array) -> Array:
 	var result: Array = []
 	for token in parts:
 		var base := Progression.base_id(str(token))
-		if base in RETIRED: continue
+		if base in RETIRED: result.append(""); continue
 		result.append("expire" if base=="on_return" else Progression.key(base,mini(Progression.rank(str(token)),3)))
 	return result
 

@@ -45,6 +45,18 @@ const MODIFIER_NOTES := {
 	"charge":"느리고 강한 한 발 · 냉기·성장량은 그대로",
 }
 const SEQUENCE_GAP := 0.12
+const SLOT_COUNT := 6
+
+static func fixed_slots(recipe: Array) -> Array:
+	var result := recipe.duplicate()
+	while result.size()<SLOT_COUNT: result.append("")
+	return result
+
+static func fixed_bank(bank: Array) -> Array:
+	return bank.map(func(row): return fixed_slots(row))
+
+static func has_content(recipe: Array) -> bool:
+	return recipe.any(func(id): return id!="")
 
 static func blank_stage() -> Dictionary:
 	var stage := {"connector":"", "modifiers":[], "slot":-1, "root":true, "next":{}}
@@ -145,32 +157,37 @@ static func next_cast(stages: Array, cursor: int) -> Dictionary:
 	return {"stage":commands[index], "cursor":next, "delay":interval(stages) if next==0 else SEQUENCE_GAP}
 
 static func invalid(message: String, index: int, nodes: Array = []) -> Dictionary:
-	return {"ok":false,"error":message,"error_index":index,"stages":[],"nodes":nodes}
+	return {"ok":false,"error":message,"error_index":index,"stages":[],"nodes":nodes,"diagnostics":[],"runnable_count":0}
 
 static func compile(recipe: Array) -> Dictionary:
-	if recipe.is_empty(): return invalid("공격을 고른 뒤 보조를 붙여줘.",0)
 	if recipe.size()>6: return invalid("이 오브는 최대 6칸이야.",6)
-	var stages: Array = []
+	var nodes: Array = []
 	var modifiers: Array = []
-	var pending := ""
-	var pending_slot := -1
+	var pending: Array = []
+	var last_attack := -1
+	var blocked_payload := false
 	var links: Dictionary = {}
+	var diagnostics: Array = []
+	var used_modifiers: Dictionary = {}
 	for index in recipe.size():
 		var id := str(recipe[index])
-		if not has_part(id): return invalid("알 수 없는 마법 부품.",index,stages)
+		if id.is_empty(): continue
+		if not has_part(id):
+			add_diagnostic(diagnostics,index,"unknown","알 수 없는 구체라 발동하지 않아요.")
+			for slot in pending: add_diagnostic(diagnostics,slot,"missing_payload","연결 대상을 해석할 수 없어요.")
+			blocked_payload = blocked_payload or not pending.is_empty()
+			pending.clear()
+			last_attack = -1
+			continue
 		var kind: String = definition(id).kind
 		if kind=="modifier":
 			var record := Progression.modifier_record(id)
 			record["slot"] = index
 			modifiers.append(record)
 		elif kind=="connector":
-			if stages.is_empty() or not pending.is_empty(): return invalid("연결 앞에 공격이 필요해.",index,stages)
-			var previous: Dictionary = stages.back()
-			pending = id
-			pending_slot = index
-			previous.connector = Progression.base_id(id)
-			previous["connector_power"] = Progression.connector_power(id)
-			previous["connector_rank"] = Progression.rank(id)
+			if last_attack<0:
+				add_diagnostic(diagnostics,index,"missing_source","연결 앞에 공격이 없어 이 연결은 발동하지 않아요.")
+			else: pending.append(index)
 		else:
 			var stage := blank_stage()
 			var fused := Progression.is_fused(id)
@@ -182,23 +199,51 @@ static func compile(recipe: Array) -> Dictionary:
 			stage["fusion"] = id if fused else ""
 			stage.slot = index
 			stage.modifiers = modifiers.duplicate(true)
-			stage.root = pending.is_empty()
+			stage.root = pending.is_empty() and not blocked_payload
 			stage["_linked"] = not stage.root
+			stage["disabled"] = blocked_payload or pending.size()>1 or (not pending.is_empty() and nodes[last_attack].disabled)
 			populate_modifiers(stage)
 			stage["modifier_effects"] = Effects.resolve(stage)
 			if fused: stage["interval"] = Progression.FUSIONS[id].interval
-			if not pending.is_empty():
-				links[stages.size()-1] = stages.size()
-				stages.back()["connector_slot"] = pending_slot
-				pending = ""
-			stages.append(stage)
-	if not pending.is_empty(): return invalid("연결 뒤에 실행할 공격이 필요해.",pending_slot,stages)
-	if stages.is_empty(): return invalid("보조 뒤에 공격 마법이 필요해.",recipe.size()-1,stages)
-	if definition(str(recipe.back())).kind=="modifier": return invalid("마지막 보조의 오른쪽에 공격 마법이 필요해.",recipe.size()-1,stages)
+			if stage.disabled:
+				var reason := "앞 공격이 비활성이라 이 연결은 발동하지 않아요."
+				if pending.size()>1: reason="연결 사이에 공격이 필요해요. 이 연결은 발동하지 않아요."
+				elif blocked_payload: reason="앞 연결의 대상을 해석할 수 없어 이 후속 공격은 발동하지 않아요."
+				for slot in pending: add_diagnostic(diagnostics,slot,"broken_chain" if pending.size()>1 else "inactive_source",reason)
+				add_diagnostic(diagnostics,index,"blocked_payload",reason)
+			elif not pending.is_empty():
+				var connector_slot: int = pending[0]
+				var connector: String = str(recipe[connector_slot])
+				var previous: Dictionary = nodes[last_attack]
+				previous.connector = Progression.base_id(connector)
+				previous["connector_power"] = Progression.connector_power(connector)
+				previous["connector_rank"] = Progression.rank(connector)
+				previous["connector_slot"] = connector_slot
+				links[last_attack] = nodes.size()
+			if not stage.disabled:
+				for entry in modifiers: used_modifiers[entry.slot] = true
+			pending.clear()
+			blocked_payload = false
+			nodes.append(stage)
+			last_attack = nodes.size()-1
+	for slot in pending: add_diagnostic(diagnostics,slot,"missing_payload","연결 뒤에 공격이 없어 이 연결은 발동하지 않아요.")
+	for entry in modifiers:
+		if not used_modifiers.has(entry.slot): add_diagnostic(diagnostics,entry.slot,"unused_modifier","오른쪽에 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.","inactive")
 	# Embed only the forward child; flat nodes retain their root flag for scheduling/UI.
-	for index in range(stages.size()-1,-1,-1):
-		if links.has(index): stages[index].next = stages[links[index]].duplicate(true)
-	return {"ok":true,"stages":stages,"nodes":stages,"error":"","error_index":-1}
+	for index in range(nodes.size()-1,-1,-1):
+		if links.has(index): nodes[index].next = nodes[links[index]].duplicate(true)
+	var stages: Array = nodes.filter(func(stage): return not stage.disabled)
+	return {"ok":diagnostics.is_empty(),"stages":stages,"nodes":nodes,"diagnostics":diagnostics,
+		"error":"" if diagnostics.is_empty() else diagnostics[0].reason,
+		"error_index":-1 if diagnostics.is_empty() else diagnostics[0].slot,"runnable_count":roots(stages).size()}
+
+static func add_diagnostic(items: Array, slot: int, code: String, reason: String, severity := "error") -> void:
+	items.append({"slot":slot,"code":code,"reason":"%d번 칸: %s"%[slot+1,reason],"severity":severity})
+
+static func slot_diagnostic(result: Dictionary, slot: int) -> Dictionary:
+	for item in result.get("diagnostics",[]):
+		if item.slot==slot: return item
+	return {}
 
 static func affected_slots(recipe: Array, modifier_slot: int) -> Array:
 	var affected: Array = []
@@ -209,7 +254,7 @@ static func affected_slots(recipe: Array, modifier_slot: int) -> Array:
 
 static func describe(recipe: Array) -> String:
 	var result := compile(recipe)
-	if not result.ok: return "%d번 칸: %s" % [result.error_index+1,result.error]
+	if result.stages.is_empty(): return result.error if not result.ok else "빈 오브 · 공격 구체를 넣으면 발사해요."
 	var chunks: PackedStringArray = []
 	for stage in result.stages:
 		var names: PackedStringArray = []
@@ -226,7 +271,7 @@ static func describe(recipe: Array) -> String:
 			var previous: Dictionary = result.stages[chunks.size()-1]
 			text = (" — "+definition(previous.connector).name+" → " if not stage.root else " → 순차 → ")+text
 		chunks.append(text)
-	return "".join(chunks)
+	return "".join(chunks)+("  ·  ! "+result.error if not result.ok else "")
 
 static func compatible(mod: String, attack: String) -> bool:
 	return has_part(mod) and definition(mod).kind=="modifier" and has_part(attack) and definition(attack).kind=="attack"
