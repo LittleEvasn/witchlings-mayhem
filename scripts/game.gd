@@ -21,6 +21,8 @@ const RunCheckpoint = preload("res://scripts/run_checkpoint.gd")
 const BossEncounter = preload("res://scripts/boss_encounter.gd")
 const AutoTargeting = preload("res://scripts/auto_targeting.gd")
 const CombatRewards = preload("res://scripts/combat_rewards.gd")
+const AutoEquip=preload("res://scripts/auto_equip.gd")
+const AcquisitionView=preload("res://scripts/acquisition_view.gd")
 const FieldEncounters = preload("res://scripts/field_encounters.gd")
 const FIELD := Rect2(0,0,4800,3600)
 const FIXED_FIELD := Rect2(72,115,1296,656)
@@ -376,6 +378,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo: return
 	if combat_rewards.paused() and state=="combat":
 		if combat_rewards.stage=="edit" and (event.is_action_pressed("recipe") or event.is_action_pressed("pause_game")): close_personal()
+		elif event.is_action_pressed("pause_game"):
+			state="paused"
+			ui.show_pause()
 		return
 	if event.is_action_pressed("mute"):
 		sound_enabled = not sound_enabled
@@ -725,21 +730,52 @@ func collect_chests(all := false) -> void:
 		chests[i].label.queue_free()
 		chests.remove_at(i)
 
-func claim_fusion(id: String) -> bool:
-	_sync_orb()
+func fusion_placement(id: String, bag_only := false) -> Dictionary:
 	var quote: Dictionary=economy.fusion_quote(id)
-	if not quote.ok: return false
+	if not quote.ok: return {"ok":false}
 	var target: String=quote.consumed[0]
-	var applied:=Forge.reconcile(orb_recipes,target,quote,active_orb)
-	var edited:=Forge.reconcile(orb_drafts,target,quote,active_orb)
-	if not Forge.valid(applied,quote.inventory) or not Forge.valid(edited,quote.inventory): return false
+	var preferred: int=active_orb
+	var target_slot: int=-1
+	for orb in orb_drafts.size():
+		for slot in orb_drafts[orb].size():
+			if orb_drafts[orb][slot] in quote.consumed:
+				target=orb_drafts[orb][slot]
+				preferred=orb
+				target_slot=slot
+				break
+		if target_slot>=0: break
+	var applied:=Forge.reconcile(orb_recipes,target,quote,preferred,target_slot)
+	var edited:=Forge.reconcile(orb_drafts,target,quote,preferred,target_slot)
+	if bag_only or target_slot<0:
+		# Consume the original parents rather than erase a replacement afterward;
+		# Forge also removes their incoming/outgoing links, preventing retargeting.
+		var consumed: Dictionary={"output":"","inventory":quote.inventory}
+		applied=Forge.reconcile(orb_recipes,"",consumed,preferred)
+		edited=Forge.reconcile(orb_drafts,"",consumed,preferred)
+	var placement: Dictionary={"orb":-1,"slot":-1,"text":"합성 결과는 가방에 보관"}
+	for orb in edited.size():
+		var slot: int=edited[orb].find(id)
+		if slot>=0: placement={"orb":orb,"slot":slot,"text":"오브 %d · %d번 칸에서 합성"%[orb+1,slot+1]};break
+	if placement.orb<0 and profile.data.auto_equip and not bag_only:
+		placement=AutoEquip.plan(edited,applied,id,active_orb)
+		if placement.orb>=0:
+			applied[placement.orb][placement.slot]=id
+			edited[placement.orb][placement.slot]=id
+	if not Forge.valid(applied,quote.inventory,orb_capacities()) or not Forge.valid(edited,quote.inventory,orb_capacities()): return {"ok":false}
+	return {"ok":true,"quote":quote,"applied":applied,"edited":edited,"placement":placement}
+
+func claim_fusion(id: String, bag_only := false) -> bool:
+	_sync_orb()
+	var plan:=fusion_placement(id,bag_only)
+	if not plan.ok: return false
+	var quote: Dictionary=plan.quote
 	economy.inventory=quote.inventory
 	economy.fusion_history.append(id)
 	economy.revision+=1
-	orb_recipes=applied
-	orb_drafts=edited
+	orb_recipes=plan.applied
+	orb_drafts=plan.edited
 	for i in orb_recipes.size():
-		var parsed:=Spells.compile(applied[i])
+		var parsed:=Spells.compile(orb_recipes[i])
 		orb_compiled[i]=parsed.stages
 	recipe=orb_recipes[active_orb].duplicate()
 	draft=orb_drafts[active_orb].duplicate()
@@ -749,6 +785,7 @@ func claim_fusion(id: String) -> bool:
 	magic.generation+=1
 	_reset_orb_clocks()
 	ui.selected_item=id
+	ui.acquisition_feedback.call_deferred(id,plan.placement)
 	return true
 
 func begin_final_boss() -> void:
@@ -1205,7 +1242,7 @@ func buy_orb(index: int, revision: int) -> bool:
 	apply_acquisition(economy.last_acquisition)
 	purchased_orb = economy.last_acquisition.output
 	discover_owned()
-	shop_message = "%s 제작 완료 · 아래 보유 목록에서 끌어 넣고 시험해봐." % Spells.definition(purchased_orb).name
+	shop_message = "%s 제작 완료 · %s" % [Spells.definition(purchased_orb).name,economy.last_acquisition.get("placement",{}).get("text","가방에 보관")]
 	ui.show_shop()
 	play_sound("reward")
 	return true
@@ -1459,7 +1496,7 @@ func claim_spell_reward(reward_id: String, id: String, revision: int) -> bool:
 	ui.show_level_reward.call_deferred()
 	return true
 
-func apply_acquisition(receipt: Dictionary) -> void:
+func apply_acquisition(receipt: Dictionary, bag_only := false) -> void:
 	if not receipt.get("ok",false): return
 	_sync_orb()
 	var old: String=receipt.old
@@ -1469,6 +1506,17 @@ func apply_acquisition(receipt: Dictionary) -> void:
 			for parts in bank:
 				for i in parts.size():
 					if parts[i]==old: parts[i]=output
+	var placement: Dictionary={"orb":-1,"slot":-1,"text":"가방에 보관"}
+	if old.is_empty() and profile.data.auto_equip and not bag_only and equipped_count(output)==0:
+		placement=AutoEquip.plan(orb_drafts,orb_recipes,output,active_orb)
+		if placement.orb>=0 and economy.remaining(output,reserved_parts())>0:
+			orb_recipes[placement.orb][placement.slot]=output
+			orb_drafts[placement.orb][placement.slot]=output
+	else:
+		for orb in orb_drafts.size():
+			var slot: int=orb_drafts[orb].find(output)
+			if slot>=0: placement={"orb":orb,"slot":slot,"text":"오브 %d · %d번 칸%s"%[orb+1,slot+1,"에서 강화" if not old.is_empty() else "에 장착"]};break
+	receipt["placement"]=placement
 	for i in orb_recipes.size():
 		var parsed:=Spells.compile(orb_recipes[i])
 		orb_compiled[i]=parsed.stages
@@ -1481,6 +1529,7 @@ func apply_acquisition(receipt: Dictionary) -> void:
 	purchased_orb=output
 	ui.selected_item=output
 	ui.rebuild_recipe()
+	ui.acquisition_feedback.call_deferred(output,placement)
 
 func normalize_owned_spells() -> void:
 	_sync_orb()
@@ -1931,7 +1980,8 @@ func launch_next_wave() -> void:
 
 func resume_game() -> void:
 	state = "combat"
-	ui.close_modal()
+	if combat_rewards.paused(): ui.show_level_reward()
+	else: ui.close_modal()
 
 func end_run(won: bool) -> void:
 	if state == "trial": return

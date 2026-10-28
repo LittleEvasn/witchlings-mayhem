@@ -4,7 +4,7 @@ const Spells=preload("res://scripts/spells.gd")
 const Relics=preload("res://scripts/relics.gd")
 const PATH := "user://profile-v1.json"
 var path := PATH
-var data := {"version":1,"wins":0,"losses":0,"lumi_clue":false,"intro_seen":false,"best_combat":0.0,"records":[],"sound":true,"music":false,"discovered_spells":[],"discovered_fusions":[],"discovered_relics":[],"completed_ids":[]}
+var data := {"version":1,"wins":0,"losses":0,"lumi_clue":false,"intro_seen":false,"best_combat":0.0,"records":[],"sound":true,"music":false,"auto_equip":true,"quick_rewards":false,"discovered_spells":[],"discovered_fusions":[],"discovered_relics":[],"completed_ids":[]}
 var warning := ""
 func _init(save_path := PATH) -> void:
 	path = save_path
@@ -39,8 +39,8 @@ func _valid(value: Variant) -> bool:
 			if typeof(amount) not in [TYPE_INT,TYPE_FLOAT] or amount<0 or not is_finite(float(amount)): return false
 	for key in ["wins","losses","best_combat"]:
 		if typeof(value.get(key,0)) not in [TYPE_INT,TYPE_FLOAT] or value.get(key,0)<0 or not is_finite(float(value.get(key,0))): return false
-	for key in ["sound","music","lumi_clue","intro_seen"]:
-		if typeof(value.get(key,false))!=TYPE_BOOL: return false
+	for key in ["sound","music","lumi_clue","intro_seen","auto_equip","quick_rewards"]:
+		if typeof(value.get(key,data.get(key,false)))!=TYPE_BOOL: return false
 	for key in ["discovered_spells","discovered_fusions","discovered_relics","completed_ids"]:
 		var list: Variant=value.get(key,[])
 		if not list is Array or list.size()>500: return false

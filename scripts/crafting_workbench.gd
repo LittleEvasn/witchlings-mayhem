@@ -4,6 +4,7 @@ const Look=preload("res://scripts/mayhem_skin.gd")
 const Spells=preload("res://scripts/spells.gd")
 const P=preload("res://scripts/spell_progression.gd")
 const Detail=preload("res://scripts/crafting_detail.gd")
+const View=preload("res://scripts/acquisition_view.gd")
 const WIDTH:=1036.0
 
 static func build(ui: CanvasLayer) -> void:
@@ -84,15 +85,18 @@ static func workshop(ui: CanvasLayer, x: float) -> void:
 	b.disabled=value.rank>=5 or g.economy.gold<cost
 	if g.orb_growth_open==selected_orb and value.offers.size()==3:
 		Look.text(ui,ui.modal,"하나를 고르면 %d 마석 소비 · 이 오브만 강화"%cost,Vector2(x+24,520),16,Look.PURPLE)
-		for i in 3:
-			var id: String=value.offers[i]
-			var spec: Dictionary=g.OrbGrowth.OPTIONS[id]
-			var at:=Vector2(x+24+i*201,553)
-			Look.card(ui,ui.modal,Rect2(at,Vector2(190,170)),Color("f1eaf5"),20,0)
-			Look.text(ui,ui.modal,spec.name,at+Vector2(10,12),19,Look.INK,170,true)
-			Look.bounded(Look.text(ui,ui.modal,spec.desc,at+Vector2(10,45),14,Look.MUTED,170),4)
-			b=Look.button(ui,ui.modal,"선택 · %d"%cost,Rect2(at+Vector2(10,125),Vector2(170,34)),func():g.choose_orb_growth(id,selected_orb,int(value.rank),revision),true,16)
-			b.name="ChooseOrb_"+id
+		var row:=HBoxContainer.new()
+		row.name="OrbGrowthChoices"
+		row.position=Vector2(x+24,550)
+		row.size=Vector2(598,178)
+		row.add_theme_constant_override("separation",9)
+		ui.modal.add_child(row)
+		for id in value.offers:
+			var model:=View.orb_model(g,id,selected_orb)
+			var card:=View.card(ui,row,model,Vector2(190,178),func():
+				if g.economy.gold>=cost: g.choose_orb_growth(id,selected_orb,int(value.rank),revision)
+			,"ChooseOrb_"+id,true)
+			b=card.find_child("ChooseOrb_*",true,false)
 			b.disabled=g.economy.gold<cost
 	else:
 		Look.bounded(Look.text(ui,ui.modal,g.OrbGrowth.summary(value),Vector2(x+24,518),14,Look.MUTED,590),2)
@@ -147,7 +151,15 @@ static func grid(ui: CanvasLayer, key: String, rect: Rect2, columns: int) -> Gri
 static func offers(ui: CanvasLayer, x: float) -> void:
 	var g: Node2D=ui.game
 	var revision: int=g.economy.revision
-	var list:=grid(ui,"offers",Rect2(x+24,424,602,260),2)
+	var automatic:=CheckButton.new()
+	automatic.name="CraftAutoEquip"
+	automatic.text="새 마법 자동 장착 · 안전한 빈칸만"
+	automatic.position=Vector2(x+24,416)
+	automatic.button_pressed=g.profile.data.auto_equip
+	automatic.add_theme_color_override("font_color",Look.INK)
+	ui.modal.add_child(automatic)
+	automatic.toggled.connect(func(enabled):g.profile.data.auto_equip=enabled;g.save_settings();ui.show_shop())
+	var list:=grid(ui,"offers",Rect2(x+24,454,602,230),2)
 	for i in g.economy.offers.size():
 		var offer: Dictionary=g.economy.offers[i]
 		var row:=Control.new()
@@ -164,6 +176,11 @@ static func offers(ui: CanvasLayer, x: float) -> void:
 		var b:=Look.button(ui,row,title,Rect2(97,61,176,42),func():ui.Board.Crafting.buy(ui,i,revision),not offer.sold,17)
 		b.name="CraftOffer%d"%i
 		b.disabled=offer.sold or offer.id.is_empty() or g.economy.gold<offer.price
+		if not offer.id.is_empty():
+			var view:=View.model(g,offer.id,"craft")
+			var placement: String=view.placement.get("text","")
+			Look.bounded(Look.text(ui,row,view.badge+" · "+placement,Vector2(10,105),11,Look.PURPLE,266))
+			row.tooltip_text=view.title+"\n"+view.change+"\n"+view.compare+"\n"+placement
 	var reroll:=Look.button(ui,ui.modal,"↻  제작안 새로 뽑기  ·  5 마석",Rect2(x+24,699,598,38),func():g.reroll_shop(revision),false,17)
 	reroll.disabled=g.economy.gold<5
 

@@ -366,6 +366,27 @@ func show_rewards() -> void:
 
 func show_level_reward() -> void: LevelRewardUI.build(self)
 
+func acquisition_feedback(id: String, placement: Dictionary) -> void:
+	if game.state!="shop": return
+	close_reward_receipt()
+	var popup:=Control.new()
+	popup.name="AcquisitionToast"
+	popup.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	root.add_child(popup)
+	reward_receipt=popup
+	var at:=Vector2(480,310)
+	var target: Control=null
+	if placement.get("orb",-1)>=0 and is_instance_valid(modal): target=modal.find_child("Socket_%d_%d"%[placement.orb,placement.slot],true,false)
+	if target!=null: at=root.get_global_transform().affine_inverse()*target.get_global_rect().get_center()-Vector2(30,30)
+	var pic:=LevelRewardUI.Look.icon(self,popup,id,Rect2(at-Vector2(0,55),Vector2(60,60)))
+	var text:=LevelRewardUI.Look.text(self,popup,Spells.definition(id).name+" · "+placement.get("text","가방에 보관"),Vector2(330,205),21,MINT,780,true)
+	text.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	var tween:=popup.create_tween()
+	tween.tween_property(pic,"position",at,.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(.6)
+	tween.tween_property(popup,"modulate:a",0.0,.2)
+	tween.tween_callback(popup.queue_free)
+
 func reward_details(id: String) -> Array:
 	var d: Dictionary = game.Relics.definition(id)
 	return [d.name,d.desc]

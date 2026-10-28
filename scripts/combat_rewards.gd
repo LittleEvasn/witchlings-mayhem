@@ -17,6 +17,8 @@ var total_xp := 0
 var serial := 0
 var stage := ""
 var receipt := ""
+var view: Dictionary={}
+var bag_only:=false
 func _init(owner_game: Node2D) -> void: game=owner_game
 func reset(seed_value: int) -> void:
 	pending.clear()
@@ -30,6 +32,8 @@ func reset(seed_value: int) -> void:
 	serial=0
 	stage=""
 	receipt=""
+	view.clear()
+	bag_only=false
 func required() -> int: return 6+(level-1)*3
 func paused() -> bool: return not stage.is_empty()
 func reserved(_number: int) -> int: return 0
@@ -85,11 +89,21 @@ func fill_options(existing: Array, chest := false) -> Array:
 	return options
 func tick() -> void:
 	if game.state!="combat" or paused() or pending.is_empty(): return
-	stage="choice"
+	stage="chest" if pending[0].get("source","")=="chest" and not game.profile.data.quick_rewards else "choice"
+	bag_only=false
 	game.close_personal()
 	refresh_options()
 	game.ui.show_level_reward.call_deferred()
 	game.play_sound("reward")
+func open_chest() -> bool:
+	if game.state!="combat" or stage!="chest" or pending.is_empty(): return false
+	stage="opening"
+	game.ui.show_level_reward.call_deferred()
+	return true
+func reveal_chest(reward_id: String) -> void:
+	if game.state!="combat" or stage!="opening" or pending.is_empty() or pending[0].id!=reward_id: return
+	stage="choice"
+	game.ui.show_level_reward.call_deferred()
 func finish_wave() -> void: pass
 func issue(_number: int, _source := "carrier") -> bool:
 	# Field rewards now grant growth, not an independent free spell choice.
@@ -112,9 +126,10 @@ func choose(reward_id: String, id: String, expected_revision: int) -> bool:
 	if game.state!="combat" or stage!="choice" or pending.is_empty() or expected_revision!=revision: return false
 	var first: Dictionary=pending[0]
 	if reward_id!=first.id or not id in first.options: return false
+	view=game.AcquisitionView.model(game,id,first.get("source","level"),bag_only)
 	if id.begins_with("fuse:"):
 		var fused:=id.trim_prefix("fuse:")
-		if first.get("source","")!="chest" or not game.claim_fusion(fused): return false
+		if first.get("source","")!="chest" or not game.claim_fusion(fused,bag_only): return false
 		receipt=game.Spells.definition(fused).name+" 합성 완성!"
 	elif id=="gold":
 		game.economy.grant(GOLD_REWARD)
@@ -135,7 +150,8 @@ func choose(reward_id: String, id: String, expected_revision: int) -> bool:
 		if not acquired.ok:
 			refresh_options()
 			return false
-		game.apply_acquisition(acquired)
+		game.apply_acquisition(acquired,bag_only)
+		view.placement=acquired.placement
 		receipt=game.Spells.definition(acquired.output).name+(" 강화!" if acquired.upgraded else " 획득!")
 	pending.pop_front()
 	revision+=1
