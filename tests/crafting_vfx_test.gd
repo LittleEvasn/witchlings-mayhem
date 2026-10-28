@@ -38,7 +38,7 @@ func run() -> void:
 	check(not g.ui.controls_hint.visible and not g.ui.objective_label.visible,"HUD refresh cannot expose overlapping hints behind drawer")
 	check(g.ui.modal.mouse_filter==Control.MOUSE_FILTER_IGNORE and find_named(g.ui.modal,"ModalShade")==null,"Drawer does not dim or block the full battlefield")
 	var drawer: Control=find_named(g.ui.modal,"CraftDrawer")
-	check(drawer.size.x==520 and drawer.get_global_rect().position.x>=g.get_viewport_rect().size.x*.65,"Purchased-skin scaffold leaves at least 65 percent battlefield width")
+	check(drawer.get_global_rect().position.x>=g.get_viewport_rect().size.x*.30 and drawer.get_global_rect().end.x<=g.get_viewport_rect().size.x,"Preparation workbench leaves the battlefield visible and stays inside the viewport")
 	var before: Array = g.orb_recipes.duplicate(true)
 	for orb in 2:
 		for slot in 6:
@@ -91,7 +91,7 @@ func run() -> void:
 	g.ui.board_panel="item"
 	check(g.start_trial(),"New board enters existing live trial")
 	await layout()
-	check(find_named(g.ui.modal,"CraftDrawer")!=null and find_named(g.ui.modal,"Socket_1_5")!=null,"Trial uses the same complete drawer")
+	check(find_named(g.ui.modal,"CraftDrawer").get_global_rect().position.x>=g.get_viewport_rect().size.x*.65 and find_named(g.ui.modal,"Socket_1_5")!=null,"Trial retains a compact two-orb drawer and at least 65 percent battlefield width")
 	check(find_named(g.ui.modal,"ForgePaid")==null and find_named(g.ui.modal,"CraftTab_craft").disabled,"Trial cannot craft or enter purchase tab")
 	check(find_named(g.ui.modal,"CraftBagScroll").get_child(0).get_children().all(func(c):return g.Spells.definition(c.id).kind=="attack"),"Trial bag respects the selected filter")
 	g.end_trial()

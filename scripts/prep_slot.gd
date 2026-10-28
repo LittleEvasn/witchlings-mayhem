@@ -1,5 +1,6 @@
 extends Control
 ## Shared inventory/socket control. Edges insert; the centre swaps/replaces.
+const Look = preload("res://scripts/mayhem_skin.gd")
 const Spells = preload("res://scripts/spells.gd")
 var ui: CanvasLayer
 var id := ""
@@ -54,16 +55,7 @@ func _get_drag_data(_at: Vector2) -> Variant:
 	pressed=false
 	var preview := Control.new()
 	preview.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	var icon := Label.new()
-	icon.text=ui.Board.glyph(id)
-	icon.position=Vector2(-32,-32)
-	icon.size=Vector2(64,64)
-	icon.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	icon.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
-	icon.add_theme_font_override("font",ui.font)
-	icon.add_theme_font_size_override("font_size",42)
-	icon.add_theme_color_override("font_color",Spells.definition(id).color)
-	preview.add_child(icon)
+	Look.icon(ui,preview,id,Rect2(-32,-32,64,64))
 	set_drag_preview(preview)
 	modulate.a=0.4
 	return data
@@ -105,11 +97,14 @@ func _draw() -> void:
 		var color: Color = ui.BORDER if id.is_empty() else Spells.definition(id).color
 		var selected: bool = not id.is_empty() and id==ui.selected_item
 		var available: bool = not inventory or ui.game.remaining_part(id)>0
-		var bg := Color("2b3348") if hover else Color("121a2b")
+		var light: bool=is_instance_valid(ui.modal) and ui.modal.get_meta("rounded_ui",false)
+		var bg: Color=(Look.LILAC if hover else Look.PAPER) if light else (Color("2b3348") if hover else Color("121a2b"))
 		var skin: StyleBox
 		var state_name := "selected" if selected else "hover" if hover else "normal"
 		if ui.crafting_theme!=null and ui.crafting_theme.has_stylebox(state_name,"CraftSlot"):
 			skin=ui.crafting_theme.get_stylebox(state_name,"CraftSlot")
+		if light and not available: bg=Color("ece6ee")
+		if skin==null and light: skin=Look.style(bg,Look.PURPLE if selected or hover else Look.LINE,17)
 		draw_style_box(skin if skin!=null else ui.box(bg,color if selected or hover else color.darkened(0.55),2 if selected else 1,12),Rect2(Vector2.ZERO,size))
 		if not id.is_empty():
 			var center := Vector2(size.x*0.5,size.y*0.40)

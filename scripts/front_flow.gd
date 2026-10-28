@@ -1,8 +1,9 @@
 extends RefCounted
-## Front-end flow and neutral layout. Existing art only; purchased GUI skin remains separate.
+## Front-end flow. Title/selection use the rounded presentation; other pages retain their layouts.
 const Spells=preload("res://scripts/spells.gd")
 const Content=preload("res://scripts/run_content.gd")
 const Relics=preload("res://scripts/relics.gd")
+const Look=preload("res://scripts/mayhem_skin.gd")
 const GuiSkin=preload("res://scripts/crafting_board.gd")
 
 static func open(ui: CanvasLayer, page: String, shade_alpha := .35) -> void:
@@ -23,7 +24,7 @@ static func open(ui: CanvasLayer, page: String, shade_alpha := .35) -> void:
 	ui._resize_modal_shade()
 
 static func action(ui: CanvasLayer, name: String, text: String, rect: Rect2, callback: Callable, primary := false, font_size := 20) -> Button:
-	var b: Button=ui.button(ui.modal,text,rect,callback,primary,font_size)
+	var b: Button=Look.button(ui,ui.modal,text,rect,callback,primary,font_size) if ui.modal.get_meta("rounded_ui",false) else ui.button(ui.modal,text,rect,callback,primary,font_size)
 	b.name=name
 	return b
 
@@ -63,39 +64,48 @@ static func finish(ui: CanvasLayer, focused: String, order: Array) -> void:
 	if target!=null: ui.call_deferred("focus_front",weakref(target))
 
 static func title(ui: CanvasLayer) -> void:
-	open(ui,"title",.24)
+	open(ui,"title",0)
+	Look.backdrop(ui)
 	var saved: Dictionary=ui.game.checkpoint_info()
-	ui.label(ui.modal,"W I T C H L I N G S '   M A Y H E M",Vector2(100,138),16,ui.MINT)
-	ui.label(ui.modal,"마녀들의\n사고현장",Vector2(94,185),72,ui.TEXT)
-	ui.label(ui.modal,"숙제는 조수에게. 사고는 우리에게.",Vector2(100,384),22,ui.TEXT)
-	ui.portrait(ui.modal,Rect2(700,130,620,620))
+	Look.chip(ui,ui.modal,"방과 후 마법실  ·  LUMI",Rect2(100,94,285,34))
+	var logo: Label=Look.text(ui,ui.modal,"마녀들의",Vector2(96,166),69,Look.INK,0,true)
+	logo.add_theme_color_override("font_outline_color",Look.PAPER)
+	logo.add_theme_constant_override("outline_size",10)
+	logo=Look.text(ui,ui.modal,"사고현장!",Vector2(96,235),93,Look.PURPLE,0,true)
+	logo.add_theme_color_override("font_outline_color",Look.PAPER)
+	logo.add_theme_constant_override("outline_size",12)
+	Look.text(ui,ui.modal,"W I T C H L I N G S '   M A Y H E M",Vector2(109,352),14,Look.PURPLE)
+	Look.text(ui,ui.modal,"숙제는 조수에게. 사고는 우리에게!",Vector2(107,396),22,Look.INK,0,true)
+	ui.portrait(ui.modal,Rect2(718,103,685,685))
+	Look.chip(ui,ui.modal,"루미  ·  오늘도 무사히 끝날 리가!",Rect2(884,738,392,42),Look.PAPER,Look.INK)
 	var order: Array=[]
-	var y:=434.0
-	if not saved.is_empty() and saved.run_id not in ui.game.profile.data.completed_ids:
-		action(ui,"Continue","이어하기 · %d웨이브 준비"%(int(saved.wave)+1),Rect2(100,y,360,60),ui.game.resume_checkpoint,true,21)
+	var has_save: bool=not saved.is_empty() and saved.run_id not in ui.game.profile.data.completed_ids
+	if has_save:
+		action(ui,"Continue","이어하기   ·   %d웨이브 준비  →"%(int(saved.wave)+1),Rect2(105,457,430,70),ui.game.resume_checkpoint,true,26)
 		order.append("Continue")
-		y+=73
-	action(ui,"NewExperiment","새 실험",Rect2(100,y,360,55),ui.show_kits,saved.is_empty(),23)
+	action(ui,"NewExperiment","새 실험 시작  →" if not has_save else "새로운 실험",Rect2(105,541 if has_save else 463,430,58 if has_save else 78),ui.show_kits,not has_save,25)
 	order.append("NewExperiment")
-	y+=66
-	for item in [["Collection","발견 도감"],["Records","실험 기록"],["Settings","설정"],["Quit","게임 종료"]]:
+	for i in 3:
+		var item: Array=[["Collection","발견 도감","charge"],["Records","실험 기록","expire"],["Settings","설정","giant"]][i]
 		var id: String=item[0]
-		action(ui,id,item[1],Rect2(100,y,360,44),func():
+		var rect:=Rect2(105+i*148,638,134,105)
+		var button:=action(ui,id,"",rect,func():
 			match id:
 				"Collection": ui.show_collection("title")
 				"Records": ui.show_records()
 				"Settings": ui.show_settings(true)
-				"Quit": quit_prompt(ui)
 		)
+		Look.icon(ui,button,item[2],Rect2(46,10,42,42))
+		var label:=Look.text(ui,button,item[1],Vector2(4,65),20,Look.INK,126,true)
+		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 		order.append(id)
-		y+=55
-	ui.label(ui.modal,"루미의 실험",Vector2(855,713),26,ui.MINT)
-	ui.label(ui.modal,"실패작의 마석으로 주문을 만들고,\n교수님이 돌아오기 전에 사고를 수습하자.",Vector2(755,755),18,ui.TEXT,460)
-	var note: String="제작 중 자동 저장 · 준비 완료 후 전투는 저장하지 않아요."
+	action(ui,"Quit","종료  ×",Rect2(1303,44,104,40),func():quit_prompt(ui),false,17)
+	order.append("Quit")
+	var note: String="준비 시간에 자동 저장돼요."
 	if not ui.game.checkpoint_store.warning.is_empty(): note=ui.game.checkpoint_store.warning
 	if not ui.game.checkpoint_message.is_empty() and saved.is_empty(): note=ui.game.checkpoint_message
-	ui.label(ui.modal,note,Vector2(100,811),14,ui.MUTED,550).max_lines_visible=2
-	if not ui.game.profile.warning.is_empty(): ui.label(ui.modal,ui.game.profile.warning,Vector2(100,843),13,ui.PINK,1200)
+	Look.bounded(Look.text(ui,ui.modal,note,Vector2(108,813),14,Look.MUTED,590),2)
+	if not ui.game.profile.warning.is_empty(): Look.bounded(Look.text(ui,ui.modal,ui.game.profile.warning,Vector2(108,851),12,Look.PURPLE,1200))
 	finish(ui,order[0],order)
 
 static func start_selected(ui: CanvasLayer) -> void:
@@ -125,49 +135,47 @@ static func confirm_replace(ui: CanvasLayer) -> void:
 static func prepare(ui: CanvasLayer) -> void:
 	var g: Node2D=ui.game
 	if not g.Economy.KITS.has(ui.setup_kit): ui.setup_kit=g.selected_kit
-	open(ui,"prepare",.3)
-	ui.label(ui.modal,"새 실험 준비",Vector2(96,64),36,ui.TEXT)
-	ui.label(ui.modal,"마녀와 시작 주문을 확인해 주세요.",Vector2(98,116),18,ui.MUTED)
-	ui.portrait(ui.modal,Rect2(82,176,468,468))
-	ui.label(ui.modal,"루미",Vector2(240,616),38,ui.MINT)
-	ui.label(ui.modal,"귀찮은 숙제는 마법 조수에게.\n멈춤 조건을 빼먹은 건 비밀이야.",Vector2(144,680),19,ui.TEXT,370)
-	ui.label(ui.modal,"현재 플레이할 수 있는 마녀",Vector2(164,755),15,ui.MUTED)
-	ui.label(ui.modal,"시작 조합",Vector2(622,110),23,ui.MINT)
+	open(ui,"prepare",0)
+	Look.backdrop(ui)
+	Look.text(ui,ui.modal,"오늘의 실험",Vector2(88,55),41,Look.INK,0,true)
+	Look.text(ui,ui.modal,"마녀와 첫 주문을 골라 주세요.",Vector2(92,109),18,Look.MUTED)
+	Look.card(ui,ui.modal,Rect2(86,185,437,530),Color("e5d7ef"),140,0)
+	ui.portrait(ui.modal,Rect2(46,183,510,510))
+	Look.chip(ui,ui.modal,"LUMI  /  루미",Rect2(168,670,274,45),Look.PAPER,Look.INK)
+	Look.text(ui,ui.modal,"멈춤 조건을 빼먹은 건 비밀이야.",Vector2(110,747),21,Look.INK,425,true)
+	Look.text(ui,ui.modal,"시작 조합",Vector2(596,145),28,Look.INK,0,true)
 	var order: Array=[]
 	var i:=0
 	for id in g.Economy.KITS:
 		var kit: Dictionary=g.Economy.KITS[id]
-		var b:=action(ui,"Kit_"+id,kit.name+"   ·   "+Spells.describe(kit.recipe),Rect2(622,153+i*66,690,55),func():ui.setup_kit=id;prepare(ui),ui.setup_kit==id,18)
+		var at:=Vector2(596+(i%2)*369,196+int(i/2)*188)
+		var selected: bool=ui.setup_kit==id
+		var b:=action(ui,"Kit_"+id,"",Rect2(at,Vector2(345,164)),func():ui.setup_kit=id;prepare(ui),selected,18)
 		b.tooltip_text=kit.note
+		Look.text(ui,b,kit.name,Vector2(20,15),23,Look.PAPER if selected else Look.INK,305,true)
+		Look.bounded(Look.text(ui,b,kit.note,Vector2(20,48),14,Color("f2e8ff") if selected else Look.MUTED,300),2)
+		for slot in kit.recipe.size():
+			Look.icon(ui,b,kit.recipe[slot],Rect2(20+slot*60,96,48,48))
 		order.append("Kit_"+id)
 		i+=1
-	var selected: Dictionary=g.Economy.KITS[ui.setup_kit]
-	ui.panel(ui.modal,Rect2(622,438,690,205),ui.INK)
-	ui.label(ui.modal,selected.note,Vector2(643,450),19,ui.TEXT,640)
-	var slot:=0
-	for id in selected.recipe:
-		var at:=Vector2(644+slot*100,496)
-		var part: Dictionary=Spells.definition(id)
-		ui.panel(ui.modal,Rect2(at,Vector2(88,82)),ui.PANEL).tooltip_text=part.desc
-		ui.label(ui.modal,ui.Board.glyph(id),at+Vector2(22,0),32,part.color)
-		var text: Label=ui.label(ui.modal,part.name,at+Vector2(4,51),13,ui.TEXT,80)
-		text.max_lines_visible=1
-		text.tooltip_text=part.name+" · "+part.desc
-		slot+=1
-	ui.label(ui.modal,"공통 지급: 별빛탄 · 명중 후  |  다른 구체도 전투 중 획득·제작 가능",Vector2(643,606),13,ui.MUTED,640)
+	Look.card(ui,ui.modal,Rect2(596,588,714,112),Look.PAPER,24,0)
+	Look.text(ui,ui.modal,"함께 받는 구체",Vector2(618,605),17,Look.MUTED,0,true)
+	Look.icon(ui,ui.modal,"bolt",Rect2(620,636,36,36))
+	Look.icon(ui,ui.modal,"impact",Rect2(664,636,36,36))
+	Look.text(ui,ui.modal,"새 주문은 전투와 제작에서 만나봐!",Vector2(729,640),18,Look.INK,540,true)
 	var toggle:=CheckButton.new()
 	toggle.name="ReplayIntro"
 	toggle.text="도입 이야기 보기"
-	toggle.position=Vector2(622,663)
-	toggle.size=Vector2(300,45)
+	toggle.position=Vector2(596,723)
+	toggle.size=Vector2(300,40)
 	toggle.button_pressed=ui.setup_intro
+	toggle.add_theme_color_override("font_color",Look.INK)
+	toggle.add_theme_font_override("font",Look.FONT)
 	toggle.toggled.connect(func(value):ui.setup_intro=value)
 	ui.modal.add_child(toggle)
-	ui.label(ui.modal,"이동 WASD · 회피 Space · 공격 자동\n오브 1은 가장 가까운 적, 오브 2는 그다음 적을 노려요.",Vector2(622,718),16,ui.TEXT,690)
-	action(ui,"PrepareBack","← 타이틀",Rect2(96,813,200,46),g.return_title,false,17)
-	action(ui,"StartExperiment","실험 시작 →",Rect2(1002,802,310,60),func():
-		start_selected(ui)
-	,true,23)
+	Look.text(ui,ui.modal,"WASD 이동   ·   Space 회피   ·   공격은 자동",Vector2(596,776),15,Look.MUTED)
+	action(ui,"PrepareBack","← 돌아가기",Rect2(88,818,194,46),g.return_title,false,18)
+	action(ui,"StartExperiment","실험 시작  →",Rect2(1055,803,255,60),func():start_selected(ui),true,25)
 	order.append_array(["ReplayIntro","StartExperiment","PrepareBack"])
 	finish(ui,"Kit_"+ui.setup_kit,order)
 

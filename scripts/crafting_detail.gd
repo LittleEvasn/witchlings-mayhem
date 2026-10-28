@@ -2,6 +2,107 @@ extends RefCounted
 ## Contextual actions in the shared preparation/trial drawer; crafting uses existing quotes.
 const Spells=preload("res://scripts/spells.gd")
 const P=preload("res://scripts/spell_progression.gd")
+const Look=preload("res://scripts/mayhem_skin.gd")
+
+static func detail_shell(ui: CanvasLayer, at: Vector2) -> Panel:
+	return Look.card(ui,ui.modal,Rect2(at,Vector2(366,632)),Color("f0e8f5"),26,0)
+
+static func wide_item(ui: CanvasLayer, at: Vector2) -> void:
+	var g: Node2D=ui.game
+	var id: String=ui.selected_item
+	detail_shell(ui,at)
+	if id.is_empty() or not Spells.has_part(id):
+		Look.icon(ui,ui.modal,"charge",Rect2(at+Vector2(125,88),Vector2(112,112)))
+		Look.text(ui,ui.modal,"어떤 주문을 만들까?",at+Vector2(30,235),26,Look.INK,310,true)
+		Look.text(ui,ui.modal,"마법 카드나 오브의 구체를 누르면\n효과와 강화 후 모습을 볼 수 있어요.",at+Vector2(30,285),17,Look.MUTED,306)
+		return
+	var part: Dictionary=Spells.definition(id)
+	Look.icon(ui,ui.modal,id,Rect2(at+Vector2(141,15),Vector2(84,84)))
+	var title:=Look.text(ui,ui.modal,part.name,at+Vector2(16,102),25,Look.INK,334,true)
+	title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	Look.bounded(title,2)
+	var role: String={"attack":"공격 주문","modifier":"보조 · 오른쪽 공격에 적용","connector":"연결 · 두 공격 사이에 놓기"}[part.kind]
+	Look.chip(ui,ui.modal,role,Rect2(at+Vector2(23,165),Vector2(320,29)),Look.PAPER,Look.PURPLE)
+	var explanation: String=Spells.modifier_token_text(id) if part.kind=="modifier" else part.desc
+	Look.bounded(Look.text(ui,ui.modal,explanation,at+Vector2(24,210),16,Look.INK,316),3)
+	var equip:=Look.button(ui,ui.modal,"오브 %d에 끼우기"%(g.active_orb+1),Rect2(at+Vector2(24,296),Vector2(318,41)),func():g.board_quick_equip(id),true,19)
+	equip.name="QuickEquip"
+	equip.disabled=g.remaining_part(id)<=0
+	if not Spells.upgradeable(id):
+		Look.chip(ui,ui.modal,"완성형 합성",Rect2(at+Vector2(83,378),Vector2(200,35)),Look.PINK,Look.INK)
+		Look.text(ui,ui.modal,"이미 완성된 주문이에요.\n추가 강화 없이 한 칸에 장착해요.",at+Vector2(30,435),17,Look.MUTED,306)
+		return
+	var paid: Dictionary=g.economy.craft_quote("upgrade",id)
+	var merge: Dictionary=g.economy.craft_quote("merge",id,ui.merge_material)
+	Look.text(ui,ui.modal,"강화하면",at+Vector2(24,357),20,Look.PURPLE,0,true)
+	var effect: String=ui.Board.effect_preview(ui,id,merge if merge.ok else paid,true)
+	if effect.is_empty(): effect="최대 강화에 도달했어요." if P.rank(id)>=3 else "강화할 구체를 먼저 확보해 주세요."
+	var forecast:=Look.text(ui,ui.modal,effect,at+Vector2(24,391),15,Look.INK,318)
+	forecast.name="ForgeEffectPreview"
+	Look.bounded(forecast,3)
+	var options:=OptionButton.new()
+	options.name="ForgeMaterial"
+	options.position=at+Vector2(24,476)
+	options.size=Vector2(318,35)
+	options.add_theme_font_size_override("font_size",14)
+	Look.decorate_button(options)
+	options.add_item("합칠 재료 · 자동 선택")
+	options.set_item_metadata(0,"")
+	for level in 4:
+		var token: String=P.key(P.base_id(id),level)
+		var count: int=g.economy.inventory.get(token,0)-(1 if token==id else 0)
+		if count<=0: continue
+		var equipped: int=g.orb_drafts[0].count(token)+g.orb_drafts[1].count(token)
+		options.add_item("%s · %d개 / 장착 %d"%[Spells.definition(token).name,count,equipped])
+		var index:=options.item_count-1
+		options.set_item_metadata(index,token)
+		if ui.merge_material==token: options.select(index)
+	if options.selected==0: ui.merge_material=""
+	ui.modal.add_child(options)
+	options.item_selected.connect(func(index):ui.merge_material=options.get_item_metadata(index);ui.refresh_workbench.call_deferred())
+	# Resolve again after validating the material selection; the action quotes remain authoritative.
+	merge=g.economy.craft_quote("merge",id,ui.merge_material)
+	var preview: String=merge.error
+	if merge.ok: preview="%s + %s → %s"%[Spells.definition(merge.consumed[0]).name,Spells.definition(merge.consumed[1]).name,Spells.definition(merge.output).name]
+	var material:=Look.text(ui,ui.modal,preview,at+Vector2(24,521),12,Look.MUTED,318)
+	material.name="ForgePreview"
+	Look.bounded(material,2)
+	var revision: int=g.economy.revision
+	var cost: int=P.paid_cost(g.Economy.PRICES[P.base_id(id)],P.rank(id))
+	var b:=Look.button(ui,ui.modal,"최대 +3" if P.rank(id)>=3 else "강화 · %d 마석"%cost,Rect2(at+Vector2(24,574),Vector2(151,40)),func():g.craft_spell("upgrade",id,"",revision),false,17)
+	b.name="ForgePaid"
+	b.disabled=not paid.ok
+	b.tooltip_text=paid.error if not paid.ok else ui.Board.effect_preview(ui,id,paid)
+	b=Look.button(ui,ui.modal,"구체 합치기",Rect2(at+Vector2(187,574),Vector2(155,40)),func():g.craft_spell("merge",id,ui.merge_material,revision),false,17)
+	b.name="ForgeMerge"
+	b.disabled=not merge.ok
+	b.tooltip_text=preview
+
+static func wide_fusion(ui: CanvasLayer, at: Vector2) -> void:
+	var g: Node2D=ui.game
+	var id: String=ui.fusion_choice if ui.fusion_choice in P.FUSIONS else "storm_spear"
+	var recipe: Dictionary=P.FUSIONS[id]
+	var a: String=P.key(recipe.parents[0],3)
+	var b: String=P.key(recipe.parents[1],3)
+	detail_shell(ui,at)
+	Look.icon(ui,ui.modal,id,Rect2(at+Vector2(121,14),Vector2(124,114)))
+	var title:=Look.text(ui,ui.modal,recipe.name,at+Vector2(20,145),27,Look.INK,326,true)
+	title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	Look.bounded(title,2)
+	Look.chip(ui,ui.modal,"완성 합성 · "+{"attack":"공격","modifier":"보조","connector":"연결"}[P.fusion_kind(id)],Rect2(at+Vector2(32,203),Vector2(302,32)),Look.PINK,Look.INK)
+	Look.bounded(Look.text(ui,ui.modal,recipe.desc,at+Vector2(26,258),16,Look.INK,314),4)
+	Look.text(ui,ui.modal,"필요한 구체",at+Vector2(26,362),20,Look.PURPLE,0,true)
+	for i in 2:
+		var token: String=a if i==0 else b
+		ui.Board.cell(ui,ui.modal,token,Rect2(at+Vector2(27+i*170,402),Vector2(142,100)))
+		var count: int=g.economy.inventory.get(token,0)
+		Look.text(ui,ui.modal,"보유 %d / 1"%count,at+Vector2(40+i*170,514),14,Look.PURPLE if count>0 else Color("b36683"),142)
+	var q: Dictionary=g.economy.craft_quote("fuse",a,b)
+	var revision: int=g.economy.revision
+	var button:=Look.button(ui,ui.modal,"합성하기 · 12 마석",Rect2(at+Vector2(24,574),Vector2(318,40)),func():g.craft_spell("fuse",a,b,revision),true,20)
+	button.name="ForgeFusion"
+	button.disabled=not q.ok
+	button.tooltip_text=q.error if not q.ok else "재료 두 개를 소비해 완성 구체 한 개를 얻어요. 장착 중인 실물도 소비돼요."
 
 static func item(ui: CanvasLayer, x: float, crafting: bool) -> void:
 	var g: Node2D=ui.game

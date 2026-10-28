@@ -1,11 +1,16 @@
 extends RefCounted
-## Battlefield-visible layout. Neutral styles are scaffolding for a purchased GUI Theme.
+## Compact trial editor; preparation delegates to the broader rounded workbench.
 const Spells = preload("res://scripts/spells.gd")
 const P = preload("res://scripts/spell_progression.gd")
 const Detail = preload("res://scripts/crafting_detail.gd")
+const Workbench = preload("res://scripts/crafting_workbench.gd")
+const Look = preload("res://scripts/mayhem_skin.gd")
 const WIDTH := 520.0
 
 static func build(ui: CanvasLayer, trial := false) -> void:
+	if not trial:
+		Workbench.build(ui)
+		return
 	var g: Node2D = ui.game
 	ui.close_modal()
 	ui.modal = Control.new()
@@ -13,6 +18,7 @@ static func build(ui: CanvasLayer, trial := false) -> void:
 	ui.modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui.modal.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.modal.set_meta("craft_drawer",true)
+	ui.modal.set_meta("rounded_ui",true)
 	ui.root.add_child(ui.modal)
 	ui.hud.visible = true
 	if is_instance_valid(ui.recipe_bar): ui.recipe_bar.visible = false
@@ -61,6 +67,7 @@ static func build(ui: CanvasLayer, trial := false) -> void:
 	var note: String = g.workbench_message
 	if note.is_empty(): note="드래그로 이동 · 우클릭 해제 · 시간 제한 없음" if not trial else "표적만 있는 시험 · 전투와 마석은 그대로"
 	ui.label(ui.modal,note,Vector2(x+24,844),11,ui.MUTED,474).max_lines_visible=1
+	Look.restyle(ui,ui.modal)
 	apply_skin(ui,ui.modal)
 
 static func orb_row(ui: CanvasLayer, index: int, at: Vector2) -> void:

@@ -1,4 +1,5 @@
 extends RefCounted
+const Look = preload("res://scripts/mayhem_skin.gd")
 const Spells = preload("res://scripts/spells.gd")
 const Slot = preload("res://scripts/prep_slot.gd")
 const Progression = preload("res://scripts/spell_progression.gd")
@@ -38,15 +39,17 @@ static func cell(ui: CanvasLayer, parent: Node, id: String, rect: Rect2, orb := 
 		var part := Spells.definition(id)
 		var available: bool = not inventory or ui.game.remaining_part(id)>0
 		var color: Color = part.color if available else ui.MUTED.darkened(0.35)
-		centered(ui,c,glyph(id),Rect2(0,2,rect.size.x,rect.size.y*0.63),30 if rect.size.y>70 else 24,color)
-		var name: Label = centered(ui,c,short_name(id),Rect2(2,rect.size.y-25,rect.size.x-4,23),12 if rect.size.x<90 else 13,ui.TEXT if available else ui.MUTED)
+		Look.icon(ui,c,id,Rect2(rect.size.x*.5-rect.size.y*.29,3,rect.size.y*.58,rect.size.y*.58))
+		var light: bool=is_instance_valid(ui.modal) and ui.modal.get_meta("rounded_ui",false)
+		var name: Label = centered(ui,c,short_name(id),Rect2(2,rect.size.y-25,rect.size.x-4,23),12 if rect.size.x<90 else 13,Look.INK if light else (ui.TEXT if available else ui.MUTED))
+		name.add_theme_font_override("font",Look.FONT)
 		name.max_lines_visible=1
 		name.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
-		if Progression.rank(id)>0: ui.label(c,"+%d" % Progression.rank(id),Vector2(5,3),12,ui.MINT)
-		if Progression.is_fused(id): ui.label(c,"✧",Vector2(5,3),12,ui.MINT)
+		if Progression.rank(id)>0: ui.label(c,"+%d" % Progression.rank(id),Vector2(4,2),12,Look.PURPLE if light else ui.MINT)
+		if Progression.is_fused(id): ui.label(c,"✧",Vector2(4,2),12,Look.PURPLE if light else ui.MINT)
 		if inventory:
 			var count: int = ui.game.remaining_part(id)
-			var badge: Label = ui.label(c,str(count) if count>0 else "장착",Vector2(rect.size.x-32,3),11,ui.MINT if count>0 else ui.MUTED,29)
+			var badge: Label = ui.label(c,str(count) if count>0 else "장착",Vector2(rect.size.x-32,3),11,Look.PURPLE if light else (ui.MINT if count>0 else ui.MUTED),29)
 			badge.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
 			if id==ui.game.purchased_orb:
 				var flash := c.create_tween()
@@ -109,7 +112,7 @@ static func bag(ui: CanvasLayer, rect: Rect2, columns := 8) -> void:
 	bg.size=rect.size
 	bg.name="BagDropArea"
 	ui.modal.add_child(bg)
-	ui.panel(bg,Rect2(Vector2.ZERO,rect.size),Color("131c2a"))
+	Look.card(ui,bg,Rect2(Vector2.ZERO,rect.size),Color("f4eef8"),20,0) if ui.modal.get_meta("rounded_ui",false) else ui.panel(bg,Rect2(Vector2.ZERO,rect.size),Color("131c2a"))
 	var scroll:=ScrollContainer.new()
 	scroll.position=Vector2(12,12)
 	scroll.size=rect.size-Vector2(24,24)
@@ -125,7 +128,7 @@ static func bag(ui: CanvasLayer, rect: Rect2, columns := 8) -> void:
 	grid.add_theme_constant_override("v_separation",8)
 	scroll.add_child(grid)
 	var w:=floorf((rect.size.x-42-(columns-1)*8)/columns)
-	var h:=70.0 if ui.modal.get_meta("craft_drawer",false) else 84.0
+	var h:=86.0 if ui.modal.get_meta("wide_workbench",false) else 70.0 if ui.modal.get_meta("craft_drawer",false) else 84.0
 	for id in ui.game.economy.inventory:
 		if ui.game.economy.inventory[id]<=0: continue
 		if ui.modal.get_meta("craft_drawer",false) and ui.bag_filter!="all" and Spells.definition(id).kind!=ui.bag_filter: continue
