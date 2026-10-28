@@ -61,20 +61,29 @@ static func build(ui: CanvasLayer) -> void:
 
 static func inventory(ui: CanvasLayer, parent: Node) -> void:
 	var g: Node2D=ui.game
+	var scroll_orbs:=ScrollContainer.new()
+	scroll_orbs.name="PersonalOrbs"
+	scroll_orbs.custom_minimum_size=Vector2(0,mini(290,g.orb_drafts.size()*94))
+	scroll_orbs.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+	parent.add_child(scroll_orbs)
+	var orb_list:=VBoxContainer.new()
+	orb_list.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	scroll_orbs.add_child(orb_list)
 	for index in g.orb_drafts.size():
 		var parts: Array=g.orb_drafts[index]
-		text(ui,parent,"오브 %d · %d번째 가까운 적"%[index+1,index+1],14,ui.MINT if index==0 else ui.PINK)
+		text(ui,orb_list,"오브 %d +%d · %s"%[index+1,g.orb_growth[index].rank,"최근접 집중" if g.OrbGrowth.amount(g.orb_growth[index],"focus") else "%d번째 가까운 적"%(index+1)],14,ui.MINT if index==0 else ui.PINK)
 		var row:=HBoxContainer.new()
 		row.add_theme_constant_override("separation",4)
-		parent.add_child(row)
+		orb_list.add_child(row)
 		var result: Dictionary=g.Spells.compile(parts)
-		for slot in 6:
+		var cell_width: float=minf(56,376.0/parts.size()-4)
+		for slot in parts.size():
 			var id: String=parts[slot] if slot<parts.size() else ""
-			var cell: Control=ui.Board.cell(ui,row,id,Rect2(0,0,56,58),index,slot)
-			cell.custom_minimum_size=Vector2(56,58)
+			var cell: Control=ui.Board.cell(ui,row,id,Rect2(0,0,cell_width,54),index,slot)
+			cell.custom_minimum_size=Vector2(cell_width,54)
 			if ui.inspected_orb==index and ui.inspected_slot>=0 and ui.inspected_slot<parts.size():
 				if slot in g.Spells.affected_slots(parts,ui.inspected_slot): cell.set_meta("affected",true)
-		var error:=text(ui,parent,result.error if not result.ok and not parts.is_empty() else "",12,ui.PINK)
+		var error:=text(ui,orb_list,result.error if not result.ok and not parts.is_empty() else "",12,ui.PINK)
 		error.visible=not result.ok and not parts.is_empty()
 	var bag_header:=HBoxContainer.new()
 	parent.add_child(bag_header)

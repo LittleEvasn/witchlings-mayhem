@@ -214,19 +214,19 @@ static func results(ui: CanvasLayer) -> void:
 		ui.label(ui.modal,stats[i][0],Vector2(x+14,286),14,ui.MUTED)
 		ui.label(ui.modal,stats[i][1],Vector2(x+14,313),25,ui.TEXT)
 	for orb in g.orb_recipes.size():
-		var x: int=560+orb*(395 if g.orb_recipes.size()==2 else 260)
-		ui.panel(ui.modal,Rect2(x,379,375 if g.orb_recipes.size()==2 else 250,222),ui.INK)
-		var heading: Label=ui.label(ui.modal,"오브 %d"%(orb+1),Vector2(x+18,392),21,ui.MINT if orb==0 else ui.PINK)
+		var x: int=560+(orb%2)*395
+		var y: int=379+int(orb/2)*123
+		ui.panel(ui.modal,Rect2(x,y,375,115),ui.INK)
+		var heading: Label=ui.label(ui.modal,"오브 %d +%d"%[orb+1,g.orb_growth[orb].rank],Vector2(x+18,y+8),21,ui.MINT if orb==0 else ui.PINK)
 		heading.name="ResultOrb%d"%orb
-		for slot in 6:
+		for slot in g.orb_recipes[orb].size():
 			var id: String=g.orb_recipes[orb][slot] if slot<g.orb_recipes[orb].size() else ""
-			var tile: Control=token(ui,id,Vector2(x+18+(slot%3)*(112 if g.orb_recipes.size()==2 else 72),432+int(slot/3)*75),slot)
+			var tile: Control=ui.Board.cell(ui,ui.modal,id,Rect2(x+12+slot*44,y+42,40,64))
 			tile.name="ResultSlot%d_%d"%[orb,slot]
-			if g.orb_recipes.size()==3: tile.scale=Vector2(.68,1)
 	var names: Array=[]
 	for id in g.relics.owned: names.append(Relics.definition(id).name)
 	var relic_text: String="이번 유물 · "+(" / ".join(names) if not names.is_empty() else "없음")
-	var relic_label: Label=ui.label(ui.modal,relic_text,Vector2(562,624),16,ui.MUTED,768)
+	var relic_label: Label=ui.label(ui.modal,relic_text,Vector2(562,642),16,ui.MUTED,768)
 	relic_label.max_lines_visible=3
 	relic_label.tooltip_text=relic_text
 	action(ui,"RetrySame","같은 시작 조합으로 다시",Rect2(560,735,770,57),func():

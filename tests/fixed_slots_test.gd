@@ -17,6 +17,15 @@ func equip(bank: Array) -> void:
 	g.active_orb=0
 	g.orb_drafts=S.fixed_bank(bank)
 	g.orb_recipes=S.fixed_bank(bank)
+	g.orb_compiled=[]
+	g.orb_trial=[]
+	g.orb_clocks=[]
+	g.orb_cursors=[]
+	for _i in bank.size():
+		g.orb_compiled.append([])
+		g.orb_trial.append([])
+		g.orb_clocks.append(0.0)
+		g.orb_cursors.append(0)
 	g.recipe=g.orb_recipes[0].duplicate()
 	g.draft=g.orb_drafts[0].duplicate()
 	g._commit_live_board()
@@ -68,7 +77,7 @@ func run() -> void:
 	var cascade:=S.compile(["bolt","impact","expire","bloom","impact","thunder"])
 	check(S.slot_diagnostic(cascade,4).code=="inactive_source" and "앞 공격" in S.slot_diagnostic(cascade,4).reason,"Downstream diagnostics name the inactive source instead of a nonexistent missing attack")
 	check(roots_of(["bolt","impact","unknown","unknown","bloom"])==["bolt"],"Multiple unknowns do not release a blocked payload as independent attack")
-	check(S.compile(["bolt","bloom","thunder","frost","vortex","thorn","bolt"]).stages.is_empty(),"Excess capacity cannot silently truncate")
+	check(S.compile(["bolt","bloom","thunder","frost","vortex","thorn","bolt","bolt","bolt"]).stages.is_empty(),"Compiler cannot exceed expanded eight-slot maximum")
 	g=load("res://scenes/main.tscn").instantiate()
 	g.record_runs=false
 	g.profile=Profile.new(PREFIX+"-profile.json")
@@ -137,6 +146,7 @@ func run() -> void:
 	g.undo_draft()
 	check(g.draft[3]=="fan" and g.draft[4]=="","Undo after restore recovers exact earlier positions")
 	var legacy: Dictionary=saved.duplicate(true)
+	legacy.erase("orb_growth")
 	legacy.orbs=[["bolt@1"],[]]
 	legacy.drafts=[["bolt@1","fan"],[]]
 	legacy.history=[]

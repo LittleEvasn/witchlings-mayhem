@@ -5,6 +5,7 @@ const P=preload("res://scripts/spell_progression.gd")
 const Economy=preload("res://scripts/economy.gd")
 const Relics=preload("res://scripts/relics.gd")
 const Forge=preload("res://scripts/spell_forge.gd")
+const Growth=preload("res://scripts/orb_growth.gd")
 const Content=preload("res://scripts/run_content.gd")
 const PATH="user://checkpoint-v1.json"
 var path: String
@@ -34,7 +35,7 @@ static func capture(g: Node2D) -> Dictionary:
 		"hp":g.hp,"max_hp":g.max_hp,"power":g.power,"fire_rate":g.fire_rate,"kills":g.kills,"wave_kills":g.wave_kills,
 		"position":[g.player.position.x,g.player.position.y],"aim":[g.aim.x,g.aim.y],"last_move":[g.last_move.x,g.last_move.y],
 		"dash_direction":[g.dash_direction.x,g.dash_direction.y],"dash_left":g.dash_left,"dash_cooldown":g.dash_cooldown,"invincible":g.invincible,
-		"run_rules":"survival-30-v1","orb_upgrades":g.orb_upgrades.duplicate(),"workshop_relics":g.workshop_relics.duplicate(),
+		"run_rules":"survival-30-v1","orb_upgrades":g.orb_upgrades.duplicate(),"orb_growth":g.orb_growth.duplicate(true),"workshop_relics":g.workshop_relics.duplicate(),
 		"orbs":g.orb_recipes.duplicate(true),"drafts":g.orb_drafts.duplicate(true),"active_orb":g.active_orb,"history":g.edit_history.duplicate(true),
 		"economy":{"gold":g.economy.gold,"earned":g.economy.total_earned,"inventory":inventory,"offers":g.economy.offers.duplicate(true),"research_sold":g.economy.research_sold},
 		"relics":relics,"rng":rng_data(g.rng),"relic_rng":rng_data(g.relics.rng),"reward_rng":rng_data(g.combat_rewards.rng),
@@ -57,9 +58,9 @@ static func token(id: Variant) -> bool:
 	return P.base_id(id) in Spells.PARTS and id==P.key(P.base_id(id),P.rank(id)) and P.rank(id)>=0 and P.rank(id)<=3
 
 static func bank(value: Variant, inventory: Dictionary) -> bool:
-	if not value is Array or not value.size() in [2,3]: return false
+	if not value is Array or not value.size() in [1,2,3,4]: return false
 	for parts in value:
-		if not string_list(parts,6): return false
+		if not string_list(parts,8): return false
 		for id in parts:
 			if id!="" and not token(id): return false
 	# An incomplete, silent program is a legitimate editing state.
@@ -85,10 +86,27 @@ static func valid(data: Variant) -> bool:
 	if data.hp>data.max_hp: return false
 	if not data.get("orbs") is Array or not number(data.get("active_orb"),0,data.orbs.size()-1,true): return false
 	if not data.has("run_rules") and data.orbs.size()!=2: return false
+	if not data.get("drafts") is Array or data.drafts.size()!=data.orbs.size(): return false
+	for parts in data.orbs+data.drafts:
+		if not parts is Array: return false
+	if not data.has("run_rules"):
+		if data.has("orb_growth"): return false
+		for parts in data.orbs+data.drafts:
+			if parts.size()>6: return false
 	if data.has("run_rules"):
 		if data.run_rules!="survival-30-v1" or not data.get("orb_upgrades") is Array or data.orb_upgrades.size()!=data.orbs.size(): return false
 		for rank in data.orb_upgrades:
-			if not number(rank,0,3,true): return false
+			if not number(rank,0,5 if data.has("orb_growth") else 3,true): return false
+		if data.has("orb_growth"):
+			if not data.orb_growth is Array or data.orb_growth.size()!=data.orbs.size(): return false
+			for i in data.orb_growth.size():
+				if not Growth.valid(data.orb_growth[i]) or data.orb_growth[i].rank!=data.orb_upgrades[i]: return false
+				var cap:=Growth.capacity(data.orb_growth[i])
+				if data.orbs[i].size()!=cap or data.drafts[i].size()!=cap: return false
+		else:
+			if data.orbs.size() not in [2,3]: return false
+			for parts in data.orbs+data.drafts:
+				if not parts is Array or parts.size()>6: return false
 		if not string_list(data.get("workshop_relics"),3): return false
 		for id in data.workshop_relics:
 			if id not in Relics.DEFINITIONS: return false
@@ -163,15 +181,17 @@ static func valid(data: Variant) -> bool:
 			if fusion not in P.FUSIONS: return false
 	if not data.get("history") is Array or data.history.size()>30: return false
 	for item in data.history:
-		if not item is Dictionary or not bank(item.get("drafts"),econ.inventory) or not number(item.get("orb"),0,data.orbs.size()-1,true) or not number(item.get("group"),0,5,true): return false
+		if not item is Dictionary or not bank(item.get("drafts"),econ.inventory) or item.drafts.size()!=data.orbs.size() or not number(item.get("orb"),0,data.orbs.size()-1,true) or not number(item.get("group"),0,7,true): return false
+		for i in item.drafts.size():
+			if item.drafts[i].size()>(Growth.capacity(data.orb_growth[i]) if data.has("orb_growth") else 6): return false
 	if not data.get("waves") is Array or data.waves.size()!=int(data.wave): return false
 	for i in data.waves.size():
 		var item: Variant=data.waves[i]
-		if not item is Dictionary or item.get("wave")!=i+1 or not item.get("recipes") is Array or not item.recipes.size() in [2,3]: return false
+		if not item is Dictionary or item.get("wave")!=i+1 or not item.get("recipes") is Array or not item.recipes.size() in [1,2,3,4]: return false
 		for key in ["seconds","kills","earned"]:
 			if not number(item.get(key)): return false
 		for parts in item.recipes:
-			if not string_list(parts,6): return false
+			if not string_list(parts,8): return false
 			for id in parts:
 				if id!="" and not token(id): return false
 	if not data.get("metrics") is Dictionary: return false
@@ -248,6 +268,13 @@ static func apply(g: Node2D, data: Dictionary) -> void:
 	g.orb_drafts=Spells.fixed_bank(data.drafts)
 	g.orb_upgrades=data.get("orb_upgrades",[0,0]).duplicate()
 	for i in g.orb_upgrades.size(): g.orb_upgrades[i]=int(g.orb_upgrades[i])
+	g.orb_growth=data.orb_growth.duplicate(true) if data.has("orb_growth") else g.orb_upgrades.map(func(rank):return Growth.migrate(int(rank)))
+	g.orb_buffer_ready=[]
+	g.orb_growth_open=-1
+	g.ensure_orb_growth()
+	for i in g.orb_recipes.size():
+		g.orb_recipes[i]=Spells.fixed_slots(g.orb_recipes[i],g.orb_capacity(i))
+		g.orb_drafts[i]=Spells.fixed_slots(g.orb_drafts[i],g.orb_capacity(i))
 	g.workshop_relics=data.get("workshop_relics",[]).duplicate()
 	g.final_boss_started=false
 	g.clear_chests()

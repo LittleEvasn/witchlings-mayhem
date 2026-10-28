@@ -34,9 +34,9 @@ static func build(ui: CanvasLayer, trial := false) -> void:
 	ui.label(ui.modal,"%d 마석"%g.economy.gold,Vector2(x+335,58),18,ui.MINT)
 	var owned: Button = ui.button(ui.modal,"유물 %d"%g.relics.owned.size(),Rect2(x+230,54,90,30),ui.show_relics,false,14)
 	owned.disabled = trial
-	if g.orb_recipes.size()>2:
+	if g.orb_recipes.size()>1:
 		ui.button(ui.modal,"오브 %d/%d ↻"%[g.active_orb+1,g.orb_recipes.size()],Rect2(x+118,54,100,30),func():g.select_orb((g.active_orb+1)%g.orb_recipes.size()),false,13).name="TrialCycleOrb"
-	var shown: Array=[0,1] if g.orb_recipes.size()==2 else [g.active_orb,(g.active_orb+1)%g.orb_recipes.size()]
+	var shown: Array=[0] if g.orb_recipes.size()==1 else ([0,1] if g.orb_recipes.size()==2 else [g.active_orb,(g.active_orb+1)%g.orb_recipes.size()])
 	for row in shown.size(): orb_row(ui,shown[row],Vector2(x+22,106+row*104))
 	var active: String = "bag" if trial else ui.craft_tab
 	for i in 3:
@@ -87,8 +87,9 @@ static func orb_row(ui: CanvasLayer, index: int, at: Vector2) -> void:
 	label.max_lines_visible=1
 	label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.tooltip_text=summary
-	for slot in 6:
-		ui.Board.cell(ui,ui.modal,str(parts[slot]) if slot<parts.size() else "",Rect2(at+Vector2(slot*78,30),Vector2(70,64)),index,slot)
+	var step: float=472.0/parts.size()
+	for slot in parts.size():
+		ui.Board.cell(ui,ui.modal,str(parts[slot]),Rect2(at+Vector2(slot*step,30),Vector2(step-6,64)),index,slot)
 	for slot in parts.size():
 		if parts[slot]==ui.selected_item and Spells.definition(parts[slot]).kind=="modifier" and (ui.inspected_slot<0 or (ui.inspected_orb==index and ui.inspected_slot==slot)):
 			for affected in Spells.affected_slots(parts,slot):

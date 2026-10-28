@@ -45,10 +45,11 @@ static func reconcile(bank: Array, target: String, quote: Dictionary, preferred:
 
 	return result
 
-static func valid(bank: Array, inventory: Dictionary) -> bool:
+static func valid(bank: Array, inventory: Dictionary, capacities: Array = []) -> bool:
 	var counts := {}
-	for parts in bank:
-		if parts.size()>6: return false
+	for orb in bank.size():
+		var parts: Array=bank[orb]
+		if parts.size()>(capacities[orb] if orb<capacities.size() else Spells.MAX_SLOTS): return false
 		for id in parts:
 			if id=="": continue
 			counts[id] = int(counts.get(id,0))+1

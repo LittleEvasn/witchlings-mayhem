@@ -279,24 +279,26 @@ func clear_children(node: Node) -> void:
 		child.queue_free()
 
 func rebuild_recipe() -> void:
+	game.ensure_orb_growth()
 	clear_children(recipe_bar)
-	panel(recipe_bar,Rect2(240,806,1120,80),Color(0.08,0.10,0.16,0.96))
+	panel(recipe_bar,Rect2(240,788,1120,98),Color(0.08,0.10,0.16,0.96))
 	button(recipe_bar,"Tab  마법",Rect2(252,828,120,36),func():
 		if game.state=="combat": game.open_editor()
 	,false,16)
 	for i in game.orb_recipes.size():
 		var parts: Array = game.orb_recipes[i]
-		var x: int=390+i*(308 if game.orb_recipes.size()==2 else 300)
+		var x: int=390+(i%2)*480
+		var y: int=796+int(i/2)*43
 		var color: Color=MINT if i==0 else PINK
 		var result: Dictionary=Spells.compile(parts)
 		var invalid: bool=not result.ok
 		if invalid: color=PINK
-		var orb: Panel=panel(recipe_bar,Rect2(x,824,42,42))
-		orb.tooltip_text=Spells.describe(parts) if invalid else "%d번째 가까운 적 자동 조준"%[i+1]
+		var orb: Panel=panel(recipe_bar,Rect2(x,y,35,35))
+		orb.tooltip_text=Spells.describe(parts) if invalid else ("가장 가까운 적 집중 조준" if game.OrbGrowth.amount(game.orb_growth[i],"focus") else "%d번째 가까운 적 자동 조준"%[i+1])
 		orb.add_theme_stylebox_override("panel",box(Color("273040"),color,2,24))
-		Board.centered(self,orb,"!" if invalid else str(i+1),Rect2(0,0,42,42),18,color)
-		for n in 6:
-			var p:=Vector2(x+49+n*39,827)
+		Board.centered(self,orb,"!" if invalid else str(i+1),Rect2(0,0,35,35),16,color)
+		for n in parts.size():
+			var p:=Vector2(x+42+n*39,y)
 			panel(recipe_bar,Rect2(p,Vector2(35,36)),INK)
 			if n<parts.size() and not str(parts[n]).is_empty():
 				var id: String=parts[n]

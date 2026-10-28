@@ -259,7 +259,7 @@ func special(c: Dictionary) -> void:
    if active>=32 or orbits.size()>=128:
     runtime.track("orbits_blocked",c.meter_source)
     return
-   c["life"] = float(stage.get("_orbit_life",1.8))
+   c["life"] = float(stage.get("_orbit_life",1.8))*(1.0 if stage.has("_anchor_zone") else float(stage.get("_orb_life",1.0)))
    c["age"] = 0.0
    c["hits"] = {}
    c["bodies"] = []
@@ -419,7 +419,7 @@ func stamp_path(c: Dictionary, at: Vector2, tangent: Vector2) -> void:
    continue
   var point: Vector2 = runtime.support.stamp_point(c,at)+tangent.orthogonal()*(n-(tracks-1)*0.5)*data.radius*c.scale*2.2
   var zone := c.duplicate()
-  zone.merge({"kind":"ember_path","pos":point,"path_points":[point],"span":0.0,"radius":data.radius*c.scale,"damage":DIRECT_DAMAGE.ember_path*damage_scale(c),"life":data.life,"age":0.0,"pulse":0.3,"group":c},true)
+  zone.merge({"kind":"ember_path","pos":point,"path_points":[point],"span":0.0,"radius":data.radius*c.scale,"damage":DIRECT_DAMAGE.ember_path*damage_scale(c),"life":data.life*float(c.stage.get("_orb_life",1.0)),"age":0.0,"pulse":0.3,"group":c},true)
   c.remaining += 1
   runtime.add_zone(zone)
   runtime.track("path_patches",c.meter_source)

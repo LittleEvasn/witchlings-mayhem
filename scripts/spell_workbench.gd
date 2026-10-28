@@ -18,5 +18,5 @@ static func pack(model: Dictionary) -> Array:
 static func put(recipe: Array, id: String, target: int, _connector := "") -> Array:
 	var result := recipe.duplicate()
 	result = Spells.fixed_slots(result)
-	if target>=0 and target<Spells.SLOT_COUNT: result[target]=id
+	if target>=0 and target<result.size(): result[target]=id
 	return result

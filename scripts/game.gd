@@ -4,6 +4,7 @@ const Workbench = preload("res://scripts/spell_workbench.gd")
 const Forge = preload("res://scripts/spell_forge.gd")
 const RoleMigration = preload("res://scripts/spell_role_migration.gd")
 const Spells = preload("res://scripts/spells.gd")
+const OrbGrowth = preload("res://scripts/orb_growth.gd")
 const Waves = preload("res://scripts/waves.gd")
 const Economy = preload("res://scripts/economy.gd")
 const Relics = preload("res://scripts/relics.gd")
@@ -113,7 +114,10 @@ var boss_encounter: RefCounted
 var boss_spawn_wait := 0.0
 var final_boss_started := false
 var chests: Array = []
-var orb_upgrades: Array = [0,0]
+var orb_upgrades: Array = [0]
+var orb_growth: Array = [OrbGrowth.fresh()]
+var orb_buffer_ready: Array = [0.0]
+var orb_growth_open := -1
 var workshop_relics: Array = []
 var actor_shadows: Node2D
 var actor_health: Node2D
@@ -422,7 +426,10 @@ func start_run(kit := "") -> bool:
 	forge_message = ""
 	result_win = false
 	final_boss_started=false
-	orb_upgrades=[0,0]
+	orb_upgrades=[0]
+	orb_growth=[OrbGrowth.fresh()]
+	orb_buffer_ready=[0.0]
+	orb_growth_open=-1
 	workshop_relics.clear()
 	clear_chests()
 	end_reason=""
@@ -447,13 +454,13 @@ func start_run(kit := "") -> bool:
 	recipe = Spells.fixed_slots(Economy.KITS[selected_kit].recipe)
 	active_orb = 0
 	selected_group = 0
-	orb_recipes = [recipe.duplicate(),Spells.fixed_slots([])]
+	orb_recipes = [recipe.duplicate()]
 	orb_drafts = orb_recipes.duplicate(true)
-	orb_compiled = [Spells.compile(recipe).stages,[]]
+	orb_compiled = [Spells.compile(recipe).stages]
 	orb_trial = []
 	for _i in orb_recipes.size(): orb_trial.append([])
-	orb_clocks = [Spells.interval(orb_compiled[0]),0.0]
-	orb_cursors = [0,0]
+	orb_clocks = [Spells.interval(orb_compiled[0])]
+	orb_cursors = [0]
 	draft = recipe.duplicate()
 	workbench_message = ""
 	economy.reset(selected_kit)
@@ -589,7 +596,8 @@ func try_dash(movement: Vector2) -> bool:
 
 func _update_auto_aim(targets: Array = []) -> void:
 	if targets.is_empty(): targets=AutoTargeting.ranked(self)
-	cast_target = AutoTargeting.point_for(self,targets,active_orb)
+	ensure_orb_growth()
+	cast_target = AutoTargeting.point_for(self,targets,0 if OrbGrowth.amount(orb_growth[active_orb],"focus") else active_orb)
 	var direction := player.position.direction_to(cast_target)
 	if not direction.is_zero_approx(): aim = direction
 	player.facing_left = aim.x < 0
@@ -623,6 +631,9 @@ func emit_stage(stage: Dictionary, origin: Vector2, direction: Vector2, follow: 
 	if not magic_active(): return
 	if meter != null and magic_active(): meter.count("casts")
 	if target_point==Vector2.INF: target_point=cast_target
+	ensure_orb_growth()
+	stage=OrbGrowth.decorate(stage,orb_growth[int(stage.get("_orb",active_orb))])
+	follow=Spells.follow(stage)
 	magic.emit(stage,origin,direction,follow,factor,-1.0,"primary",false,-1,-1,target_point)
 	if relics.direct_cast() and magic_active():
 		var copy := stage.duplicate(true)
@@ -630,7 +641,7 @@ func emit_stage(stage: Dictionary, origin: Vector2, direction: Vector2, follow: 
 		var rotated := direction.rotated(relics.rng.randf_range(-PI,PI))
 		var point := origin+rotated*origin.distance_to(target_point)
 		magic.track("relic_copies")
-		magic.emit(copy,origin,rotated,follow,factor,caster_power()*.4,"primary",false,-1,-1,point)
+		magic.emit(copy,origin,rotated,follow,factor,caster_power()*.4*float(stage.get("_orb_power",1.0)),"primary",false,-1,-1,point)
 		ring(origin,26,Color("dfb6f5"),.2)
 
 func caster_power() -> float:
@@ -917,6 +928,12 @@ func hurt_player(amount: float) -> void:
 		meter.count("shield_absorbed","",result.shield)
 		meter.count("player_hits")
 	hp = maxf(0,hp-result.health)
+	if result.health>0 or result.shield>0:
+		ensure_orb_growth()
+		for i in orb_recipes.size():
+			if OrbGrowth.amount(orb_growth[i],"buffer")>0 and elapsed>=float(orb_buffer_ready[i]):
+				orb_clocks[i]=0.0
+				orb_buffer_ready[i]=elapsed+8.0
 	if result.speed:
 		announce("도망쟁이 구두 · 이동 속도 증가",1.2)
 		magic.track("relic_shoes_activated")
@@ -1071,8 +1088,72 @@ func _enter_preparation() -> void:
 func is_shopping() -> bool:
 	return state == "shop" or (state == "edit" and previous_state == "shop")
 
-func orb_delay(delay: float, index: int) -> float:
-	return cast_delay(delay)/(1.0+float(orb_upgrades[index])*.1)
+func ensure_orb_growth() -> void:
+	while orb_growth.size()<orb_recipes.size(): orb_growth.append(OrbGrowth.fresh())
+	while orb_upgrades.size()<orb_recipes.size(): orb_upgrades.append(0)
+	orb_buffer_ready.resize(orb_recipes.size())
+	for i in orb_buffer_ready.size():
+		if orb_buffer_ready[i]==null: orb_buffer_ready[i]=0.0
+
+func orb_capacity(index: int) -> int:
+	ensure_orb_growth()
+	return OrbGrowth.capacity(orb_growth[index])
+
+func orb_capacities() -> Array:
+	ensure_orb_growth()
+	return orb_growth.slice(0,orb_recipes.size()).map(func(value):return OrbGrowth.capacity(value))
+
+func orb_delay(delay: float, index: int, sequential := false) -> float:
+	ensure_orb_growth()
+	var value: Dictionary=orb_growth[index]
+	return cast_delay(delay)*((1.0-.2*OrbGrowth.amount(value,"sequence"))*float(value.legacy_sequence) if sequential else OrbGrowth.cycle(value))
+
+func extra_orb_cost() -> int:
+	return OrbGrowth.ORB_COSTS[orb_recipes.size()-1] if orb_recipes.size()<OrbGrowth.MAX_ORBS else 0
+
+func extra_orb_unlocked() -> bool:
+	return state=="shop" and orb_recipes.size()<OrbGrowth.MAX_ORBS and wave>=orb_recipes.size()
+
+func open_orb_growth(index: int, revision: int) -> bool:
+	if state!="shop" or revision!=economy.revision or index!=active_orb: return false
+	ensure_orb_growth()
+	var value: Dictionary=orb_growth[index]
+	if value.rank>=OrbGrowth.MAX_RANK: return false
+	var pool:=OrbGrowth.eligible(value,Spells.compile(orb_drafts[index]).stages,orb_recipes.size())
+	if value.offers.size()!=3 or not value.offers.all(func(id):return id in pool):
+		value.offers=[]
+		while value.offers.size()<3 and not pool.is_empty():
+			value.offers.append(pool.pop_at(rng.randi_range(0,pool.size()-1)))
+	if value.offers.size()!=3: return false
+	orb_growth_open=index
+	ui.show_shop()
+	return true
+
+func choose_orb_growth(id: String, index: int, rank: int, revision: int) -> bool:
+	if state!="shop" or revision!=economy.revision or index!=active_orb or index!=orb_growth_open: return false
+	var value: Dictionary=orb_growth[index]
+	if rank!=value.rank or rank>=OrbGrowth.MAX_RANK or id not in value.offers: return false
+	if id not in OrbGrowth.eligible(value,Spells.compile(orb_drafts[index]).stages,orb_recipes.size()): return false
+	var price:=OrbGrowth.cost(value)
+	if economy.gold<price: return false
+	economy.gold-=price
+	economy.revision+=1
+	value.picks[id]=OrbGrowth.amount(value,id)+1
+	value.rank+=1
+	value.offers=[]
+	orb_upgrades[index]=value.rank
+	orb_growth_open=-1
+	if id=="socket":
+		orb_recipes[index].append("")
+		orb_drafts[index].append("")
+		if index==active_orb:
+			recipe=orb_recipes[index].duplicate()
+			draft=orb_drafts[index].duplicate()
+	edit_revision+=1
+	ui.rebuild_recipe()
+	ui.show_shop()
+	play_sound("reward")
+	return true
 
 func equipped_count(id: String, use_draft := true) -> int:
 	var count:=0
@@ -1089,12 +1170,10 @@ func workshop_buy(action: String, revision: int, expected_orb := -1) -> bool:
 	if state!="shop" or revision!=economy.revision: return false
 	var price := 0
 	if action=="orb":
-		if orb_recipes.size()>=3: return false
-		price=180
+		if not extra_orb_unlocked(): return false
+		price=extra_orb_cost()
 	elif action=="upgrade":
-		if expected_orb!=active_orb: return false
-		if orb_upgrades[active_orb]>=3: return false
-		price=60*(int(orb_upgrades[active_orb])+1)
+		return open_orb_growth(expected_orb,revision)
 	elif action.begins_with("relic:"):
 		var id:=action.trim_prefix("relic:")
 		if not id in workshop_relics or relics.has(id): return false
@@ -1111,9 +1190,10 @@ func workshop_buy(action: String, revision: int, expected_orb := -1) -> bool:
 		orb_clocks.append(0.0)
 		orb_cursors.append(0)
 		orb_upgrades.append(0)
+		orb_growth.append(OrbGrowth.fresh())
+		orb_buffer_ready.append(0.0)
 		edit_history.clear()
 		edit_revision+=1
-	elif action=="upgrade": orb_upgrades[active_orb]+=1
 	else: acquire_relic(action.trim_prefix("relic:"))
 	ui.rebuild_recipe()
 	ui.show_shop()
@@ -1239,10 +1319,14 @@ func editing_recipe() -> bool:
 	return state in ["shop","edit","trial"] or (state=="combat" and personal_tab=="inventory")
 
 func _sync_orb() -> void:
+	ensure_orb_growth()
 	orb_recipes = Spells.fixed_bank(orb_recipes)
 	orb_drafts = Spells.fixed_bank(orb_drafts)
-	recipe = Spells.fixed_slots(recipe)
-	draft = Spells.fixed_slots(draft)
+	for i in orb_recipes.size():
+		orb_recipes[i]=Spells.fixed_slots(orb_recipes[i],orb_capacity(i))
+		orb_drafts[i]=Spells.fixed_slots(orb_drafts[i],orb_capacity(i))
+	recipe = Spells.fixed_slots(recipe,orb_capacity(active_orb))
+	draft = Spells.fixed_slots(draft,orb_capacity(active_orb))
 	orb_recipes[active_orb] = recipe.duplicate()
 	orb_drafts[active_orb] = draft.duplicate()
 
@@ -1260,7 +1344,7 @@ func has_draft_changes() -> bool:
 
 func valid_draft() -> bool:
 	_sync_orb()
-	return Forge.valid(orb_drafts,economy.inventory)
+	return Forge.valid(orb_drafts,economy.inventory,orb_capacities())
 
 func select_orb(index: int) -> void:
 	if not editing_recipe() or index==active_orb or index<0 or index>=orb_recipes.size(): return
@@ -1281,7 +1365,7 @@ func focus_group(index: int) -> void:
 	ui.refresh_workbench.call_deferred()
 
 func orb_position(index: int) -> Vector2:
-	return player.position+([Vector2(-36,-19),Vector2(36,-19),Vector2(0,-65)][index])+Vector2(0,sin(elapsed*2.5+index*PI)*5)
+	return player.position+([Vector2(-36,-19),Vector2(36,-19),Vector2(-28,-65),Vector2(28,-65)][index])+Vector2(0,sin(elapsed*2.5+index*PI)*5)
 
 func _reset_orb_clocks() -> void:
 	orb_cursors.resize(orb_recipes.size())
@@ -1291,6 +1375,7 @@ func _reset_orb_clocks() -> void:
 	cast_clock = orb_clocks[active_orb]
 
 func _tick_orbs(delta: float, allow_cast := true) -> void:
+	ensure_orb_growth()
 	magic.begin_tick()
 	var due := false
 	for i in orb_compiled.size():
@@ -1312,14 +1397,14 @@ func _tick_orbs(delta: float, allow_cast := true) -> void:
 		var stage: Dictionary = command.stage.duplicate(true)
 		stage["_orb"] = i
 		var origin := orb_position(i)
-		var point: Vector2=AutoTargeting.point_for(self,targets,i)
+		var point: Vector2=AutoTargeting.point_for(self,targets,0 if OrbGrowth.amount(orb_growth[i],"focus")>0 else i)
 		var direction := origin.direction_to(point)
 		if direction.is_zero_approx(): direction = aim
 		emit_stage(stage,origin,direction,Spells.follow(stage),1.0,point)
 		if not magic_active(): return
 		metrics.casts += 1
 		orb_cursors[i] = command.cursor
-		orb_clocks[i] = orb_delay(command.delay,i)
+		orb_clocks[i] = orb_delay(command.delay,i,command.cursor!=0)
 		play_sound("cast")
 	cast_clock = orb_clocks[active_orb]
 
@@ -1532,15 +1617,16 @@ func board_plan(data: Variant, target: int, boundary: int, replace := false) -> 
 	if target<0:
 		bank[src][index] = ""
 	else:
-		if boundary<0 or boundary>=Spells.SLOT_COUNT: return {}
+		if boundary<0 or boundary>=orb_capacity(target): return {}
 		if src==target and index==boundary: return {"bank":bank}
 		var old: String = bank[target][boundary]
 		bank[target][boundary] = id
 		if src>=0: bank[src][index] = old
 
 	var all_parts: Array = []
-	for row in bank:
-		if row.size()>6: return {}
+	for orb in bank.size():
+		var row: Array=bank[orb]
+		if row.size()>orb_capacity(orb): return {}
 		all_parts.append_array(row)
 	if not economy.owns_recipe(all_parts): return {}
 	return {"bank":bank}
@@ -1597,8 +1683,8 @@ func _refresh_trial_orbs() -> void:
 func _accept_group_recipe(next: Array) -> bool:
 	var all_parts: Array = []
 	for i in orb_recipes.size(): all_parts.append_array(next if i==active_orb else orb_drafts[i])
-	if next.size()>6:
-		workbench_message = "이 오브는 최대 6칸이야. 보조를 빼거나 다른 오브로 옮겨봐."
+	if next.size()>orb_capacity(active_orb):
+		workbench_message = "이 오브는 현재 %d칸이야. 빈칸을 확인해줘."%orb_capacity(active_orb)
 		ui.refresh_workbench.call_deferred()
 		return false
 	if not economy.owns_recipe(all_parts):
@@ -1622,7 +1708,7 @@ func _available_connector() -> String:
 func can_drop_group_part(data: Variant, target: int) -> bool:
 	if not data is Dictionary or not editing_recipe(): return false
 	if data.get("owner",0)!=get_instance_id() or data.get("revision",-1)!=edit_revision or data.get("kind","")!="recipe_orb": return false
-	return target>=0 and target<=6 and Spells.has_part(data.get("id",""))
+	return target>=0 and target<orb_capacity(active_orb) and Spells.has_part(data.get("id",""))
 
 func drop_group_part(data: Variant, target: int) -> bool:
 	if not can_drop_group_part(data,target): return false

@@ -19,7 +19,7 @@ func _draw() -> void:
 		for i in game.orb_recipes.size():
 			var pos: Vector2 = game.orb_position(i)
 			var color := Color("a8efe2") if i==0 else Color("ff9cae")
-			var occupied: bool = not (game.orb_drafts[i] if game.state=="trial" else game.orb_recipes[i]).is_empty()
+			var occupied: bool = game.Spells.has_content(game.orb_drafts[i] if game.state=="trial" else game.orb_recipes[i])
 			draw_circle(pos,15,Color(color,0.12 if occupied else 0.04))
 			draw_circle(pos,8,Color(color,0.9 if occupied else 0.25))
 			draw_circle(pos-Vector2(2,2),3,Color("fff8e8"))

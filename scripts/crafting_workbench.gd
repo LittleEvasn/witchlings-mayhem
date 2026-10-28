@@ -8,6 +8,7 @@ const WIDTH:=1036.0
 
 static func build(ui: CanvasLayer) -> void:
 	var g: Node2D=ui.game
+	g.ensure_orb_growth()
 	ui.close_modal()
 	ui.modal=Control.new()
 	ui.modal.name="CraftWorkbenchRoot"
@@ -30,8 +31,8 @@ static func build(ui: CanvasLayer) -> void:
 	Look.chip(ui,ui.modal,"%d  마석"%g.economy.gold,Rect2(x+814,52,192,48),Look.MINT,Look.INK)
 	Look.button(ui,ui.modal,"유물 %d"%g.relics.owned.size(),Rect2(x+689,56,108,40),ui.show_relics,false,17)
 	for index in g.orb_recipes.size():
-		Look.button(ui,ui.modal,"오브 %d"%(index+1),Rect2(x+355+index*82,106,76,28),func():g.select_orb(index),index==g.active_orb,14)
-	var shown: Array=[0,1] if g.orb_recipes.size()==2 else [g.active_orb,(g.active_orb+1)%g.orb_recipes.size()]
+		Look.button(ui,ui.modal,"오브 %d +%d"%[index+1,g.orb_growth[index].rank],Rect2(x+355+index*82,106,76,28),func():g.select_orb(index),index==g.active_orb,14)
+	var shown: Array=[0] if g.orb_recipes.size()==1 else ([0,1] if g.orb_recipes.size()==2 else [g.active_orb,(g.active_orb+1)%g.orb_recipes.size()])
 	for row in shown.size(): orb_row(ui,shown[row],Vector2(x+24,140+row*106))
 	for i in 4:
 		var tab: Array=[["bag","가방"],["craft","마법 제작"],["fusion","합성 도감"],["workshop","오브·유물"]][i]
@@ -71,22 +72,38 @@ static func workshop(ui: CanvasLayer, x: float) -> void:
 	var g: Node2D=ui.game
 	var revision: int=g.economy.revision
 	var selected_orb: int=g.active_orb
-	Look.text(ui,ui.modal,"오브 %d · 시전 속도 +%d%%"%[g.active_orb+1,int(g.orb_upgrades[g.active_orb])*10],Vector2(x+24,426),20,Look.INK)
-	var b:=Look.button(ui,ui.modal,"세 번째 오브 · 180 마석",Rect2(x+24,463,290,46),func():g.workshop_buy("orb",revision),false,18)
+	var value: Dictionary=g.orb_growth[selected_orb]
+	Look.text(ui,ui.modal,"오브 %d +%d/5 · %d칸"%[selected_orb+1,value.rank,g.orb_capacity(selected_orb)],Vector2(x+24,426),20,Look.INK)
+	var b:=Look.button(ui,ui.modal,"오브 최대 4개" if g.orb_recipes.size()>=4 else "오브 %d 추가 · %d 마석"%[g.orb_recipes.size()+1,g.extra_orb_cost()],Rect2(x+24,463,290,46),func():g.workshop_buy("orb",revision),false,18)
 	b.name="BuyExtraOrb"
-	b.disabled=g.orb_recipes.size()>=3 or g.economy.gold<180
-	var cost:=60*(int(g.orb_upgrades[g.active_orb])+1)
-	b=Look.button(ui,ui.modal,"이 오브 속도 +10%% · %d"%cost,Rect2(x+326,463,294,46),func():g.workshop_buy("upgrade",revision,selected_orb),false,17)
+	b.disabled=not g.extra_orb_unlocked() or g.economy.gold<g.extra_orb_cost()
+	b.tooltip_text="6·12·18분 휴식부터 순서대로 해금 · 빈 오브를 추가해요"
+	var cost: int=g.OrbGrowth.cost(value)
+	b=Look.button(ui,ui.modal,"최대 강화 완료" if value.rank>=5 else "이 오브 강화 · 3중 1택 · %d"%cost,Rect2(x+326,463,294,46),func():g.open_orb_growth(selected_orb,revision),false,17)
 	b.name="UpgradeOrb"
-	b.disabled=g.orb_upgrades[g.active_orb]>=3 or g.economy.gold<cost
-	Look.text(ui,ui.modal,"유물 제작 · 각각 80 마석",Vector2(x+24,530),20,Look.PURPLE)
-	for i in g.workshop_relics.size():
-		var id: String=g.workshop_relics[i]
-		var d: Dictionary=g.Relics.definition(id)
-		b=Look.button(ui,ui.modal,d.name,Rect2(x+24+i*201,575,190,108),func():g.workshop_buy("relic:"+id,revision),false,18)
-		b.name="CraftRelic_"+id
-		b.tooltip_text=d.desc
-		b.disabled=g.relics.has(id) or g.economy.gold<80
+	b.disabled=value.rank>=5 or g.economy.gold<cost
+	if g.orb_growth_open==selected_orb and value.offers.size()==3:
+		Look.text(ui,ui.modal,"하나를 고르면 %d 마석 소비 · 이 오브만 강화"%cost,Vector2(x+24,520),16,Look.PURPLE)
+		for i in 3:
+			var id: String=value.offers[i]
+			var spec: Dictionary=g.OrbGrowth.OPTIONS[id]
+			var at:=Vector2(x+24+i*201,553)
+			Look.card(ui,ui.modal,Rect2(at,Vector2(190,170)),Color("f1eaf5"),20,0)
+			Look.text(ui,ui.modal,spec.name,at+Vector2(10,12),19,Look.INK,170,true)
+			Look.bounded(Look.text(ui,ui.modal,spec.desc,at+Vector2(10,45),14,Look.MUTED,170),4)
+			b=Look.button(ui,ui.modal,"선택 · %d"%cost,Rect2(at+Vector2(10,125),Vector2(170,34)),func():g.choose_orb_growth(id,selected_orb,int(value.rank),revision),true,16)
+			b.name="ChooseOrb_"+id
+			b.disabled=g.economy.gold<cost
+	else:
+		Look.bounded(Look.text(ui,ui.modal,g.OrbGrowth.summary(value),Vector2(x+24,518),14,Look.MUTED,590),2)
+		Look.text(ui,ui.modal,"유물 제작 · 각각 80 마석",Vector2(x+24,560),20,Look.PURPLE)
+		for i in g.workshop_relics.size():
+			var id: String=g.workshop_relics[i]
+			var d: Dictionary=g.Relics.definition(id)
+			b=Look.button(ui,ui.modal,d.name,Rect2(x+24+i*201,602,190,100),func():g.workshop_buy("relic:"+id,revision),false,18)
+			b.name="CraftRelic_"+id
+			b.tooltip_text=d.desc
+			b.disabled=g.relics.has(id) or g.economy.gold<80
 
 static func orb_row(ui: CanvasLayer, index: int, at: Vector2) -> void:
 	var g: Node2D=ui.game
@@ -98,8 +115,9 @@ static func orb_row(ui: CanvasLayer, index: int, at: Vector2) -> void:
 	b.name="OrbSelect%d"%index
 	b.add_theme_stylebox_override("normal",Look.style(color,Look.PURPLE if g.active_orb==index else Look.LINE,40))
 	b.tooltip_text="오브 %d · 클릭해서 편집할 오브 선택"%(index+1)
-	for slot in 6:
-		ui.Board.cell(ui,ui.modal,str(parts[slot]) if slot<parts.size() else "",Rect2(at+Vector2(80+slot*84,8),Vector2(77,70)),index,slot)
+	var step: float=504.0/parts.size()
+	for slot in parts.size():
+		ui.Board.cell(ui,ui.modal,str(parts[slot]),Rect2(at+Vector2(80+slot*step,8),Vector2(step-7,70)),index,slot)
 	var result: Dictionary=Spells.compile(parts)
 	var summary: String=Spells.describe(parts) if Spells.has_content(parts) else "아직 빈 오브예요. 구체를 끌어 넣어보세요."
 	var l:=Look.text(ui,ui.modal,summary,at+Vector2(5,88),12,Look.MUTED,588)

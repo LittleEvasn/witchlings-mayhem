@@ -79,15 +79,16 @@ static func row(ui: CanvasLayer, index: int, at: Vector2, compact := false, widt
 	orb.name="OrbSelect%d" % index
 	orb.add_theme_stylebox_override("normal",ui.box(Color("273c4b") if index==0 else Color("493041"),color,3 if index==g.active_orb else 1,60))
 	orb.add_theme_color_override("font_color",color)
-	orb.tooltip_text="오브 %d · 두 오브는 각자 자동으로 마법을 쏩니다." % (index+1)
+	orb.tooltip_text="오브 %d · 오브들은 각자 자동으로 마법을 쏩니다." % (index+1)
 	var x: float=at.x+(110 if compact else 150)
 	var w:=91.0 if compact else 108.0
 	var h:=61.0 if compact else 86.0
 	if narrow:
 		x = at.x+62
-		w = floorf((width-76-5*8)/6)
+		w = floorf((width-76-(parts.size()-1)*8)/parts.size())
 		h = 64
-	for i in 6:
+	if not narrow: w=minf(w,(width-(x-at.x)-20)/parts.size()-8)
+	for i in parts.size():
 		cell(ui,ui.modal,str(parts[i]) if i<parts.size() else "",Rect2(x+i*(w+8),at.y+19,w,h),index,i)
 	var selected_slots: Array = []
 	for slot in parts.size():
@@ -147,7 +148,7 @@ static func build(ui: CanvasLayer, shop: bool) -> void:
 	ui.new_modal(Rect2(32,32,1376,836))
 	ui.hud.visible=false
 	ui.label(ui.modal,"마법 준비",Vector2(64,54),32,ui.TEXT)
-	ui.label(ui.modal,"다음: "+g.RunContent.chapter(mini(5,g.wave+1)).title if shop else "두 오브가 함께 싸워요",Vector2(66,104),16,ui.MINT,410)
+	ui.label(ui.modal,"다음: "+g.RunContent.chapter(mini(5,g.wave+1)).title if shop else "장착한 오브들이 함께 싸워요",Vector2(66,104),16,ui.MINT,410)
 	ui.label(ui.modal,"구체를 끌어 장착 · 우클릭으로 빼기",Vector2(480,112),14,ui.MUTED)
 	ui.label(ui.modal,"%d G" % g.economy.gold,Vector2(1220,62),28,ui.MINT)
 	ui.button(ui.modal,"보유 유물 %d"%g.relics.owned.size(),Rect2(1010,65,190,38),ui.show_relics,false,16)

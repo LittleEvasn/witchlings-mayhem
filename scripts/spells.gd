@@ -46,10 +46,11 @@ const MODIFIER_NOTES := {
 }
 const SEQUENCE_GAP := 0.12
 const SLOT_COUNT := 6
+const MAX_SLOTS := 8
 
-static func fixed_slots(recipe: Array) -> Array:
+static func fixed_slots(recipe: Array, capacity := SLOT_COUNT) -> Array:
 	var result := recipe.duplicate()
-	while result.size()<SLOT_COUNT: result.append("")
+	while result.size()<capacity: result.append("")
 	return result
 
 static func fixed_bank(bank: Array) -> Array:
@@ -70,7 +71,7 @@ static func branches(stage: Dictionary) -> int:
 	return 1+int(Effects.profile(stage,"fan").extra)
 
 static func scale(stage: Dictionary) -> float:
-	return Effects.value(stage,"giant")*float(Effects.profile(stage,"charge").size)*float(stage.get("_growth",1.0))*float(stage.get("rank_scale",1.0))*float(stage.get("_relic_scale",1.0))*float(stage.get("_support_scale",1.0))
+	return Effects.value(stage,"giant")*float(Effects.profile(stage,"charge").size)*float(stage.get("_growth",1.0))*float(stage.get("rank_scale",1.0))*float(stage.get("_relic_scale",1.0))*float(stage.get("_support_scale",1.0))*float(stage.get("_orb_scale",1.0))
 
 static func seek_strength(stage: Dictionary) -> float:
 	return Effects.value(stage,"seek")
@@ -160,7 +161,7 @@ static func invalid(message: String, index: int, nodes: Array = []) -> Dictionar
 	return {"ok":false,"error":message,"error_index":index,"stages":[],"nodes":nodes,"diagnostics":[],"runnable_count":0}
 
 static func compile(recipe: Array) -> Dictionary:
-	if recipe.size()>6: return invalid("이 오브는 최대 6칸이야.",6)
+	if recipe.size()>MAX_SLOTS: return invalid("이 오브는 최대 8칸이야.",MAX_SLOTS)
 	var nodes: Array = []
 	var modifiers: Array = []
 	var pending: Array = []

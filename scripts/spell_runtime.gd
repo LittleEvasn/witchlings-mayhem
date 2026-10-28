@@ -81,7 +81,7 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 	if emitted_generation < 0: emitted_generation = generation
 	if stage.get("charge",false): track("charged_stages")
 	var source := source_for(stage,meter_stage,meter_echo)
-	var power: float = game.caster_power() if power_snapshot < 0 else power_snapshot
+	var power: float = game.caster_power()*float(stage.get("_orb_power",1.0)) if power_snapshot < 0 else power_snapshot
 	track("stage_casts",source)
 	track("orb_%d_slot_%d" % [stage.get("_orb",0),stage.get("slot",-1)],source)
 	var count: int = game.Spells.branches(stage)
@@ -132,8 +132,8 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 		track("projectiles_emitted",source)
 		var dir: Vector2 = support.branch_direction(stage,origin,direction.rotated(deg_to_rad(float(angles[i]))),i)
 		var projectile := ctx.duplicate(true)
-		projectile.merge({"pos":origin,"dir":dir,"speed":spec.speed,"damage":spec.damage*strength,
-			"attack":stage.attack,"radius":spec.radius*scale,"life":spec.life*(2.0 if seed_portions > 1 else 1.0),"seek":stage.seek,
+		projectile.merge({"pos":origin,"dir":dir,"speed":spec.speed*float(stage.get("_orb_speed",1.0)),"damage":spec.damage*strength,
+			"attack":stage.attack,"radius":spec.radius*scale,"life":spec.life*float(stage.get("_orb_life",1.0))*(2.0 if seed_portions > 1 else 1.0),"seek":stage.seek,
 			"pierce":int(game.Spells.Effects.profile(stage,"pierce").targets),
 			"follow":follow.duplicate(),"triggered":false,"hit":{},"target":null,"seek_clock":0.0,
 			"strength":strength,"scale":scale,"power":power,"child_factor":shot_factor,"swarm_index":i,
@@ -212,7 +212,7 @@ func turn_back(p: Dictionary) -> void:
 	p.returning = true
 	p.leg_hits = 0
 	p.target = null
-	p.speed = 520.0
+	p.speed = 520.0*float(p.stage.get("_orb_speed",1.0))
 	moon_leg(p,game.player.position)
 	fusion.event(p,"return_start",p.pos)
 	track("boomerang_returns",p.meter_source)
@@ -251,7 +251,7 @@ func install(p: Dictionary, portions := 0) -> void:
 	var zone := p.duplicate(true)
 	zone.factor *= share
 	zone.merge({"kind":p.attack,"pos":p.pos,"dir":p.dir,"radius":game.Spells.attack_data(p.stage).radius*p.scale,
-		"damage":p.damage*share*game.Spells.Effects.value(p.stage,"pierce"),"life":game.Spells.attack_data(p.stage).life,"age":0.0,"pulse":0.35 if vortex else 0.0,
+		"damage":p.damage*share*game.Spells.Effects.value(p.stage,"pierce"),"life":game.Spells.attack_data(p.stage).life*float(p.stage.get("_orb_life",1.0)),"age":0.0,"pulse":0.35 if vortex else 0.0,
 		"meter_source":p.get("meter_source",""),"meter_echo":p.get("meter_echo",false),
 		"follow":p.follow.duplicate(),"triggered":false,"child_factor":p.child_factor*share,"power":p.power},true)
 	if zones.size()>=MAX_ZONES: evict_zone(zones[0])
