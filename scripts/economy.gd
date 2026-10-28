@@ -19,11 +19,15 @@ var kit := "sigil"
 var research_sold := false
 var affinity: Array = []
 var relics: RefCounted
+var last_acquisition: Dictionary = {}
+var fusion_history: Array = []
 func _init() -> void: reset()
 func reset(selected := "sigil") -> void:
  kit = selected if KITS.has(selected) else "sigil"
  gold = 0
  total_earned = 0
+ last_acquisition.clear()
+ fusion_history.clear()
  inventory = {"bolt":1,"impact":1}
  for id in KITS[kit].orbs: inventory[id] = int(inventory.get(id,0))+1
  offers.clear()
@@ -47,10 +51,55 @@ static func purchase_cost(recipe: Array, selected := "sigil") -> int:
  return cost
 func can_stock(id: String) -> bool:
  if not PRICES.has(id): return false
- var count := 0
+ var token := owned_token(id)
+ return token.is_empty() or Progression.rank(token)<3
+
+func owned_token(id: String) -> String:
+ var base := Progression.base_id(id)
  for token in inventory:
-  if Progression.base_id(token)==id: count += int(inventory[token])
- return count<12
+  if inventory[token]>0 and Progression.base_id(token)==base: return token
+ return ""
+
+func acquire(id: String) -> Dictionary:
+ if not can_stock(id): return {"ok":false,"error":"이미 최대 강화야."}
+ var old := owned_token(id)
+ var output := id if old.is_empty() else Progression.key(id,Progression.rank(old)+1)
+ if not old.is_empty(): inventory.erase(old)
+ inventory[output]=1
+ revision+=1
+ last_acquisition={"ok":true,"old":old,"output":output,"upgraded":not old.is_empty()}
+ return last_acquisition.duplicate()
+
+func normalize_owned() -> Dictionary:
+ # Legacy saves retain all distinct types. Excess copies become paid investment refunds.
+ var before := inventory.duplicate()
+ var after := {}
+ var refund := 0
+ var remap := {}
+ for token in before:
+  var base := Progression.base_id(token)
+  if remap.has(token): continue
+  var group: Array=[]
+  for other in before:
+   if before[other]>0 and Progression.base_id(other)==base: group.append(other)
+  group.sort_custom(func(a,b):return Progression.rank(a)>Progression.rank(b))
+  var output: String=group[0]
+  var level := Progression.rank(output)
+  var copies := 0
+  for other in group: copies+=int(before[other])
+  if not Progression.is_fused(output):
+   level=mini(3,level+copies-1)
+   output=Progression.key(base,level)
+  var investment := 0
+  for other in group:
+   investment+=investment_cost(other)*int(before[other])
+   remap[other]=output
+  after[output]=1
+  refund+=maxi(0,investment-investment_cost(output))
+ inventory=after
+ gold+=refund
+ revision+=1
+ return {"remap":remap,"refund":refund,"changed":before!=after}
 
 static func investment_cost(id: String) -> int:
  if Progression.is_fused(id):
@@ -72,29 +121,7 @@ func craft_quote(action: String, target: String, material := "") -> Dictionary:
  var output := ""
  match action:
   "merge":
-   var feeder := material
-   if feeder.is_empty():
-    # Prefer a spare low-rank copy, but allow either rank to be the target.
-    for candidate_level in range(4):
-     var candidate := Progression.key(Progression.base_id(target),candidate_level)
-     if int(inventory.get(candidate,0))-(1 if candidate==target else 0)>0:
-      if Progression.merge_rank(target,candidate)<=3:
-       feeder = candidate
-       break
-    if feeder.is_empty():
-     for candidate in inventory:
-      if Progression.base_id(candidate)==Progression.base_id(target) and int(inventory[candidate])-(1 if candidate==target else 0)>0:
-       feeder = candidate
-       break
-   if not Spells.has_part(feeder) or Progression.is_fused(feeder) or Progression.base_id(feeder)!=Progression.base_id(target):
-    return {"ok":false,"error":"같은 종류의 구체를 재료로 골라줘."}
-   if int(inventory.get(feeder,0))-(1 if feeder==target else 0)<=0:
-    return {"ok":false,"error":"선택한 재료 구체가 부족해. 다시 골라줘."}
-   var result_rank := Progression.merge_rank(target,feeder)
-   consumed.append(feeder)
-   if result_rank>Progression.MAX_RANK:
-    return {"ok":false,"error":"예상 +%d: 최대 +3를 초과해. 구체와 마석은 사용하지 않아." % result_rank,"output_rank":result_rank,"consumed":consumed,"cost":0}
-   output = Progression.key(Progression.base_id(target),result_rank)
+   return {"ok":false,"error":"같은 마법을 획득하면 자동으로 +1 강화돼. 별도 합치기는 필요 없어."}
   "upgrade":
    if level>=3: return {"ok":false,"error":"+3는 최대 강화야."}
    cost = Progression.paid_cost(PRICES[Progression.base_id(target)],level)
@@ -103,6 +130,7 @@ func craft_quote(action: String, target: String, material := "") -> Dictionary:
   "fuse":
    output = Progression.fusion_for(target,material)
    if output.is_empty(): return {"ok":false,"error":"도감의 지정 재료 두 개가 모두 +3여야 해."}
+   if output in fusion_history or inventory.get(output,0)>0: return {"ok":false,"error":"이번 실험에서 이미 완성한 합성이야."}
    consumed.append(material)
    cost = Progression.FUSION_COST
   _: return fail
@@ -121,6 +149,7 @@ func craft(action: String, target: String, material: String, expected_revision: 
  if not quote.ok: return quote
  gold -= quote.cost
  inventory = quote.inventory
+ if action=="fuse": fusion_history.append(quote.output)
  revision += 1
  return quote
 func roll(rng: RandomNumberGenerator, recipe: Array = [], new_shop := true) -> void:
@@ -169,7 +198,7 @@ func buy(index: int, expected_revision: int) -> bool:
  if offer.sold or offer.id.is_empty() or not can_stock(offer.id) or gold<offer.price: return false
  if index==0 and research_sold: return false
  gold -= int(offer.price)
- inventory[offer.id] = int(inventory.get(offer.id,0))+1
+ acquire(offer.id)
  offer.sold = true
  if index==0: research_sold = true
  revision += 1

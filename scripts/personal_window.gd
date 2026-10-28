@@ -50,14 +50,14 @@ static func build(ui: CanvasLayer) -> void:
 	var tabs:=HBoxContainer.new()
 	tabs.add_theme_constant_override("separation",6)
 	column.add_child(tabs)
-	for item in [["inventory","조합"],["reward","마법 선택 %d"%g.combat_rewards.pending.size()],["relics","유물"]]:
+	for item in [["inventory","조합"],["relics","유물"]]:
 		var tab: String=item[0]
 		var b:=button(ui,tabs,item[1],func():g.open_personal(tab))
 		if tab==g.personal_tab: b.add_theme_color_override("font_color",ui.MINT)
 	if g.personal_tab=="relics": relics(ui,column)
 	else: inventory(ui,column)
 	ui.personal_danger=text(ui,column,"",12,ui.PINK)
-	text(ui,column,"전투 계속 · WASD 이동 · Space 회피 · Tab 닫기",12,ui.MUTED)
+	text(ui,column,"전투 정지 · 닫으면 보상 화면으로 돌아가요" if g.combat_rewards.paused() else "전투 계속 · WASD 이동 · Space 회피 · Tab 닫기",12,ui.MUTED)
 
 static func inventory(ui: CanvasLayer, parent: Node) -> void:
 	var g: Node2D=ui.game
@@ -128,4 +128,4 @@ static func relics(ui: CanvasLayer, parent: Node) -> void:
 		var d: Dictionary=ui.game.Relics.definition(id)
 		text(ui,list,d.name,18,ui.MINT)
 		text(ui,list,d.desc,15,ui.TEXT).tooltip_text=ui.game.relics.tooltip(id,ui.game.economy.gold)
-	if ui.game.relics.owned.is_empty(): text(ui,list,"웨이브를 마치면 유물을 제작할 수 있어.",15,ui.MUTED)
+	if ui.game.relics.owned.is_empty(): text(ui,list,"레벨업 선택지에서 유물을 얻을 수 있어.",15,ui.MUTED)

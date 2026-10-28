@@ -38,6 +38,7 @@ static func capture(g: Node2D) -> Dictionary:
 		"economy":{"gold":g.economy.gold,"earned":g.economy.total_earned,"inventory":inventory,"offers":g.economy.offers.duplicate(true),"research_sold":g.economy.research_sold},
 		"relics":relics,"rng":rng_data(g.rng),"relic_rng":rng_data(g.relics.rng),"reward_rng":rng_data(g.combat_rewards.rng),
 		"rewards":{"pending":g.combat_rewards.pending.duplicate(true),"issued":issued,"serial":g.combat_rewards.run_serial},
+		"growth":g.combat_rewards.snapshot(),"fusion_history":g.economy.fusion_history.duplicate(),
 		"waves":g.wave_records.duplicate(true),"metrics":g.metrics.duplicate(),"ui":ui_state}
 
 static func number(value: Variant, low := 0.0, high := 1.0e9, integral := false) -> bool:
@@ -118,11 +119,21 @@ static func valid(data: Variant) -> bool:
 	if relics.get("rng_state")!=data.relic_rng.state: return false
 	var rewards: Variant=data.get("rewards")
 	if not rewards is Dictionary or not number(rewards.get("serial"),0,1e9,true) or not rewards.get("issued") is Dictionary: return false
-	if not rewards.get("pending") is Array or rewards.pending.size()>4: return false
+	if not rewards.get("pending") is Array or rewards.pending.size()>512: return false
 	for key in rewards.issued:
 		if key not in ["1","2","3","4"] or rewards.issued[key]!=true: return false
 	seen.clear()
 	for item in rewards.pending:
+		if data.has("growth"):
+			if not item is Dictionary or not item.get("id") is String or item.id in seen or not number(item.get("level"),2,100000,true): return false
+			seen.append(item.id)
+			if not string_list(item.get("options"),3): return false
+			var unique_options: Array=[]
+			for id in item.options:
+				if id in unique_options: return false
+				unique_options.append(id)
+				if id not in Economy.PRICES and id not in ["gold","heal"] and not (id.begins_with("relic:") and id.trim_prefix("relic:") in Relics.DEFINITIONS): return false
+			continue
 		if not item is Dictionary or not number(item.get("wave"),1,data.wave,true) or not item.get("id") is String or item.id in seen: return false
 		seen.append(item.id)
 		if not rewards.issued.has(str(int(item.wave))) or item.id!="%d:%d"%[int(rewards.serial),int(item.wave)]: return false
@@ -131,6 +142,15 @@ static func valid(data: Variant) -> bool:
 		for id in item.options:
 			if id not in Economy.PRICES or id in options: return false
 			options.append(id)
+	if data.has("growth"):
+		var growth: Variant=data.growth
+		if not growth is Dictionary: return false
+		for key in ["level","xp","total_xp","serial"]:
+			if not number(growth.get(key),1 if key=="level" else 0,1000000000,true): return false
+		if growth.level>100000 or growth.xp>=6+(growth.level-1)*3: return false
+		if not string_list(data.get("fusion_history",[]),18): return false
+		for fusion in data.get("fusion_history",[]):
+			if fusion not in P.FUSIONS: return false
 	if not data.get("history") is Array or data.history.size()>30: return false
 	for item in data.history:
 		if not item is Dictionary or not bank(item.get("drafts"),econ.inventory) or not number(item.get("orb"),0,1,true) or not number(item.get("group"),0,5,true): return false
@@ -241,10 +261,18 @@ static func apply(g: Node2D, data: Dictionary) -> void:
 	relics.rng_state=int(relics.rng_state)
 	g.relics.restore(relics)
 	g.combat_rewards.pending=data.rewards.pending.duplicate(true)
-	for item in g.combat_rewards.pending: item.wave=int(item.wave)
+	for item in g.combat_rewards.pending:
+		if not data.has("growth"):
+			item["level"]=2
+			item["options"]=[]
 	g.combat_rewards.issued.clear()
 	for key in data.rewards.issued: g.combat_rewards.issued[int(key)]=true
 	g.combat_rewards.run_serial=int(data.rewards.serial)
+	g.combat_rewards.restore(data.get("growth",{}))
+	g.economy.fusion_history=data.get("fusion_history",[]).duplicate()
+	for token in g.economy.inventory:
+		if P.is_fused(token) and not token in g.economy.fusion_history: g.economy.fusion_history.append(token)
+	g.normalize_owned_spells()
 	g.combat_rewards.revision+=1
 	g.wave_records=data.waves.duplicate(true)
 	for item in g.wave_records:

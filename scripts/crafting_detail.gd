@@ -40,43 +40,13 @@ static func wide_item(ui: CanvasLayer, at: Vector2) -> void:
 	var forecast:=Look.text(ui,ui.modal,effect,at+Vector2(24,391),15,Look.INK,318)
 	forecast.name="ForgeEffectPreview"
 	Look.bounded(forecast,3)
-	var options:=OptionButton.new()
-	options.name="ForgeMaterial"
-	options.position=at+Vector2(24,476)
-	options.size=Vector2(318,35)
-	options.add_theme_font_size_override("font_size",14)
-	Look.decorate_button(options)
-	options.add_item("합칠 재료 · 자동 선택")
-	options.set_item_metadata(0,"")
-	for level in 4:
-		var token: String=P.key(P.base_id(id),level)
-		var count: int=g.economy.inventory.get(token,0)-(1 if token==id else 0)
-		if count<=0: continue
-		var equipped: int=g.orb_drafts[0].count(token)+g.orb_drafts[1].count(token)
-		options.add_item("%s · %d개 / 장착 %d"%[Spells.definition(token).name,count,equipped])
-		var index:=options.item_count-1
-		options.set_item_metadata(index,token)
-		if ui.merge_material==token: options.select(index)
-	if options.selected==0: ui.merge_material=""
-	ui.modal.add_child(options)
-	options.item_selected.connect(func(index):ui.merge_material=options.get_item_metadata(index);ui.refresh_workbench.call_deferred())
-	# Resolve again after validating the material selection; the action quotes remain authoritative.
-	merge=g.economy.craft_quote("merge",id,ui.merge_material)
-	var preview: String=merge.error
-	if merge.ok: preview="%s + %s → %s"%[Spells.definition(merge.consumed[0]).name,Spells.definition(merge.consumed[1]).name,Spells.definition(merge.output).name]
-	var material:=Look.text(ui,ui.modal,preview,at+Vector2(24,521),12,Look.MUTED,318)
-	material.name="ForgePreview"
-	Look.bounded(material,2)
+	Look.text(ui,ui.modal,"같은 마법을 획득하면 자동 +1 강화\n종류별 한 개 · 최대 +3",at+Vector2(24,480),16,Look.PURPLE,318)
 	var revision: int=g.economy.revision
 	var cost: int=P.paid_cost(g.Economy.PRICES[P.base_id(id)],P.rank(id))
 	var b:=Look.button(ui,ui.modal,"최대 +3" if P.rank(id)>=3 else "강화 · %d 마석"%cost,Rect2(at+Vector2(24,574),Vector2(151,40)),func():g.craft_spell("upgrade",id,"",revision),false,17)
 	b.name="ForgePaid"
 	b.disabled=not paid.ok
 	b.tooltip_text=paid.error if not paid.ok else ui.Board.effect_preview(ui,id,paid)
-	b=Look.button(ui,ui.modal,"구체 합치기",Rect2(at+Vector2(187,574),Vector2(155,40)),func():g.craft_spell("merge",id,ui.merge_material,revision),false,17)
-	b.name="ForgeMerge"
-	b.disabled=not merge.ok
-	b.tooltip_text=preview
 
 static func wide_fusion(ui: CanvasLayer, at: Vector2) -> void:
 	var g: Node2D=ui.game

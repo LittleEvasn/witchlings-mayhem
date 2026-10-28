@@ -7,6 +7,7 @@ const FrontFlow = preload("res://scripts/front_flow.gd")
 const CollectionUI = preload("res://scripts/collection_ui.gd")
 const PersonalWindow = preload("res://scripts/personal_window.gd")
 const RewardReveal = preload("res://scripts/reward_reveal.gd")
+const LevelRewardUI = preload("res://scripts/level_reward_ui.gd")
 const DESIGN_SIZE := Vector2(1440,900)
 const INK := Color("171d2b")
 const PANEL := Color("202536")
@@ -57,6 +58,8 @@ var personal_danger: Label
 var spell_reward_button: Button
 var reward_receipt: Control
 var encounter_hint: Label
+var experience_bar: ProgressBar
+var experience_label: Label
 var front_screen := ""
 var setup_kit := "sigil"
 var setup_intro := true
@@ -101,8 +104,10 @@ func _ready() -> void:
 	hp_bar = bar(hud,Rect2(38,57,280,8),PINK)
 	money_label = label(hud,"0 G",Vector2(235,27),16,MINT)
 	shield_label = label(hud,"",Vector2(38,74),13,MINT,270)
+	experience_bar=bar(hud,Rect2(38,86,280,6),MINT)
+	experience_label=label(hud,"Lv.1",Vector2(38,101),13,MINT,280)
 	relic_strip = HBoxContainer.new()
-	relic_strip.position=Vector2(22,105)
+	relic_strip.position=Vector2(22,128)
 	relic_strip.add_theme_constant_override("separation",3)
 	hud.add_child(relic_strip)
 	time_label = label(hud,"00:00",Vector2(645,17),32,TEXT,150)
@@ -113,6 +118,7 @@ func _ready() -> void:
 	stats_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	button(hud,"Esc  잠깐 쉬기",Rect2(1220,60,196,36),func():
 		if game.state == "combat":
+			if game.combat_rewards.paused(): return
 			game.state = "paused"
 			show_pause()
 	,false,16)
@@ -232,6 +238,9 @@ func bar(parent: Node, rect: Rect2, color: Color) -> ProgressBar:
 	return b
 
 func update_hud() -> void:
+	if game.combat_rewards!=null:
+		experience_bar.value=float(game.combat_rewards.xp)/game.combat_rewards.required()*100
+		experience_label.text="Lv.%d · 경험치 %d / %d"%[game.combat_rewards.level,game.combat_rewards.xp,game.combat_rewards.required()]
 	hp_label.text = "LUMI    %d / %d" % [ceili(game.hp),int(game.max_hp)]
 	hp_bar.value = game.hp/game.max_hp*100
 	money_label.text = "%d G" % game.economy.gold
@@ -247,7 +256,7 @@ func update_hud() -> void:
 	objective_label.text = game.RunContent.chapter(game.wave).goal
 	objective_label.visible = game.notice_left<=0 and not (is_instance_valid(modal) and modal.get_meta("craft_drawer",false))
 	if game.wave==1 and game.wave_time<18: objective_label.text="WASD 이동 · 가까운 적 자동 조준 · Space 회피 · Tab 실시간 조합"
-	spell_reward_button.visible=not game.combat_rewards.pending.is_empty()
+	spell_reward_button.visible=false
 	spell_reward_button.text="마법 선택 %d"%game.combat_rewards.pending.size()
 	spell_reward_button.disabled=game.state not in ["combat","shop"]
 	encounter_hint.text=game.encounters.hint()
@@ -349,6 +358,8 @@ func focus_front(reference: WeakRef) -> void:
 
 func show_rewards() -> void:
 	RelicUI.rewards(self)
+
+func show_level_reward() -> void: LevelRewardUI.build(self)
 
 func reward_details(id: String) -> Array:
 	var d: Dictionary = game.Relics.definition(id)

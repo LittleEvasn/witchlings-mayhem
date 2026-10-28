@@ -352,6 +352,9 @@ func _input(event: InputEvent) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo: return
+	if combat_rewards.paused() and state=="combat":
+		if combat_rewards.stage=="edit" and (event.is_action_pressed("recipe") or event.is_action_pressed("pause_game")): close_personal()
+		return
 	if event.is_action_pressed("mute"):
 		sound_enabled = not sound_enabled
 		save_settings()
@@ -468,6 +471,9 @@ func start_run(kit := "") -> bool:
 
 func _physics_process(delta: float) -> void:
 	# Preparation ends only with the player's Ready button.
+	if state=="combat":
+		combat_rewards.tick()
+		if combat_rewards.paused(): return
 	if state == "trial":
 		_update_trial(delta)
 		return
@@ -526,6 +532,9 @@ func _physics_process(delta: float) -> void:
 	encounters.update(delta)
 	combat_rewards.tick()
 	_remove_dead()
+	if combat_rewards.paused():
+		ui.update_hud()
+		return
 	if wave < 5 and wave_time >= Waves.config(wave).duration: complete_wave()
 	elif wave == 5 and wave_time >= Waves.config(wave).duration:
 		end_reason="교수님이 돌아올 때까지 폭주를 멈추지 못했어."
@@ -539,6 +548,7 @@ func _physics_process(delta: float) -> void:
 		ui.update_hud()
 
 func try_dash(movement: Vector2) -> bool:
+	if combat_rewards.paused(): return false
 	if dash_cooldown > 0 or not state in ["combat","trial"]: return false
 	dash_direction = movement if movement.length_squared() > 0.01 else last_move
 	dash_left = 0.19
@@ -803,6 +813,7 @@ func _recycle_distant_enemies() -> void:
 		relocated+=1
 
 func hurt_player(amount: float) -> void:
+	if combat_rewards.paused(): return
 	if invincible > 0 or state != "combat": return
 	if amount<=0: return
 	var result := relics.take_damage(amount)
@@ -854,6 +865,7 @@ func _update_gems(delta: float) -> void:
 func gain_money(value: int, combat_drop := false) -> void:
 	if state=="trial": return
 	economy.grant(value)
+	if combat_drop and state=="combat": combat_rewards.gain_xp(value*combat_rewards.XP_PER_STONE)
 	if combat_drop and state in ["combat","reward"]:
 		var healing := relics.collect(value)
 		if healing>0:
@@ -909,10 +921,10 @@ func complete_wave() -> void:
 		var restored: int=maxi(0,director.potential-director.dropped)
 		if restored>0: gain_money(restored,true)
 	director.clear()
-	state = "reward"
 	set_music("prepare")
 	for gem in gems: gain_money(gem.value,true)
 	gems.clear()
+	state = "reward"
 	for enemy in enemies: enemy.queue_free()
 	enemies.clear()
 	grid.clear()
@@ -924,11 +936,8 @@ func complete_wave() -> void:
 	reward_taken = false
 	economy.grant(Economy.CLEAR_REWARD)
 	wave_records.append({"wave":wave,"seconds":wave_time,"kills":wave_kills,"earned":economy.total_earned,"recipes":orb_recipes.duplicate(true)})
-	reward_options = relics.choices(rng)
-	if reward_options.is_empty():
-		_enter_preparation()
-		return
-	ui.show_rewards()
+	reward_options.clear()
+	_enter_preparation()
 	visuals.queue_redraw()
 	play_sound("reward")
 
@@ -961,7 +970,8 @@ func is_shopping() -> bool:
 func buy_orb(index: int, revision: int) -> bool:
 	if state != "shop" or shop_time <= 0: return false
 	if not economy.buy(index,revision): return false
-	purchased_orb = economy.offers[index].id
+	apply_acquisition(economy.last_acquisition)
+	purchased_orb = economy.last_acquisition.output
 	discover_owned()
 	shop_message = "%s 제작 완료 · 아래 보유 목록에서 끌어 넣고 시험해봐." % Spells.definition(purchased_orb).name
 	ui.show_shop()
@@ -1164,10 +1174,15 @@ func open_editor() -> void:
 		ui.show_shop()
 		return
 	if state != "combat": return
+	if combat_rewards.paused(): return
 	open_personal("inventory")
 
 func open_personal(tab := "inventory") -> void:
 	if not state in ["combat","shop"] or not tab in ["inventory","reward","relics"]: return
+	if state=="combat" and combat_rewards.paused() and combat_rewards.stage!="edit": return
+	if tab=="reward":
+		combat_rewards.tick()
+		return
 	if state=="shop" and tab=="inventory":
 		close_personal()
 		ui.show_shop()
@@ -1190,23 +1205,65 @@ func close_personal() -> void:
 	personal_tab=""
 	edit_revision+=1
 	ui.close_personal_visual()
+	if combat_rewards!=null and combat_rewards.stage=="edit":
+		combat_rewards.stage="ready"
+		ui.show_level_reward.call_deferred()
 
 func claim_spell_reward(reward_id: String, id: String, revision: int) -> bool:
 	if not combat_rewards.choose(reward_id,id,revision):
-		if not personal_tab.is_empty(): ui.show_personal.call_deferred()
+		ui.show_level_reward.call_deferred()
 		return false
-	purchased_orb=id
-	discover_owned()
-	ui.selected_item=id
-	ui.inspected_orb=-1
-	ui.inspected_slot=-1
-	edit_revision+=1
-	announce("마석을 회수했어." if id.is_empty() else Spells.definition(id).name+" 획득 · 조합 창에서 바로 장착해봐.",3)
 	play_sound("reward")
-	close_personal()
-	if state=="shop": ui.show_shop()
-	ui.show_reward_receipt.call_deferred(id,combat_rewards.run_serial)
+	ui.rebuild_recipe()
+	ui.update_hud()
+	ui.show_level_reward.call_deferred()
 	return true
+
+func apply_acquisition(receipt: Dictionary) -> void:
+	if not receipt.get("ok",false): return
+	_sync_orb()
+	var old: String=receipt.old
+	var output: String=receipt.output
+	if not old.is_empty():
+		for bank in [orb_recipes,orb_drafts]:
+			for parts in bank:
+				for i in parts.size():
+					if parts[i]==old: parts[i]=output
+	for i in orb_recipes.size():
+		var parsed:=Spells.compile(orb_recipes[i])
+		orb_compiled[i]=parsed.stages if parsed.ok else []
+	recipe=orb_recipes[active_orb].duplicate()
+	draft=orb_drafts[active_orb].duplicate()
+	compiled=orb_compiled[active_orb]
+	edit_history.clear()
+	edit_revision+=1
+	magic.generation+=1
+	purchased_orb=output
+	ui.selected_item=output
+	ui.rebuild_recipe()
+
+func normalize_owned_spells() -> void:
+	_sync_orb()
+	var migration: Dictionary=economy.normalize_owned()
+	for bank in [orb_recipes,orb_drafts]:
+		for orb in bank.size():
+			var parts: Array=[]
+			for old in bank[orb]:
+				var token: String=migration.remap.get(old,old)
+				parts.append(token)
+			bank[orb]=parts
+	var quote := {"output":"","inventory":economy.inventory}
+	orb_recipes=Forge.reconcile(orb_recipes,"",quote,active_orb)
+	orb_drafts=Forge.reconcile(orb_drafts,"",quote,active_orb)
+	for i in orb_recipes.size():
+		var parsed:=Spells.compile(orb_recipes[i])
+		orb_compiled[i]=parsed.stages if parsed.ok else []
+	recipe=orb_recipes[active_orb].duplicate()
+	draft=orb_drafts[active_orb].duplicate()
+	compiled=orb_compiled[active_orb]
+	edit_history.clear()
+	edit_revision+=1
+	if migration.changed: checkpoint_message="이전 중복 구체를 자동 강화로 정리했어요. 초과 투자 %d마석 반환."%migration.refund
 
 func migrate_spell_roles() -> bool:
 	# Disk saves validate the content version; this handles imported/debug run state.
@@ -1532,7 +1589,7 @@ func leave_editor() -> void:
 	else: ui.close_modal()
 
 func magic_active() -> bool:
-	return state in ["combat","trial"]
+	return state=="trial" or (state=="combat" and not combat_rewards.paused())
 
 func start_trial() -> bool:
 	migrate_spell_roles()
