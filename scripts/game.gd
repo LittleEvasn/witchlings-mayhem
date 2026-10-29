@@ -13,6 +13,8 @@ const SHOP_SECONDS := 60.0
 const SpellRuntime = preload("res://scripts/spell_runtime.gd")
 const Actor = preload("res://scripts/actor.gd")
 const ActorOverlays=preload("res://scripts/actor_overlays.gd")
+const MonsterCatalog=preload("res://scripts/monster_catalog.gd")
+const MonsterBehaviors=preload("res://scripts/monster_behaviors.gd")
 const DamageNumbers=preload("res://scripts/damage_numbers.gd")
 const Visuals = preload("res://scripts/magic_visuals.gd")
 const Interface = preload("res://scripts/interface.gd")
@@ -124,6 +126,7 @@ var orb_growth_open := -1
 var workshop_relics: Array = []
 var actor_shadows: Node2D
 var actor_health: Node2D
+var monsters: RefCounted
 var damage_numbers: Node2D
 var music_enabled := false
 var music_player: AudioStreamPlayer
@@ -183,6 +186,7 @@ func _ready() -> void:
 	add_child(damage_numbers)
 	director = Waves.new(self)
 	combat_rewards = CombatRewards.new(self)
+	monsters=MonsterBehaviors.new(self)
 	encounters = FieldEncounters.new(self)
 	boss_encounter = BossEncounter.new(self)
 	magic = SpellRuntime.new(self)
@@ -558,6 +562,8 @@ func _physics_process(delta: float) -> void:
 	player.animate(delta)
 	player.modulate.a = 0.45 if invincible > 0 and int(elapsed*14)%2 == 0 else 1.0
 	_rebuild_grid()
+	monsters.update(delta)
+	if state!="combat": return
 	_update_enemies(delta)
 	if state != "combat": return
 	_recycle_distant_enemies()
@@ -696,6 +702,7 @@ func damage_enemy(enemy: Node2D, amount: float, direction: Vector2, source := ""
 		enemy.flash = 0.1
 		damage_numbers.add_hit(enemy,amount)
 		return
+	amount=monsters.incoming(enemy,amount,direction)
 	if meter != null:
 		if shares.is_empty(): meter.damage(source,amount,enemy.hp,enemy.get_instance_id())
 		else: meter.damage_split(amount,enemy.hp,enemy.get_instance_id(),shares)
@@ -712,6 +719,7 @@ func damage_enemy(enemy: Node2D, amount: float, direction: Vector2, source := ""
 		if relics.kill():
 			ring(player.position,30,Color("a8efe2"),.3)
 			magic.track("relic_shield_gained")
+		monsters.died(enemy)
 		encounters.died(enemy)
 		if enemy.role=="sentinel": drop_chest(enemy.position)
 		var coins: int = 0 if enemy.role in ["carrier","escort"] else director.reward(enemy.kind)
@@ -806,7 +814,10 @@ func begin_final_boss() -> void:
 	set_music("boss")
 	announce("30분 생존! 마지막 폭주를 멈추면 승리야.",6)
 
-func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, role := "normal") -> Node2D:
+func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, role := "normal", species := "") -> Node2D:
+	if not species.is_empty() and not MonsterCatalog.DATA.has(species): return null
+	if species in ["satchel","trolley"] and role!="carrier": return null
+	if species=="cauldron": role="sentinel"
 	var config: Dictionary = Waves.config(wave)
 	var living := 0
 	var ranged := 0
@@ -824,7 +835,12 @@ func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, 
 	if kind == 2 and ranged >= int(config.ranged_cap): return null
 	if role=="sentinel" and sentinels>=1: return null
 	if kind == 3 and not is_boss and role!="sentinel" and heavy >= int(config.heavy_cap): return null
+	var species_id: String=species if not species.is_empty() else MonsterCatalog.default_id(kind,role,wave)
+	var species_data: Dictionary=MonsterCatalog.definition(species_id)
+	if not species.is_empty() and int(species_data.kind)!=kind: return null
+	if not is_boss and enemies.filter(func(e):return not e.dead and e.monster_id==species_id).size()>=int(species_data.cap): return null
 	var radius := 45.0 if is_boss else (32.0 if role=="sentinel" else (16.0 if role == "line" else (26.0 if kind==3 else 20.0)))
+	if not is_boss: radius=float(species_data.radius)
 	var point: Vector2 = requested
 	if is_boss and arena_profile!="scroll" and point == Vector2.INF and director.available(Vector2(720,180),radius):
 		point = Vector2(720,180)
@@ -838,7 +854,16 @@ func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, 
 	enemy.setup(art,kind,is_boss)
 	enemy.hp = (Waves.ENEMY_HEALTH[kind] if role != "swarm" else Waves.SWARM_HEALTH)*float(config.hp_scale)
 	enemy.speed = Tempo.enemy_speed(kind,role,wave,is_boss)
-	if role=="carrier": enemy.hp=85+wave*12; enemy.radius=22
+	if not is_boss:
+		MonsterCatalog.apply(enemy,species_id)
+		if MonsterCatalog.IDS.find(species_id)>=3 and role not in ["carrier","escort","sentinel"]:
+			enemy.hp=float(species_data.hp)*float(config.hp_scale)
+			enemy.speed=float(species_data.speed)+wave*2
+		enemy.tactics.guard=enemy.position.direction_to(player.position)
+	if role=="carrier":
+		enemy.hp=(150 if species_id=="trolley" else 85)+wave*12
+		enemy.radius=float(species_data.radius)
+		enemy.speed=float(species_data.speed)
 	if role=="escort": enemy.hp=35*float(config.hp_scale)
 	if role=="sentinel": enemy.hp=(350+elapsed*1.5)
 	if role!="carrier": enemy.radius = radius
@@ -889,6 +914,10 @@ func _update_enemies(delta: float) -> void:
 			if state!="combat": return
 		elif enemy.role in ["carrier","escort"]:
 			velocity=encounters.velocity(enemy)
+		elif enemy.monster_id in ["paper","ink","rabbit","book","candle"]:
+			velocity=monsters.velocity(enemy,delta,direction,distance)
+			if state!="combat": return
+			if enemy.dead: continue
 		elif enemy.kind == 2:
 			if distance < 240: velocity = -direction*enemy.speed*0.5
 			elif distance < 330: velocity = direction.orthogonal()*enemy.speed*0.4
@@ -899,7 +928,7 @@ func _update_enemies(delta: float) -> void:
 					if hostile_shots.size() < 100:
 						hostile_shots.append({"pos":enemy.position,"vel":enemy.shot_direction*Tempo.SHOT_SPEED,"life":5.0})
 					enemy.cooldown = 2.7
-			elif enemy.cooldown <= 0 and distance < 650:
+			elif enemy.cooldown <= 0 and distance < 650 and monsters.can_attack(enemy):
 				enemy.shot_windup = 0.7
 				enemy.shot_direction = direction
 		if enemy.kind == 3 and not enemy.boss and enemy.role!="sentinel":
@@ -919,7 +948,7 @@ func _update_enemies(delta: float) -> void:
 			elif enemy.recovery_left>0:
 				enemy.recovery_left=maxf(0,enemy.recovery_left-delta)
 				velocity=Vector2.ZERO
-			elif enemy.cooldown <= 0:
+			elif enemy.cooldown <= 0 and distance<650 and monsters.can_attack(enemy):
 				enemy.windup = Tempo.CHARGE_WINDUP
 				enemy.charge_direction = direction
 				enemy.cooldown = Tempo.CHARGE_COOLDOWN
@@ -954,9 +983,7 @@ func _recycle_distant_enemies() -> void:
 		var point: Vector2=director.random_spawn_point(enemy.radius)
 		if point==Vector2.INF: continue
 		enemy.position=point
-		enemy.windup=0
-		enemy.charge_time=0
-		enemy.shot_windup=0
+		monsters.reset_actor(enemy)
 		enemy.cooldown=maxf(enemy.cooldown,1)
 		if meter!=null: meter.count("enemies_relocated")
 		relocated+=1
@@ -1938,6 +1965,7 @@ func _update_trial(delta: float) -> void:
 	ui.update_trial_stats()
 
 func _clear_trial() -> void:
+	monsters.clear()
 	clear_magic()
 	effects.clear()
 	for target in enemies: target.queue_free()

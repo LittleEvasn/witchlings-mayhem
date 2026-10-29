@@ -22,6 +22,7 @@ var stats := {"carriers":0,"escaped":0,"picked":0,"sentinels":0,"cancelled":0}
 func _init(owner_game: Node2D) -> void: game=owner_game
 
 func clear() -> void:
+	if game.monsters!=null: game.monsters.clear()
 	tells.clear()
 	carrier=null
 	escorts.clear()
@@ -50,12 +51,13 @@ func request_carrier() -> void:
 	var point:=nearby_point(24)
 	if point==Vector2.INF:
 		stats.cancelled+=1
-		return # The same earned choice is delivered at wave end; never accumulate spawn debt.
+		return # No spawn debt or unearned replacement reward.
 	tells.append({"kind":"carrier","pos":point,"left":TELL_SECONDS})
-	game.announce("마법 재료를 물고 달아나는 실패작! 잡으면 먼저 주문을 고를 수 있어.",4)
+	game.announce("마법 재료를 물고 달아나는 실패작! 잡으면 보상 상자를 얻을 수 있어.",4)
 
 func update(delta: float) -> void:
 	if not enabled or game.state!="combat": return
+	if not carrier_started and game.wave_time>=75 and game.wave<=4: request_carrier()
 	if SENTINEL_AT.has(game.wave) and not sentinel_started and game.wave_time>=SENTINEL_AT[game.wave]:
 		sentinel_started=true
 		var point:=nearby_point(32)
@@ -93,8 +95,10 @@ func spawn_carrier(at: Vector2) -> void:
 	carrier_left=CARRIER_LIFE
 	decision_clock=0
 	goal=at
+	if carrier.monster_id=="trolley":
+		goal=(at+game.player.position.direction_to(at).orthogonal()*550).clamp(game.enemy_bounds().position+Vector2.ONE*65,game.enemy_bounds().end-Vector2.ONE*65)
 	last_death=at
-	# Even waves use the same carrier with existing enemy escorts, not new enemy species.
+	# Even chapters keep the existing escort formation; chapter4 uses the cart silhouette.
 	if game.wave%2==0:
 		var perpendicular: Vector2=game.player.position.direction_to(at).orthogonal()
 		for offset in [-110.0,0.0,110.0]:
@@ -106,9 +110,13 @@ func spawn_carrier(at: Vector2) -> void:
 
 func velocity(enemy: Node2D) -> Vector2:
 	if enemy.role=="escort":
-		if not is_instance_valid(carrier) or carrier.dead or enemy.position.distance_to(game.player.position)<210:
+		if not is_instance_valid(carrier) or carrier.dead or (carrier.monster_id!="trolley" and enemy.position.distance_to(game.player.position)<210):
 			return enemy.position.direction_to(game.player.position)*enemy.speed
 		return (carrier.position+enemy.get_meta("formation_offset",Vector2.ZERO)-enemy.position).limit_length(enemy.speed)
+	if enemy.monster_id=="trolley":
+		if enemy.position.distance_to(goal)<30:
+			escape();return Vector2.ZERO
+		return enemy.position.direction_to(goal)*enemy.speed
 	if decision_clock<=0 or enemy.position.distance_to(goal)<30:
 		decision_clock=.8
 		var fleeing: bool=enemy.position.distance_to(game.player.position)<350
@@ -135,6 +143,7 @@ func died(enemy: Node2D) -> void:
 		var walk: Rect2=game.player_bounds()
 		drop_at=last_death.clamp(walk.position,walk.end)
 		drop_ready=true
+		game.drop_chest(drop_at)
 		game.ring(drop_at,48,Color("ffe7a3"),.7)
 		game.announce("마법 재료를 떨어뜨렸어! 가까이 가서 회수해봐.",3)
 
@@ -146,7 +155,7 @@ func escape() -> void:
 	escorts.clear()
 	stats.escaped+=1
 	resolved=true
-	game.announce("운반자가 달아났어. 확보한 선택권은 웨이브가 끝나면 받을 수 있어.",3)
+	game.announce("운반자가 달아났어. 다음 기회를 노려보자.",3)
 
 func hint() -> String:
 	var guards: Array=escorts.filter(func(e):return is_instance_valid(e) and not e.dead)

@@ -1,0 +1,402 @@
+[
+  {
+    "id": "jelly",
+    "file": "assets/art/enemies/jelly.png",
+    "source": "characters.png",
+    "source_rect": null,
+    "alpha_bbox_inside_source_rect": [
+      25,
+      55,
+      476,
+      514
+    ],
+    "cell": [
+      0,
+      0
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "bat",
+    "file": "assets/art/enemies/bat.png",
+    "source": "characters.png",
+    "source_rect": null,
+    "alpha_bbox_inside_source_rect": [
+      40,
+      21,
+      688,
+      503
+    ],
+    "cell": [
+      1,
+      0
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "beetle",
+    "file": "assets/art/enemies/beetle.png",
+    "source": "characters.png",
+    "source_rect": null,
+    "alpha_bbox_inside_source_rect": [
+      13,
+      29,
+      537,
+      514
+    ],
+    "cell": [
+      2,
+      0
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "paper",
+    "file": "assets/art/enemies/paper.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      0,
+      0,
+      443,
+      440
+    ],
+    "alpha_bbox_inside_source_rect": [
+      39,
+      34,
+      389,
+      430
+    ],
+    "cell": [
+      3,
+      0
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "ink",
+    "file": "assets/art/enemies/ink.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      443,
+      0,
+      887,
+      429
+    ],
+    "alpha_bbox_inside_source_rect": [
+      10,
+      38,
+      444,
+      424
+    ],
+    "cell": [
+      0,
+      1
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "rabbit",
+    "file": "assets/art/enemies/rabbit.png",
+    "source": "rabbit-seed.png",
+    "source_rect": null,
+    "alpha_bbox_inside_source_rect": [
+      110,
+      84,
+      1173,
+      1135
+    ],
+    "cell": [
+      1,
+      1
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "cauldron",
+    "file": "assets/art/enemies/cauldron.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      887,
+      0,
+      1330,
+      438
+    ],
+    "alpha_bbox_inside_source_rect": [
+      0,
+      54,
+      434,
+      425
+    ],
+    "cell": [
+      2,
+      1
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "mushroom",
+    "file": "assets/art/enemies/mushroom.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      1330,
+      0,
+      1774,
+      450
+    ],
+    "alpha_bbox_inside_source_rect": [
+      6,
+      45,
+      427,
+      426
+    ],
+    "cell": [
+      3,
+      1
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "book",
+    "file": "assets/art/enemies/book.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      0,
+      440,
+      443,
+      887
+    ],
+    "alpha_bbox_inside_source_rect": [
+      48,
+      12,
+      400,
+      408
+    ],
+    "cell": [
+      0,
+      2
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "candle",
+    "file": "assets/art/enemies/candle.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      443,
+      429,
+      887,
+      887
+    ],
+    "alpha_bbox_inside_source_rect": [
+      68,
+      9,
+      380,
+      412
+    ],
+    "cell": [
+      1,
+      2
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "satchel",
+    "file": "assets/art/enemies/satchel.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      887,
+      438,
+      1330,
+      887
+    ],
+    "alpha_bbox_inside_source_rect": [
+      13,
+      17,
+      421,
+      408
+    ],
+    "cell": [
+      2,
+      2
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  },
+  {
+    "id": "trolley",
+    "file": "assets/art/enemies/trolley.png",
+    "source": "eight-enemy-source.png",
+    "source_rect": [
+      1330,
+      450,
+      1774,
+      887
+    ],
+    "alpha_bbox_inside_source_rect": [
+      2,
+      66,
+      422,
+      396
+    ],
+    "cell": [
+      3,
+      2
+    ],
+    "canvas": [
+      256,
+      256
+    ],
+    "foot_pivot": [
+      128,
+      240
+    ],
+    "alpha_extrema": [
+      0,
+      255
+    ],
+    "status": "in_game_visual_qa_passed_still_prototype",
+    "frames": 1
+  }
+]

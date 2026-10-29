@@ -12,6 +12,7 @@ func _ready() -> void:
 
 func _draw() -> void:
 	vfx.draws = 0
+	if game.monsters!=null: game.monsters.draw(self)
 	if game.encounters!=null: game.encounters.draw(self)
 	if game.boss_encounter!=null: game.boss_encounter.tells(self)
 	_draw_specials()

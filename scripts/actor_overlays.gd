@@ -15,7 +15,7 @@ func _draw() -> void:
 		var health:=PackedVector2Array()
 		for actor in game.enemies:
 			if actor.dead or actor.boss or actor.hp>=actor.max_hp: continue
-			var at: Vector2=actor.position+Vector2(-16,-78 if actor.role=="sentinel" else -47)
+			var at: Vector2=actor.position+Vector2(-16,-maxf(47,actor.visual_height))
 			backs.append(at)
 			backs.append(at+Vector2(32,0))
 			health.append(at)

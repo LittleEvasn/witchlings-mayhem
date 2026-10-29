@@ -44,7 +44,7 @@ func add_hit(enemy: Node2D, amount: float) -> void:
 				break
 	if entries.size()>=MAX_VISIBLE: entries.pop_front()
 	serial+=1
-	var height:=110 if enemy.boss else (90 if enemy.role=="sentinel" else 60)
+	var height: float=110 if enemy.boss else maxf(60,enemy.visual_height+8)
 	var item: Dictionary={"target":key,"amount":amount,"hits":1,"started":clock,"pos":enemy.position+Vector2((serial%5-2)*7,-height-matching*12)}
 	refresh_text(item)
 	entries.append(item)

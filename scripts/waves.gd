@@ -1,5 +1,6 @@
 extends RefCounted
 const RunContent = preload("res://scripts/run_content.gd")
+const Catalog=preload("res://scripts/monster_catalog.gd")
 const Tempo=preload("res://scripts/combat_tempo.gd")
 ## Two independent randomized streams: scattered arrivals and occasional local packs.
 ## Cadence is adapted to our five-wave arena; no fixed entrance or advance warning.
@@ -110,7 +111,7 @@ func update() -> void:
 		if living>=int(c.cap): count=0
 		for i in count:
 			var choice:=choose_normal()
-			spawn(choice.kind,choice.role,Vector2.INF,false)
+			spawn(choice.kind,choice.role,Vector2.INF,false,Catalog.pick(game,choice.kind,choice.role))
 		next_normal=now+.25
 	if enabled and now >= next_pack:
 		schedule_pack()
@@ -127,7 +128,7 @@ func update() -> void:
 		if point == Vector2.INF:
 			stats.skipped += 1
 			continue
-		spawn(request.kind,request.role,point,true)
+		spawn(request.kind,request.role,point,true,request.get("species",""))
 
 func choose_normal() -> Dictionary:
 	var weights: Array = config(game.wave).weights
@@ -138,8 +139,10 @@ func choose_normal() -> Dictionary:
 			return {"kind":2 if i==2 else (3 if i==3 else 1),"role":"swarm" if i==1 else "normal"}
 	return {"kind":1,"role":"normal"}
 
-func spawn(kind: int, role: String, point: Vector2, grouped: bool) -> void:
-	var enemy = game.spawn_enemy(kind,false,point,role)
+func spawn(kind: int, role: String, point: Vector2, grouped: bool, species := "") -> void:
+	var enemy = game.spawn_enemy(kind,false,point,role,species)
+	if enemy==null and kind==1 and species not in ["","jelly"]:
+		enemy=game.spawn_enemy(kind,false,point,role,"jelly")
 	if enemy == null:
 		stats.skipped += 1
 		return
@@ -223,7 +226,7 @@ func schedule_pack() -> void:
 	var at: float = game.wave_time
 	for member in roles:
 		at += game.rng.randf_range(0.16,0.30)
-		pending.append({"at":at,"kind":member.kind,"role":member.role,"edge":edge,"along":along,"frame":frame})
+		pending.append({"at":at,"kind":member.kind,"role":member.role,"edge":edge,"along":along,"frame":frame,"species":Catalog.pick(game,member.kind,member.role)})
 	stats.packs += 1
 
 func reward(kind: int) -> int:

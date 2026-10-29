@@ -5,6 +5,12 @@ var overlay_active := false
 var role := "normal"
 var shot_windup := 0.0
 var shot_direction := Vector2.RIGHT
+var monster_id := ""
+var monster_name := ""
+var visual_height:=94.0
+var jump_height:=0.0
+var tactics: Dictionary={}
+var base_sprite_y:=0.0
 var kind := 0
 var hp := 1.0
 var max_hp := 1.0
@@ -51,6 +57,7 @@ func setup(texture: Texture2D, actor_kind: int, is_boss := false) -> void:
 	sprite.scale = Vector2.ONE * art_scale
 	sprite.position.y = -target_size * 0.22
 	add_child(sprite)
+	base_sprite_y=sprite.position.y
 	if role in ["sentinel","carrier"]:
 		var nameplate:=Label.new()
 		nameplate.text="과팽창 · 밀치기 저항" if role=="sentinel" else "마법 재료 운반자"
@@ -77,9 +84,10 @@ func animate(delta: float) -> void:
 	sprite.scale = Vector2(1.0 + bob * amount, 1.0 - bob * amount) * art_scale
 	sprite.flip_h = facing_left
 	sprite.rotation = bob * 0.045 if moving else 0.0
+	sprite.position.y=base_sprite_y-jump_height
 	sprite.modulate = Color(2.2,1.7,1.7) if flash > 0 else visual_tint
 	z_index = 0
-	var needs_overlay: bool=not batched_overlays or kind==0 or role in ["carrier","sentinel"] or windup>0 or shot_windup>0
+	var needs_overlay: bool=not batched_overlays or kind==0 or role in ["carrier","sentinel"] or windup>0 or shot_windup>0 or monster_id=="book"
 	if needs_overlay or overlay_active: queue_redraw()
 	overlay_active=needs_overlay
 
@@ -89,12 +97,19 @@ func _draw() -> void:
 		draw_circle(Vector2(0,5),radius,Color(0.05,0.04,0.12,0.3))
 		draw_set_transform(Vector2.ZERO)
 	if role in ["carrier","sentinel"]:
-		draw_arc(Vector2.ZERO,radius+5,0,TAU,36,visual_tint,2,true)
+		draw_arc(Vector2.ZERO,radius+5,0,TAU,36,Color("ffe7a3") if role=="carrier" else Color("dfb6f5"),2,true)
 	if kind == 0:
 		draw_arc(Vector2.ZERO,22,0,TAU,36,Color(0.67,0.94,0.89,0.8),1.7,true)
 	elif windup > 0:
 		draw_arc(Vector2.ZERO,radius+8,0,TAU,36,Color("ff778e"),3,true)
 		draw_line(Vector2.ZERO,charge_direction*95,Color(1,0.4,0.5,0.55),5,true)
+	if monster_id=="candle" and windup>0:
+		draw_arc(Vector2.ZERO,86,0,TAU,48,Color("ff778e"),3,true)
+		draw_arc(Vector2.ZERO,86*(1-windup/1.1),0,TAU,32,Color("ffbf8f"),2,true)
+	if monster_id=="book":
+		var guard: Vector2=tactics.get("guard",Vector2.DOWN)
+		var angle:=guard.angle()
+		draw_arc(Vector2.ZERO,radius+10,angle-.95,angle+.95,16,Color("ffe7a3") if windup<=0 else Color("ff9cae"),4,true)
 	if shot_windup > 0:
 		draw_arc(Vector2.ZERO,radius+8,0,TAU,32,Color("ffb174"),2.5,true)
 		draw_line(Vector2.ZERO,shot_direction*170,Color(1,0.66,0.45,0.7),2,true)
