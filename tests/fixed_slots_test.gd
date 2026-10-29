@@ -129,9 +129,9 @@ func run() -> void:
 	check(g.state=="shop" and g.draft[3]=="fan" and g.projectiles.is_empty(),"Trial return preserves edits and cleans attacks")
 	check(g.craft_spell("upgrade","bolt","",g.economy.revision),"Equipped attack upgrades despite trailing support warning")
 	check(g.draft[0]=="bolt@1" and g.draft[3]=="fan" and g.draft[1]=="","Upgrade preserves all positions and holes")
-	var inventory: Dictionary={"storm_spear":1,"impact":1,"fan":1}
-	var fused: Array=Forge.reconcile([["","bolt@3","impact","thunder@3","fan",""] ,[]],"bolt@3",{"output":"storm_spear","inventory":inventory},0)
-	check(fused[0]==["","storm_spear","","","fan",""] and Forge.valid(fused,inventory),"Fusion clears consumed cells/links without compaction")
+	var inventory: Dictionary={"shining_spear":1,"impact":1,"fan":1}
+	var fused: Array=Forge.reconcile([["","pierce@3","impact","bolt@3","fan",""] ,[]],"pierce@3",{"output":"shining_spear","inventory":inventory},0)
+	check(fused[0]==["","shining_spear","","","fan",""] and Forge.valid(fused,inventory),"Fusion clears consumed cells/links without compaction")
 	check(not Forge.valid([["bolt","","bolt"],[]],{"bolt":1}),"Duplicate reservations still rejected")
 	check(not Forge.valid([["unknown"],[]],{"unknown":1}),"Unknown tokens cannot bypass ownership checks")
 	check(g.board_drop(g.board_data("fan",0,3),0,4),"Create reversible sparse edit before saving")

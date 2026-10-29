@@ -360,4 +360,4 @@ static func apply(g: Node2D, data: Dictionary) -> void:
 	g.ui.bag_filter=view.get("bag_filter","all") if view.get("bag_filter") in ["all","attack","modifier","connector"] else "all"
 	g.ui.bag_scroll=int(view.get("bag_scroll",0)) if number(view.get("bag_scroll",0),0,100000,true) else 0
 	g.ui.board_panel="fusion" if g.ui.craft_tab=="fusion" else "item"
-	g.ui.fusion_choice=view.get("fusion_choice","storm_spear") if view.get("fusion_choice") in P.FUSIONS else "storm_spear"
+	g.ui.fusion_choice=view.get("fusion_choice","shining_spear") if view.get("fusion_choice") in P.FUSIONS else "shining_spear"

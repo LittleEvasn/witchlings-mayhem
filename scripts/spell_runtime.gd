@@ -7,11 +7,14 @@ const PROFILE := {
 	"bloom":{"speed":290.0,"damage":20.0,"radius":8.0,"life":2.6},
 	"boomerang":{"speed":460.0,"damage":24.0,"radius":11.0,"life":5.0},
 	"vortex":{"speed":320.0,"damage":2.5,"radius":7.0,"life":0.85},
-	"thorn":{"speed":320.0,"damage":45.0,"radius":7.0,"life":0.85}
+	"thorn":{"speed":320.0,"damage":45.0,"radius":7.0,"life":0.85},
+	"fireball":{"speed":270.0,"damage":26.0,"radius":10.0,"life":2.6}
 }
 const Behaviors = preload("res://scripts/spell_behaviors.gd")
 const FusionEffects = preload("res://scripts/fusion_effects.gd")
 const SupportFusions=preload("res://scripts/support_fusions.gd")
+const Extensions=preload("res://scripts/magic_extensions.gd")
+var extensions: RefCounted
 var support: RefCounted
 var fusion: RefCounted
 var behavior: RefCounted
@@ -31,6 +34,7 @@ func _init(owner_game: Node2D) -> void:
 	behavior = Behaviors.new(self)
 	fusion = FusionEffects.new(self)
 	support = SupportFusions.new(self)
+	extensions = Extensions.new(self)
 
 func begin_tick() -> void:
 	emits_this_tick = 0
@@ -44,6 +48,7 @@ func clear() -> void:
 	behavior.clear()
 	fusion.clear()
 	support.clear()
+	extensions.clear()
 	generation += 1
 
 func track(event: String, source := "", value := 1.0) -> void:
@@ -57,6 +62,7 @@ func source_for(stage: Dictionary, lane: String, echo: bool) -> String:
 	return label
 
 func finish_projectile(p: Dictionary) -> void:
+	extensions.finish(p,p.pos,not p.get("_forced_end",false))
 	track("projectiles_finished",p.get("meter_source",""))
 	if not p.get("meter_contacted",false):
 		track("projectiles_finished_without_contact",p.get("meter_source",""))
@@ -67,6 +73,8 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 	# Snapshot once per cast tree; descendants carry this value rather than multiply it.
 	stage = stage.duplicate()
 	if not stage.has("_relic_scale"): stage["_relic_scale"] = game.relics.size_multiplier()
+	var launch_power: float=game.caster_power()*float(stage.get("_orb_power",1.0)) if power_snapshot<0 else power_snapshot
+	if extensions.intercept(stage,origin,direction,follow,factor,launch_power,meter_stage,meter_echo,lineage,emitted_generation,target_point): return
 	if int(stage.get("_depth",0))>MAX_CHAIN_DEPTH:
 		track("chain_depth_blocked",meter_stage)
 		return
@@ -144,7 +152,11 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 			"seed_portion_count":seed_portions,"seed_portions":seed_portions,
 			"meter_source":source,"meter_echo":meter_echo,"meter_contacted":false,
 			"age":0.0,"returning":false,"leg_hits":0,"leg_limit":1+int(game.Spells.Effects.profile(stage,"pierce").targets)},true)
+		extensions.attach(projectile)
 		game.projectiles.append(projectile)
+		if stage.get("_landed",false) and stage.attack in ["thorn","vortex"]:
+			install(projectile)
+			game.projectiles.pop_back()
 		if stage.attack=="boomerang":
 			projectile["ricochets"] = game.Spells.attack_data(stage).ricochets
 			projectile["outbound_limit"] = 1.0+0.6*projectile.ricochets+(.3*projectile.pierce if stage.get("chase_pierce",0)>0 else 0.0)
@@ -159,6 +171,7 @@ func update_echoes(delta: float) -> void:
 	behavior.update(delta)
 	fusion.update(delta)
 	support.update(delta)
+	extensions.update(delta)
 	if not game.magic_active(): return
 	for i in range(echoes.size()-1,-1,-1):
 		var echo: Dictionary = echoes[i]
@@ -175,6 +188,7 @@ func trigger(source: Dictionary, at: Vector2, event := "impact") -> void:
 	if mode=="dual_event":
 		if event not in ["impact","expire"]: return
 	elif ("impact" if mode=="delayed_ignition" else mode)!=event: return
+	if source.get("generation",generation)!=generation or source.get("_forced_end",false): return
 	if source.follow.is_empty(): return
 	if mode=="dual_event":
 		if not source.has("events"): source["events"]={}
@@ -223,6 +237,7 @@ func turn_back(p: Dictionary) -> void:
 
 func moon_contact(p: Dictionary, at: Vector2) -> void:
 	if p.returning: return
+	if extensions.redirect(p,at): return
 	if p.stage.get("chase_pierce",0)>0 and p.pierce>0:
 		var choices: Array=support.targets(at,260,p.hit)
 		if not choices.is_empty():
@@ -259,6 +274,10 @@ func install(p: Dictionary, portions := 0) -> void:
 		"meter_source":p.get("meter_source",""),"meter_echo":p.get("meter_echo",false),
 		"follow":p.follow.duplicate(),"triggered":false,"child_factor":p.child_factor*share,"power":p.power},true)
 	if zones.size()>=MAX_ZONES: evict_zone(zones[0])
+	if p.has("_timer_left"): zone["_timer_remaining"]=p._timer_left
+	extensions.attach(zone)
+	# The seed becomes the installed instance; its timer does not duplicate.
+	p["_ended"]=true
 	behavior.register_garden(zone)
 	add_zone(zone)
 	fusion.event(zone,"installed",zone.pos)
@@ -275,6 +294,7 @@ func update_projectiles(delta: float) -> void:
 		if p.life <= 0:
 			if seed: install(p)
 			elif p.attack == "bloom": behavior.area(p,p.pos,p.damage,game.Spells.attack_data(p.stage).radius*p.scale)
+			elif p.attack == "fireball": extensions.impact(p,p.pos)
 			if not game.magic_active(): return
 			if not seed:
 				trigger(p,p.pos,"expire")
@@ -310,7 +330,7 @@ func update_projectiles(delta: float) -> void:
 				if not p.returning: turn_back(p)
 				else: moon_leg(p,game.player.position)
 		else:
-			if p.seek:
+			if p.seek and p.get("_motion","")!="orbit":
 				p.seek_clock -= delta
 				if p.seek_clock<=0:
 					p.seek_clock = 0.15
@@ -322,6 +342,7 @@ func update_projectiles(delta: float) -> void:
 					var desired: Vector2 = p.pos.direction_to(p.target.position)
 					p.dir = p.dir.rotated(clampf(p.dir.angle_to(desired),-delta*3.0*game.Spells.seek_strength(p.stage),delta*3.0*game.Spells.seek_strength(p.stage)))
 			p.pos += p.dir*p.speed*delta
+		extensions.move(p,delta,old)
 		var consumed := false
 		if true:
 			var candidates: Array = game.nearby((old+p.pos)*0.5,old.distance_to(p.pos)*0.5+45+p.radius)
@@ -361,6 +382,9 @@ func update_projectiles(delta: float) -> void:
 				else:
 					p.pierce -= 1
 					if p.pierce>=0: support.retarget(p)
+					if p.pierce < 0 and extensions.redirect(p,nearest):
+						p.pos=nearest+p.dir*2
+						break
 					if p.pierce < 0:
 						if seed:
 							p.pos = nearest
@@ -374,6 +398,7 @@ func update_projectiles(delta: float) -> void:
 				if not game.magic_active(): return
 				support.terminal(p,p.pos)
 				if not game.magic_active(): return
+			if not consumed: p["_forced_end"]=true
 			finish_projectile(p)
 			game.projectiles.remove_at(index)
 
@@ -396,6 +421,7 @@ func remove_zone(zone: Dictionary) -> void:
 
 func evict_zone(zone: Dictionary) -> void:
 	if zone.kind=="ember_path": behavior.end_path(zone,false)
+	extensions.finish(zone,zone.pos,false)
 	track("zones_evicted",zone.get("meter_source",""))
 	remove_zone(zone)
 
@@ -407,6 +433,8 @@ func update_zones(delta: float) -> void:
 	# Iterate a snapshot: a finishing connector may append another field.
 	for zone in zones.duplicate():
 		if not live_zones.has(zone._zone_uid): continue
+		var previous_pos: Vector2=zone.pos
+		extensions.move(zone,delta,previous_pos)
 		zone.life -= delta
 		zone.age += delta
 		if zone.kind=="ember_path":
@@ -440,11 +468,12 @@ func update_zones(delta: float) -> void:
 					if enemy.dead or enemy.position.distance_to(zone.pos)>zone.radius+enemy.radius: continue
 					behavior.hit(enemy,amount,Vector2.ZERO,zone)
 					if not game.magic_active(): return
+					extensions.impact(zone,enemy.position)
 					trigger(zone,enemy.position)
 					if not game.magic_active(): return
 		else:
 			var activated := false
-			if zone.age>=0.25 and not ending:
+			if zone.age>=0.25 and not ending and zone.stage.get("fusion","")!="timed_thorn":
 				for enemy in victims:
 					if not enemy.dead and enemy.position.distance_to(zone.pos)<=zone.radius+enemy.radius: activated = true
 			if activated:
@@ -456,11 +485,13 @@ func update_zones(delta: float) -> void:
 					if enemy.dead or enemy.position.distance_to(zone.pos)>zone.radius+enemy.radius: continue
 					behavior.hit(enemy,amount,Vector2.ZERO,zone,3.0 if zone.stage.get("fusion","")=="frost_blossom" else 0.0)
 					if not game.magic_active(): return
+					extensions.impact(zone,enemy.position)
 					trigger(zone,enemy.position)
 					if not game.magic_active(): return
 				ending = true
 		if ending:
 			remove_zone(zone)
+			extensions.finish(zone,zone.pos)
 			fusion.event(zone,"expire",zone.pos)
 			if not game.magic_active(): return
 			trigger(zone,zone.pos,"expire")

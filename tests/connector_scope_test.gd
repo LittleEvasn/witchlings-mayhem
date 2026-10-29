@@ -18,7 +18,7 @@ func run() -> void:
 	var mods: Array=S.PARTS.keys().filter(func(id):return S.PARTS[id].kind=="modifier")
 	for id in S.Progression.FUSIONS:
 		if S.Progression.fusion_kind(id)=="modifier": mods.append(id)
-	for edge in ["impact","expire","dual_event","delayed_ignition"]:
+	for edge in ["impact","expire","dual_event","timer"]:
 		for id in mods:
 			var result:=S.compile([id,"bolt",edge,"bloom"])
 			check(result.ok and result.stages[0].modifiers.size()==1 and result.stages[0].next.modifiers.is_empty(),"No modifier crosses "+edge+": "+id)

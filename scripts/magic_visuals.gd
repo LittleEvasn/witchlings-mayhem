@@ -16,6 +16,7 @@ func _draw() -> void:
 	if game.encounters!=null: game.encounters.draw(self)
 	if game.boss_encounter!=null: game.boss_encounter.tells(self)
 	_draw_specials()
+	_draw_extensions()
 	if game.state in ["combat","trial","edit","shop"]:
 		for i in game.orb_recipes.size():
 			var pos: Vector2 = game.orb_position(i)
@@ -58,6 +59,16 @@ func _draw() -> void:
 	for p in game.projectiles:
 		var c: Color = p.get("tint",game.Spells.PARTS[p.attack].color)
 		var pos: Vector2 = p.pos
+		if p.stage.get("fusion","")=="shining_spear":
+			draw_line(pos-p.dir*70,pos,Color("fff1b5"),5,true)
+			vfx.draw(self,"star",pos,22,p.age)
+			continue
+		if p.stage.get("fusion","")=="ball_lightning":
+			draw_circle(pos,p.radius,Color("94dbff"))
+			draw_arc(pos,p.radius*1.3,p.age*8,p.age*8+PI,20,Color("f1faff"),2,true)
+			continue
+		if p.attack=="fireball":
+			if vfx.draw(self,"fire",pos,p.radius*5.0,p.age,Color.WHITE,0,p.dir.angle(),true): continue
 		if p.attack == "boomerang":
 			for bud in p.get("buds",[]): draw_circle(bud,6,Color("ffb6d7"))
 			var angle: float = p.age*11
@@ -152,3 +163,43 @@ func _draw_specials() -> void:
 				chain_lines.append(f.pos);chain_lines.append(f.to)
 	if not lightning_lines.is_empty(): draw_multiline(lightning_lines,Color("ffe7a3"),5,false)
 	if not chain_lines.is_empty(): draw_multiline(chain_lines,Color("ffe7a3"),2,false)
+
+func _draw_extensions() -> void:
+	var x: RefCounted=game.magic.extensions
+	for job in x.jobs:
+		if job.kind!="land": continue
+		var at: Vector2=job.pos
+		draw_arc(at,26,0,TAU,24,Color(.75,.7,1,.55),2,true)
+		var height: float=job.delay*200
+		vfx.draw(self,"star",at-Vector2(0,height),30,job.delay)
+		draw_line(at-Vector2(0,height),at,Color(.8,.75,1,.2),2,true)
+	for c in x.clouds:
+		var color: Color=Color("a6db83") if c.kind in ["poison","gas"] else Color("ffcf80")
+		draw_circle(c.pos,c.radius,Color(color,.08))
+		draw_arc(c.pos,c.radius,0,TAU,24,Color(color,.35),1.5,true)
+		if c.kind=="seal": vfx.draw(self,"star",c.pos,c.radius*1.2,c.age,Color.WHITE,0,0,true)
+	for c in x.beams:
+		if c.get("_charge_left",0)>0:
+			draw_arc(c.pos,20,0,TAU*(1-c._charge_left/.35),24,Color("dcb9ff"),3,true)
+			continue
+		var alpha: float=minf(1,c.life/.15)
+		var color:=Color("80dcff") if c.attack=="laser" else Color("ffad66")
+		if c.attack=="laser":
+			for segment in c.segments:
+				draw_line(segment[0],segment[1],Color(color,.15*alpha),c.width*3,true)
+				draw_line(segment[0],segment[1],Color(color,.7*alpha),c.width,true)
+				draw_line(segment[0],segment[1],Color(1,1,1,.8*alpha),maxf(2,c.width*.25),true)
+		else:
+			for segment in c.segments:
+				var direction: Vector2=(segment[1]-segment[0]).normalized()
+				var half: float=deg_to_rad(game.Spells.attack_data(c.stage).spread*.5)
+				var points:=PackedVector2Array([c.pos])
+				for n in 13: points.append(c.pos+direction.rotated(-half+n*half/6)*c.length*c.scale)
+				draw_colored_polygon(points,Color(color,.10*alpha))
+				for n in 3: vfx.draw(self,"fire",c.pos+direction.rotated((n-1)*half*.6)*c.length*.65,65*c.scale,c.age+n*.06,Color(1,1,1,alpha),0,direction.angle(),true)
+	for s in x.status.values():
+		if not is_instance_valid(s.enemy) or s.enemy.dead: continue
+		var at: Vector2=s.enemy.position+Vector2(0,-s.enemy.radius-10)
+		if s.burn>0: draw_circle(at,3,Color("ffad66"))
+		if s.poison>0: draw_circle(at+Vector2(8,0),3,Color("a6db83"))
+		if s.shock>0: draw_line(at+Vector2(-8,-4),at+Vector2(-10,4),Color("ffdf80"),2,true)

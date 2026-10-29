@@ -51,7 +51,7 @@ func sample(game: Node2D, delta: float) -> void:
 	for e in game.enemies:
 		if not e.dead: living += 1
 	count("living_enemy_seconds","",living*delta)
-	for pair in [["peak_echoes",game.magic.echoes.size()],["peak_enemies",living],["peak_projectiles",game.projectiles.size()],["peak_zones",game.magic.zones.size()],["peak_strikes",game.magic.behavior.strikes.size()],["peak_orbits",game.magic.behavior.orbits.size()]]:
+	for pair in [["peak_beams",game.magic.extensions.beams.size()],["peak_clouds",game.magic.extensions.clouds.size()],["peak_extension_jobs",game.magic.extensions.jobs.size()],["peak_echoes",game.magic.echoes.size()],["peak_enemies",living],["peak_projectiles",game.projectiles.size()],["peak_zones",game.magic.zones.size()],["peak_strikes",game.magic.behavior.strikes.size()],["peak_orbits",game.magic.behavior.orbits.size()]]:
 		totals[pair[0]] = maxf(float(totals.get(pair[0],0)),float(pair[1]))
 	if time >= next_sample:
 		timeline.append({"seconds":snappedf(time,0.01),"damage":totals.get("damage_effective",0),"kills":totals.get("kills",0),"alive":living,"projectiles":game.projectiles.size(),"zones":game.magic.zones.size()})

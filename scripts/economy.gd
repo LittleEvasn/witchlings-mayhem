@@ -1,7 +1,7 @@
 extends RefCounted
 const Spells = preload("res://scripts/spells.gd")
 const Progression = preload("res://scripts/spell_progression.gd")
-const PRICES := {"bolt":8,"bloom":12,"fan":14,"seek":16,"pierce":12,"impact":10,"boomerang":14,"vortex":18,"thorn":14,"bounce":14,"giant":14,"echo":18,"charge":18,"frost":14,"thunder":16,"expire":10,"satellite":16,"ember_path":14}
+const PRICES := {"bolt":8,"bloom":12,"fan":14,"seek":16,"pierce":12,"impact":10,"boomerang":14,"vortex":18,"thorn":14,"bounce":14,"giant":14,"echo":18,"charge":18,"frost":14,"thunder":16,"expire":10,"satellite":16,"ember_path":14,"fireball":16,"laser":16,"flamethrower":16,"fall":18,"orbit":18,"split":18,"trail":18,"element_fire":18,"element_ice":18,"element_poison":18,"element_lightning":18,"timer":16}
 const CLEAR_REWARD := 20
 const REROLL_COST := 5
 const KITS := {

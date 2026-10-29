@@ -1,6 +1,6 @@
 extends RefCounted
 ## The Lumi route. Combat excludes preparation/trial; personal combat editing stays live.
-const VERSION := "lumi-magic-v2"
+const VERSION := "lumi-magic60-v1"
 const RUN_SECONDS := 1800.0
 const REST_SECONDS := 360.0
 const CHAPTERS := [

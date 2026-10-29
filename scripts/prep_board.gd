@@ -4,12 +4,12 @@ const Spells = preload("res://scripts/spells.gd")
 const Slot = preload("res://scripts/prep_slot.gd")
 const Progression = preload("res://scripts/spell_progression.gd")
 const Crafting = preload("res://scripts/crafting_board.gd")
-const GLYPHS := {"bolt":"✦","bloom":"✿","boomerang":"☽","vortex":"◎","thorn":"♧","frost":"❄","thunder":"ϟ","satellite":"◉","ember_path":"♨","fan":"⋔","seek":"⌖","pierce":"↠","bounce":"↗","giant":"↟","echo":"≋","charge":"◆","impact":"→","expire":"◷","storm_spear":"ϟ↠","nova_garden":"✿◎","moon_ring":"☽◉","frost_blossom":"❄✿","firework_trail":"♨✿","frost_gate":"✦❄","thunder_trap":"ϟ♧","moon_vortex":"◎◉","petal_return":"☽✿"}
+const GLYPHS := {"bolt":"✦","bloom":"✿","boomerang":"☽","vortex":"◎","thorn":"♧","frost":"❄","thunder":"ϟ","satellite":"◉","ember_path":"♨","fan":"⋔","seek":"⌖","pierce":"↠","bounce":"↗","giant":"↟","echo":"≋","charge":"◆","impact":"→","expire":"◷","shining_spear":"ϟ↠","nova_garden":"✿◎","moon_ring":"☽◉","frost_blossom":"❄✿","firework_trail":"♨✿","frost_gate":"✦❄","thunder_trap":"ϟ♧","moon_vortex":"◎◉","petal_return":"☽✿"}
 static func glyph(id: String) -> String:
-	if Progression.is_support(id):
+	if Progression.is_fused(id):
 		var parents: Array=Progression.FUSIONS[id].parents
-		return GLYPHS.get(parents[0],"✧")+GLYPHS.get(parents[1],"✧")
-	return GLYPHS.get(Progression.base_id(id),"✧")
+		return GLYPHS.get(parents[0],Spells.PARTS.get(parents[0],{}).get("symbol","✧"))+GLYPHS.get(parents[1],Spells.PARTS.get(parents[1],{}).get("symbol","✧"))
+	return GLYPHS.get(Progression.base_id(id),Spells.definition(id).get("symbol","✧"))
 static func short_name(id: String) -> String:
 	var data := Spells.definition(id)
 	return data.name.replace(" +%d" % Progression.rank(id),"").replace(" ✧","")
@@ -314,7 +314,7 @@ static func detail(ui: CanvasLayer, crafting := true) -> void:
 static func fusion(ui: CanvasLayer, show_catalog := true) -> void:
 	var g: Node2D=ui.game
 	var selected: String=ui.fusion_choice
-	if selected.is_empty(): selected="storm_spear"
+	if selected.is_empty(): selected="shining_spear"
 	var recipe: Dictionary=Progression.FUSIONS[selected]
 	var a:=Progression.key(recipe.parents[0],3)
 	var b:=Progression.key(recipe.parents[1],3)

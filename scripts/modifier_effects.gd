@@ -1,10 +1,10 @@
 extends RefCounted
 ## Magic v2: rank changes geometry/response; duplicate modifiers add their contributions.
 const P=preload("res://scripts/spell_progression.gd")
-const BALANCE_VERSION := "magic-user-v2"
+const BALANCE_VERSION := "magic60-v1"
 const VALUES := {
 	"fan":[3,4,5,6],"seek":[0.35,0.55,0.8,1.05],"pierce":[2,3,4,5],
-	"bounce":[2,3,4,5],"giant":[1.6,1.9,2.2,2.5],"echo":[1,2,3,4],"charge":[1.0,1.1,1.2,1.35]
+	"bounce":[2,3,4,5],"giant":[1.6,1.9,2.2,2.5],"echo":[1,2,3,4],"charge":[1.0,1.1,1.2,1.35],"fall":[.5,.45,.4,.35],"orbit":[90,110,130,150],"split":[2,3,4,5],"trail":[2,3,4,5],"element_fire":[1,1.25,1.5,1.75],"element_ice":[.6,.8,1.0,1.2],"element_poison":[1,1.25,1.5,1.75],"element_lightning":[1,1.25,1.5,1.75]
 }
 static func resolve(stage: Dictionary) -> Dictionary:
 	var result := {}
@@ -19,7 +19,7 @@ static func resolve(stage: Dictionary) -> Dictionary:
 		for entry in expanded:
 			if entry.id==id and ranks.size()<count: ranks.append(clampi(int(entry.rank),0,3))
 		while ranks.size()<count: ranks.append(0)
-		var e := {"count":count,"value":1.0,"targets":0,"extra":0,"repeats":[],"range":1.0,"size":1.0,"knockback":0.0,"distance":160.0,"cooldown":1.0}
+		var e := {"count":count,"value":0.0 if id in ["fall","orbit","split","trail","element_fire","element_ice","element_poison","element_lightning"] else 1.0,"targets":0,"extra":0,"repeats":[],"range":1.0,"size":1.0,"knockback":0.0,"distance":160.0,"cooldown":1.0}
 		for r in ranks:
 			match id:
 				"fan": e.extra += VALUES.fan[r]-1
@@ -29,6 +29,8 @@ static func resolve(stage: Dictionary) -> Dictionary:
 				"echo":
 					# Growing total budget, distributed across the visible repeats.
 					for n in VALUES.echo[r]: e.repeats.append((0.35+0.15*r)/float(VALUES.echo[r]))
+				"fall", "orbit", "split", "trail", "element_fire", "element_ice", "element_poison", "element_lightning":
+					e.value += VALUES[id][r]
 				"charge":
 					e.value *= 3.0
 					e.size *= VALUES.charge[r]
@@ -77,5 +79,13 @@ static func text(stage: Dictionary, id: String) -> String:
 			for strength in e.repeats: total += strength
 			return "추가 %d회 · 합계 위력 %.0f%% · 0.18초 간격"%[e.repeats.size(),total*100]
 		"charge": return "피해 ×%.2f · 크기 ×%.2f · 첫 밀침 %.0f · 대기 ×%.2f"%[e.value,e.size,e.knockback,e.cooldown]
+		"fall": return "착지까지 %.2f초 · 착지 전 무피해"%e.value
+		"orbit": return "공전 반경 %.0f · 오른쪽 추적/공전이 이동 방식 결정"%e.value
+		"split": return "약한 자식 %d개 · 합계 위력 55%% · 재분열/연결 없음"%e.value
+		"trail": return "90거리마다 잔상 · 최대 %d개 · 각 20%% · 재복제 없음"%e.value
+		"element_fire": return "3초 화상 · 초당 기준 피해 ×%.2f"%(e.value*.12)
+		"element_ice": return "유효 명중 냉기 %.2f · 3 누적 동결"%e.value
+		"element_poison": return "3초 중독 · 이동 48거리마다 독 흔적 · 위력 ×%.2f"%e.value
+		"element_lightning": return "0.6초마다 근처 1명 방전 · 위력 %.0f%%"%(e.value*20)
 	return ""
 static func compact(stage: Dictionary, id: String) -> String: return text(stage,id)

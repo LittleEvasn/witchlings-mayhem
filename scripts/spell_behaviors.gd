@@ -88,6 +88,7 @@ func update(delta: float) -> void:
 func hit(enemy: Node2D, amount: float, direction: Vector2, c: Dictionary, cold := 0.0) -> void:
  if not is_instance_valid(enemy) or enemy.dead: return
  var s := state_for(enemy)
+ cold=runtime.extensions.cold(c,cold)
  var frozen: bool = s.frozen_until>clock
  var at: Vector2 = enemy.position
  game.damage_enemy(enemy,amount,direction,c.get("meter_source",""))
@@ -141,37 +142,15 @@ func hit(enemy: Node2D, amount: float, direction: Vector2, c: Dictionary, cold :
    var push: Vector2 = direction.normalized() if direction.length_squared()>0 else game.player.position.direction_to(enemy.position)
    var bounds: Rect2 = game.enemy_bounds()
    enemy.position = (enemy.position+push*force*resistance).clamp(bounds.position,bounds.end)
-  chain(c,at,enemy,amount,cold)
+ runtime.extensions.elements(enemy,amount,c,frozen)
 
-func chain(c: Dictionary, at: Vector2, victim: Node2D, amount: float, cold: float) -> void:
- var owner: Dictionary = c.get("group",c)
- if owner.get("chain_fired",false) or not c.stage.get("bounce",false): return
- owner["chain_fired"] = true
- var seen: Dictionary = c.get("chain_exclusions",c.get("contact_exclusions",{})).duplicate()
- seen[victim.get_instance_id()] = true
- var origin := at
- for hop in int(game.Spells.Effects.profile(c.stage,"bounce").targets):
-  var target: Node2D = game.nearest_enemy(origin,game.Spells.Effects.profile(c.stage,"bounce").distance,seen)
-  if target==null: break
-  seen[target.get_instance_id()] = true
-  var share := pow(game.Spells.Effects.value(c.stage,"bounce"),hop+1)
-  var arc := c.duplicate()
-  arc["hit_origin"] = "chain"
-  arc["meter_source"] = c.meter_source+"/chain"
-  arc.factor = c.factor*share
-  hit(target,amount*share,Vector2.ZERO,arc,cold*share)
-  flash({"kind":"arc","pos":origin,"to":target.position,"life":0.18})
-  runtime.track("chain_hits",c.meter_source)
-  runtime.support.chain_echo(c,target.position,amount*share)
-  if not game.magic_active(): return
-  origin = target.position
 func area(c: Dictionary, at: Vector2, damage: float, radius: float) -> int:
  var victims: Array = game.nearby(at,radius+45).filter(func(e):return not e.dead and e.position.distance_to(at)<=radius+e.radius)
  c["contact_exclusions"] = {}
  for enemy in victims: c.contact_exclusions[enemy.get_instance_id()] = true
  var count := 0
  runtime.track("explosions",c.meter_source)
- game.ring(at,radius,game.Spells.PARTS[c.attack].color,0.3)
+ game.ring(at,radius,game.Spells.PARTS.get(c.attack,{"color":Color("c8b4ff")}).color,0.3)
  # One visual per area event, never one sprite per victim. Does not affect damage.
  if c.attack in ["bloom","thunder"]:
   flash({"kind":"vfx","effect":"explosion" if c.attack=="bloom" else "shockwave","pos":at,"diameter":radius*2.4,"life":0.4,"total":0.4})
@@ -183,8 +162,12 @@ func area(c: Dictionary, at: Vector2, damage: float, radius: float) -> int:
  return count
 func special(c: Dictionary) -> void:
  var stage: Dictionary = c.stage
+ if runtime.extensions.special(c): return
  match c.attack:
   "frost":
+   runtime.extensions.attach(c)
+   if c._motion=="orbit":
+    c.pos+=c.dir*runtime.extensions.rank_value(stage,"orbit")
    if stage.seek:
     var target: Node2D = game.nearest_enemy(c.pos,220*c.scale/float(stage.get("_relic_scale",1.0))*game.Spells.Effects.profile(stage,"seek").range)
     if target!=null: c.dir = c.dir.rotated(clampf(c.dir.angle_to(c.pos.direction_to(target.position)),-0.25*game.Spells.seek_strength(stage),0.25*game.Spells.seek_strength(stage)))
@@ -194,8 +177,9 @@ func special(c: Dictionary) -> void:
    victims.sort_custom(func(a,b):return c.pos.distance_squared_to(a.position)<c.pos.distance_squared_to(b.position))
    var contacts: Array = []
    var cone_dirs: Array=[]
-   for i in game.Spells.branches(stage):
-    var angle: float=(i-(game.Spells.branches(stage)-1)*.5)*.48
+   var cone_count: int=game.Spells.branches(stage)+(2 if stage.get("fusion","")=="triple_frost" else 0)
+   for i in cone_count:
+    var angle: float=(i-(cone_count-1)*.5)*.48
     cone_dirs.append(runtime.support.branch_direction(stage,c.pos,c.dir.rotated(angle),i))
    for enemy in victims:
     if enemy.dead or c.pos.distance_to(enemy.position)>length+enemy.radius: continue
@@ -215,10 +199,11 @@ func special(c: Dictionary) -> void:
     if not game.magic_active(): return
     runtime.trigger(c,enemy.position)
     if not game.magic_active(): return
-   flash({"kind":"cone","pos":c.pos,"dir":c.dir,"radius":length,"fan":stage.fan,"branches":game.Spells.branches(stage),"half_angle":half_angle,"directions":cone_dirs,"life":0.22})
+   flash({"kind":"cone","pos":c.pos,"dir":c.dir,"radius":length,"fan":stage.fan,"branches":cone_count,"half_angle":half_angle,"directions":cone_dirs,"life":0.22})
    if stage.get("chase_pierce",0)>0 and not contacts.is_empty():
     c["chain_exclusions"]=c.contact_exclusions
     extra_links(c,contacts.back().position,contacts.back())
+   runtime.extensions.finish(c,c.pos+c.dir*length)
    runtime.trigger(c,c.pos+c.dir*length,"expire")
    if not game.magic_active(): return
    runtime.support.terminal(c,c.pos+c.dir*length)
@@ -228,7 +213,7 @@ func special(c: Dictionary) -> void:
     runtime.track("strikes_blocked",c.meter_source)
     return
    # Root lightning rains around the player; connectors/fusion keep their event location.
-   var local_event: bool=c.stage.get("_linked",false) or c.stage.get("_intrinsic",false)
+   var local_event: bool=c.stage.get("_linked",false) or c.stage.get("_intrinsic",false) or c.stage.get("_landed",false)
    var center: Vector2=c.pos
    if not local_event:
     var offset := Vector2.RIGHT.rotated(game.rng.randf()*TAU)*sqrt(game.rng.randf_range(90.0*90.0,360.0*360.0))
@@ -248,6 +233,7 @@ func special(c: Dictionary) -> void:
    c["life"] = 0.45
    c["pulses_left"] = game.Spells.attack_data(stage).pulses
    c["strike_radius"] = game.Spells.attack_data(stage).radius*c.scale
+   runtime.extensions.attach(c)
    strikes.append(c)
    runtime.track("strikes_scheduled",c.meter_source)
   "satellite":
@@ -266,14 +252,23 @@ func special(c: Dictionary) -> void:
    c["body_count"] = int(game.Spells.attack_data(stage).bodies)+int(game.Spells.Effects.profile(stage,"fan").extra)
    c["orbit_radius"] = float(stage.get("_orbit_radius",95.0))
    c["orbit_offset"] = 0.0
+   runtime.extensions.attach(c)
    orbits.append(c)
    runtime.track("orbits_created",c.meter_source)
-  "ember_path": emit_path(c)
+  "ember_path":
+   runtime.extensions.attach(c)
+   emit_path(c)
 func flash(data: Dictionary) -> void:
  if flashes.size()<64: flashes.append(data)
 func update_strikes(delta: float) -> void:
  for i in range(strikes.size()-1,-1,-1):
   var c: Dictionary = strikes[i]
+  var previous_pos: Vector2=c.pos
+  runtime.extensions.move(c,delta,previous_pos)
+  if c._motion=="orbit":
+   var offset: Vector2=c.pos-previous_pos
+   c.center+=offset
+   for point in c.points: point.pos+=offset
   c.life -= delta
   if c.life>0.15 and not c.get("strike_locked",false):
    for point in c.points:
@@ -292,6 +287,7 @@ func update_strikes(delta: float) -> void:
   for point in c.points:
    var contacts := area(c,point.pos,36*damage_scale(c),c.strike_radius)
    if contacts>0:
+    runtime.extensions.impact(c,point.pos)
     runtime.trigger(c,point.pos)
     if not game.magic_active(): return
     extra_links(c,point.pos,null,true,false,c.strike_radius)
@@ -303,6 +299,7 @@ func update_strikes(delta: float) -> void:
      if not game.magic_active(): return
    flash({"kind":"lightning","pos":point.pos,"life":0.2})
   if c.pulses_left==0:
+   runtime.extensions.finish(c,c.center)
    runtime.trigger(c,c.center,"expire")
    if not game.magic_active(): return
    runtime.support.terminal(c,c.center)
@@ -315,12 +312,14 @@ func update_orbits(delta: float) -> void:
   if c.stage.has("_anchor_zone") and not runtime.live_zones.has(c.stage._anchor_zone): c.life = 0.0
   if c.life<=0:
    orbits.remove_at(i)
+   runtime.extensions.finish(c,c.pos)
    runtime.trigger(c,c.bodies.back() if not c.bodies.is_empty() else c.pos,"expire")
    if not game.magic_active(): return
    runtime.support.terminal(c,c.pos)
    if not game.magic_active(): return
    continue
-  if c.stage.get("_follow_player",false) or not c.stage.get("_linked",false): c.pos = game.player.position
+  if c.stage.get("_follow_player",false) or (not c.stage.get("_linked",false) and not c.stage.get("_landed",false)): c.pos = game.player.position
+  runtime.extensions.move(c,delta,c.pos)
   c.bodies.clear()
   if c.stage.seek:
    var target: Node2D = game.nearest_enemy(c.pos,170*game.Spells.Effects.profile(c.stage,"seek").range)
@@ -334,11 +333,15 @@ func update_orbits(delta: float) -> void:
     var choices: Array=runtime.support.targets(c.pos,220)
     if not choices.is_empty(): point=point.move_toward(choices[n%choices.size()].position,24)
    c.bodies.append(point)
+  if c.stage.get("trail",0)>0 and not c.bodies.is_empty():
+   c._path_distance+=c.orbit_radius*TAU*delta
+   c["_trail_point"]=c.bodies[0]
   c["contact_exclusions"] = {}
   for point in c.bodies:
    for enemy in game.nearby(point,12*c.scale+45):
     if not enemy.dead and enemy.position.distance_to(point)<=12*c.scale+enemy.radius: c.contact_exclusions[enemy.get_instance_id()] = true
-  for point in c.bodies:
+  for body_index in c.bodies.size():
+   var point: Vector2=c.bodies[body_index]
    for enemy in game.nearby(point,12*c.scale+45):
     if enemy.dead or enemy.position.distance_to(point)>12*c.scale+enemy.radius: continue
     var id: int = enemy.get_instance_id()
@@ -346,10 +349,31 @@ func update_orbits(delta: float) -> void:
     c.hits[id] = clock
     hit(enemy,DIRECT_DAMAGE.satellite*damage_scale(c),Vector2.ZERO,c)
     if not game.magic_active(): return
+    runtime.extensions.split(c,enemy.position)
+    if c.stage.get("fusion","")=="shard_satellite":
+     if not c.has("_shard_bodies"): c["_shard_bodies"]={}
+     if not c._shard_bodies.has(body_index):
+      c._shard_bodies[body_index]=true
+      var shard: Dictionary=runtime.extensions.derived(c,.3)
+      shard.attack="bolt";shard.source_id="bolt";shard.attack_profile=game.Spells.Progression.attack_profile("bolt")
+      runtime.extensions.schedule_cast(c,shard,point,c.pos.direction_to(point),0)
+      runtime.track("satellite_shards",c.meter_source)
     extra_links(c,enemy.position,enemy)
     runtime.track("orbit_contacts",c.meter_source)
     runtime.trigger(c,enemy.position)
     if not game.magic_active(): return
+  if c.stage.get("fusion","")=="clock_satellite":
+   var tick_index:=int(c.age/.65)
+   if tick_index>int(c.get("_clock_tick",0)) and tick_index<=2:
+    c["_clock_tick"]=tick_index
+    var dir:=Vector2.RIGHT.rotated(c.age)
+    var a: Vector2=c.pos-dir*c.orbit_radius
+    var b: Vector2=c.pos+dir*c.orbit_radius
+    for body in c.bodies.size(): c.bodies[body]=a.lerp(b,float(body)/maxi(1,c.bodies.size()-1))
+    for enemy in runtime.extensions.targets(c.pos,c.orbit_radius+30):
+     if Geometry2D.get_closest_point_to_segment(enemy.position,a,b).distance_to(enemy.position)<=enemy.radius+8: runtime.extensions.area(c,enemy.position,12*damage_scale(c),12)
+    flash({"kind":"arc","pos":a,"to":b,"life":.18})
+    runtime.track("clock_lines",c.meter_source)
   for id in c.hits.keys():
    if clock-c.hits[id]>1: c.hits.erase(id)
 func path_contains(zone: Dictionary, point: Vector2, extra: float = 0.0) -> bool:
@@ -366,7 +390,7 @@ func emit_path(c: Dictionary) -> void:
  c["cancelled"] = false
  c["emitting"] = false
  c["last_pos"] = c.pos
- if not c.stage.get("_linked",false):
+ if not c.stage.get("_linked",false) and not c.stage.get("_landed",false):
   if trail_emitters.size()>=128:
    runtime.track("trail_emitters_blocked",c.meter_source)
    c.cancelled = true
@@ -401,9 +425,11 @@ func update_trails(delta: float) -> void:
     c.last_pos += tangent*step
     stamp_path(c,c.last_pos,tangent)
   if c.emit_left<=0:
+   runtime.extensions.mirror_path(c)
    c.emitting = false
    trail_emitters.remove_at(index)
    if c.remaining==0 and not c.cancelled:
+    runtime.extensions.finish(c,c.last_pos)
     runtime.trigger(c,c.last_pos,"expire")
     if not game.magic_active(): return
     runtime.support.terminal(c,c.last_pos)
@@ -420,6 +446,9 @@ func stamp_path(c: Dictionary, at: Vector2, tangent: Vector2) -> void:
   var point: Vector2 = runtime.support.stamp_point(c,at)+tangent.orthogonal()*(n-(tracks-1)*0.5)*data.radius*c.scale*2.2
   var zone := c.duplicate()
   zone.merge({"kind":"ember_path","pos":point,"path_points":[point],"span":0.0,"radius":data.radius*c.scale,"damage":DIRECT_DAMAGE.ember_path*damage_scale(c),"life":data.life*float(c.stage.get("_orb_life",1.0)),"age":0.0,"pulse":0.3,"group":c},true)
+  if c.stage.get("fusion","")=="mirror_trail":
+   if not c.has("_mirror_points"): c["_mirror_points"]=[]
+   if c._mirror_points.size()<24: c._mirror_points.append({"pos":point,"dir":tangent,"radius":data.radius*c.scale,"damage":zone.damage})
   c.remaining += 1
   runtime.add_zone(zone)
   runtime.track("path_patches",c.meter_source)
@@ -429,6 +458,7 @@ func end_path(zone: Dictionary, normal: bool) -> void:
  group.remaining -= 1
  if not normal: group.cancelled = true
  if group.remaining==0 and not group.get("emitting",false) and not group.cancelled:
+  runtime.extensions.finish(group,group.last_pos)
   runtime.trigger(group,group.last_pos,"expire")
   if not game.magic_active(): return
   runtime.support.terminal(group,group.last_pos)

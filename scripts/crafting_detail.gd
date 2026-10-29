@@ -50,7 +50,7 @@ static func wide_item(ui: CanvasLayer, at: Vector2) -> void:
 
 static func wide_fusion(ui: CanvasLayer, at: Vector2) -> void:
 	var g: Node2D=ui.game
-	var id: String=ui.fusion_choice if ui.fusion_choice in P.FUSIONS else "storm_spear"
+	var id: String=ui.fusion_choice if ui.fusion_choice in P.FUSIONS else "shining_spear"
 	var recipe: Dictionary=P.FUSIONS[id]
 	var a: String=P.key(recipe.parents[0],3)
 	var b: String=P.key(recipe.parents[1],3)
@@ -136,7 +136,7 @@ static func item(ui: CanvasLayer, x: float, crafting: bool) -> void:
 
 static func fusion(ui: CanvasLayer, x: float) -> void:
 	var g: Node2D=ui.game
-	var id: String=ui.fusion_choice if not ui.fusion_choice.is_empty() else "storm_spear"
+	var id: String=ui.fusion_choice if not ui.fusion_choice.is_empty() else "shining_spear"
 	var recipe: Dictionary=P.FUSIONS[id]
 	var a: String=P.key(recipe.parents[0],3)
 	var b: String=P.key(recipe.parents[1],3)

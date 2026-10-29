@@ -3,30 +3,20 @@ const Progression = preload("res://scripts/spell_progression.gd")
 const Effects = preload("res://scripts/modifier_effects.gd")
 ## Sparse program: right-side modifiers stop at each event connector.
 ## Compile once when the player changes their recipe, never for each projectile.
-const PARTS = {
-	"bolt": {"name":"별빛탄", "symbol":"✦", "kind":"attack", "color":Color("a8efe2"), "desc":"빠른 탄환 · 직접 맞힌 적에게 피해"},
-	"bloom": {"name":"꽃폭탄", "symbol":"✺", "kind":"attack", "color":Color("ffc79f"), "desc":"닿으면 폭발 · 주변 적에게 범위 피해\n별빛탄보다 느린 시전"},
-	"boomerang": {"name":"달빛 부메랑", "symbol":"☾", "kind":"attack", "color":Color("b8c9ff"), "desc":"호를 그리며 비행 · 도탄 소진 시 즉시 귀환\n같은 시전에서 같은 적 재타격 없음"},
-	"vortex": {"name":"소용돌이 씨앗", "hud_name":"소용돌이", "symbol":"◎", "kind":"attack", "color":Color("c6a3ff"), "desc":"설치 후 적을 모으며 지속 피해\n같은 곳에 모아 심으면 범위 성장 · 보스 끌림 없음"},
-	"thorn": {"name":"가시꽃 덫", "symbol":"❀", "kind":"attack", "color":Color("b8ed9a"), "desc":"적이 다가오면 터지는 덫\n6초 유지 · 같은 곳에 모아 심으면 범위 성장"},
-	"fan": {"name":"갈래", "symbol":"⋔", "kind":"modifier", "color":Color("dfb6f5"), "desc":"뒤 공격에 갈래 추가 · 기본 단발은 3갈래\n오른쪽 각 주문에 한 번씩 적용 · 중복 시 갈래 증가"},
-	"seek": {"name":"추적", "symbol":"◎", "kind":"modifier", "color":Color("a8efe2"), "desc":"가까운 적을 따라 조준·이동\n공격의 형태를 유지하며 추적"},
-	"pierce": {"name":"관통", "symbol":"»", "kind":"modifier", "color":Color("f7dfa1"), "desc":"진행 방향의 적 2명까지 추가 타격\n탄은 관통 · 설치 씨앗은 위력을 나눠 배치"},
-	"bounce": {"name":"연쇄", "symbol":"↝", "kind":"modifier", "color":Color("ffd99c"), "desc":"첫 피해 뒤 다른 적 최대 2명에게 연쇄\n홉마다 위력 50% · 주문·연결은 다시 만들지 않음"},
-	"giant": {"name":"거대화", "symbol":"＋", "kind":"modifier", "color":Color("ffb1c6"), "desc":"크기·범위 ×1.6\n한 바퀴 후 대기 ×1.2"},
-	"echo": {"name":"메아리", "symbol":"≋", "kind":"modifier", "color":Color("a5d9ff"), "desc":"0.18초 뒤 위력 35%로 재시전\n복사본은 다시 복제하지 않음"},
-	"impact": {"name":"명중 후", "symbol":"→", "kind":"connector", "color":Color("ff9cae"), "desc":"첫 명중 지점에서 뒤 마법을 한 번 시전\n주문 개체당 첫 유효 명중 한 번 · 다단계 연결 가능"},
-	"charge": {"name":"응축","kind":"modifier","symbol":"✧","color":Color("ffd99c"),"desc":"한 바퀴 후 대기 ×2.5 · 해당 단계 피해 ×3\n상태와 성장량은 증가하지 않음"},
-	"frost": {"name":"서리숨결","kind":"attack","symbol":"✧","color":Color("b8eaff"),"desc":"냉기 3이면 얼림 · 보스는 얼음 껍질\n다른 직접 공격으로 깨면 추가 피해 · 동결 해제"},
-	"thunder": {"name":"벼락","kind":"attack","symbol":"✧","color":Color("ffe7a3"),"desc":"플레이어 주변 무작위 지점에 예고 후 낙뢰\n추적은 주변 적을 따라가다 낙하 직전에 고정"},
-	"expire": {"name":"소멸 후","kind":"connector","symbol":"✧","color":Color("ff9cae"),"desc":"앞 주문이 정상 종료한 자리에서 후속 시전\n부메랑 귀환 시 현재 조준 방향으로 발사"},
-	"satellite": {"name":"달무리 위성","kind":"attack","symbol":"✧","color":Color("b8c9ff"),"desc":"일정 거리를 도는 위성 · 궤도에서만 접촉 피해\n후속 주문이면 제자리에 공전"},
-	"ember_path": {"name":"잔불 발자국","kind":"attack","symbol":"✧","color":Color("ffc79f"),"desc":"걸음마다 발밑에 원형 불장판을 남김\n정지 시 중첩 설치 안 함 · 겹친 피해는 최강만 적용"}
-}
-const ATTACK_INTERVALS := {"bolt":0.48,"bloom":0.576,"boomerang":0.624,"vortex":0.864,"thorn":0.72,"frost":0.6,"thunder":0.9,"satellite":1.1,"ember_path":1.0}
+const Catalog=preload("res://scripts/magic_catalog.gd")
+const PARTS = Catalog.PARTS
+const ATTACK_INTERVALS := {"bolt":0.48,"bloom":0.576,"boomerang":0.624,"vortex":0.864,"thorn":0.72,"frost":0.6,"thunder":0.9,"satellite":1.1,"ember_path":1.0,"fireball":0.8,"laser":1.1,"flamethrower":1.2}
 
 # Counts select geometry/repeats; rank data selects efficiency. See modifier_effects.gd.
 const STACK_RULES := {
+	"element_lightning":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
+	"element_poison":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
+	"element_ice":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
+	"element_fire":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
+	"trail":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
+	"split":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
+	"orbit":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
+	"fall":{"rule":"add","per_copy":1,"text":"강화 단계의 효과 합산 · 파생 공격은 재생성 금지"},
 	"fan":{"rule":"add","per_copy":2,"text":"강화 단계별 추가 갈래 합산 · 각 위력은 분산"},
 	"seek":{"rule":"add","per_copy":0.5,"text":"각 구체의 탐색 거리·회전 반응 합산"},
 	"pierce":{"rule":"add","per_copy":2,"text":"각 구체의 추가 관통/설치 수 합산"},
@@ -36,10 +26,18 @@ const STACK_RULES := {
 	"charge":{"rule":"multiply","per_copy":3.0,"text":"피해·범위·대기 곱연산 · 첫 밀침 합산"},
 }
 const MODIFIER_NOTES := {
+	"element_lightning":"감전 대상이 주기적으로 주변 한 적에 방전 · 반응 재전파 없음",
+	"element_poison":"중독된 적이 이동하면 독 흔적 · 같은 지점 병합",
+	"element_ice":"냉기를 쌓아 둔화·동결 · 서리숨결의 냉기와는 큰 값만 적용",
+	"element_fire":"명중한 적에게 화상 · 동결에 남은 화상 정산",
+	"trail":"이동 거리마다 약한 잔상 · 한 주문 최대 2개 · 재복제 없음",
+	"split":"첫 명중 또는 정상 종료에 약한 자식 2개 · 1세대만 생성",
+	"orbit":"공격의 위치가 기준점 주위를 공전 · 추적과 함께면 오른쪽 이동 보조 우선",
+	"fall":"조준 지점 상공에서 예고 후 착지 · 착지 전 피해 없음",
 	"fan":"고유 배치에 갈래 추가 · 강화는 갈래 수 증가",
 	"seek":"가까운 적을 따라 조준·이동 · 강화는 추적 반응 증가",
 	"pierce":"진행 경로의 적 추가 타격 · 씨앗은 위력을 나눠 설치",
-	"bounce":"첫 피해 뒤 다른 적에게 연쇄 · 주문/연결 재생성 없음",
+	"bounce":"적에게 맞으면 다음 미타격 표적으로 경로 변경",
 	"giant":"공격 크기·범위 확대 · 강화로 대기는 늘지 않음",
 	"echo":"0.18초 간격으로 시전 재현 · 복사본은 재복제하지 않음",
 	"charge":"느리고 강한 한 발 · 냉기·성장량은 그대로",
@@ -91,6 +89,7 @@ static func has_part(id: String) -> bool:
 static func definition(id: String) -> Dictionary:
 	if not has_part(id):
 		var old_base := Progression.base_id(id)
+		if Catalog.RETIRED.has(old_base): return {"name":Catalog.RETIRED[old_base]+" (이전 기록)","kind":"legacy","color":Color.GRAY,"desc":"이전 마법 목록의 기록 · 새 실험에서는 등장하지 않아요."}
 		if old_base=="sigil": return {"name":"각인 (이전 기록)","kind":"legacy","color":Color.GRAY,"desc":"삭제된 구체 · 새 실험에서 등장하지 않음"}
 		if PARTS.has(old_base) and Progression.rank(id)==4: return {"name":PARTS[old_base].name+" +4 (이전 기록)","kind":"legacy","color":PARTS[old_base].color,"desc":"이전 버전 실험 기록"}
 		return {"name":"알 수 없는 구체","kind":"unknown","color":Color.GRAY,"desc":""}
@@ -123,7 +122,7 @@ static func populate_modifiers(stage: Dictionary) -> void:
 	for mod in stage.modifiers:
 		stage[mod.id]=int(stage.get(mod.id,0))+1
 		if Progression.is_support(mod.id):
-			for effect in Progression.FUSIONS[mod.id].get("effects",[]): stage[effect[0]]+=1
+			for effect in Progression.FUSIONS[mod.id].get("effects",[]): stage[effect[0]]=int(stage.get(effect[0],0))+1
 
 static func modifier_token_stage(id: String) -> Dictionary:
 	var stage := blank_stage()
@@ -205,6 +204,7 @@ static func compile(recipe: Array) -> Dictionary:
 			stage["fusion"] = id if fused else ""
 			stage.slot = index
 			stage.modifiers = modifiers.duplicate(true)
+			if id=="thermal_trail": stage.modifiers.append({"id":"element_ice","rank":2,"slot":index,"intrinsic":true})
 			stage.root = pending.is_empty() and not blocked_payload
 			stage["_linked"] = not stage.root
 			stage["disabled"] = blocked_payload or pending.size()>1 or (not pending.is_empty() and nodes[last_attack].disabled)

@@ -267,7 +267,7 @@ func report() -> Dictionary:
 	output.orb_cost = 0
 	for row in bank:
 		for id in row: output.orb_cost += int(game.Economy.investment_cost(id))
-	output.pending = {"projectiles":game.projectiles.size(),"echoes":game.magic.echoes.size(),"zones":game.magic.zones.size(),"strikes":game.magic.behavior.strikes.size(),"orbits":game.magic.behavior.orbits.size()}
+	output.pending = {"beams":game.magic.extensions.beams.size(),"clouds":game.magic.extensions.clouds.size(),"extension_jobs":game.magic.extensions.jobs.size(),"projectiles":game.projectiles.size(),"echoes":game.magic.echoes.size(),"zones":game.magic.zones.size(),"strikes":game.magic.behavior.strikes.size(),"orbits":game.magic.behavior.orbits.size()}
 	output.wall_elapsed_ms = (Time.get_ticks_usec()-started_us)/1000.0
 	return output
 

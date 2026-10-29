@@ -11,10 +11,6 @@ func clear() -> void: jobs.clear()
 func repetitions(stage: Dictionary) -> Dictionary:
 	var result: Dictionary={"primary":1.0,"copies":[]}
 	if stage.get("_echo_copy",false): return result
-	var waves:=count(stage,"wave_split")
-	result.primary=1.0/(1+waves*2)
-	for n in waves*2:
-		result.copies.append({"factor":result.primary,"scale":1.0,"delay":.24*(n+1)})
 	for n in count(stage,"growing_echo")*2:
 		result.copies.append({"factor":.45*result.primary,"scale":1.3+.4*(n%2),"delay":.25*(n+1)})
 	return result
@@ -24,10 +20,8 @@ func targets(at: Vector2, radius: float, excluded: Dictionary = {}) -> Array:
 	found.sort_custom(func(a,b):return at.distance_squared_to(a.position)<at.distance_squared_to(b.position))
 	return found
 
-func branch_direction(stage: Dictionary, at: Vector2, original: Vector2, index: int) -> Vector2:
-	if count(stage,"swarm_seek")==0: return original
-	var choices:=targets(at,320)
-	return at.direction_to(choices[index%choices.size()].position) if not choices.is_empty() else original
+func branch_direction(_stage: Dictionary, _at: Vector2, original: Vector2, _index: int) -> Vector2:
+	return original
 
 func retarget(p: Dictionary) -> void:
 	if count(p.stage,"chase_pierce")==0: return
@@ -40,7 +34,7 @@ func retarget(p: Dictionary) -> void:
 	runtime.track("chase_retargets",p.get("meter_source",""))
 
 func stamp_point(c: Dictionary, at: Vector2) -> Vector2:
-	if count(c.stage,"chase_pierce")==0 and count(c.stage,"swarm_seek")==0: return at
+	if count(c.stage,"chase_pierce")==0: return at
 	var choices:=targets(at,220)
 	if choices.is_empty(): return at
 	var index: int=int(c.get("support_stamp",0))
@@ -54,24 +48,8 @@ func schedule(job: Dictionary) -> void:
 	job["generation"]=job.get("generation",runtime.generation)
 	jobs.append(job)
 
-func terminal(c: Dictionary, at: Vector2) -> void:
-	if not runtime.game.magic_active() or c.get("generation",-1)!=runtime.generation: return
-	var owner: Dictionary=c.get("group",c)
-	if count(c.stage,"leap_pierce")==0 or owner.get("leap_fired",false): return
-	owner["leap_fired"]=true
-	var amount: float=float(c.get("damage",runtime.behavior.DIRECT_DAMAGE.get(c.attack,22.0)*runtime.behavior.damage_scale(c)))*.5
-	var choices:=targets(at,180,c.get("contact_exclusions",{}))
-	for n in mini(3*count(c.stage,"leap_pierce"),choices.size()):
-		var enemy: Node2D=choices[n]
-		runtime.game.damage_enemy(enemy,amount,at.direction_to(enemy.position),c.get("meter_source","")+"/terminal")
-		runtime.behavior.flash({"kind":"arc","pos":at,"to":enemy.position,"life":.18})
-		runtime.track("terminal_hits",c.get("meter_source",""))
-		if not runtime.game.magic_active(): return
-
-func chain_echo(c: Dictionary, at: Vector2, amount: float) -> void:
-	if count(c.stage,"echo_chain")==0: return
-	schedule({"kind":"trace","pos":at,"damage":amount*.5,"delay":.35,"generation":c.generation,"source":{"meter_source":c.get("meter_source","")}})
-	runtime.track("chain_traces_scheduled",c.get("meter_source",""))
+func terminal(_c: Dictionary, _at: Vector2) -> void: pass
+func chain_echo(_c: Dictionary, _at: Vector2, _amount: float) -> void: pass
 
 func update(delta: float) -> void:
 	# Remove first, then execute; emitted child spells may schedule fresh work.
