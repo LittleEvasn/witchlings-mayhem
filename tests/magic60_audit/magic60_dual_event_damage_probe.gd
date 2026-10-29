@@ -29,5 +29,3 @@ func run()->void:
 		row.erase("children");out.append(row)
 	out.append({"label":"summary","program_compiles":program.ok,"branches":g.projectiles.size()+1,"expected_per_descendant_from_doc":11,"interpretation":"synthetic root event injection; child and grandchild damage measured through actual engine projectile collision"})
 	var f:=FileAccess.open("res://artifacts/magic60_dual_event_damage_probe.json",FileAccess.WRITE);f.store_string(JSON.stringify({"cases":out},"\t"));f.close();print("DUAL_EVENT_DAMAGE_DONE "+JSON.stringify(out));g.queue_free();await process_frame;quit(0)
-
-
