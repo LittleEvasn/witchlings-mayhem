@@ -13,6 +13,7 @@ const SHOP_SECONDS := 60.0
 const SpellRuntime = preload("res://scripts/spell_runtime.gd")
 const Actor = preload("res://scripts/actor.gd")
 const ActorOverlays=preload("res://scripts/actor_overlays.gd")
+const DamageNumbers=preload("res://scripts/damage_numbers.gd")
 const Visuals = preload("res://scripts/magic_visuals.gd")
 const Interface = preload("res://scripts/interface.gd")
 const ArenaWorld = preload("res://scripts/arena_world.gd")
@@ -123,6 +124,7 @@ var orb_growth_open := -1
 var workshop_relics: Array = []
 var actor_shadows: Node2D
 var actor_health: Node2D
+var damage_numbers: Node2D
 var music_enabled := false
 var music_player: AudioStreamPlayer
 var music_phase := ""
@@ -174,6 +176,11 @@ func _ready() -> void:
 	actor_health.game=self
 	actor_health.z_index=3995
 	add_child(actor_health)
+	damage_numbers=DamageNumbers.new()
+	damage_numbers.name="DamageNumbers"
+	damage_numbers.game=self
+	damage_numbers.z_index=4090
+	add_child(damage_numbers)
 	director = Waves.new(self)
 	combat_rewards = CombatRewards.new(self)
 	encounters = FieldEncounters.new(self)
@@ -630,6 +637,7 @@ func cast_spell() -> bool:
 func clear_magic() -> void:
 	projectiles.clear()
 	magic.clear()
+	if is_instance_valid(damage_numbers): damage_numbers.clear()
 	if is_instance_valid(visuals): visuals.queue_redraw()
 	actor_shadows.queue_redraw()
 	actor_health.queue_redraw()
@@ -681,16 +689,19 @@ func explode(at: Vector2, damage: float, radius: float, source := "", shares: Di
 		sound_clock = 0.07
 
 func damage_enemy(enemy: Node2D, amount: float, direction: Vector2, source := "", shares: Dictionary = {}) -> void:
-	if enemy.dead: return
+	if enemy.dead or amount<=0 or not is_finite(amount): return
 	if state == "trial":
 		trial_damage += amount
 		trial_hits += 1
 		enemy.flash = 0.1
+		damage_numbers.add_hit(enemy,amount)
 		return
 	if meter != null:
 		if shares.is_empty(): meter.damage(source,amount,enemy.hp,enemy.get_instance_id())
 		else: meter.damage_split(amount,enemy.hp,enemy.get_instance_id(),shares)
+	var effective:=minf(amount,maxf(0,enemy.hp))
 	enemy.hp -= amount
+	damage_numbers.add_hit(enemy,effective)
 	enemy.flash = 0.1
 	metrics.hits += 1
 	if not enemy.boss: enemy.position += direction*(.6 if enemy.role=="sentinel" else 6.0)
@@ -1019,6 +1030,15 @@ func gain_money(value: int, combat_drop := false) -> void:
 			magic.track("relic_healing","",restored)
 			if restored>0: ring(player.position,24,Color("a8efe2"),.25)
 
+func recover_remaining_gems() -> int:
+	if state=="trial": return 0
+	var value:=0
+	for gem in gems: value+=maxi(0,int(gem.value))
+	# Remove first: re-entering a rest while a chest choice is pending cannot pay twice.
+	gems.clear()
+	if value>0: gain_money(value,false)
+	return value
+
 func _rebuild_grid() -> void:
 	grid.clear()
 	for enemy in enemies:
@@ -1059,8 +1079,7 @@ func _remove_dead() -> void:
 func complete_wave() -> void:
 	if state != "combat" or wave >= 5: return
 	collect_chests(true)
-	for gem in gems: gain_money(gem.value,true)
-	gems.clear()
+	recover_remaining_gems()
 	combat_rewards.tick()
 	if combat_rewards.paused(): return
 	close_personal()
@@ -1069,11 +1088,9 @@ func complete_wave() -> void:
 	# If no spell choice was earned, return only withheld value from actual kills.
 	if not combat_rewards.issued.has(wave):
 		var restored: int=maxi(0,director.potential-director.dropped)
-		if restored>0: gain_money(restored,true)
+		if restored>0: gain_money(restored,false)
 	director.clear()
 	set_music("prepare")
-	for gem in gems: gain_money(gem.value,true)
-	gems.clear()
 	state = "reward"
 	for enemy in enemies: enemy.queue_free()
 	enemies.clear()
@@ -1982,7 +1999,7 @@ func end_run(won: bool) -> void:
 	result_win = won
 	if not won and end_reason.is_empty(): end_reason="실험을 끝내지 못했어. 다음에는 주문을 바꿔보자."
 	if won:
-		for gem in gems: economy.grant(gem.value)
+		recover_remaining_gems()
 		end_reason="마법 조수의 폭주를 멈췄어."
 	gems.clear()
 	boss_encounter.clear()
