@@ -20,7 +20,8 @@ const PINK := Color("ff9cae")
 @export var crafting_theme: Theme
 var game: Node2D
 var root: Control
-var compact_bag_page:=0
+var health_group: Control
+var pause_button: Button
 var modal: Control
 var hud: Control
 var recipe_bar: Control
@@ -100,13 +101,16 @@ func _ready() -> void:
 	hud = Control.new()
 	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(hud)
-	panel(hud,Rect2(22,18,312,81),Color(0.08,0.10,0.16,0.92))
-	hp_label = label(hud,"LUMI   ·   100 / 100",Vector2(38,25),18)
-	hp_bar = bar(hud,Rect2(38,57,280,8),PINK)
-	money_label = label(hud,"0 G",Vector2(235,27),16,MINT)
-	shield_label = label(hud,"",Vector2(38,74),13,MINT,270)
-	experience_bar=bar(hud,Rect2(38,86,280,6),MINT)
-	experience_label=label(hud,"Lv.1",Vector2(38,101),13,MINT,280)
+	health_group=Control.new();health_group.name="HealthHUD"
+	health_group.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	health_group.size=Vector2(340,76);hud.add_child(health_group)
+	panel(health_group,Rect2(0,0,340,76),Color(0.08,0.10,0.16,0.92))
+	hp_label=label(health_group,"LUMI   ·   100 / 100",Vector2(14,6),16)
+	hp_bar=bar(health_group,Rect2(14,31,312,9),PINK)
+	money_label=label(health_group,"0 G",Vector2(246,7),15,MINT)
+	shield_label=label(health_group,"",Vector2(186,47),11,MINT,140)
+	experience_bar=bar(health_group,Rect2(14,46,158,5),MINT)
+	experience_label=label(health_group,"Lv.1",Vector2(14,55),11,MINT,300)
 	relic_strip = HBoxContainer.new()
 	relic_strip.position=Vector2(22,128)
 	relic_strip.add_theme_constant_override("separation",3)
@@ -117,7 +121,7 @@ func _ready() -> void:
 	wave_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	stats_label = label(hud,"",Vector2(1100,24),18,TEXT,300)
 	stats_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	button(hud,"Esc  잠깐 쉬기",Rect2(1220,60,196,36),func():
+	pause_button=button(hud,"Esc  잠깐 쉬기",Rect2(928,834,200,46),func():
 		if game.state == "combat":
 			if game.combat_rewards.paused(): return
 			game.state = "paused"
@@ -141,12 +145,43 @@ func _ready() -> void:
 	recipe_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hud.add_child(recipe_bar)
 	rebuild_recipe()
+	_layout_combat_hud()
 	update_hud()
 
 func _on_viewport_resized() -> void:
+	_layout_combat_hud()
 	if is_instance_valid(modal) and modal.get_meta("combined_reward",false): show_level_reward.call_deferred()
 	elif not game.personal_tab.is_empty(): show_personal.call_deferred()
 	else: _resize_modal_shade()
+
+func _layout_combat_hud() -> void:
+	# All positions start in viewport coordinates, then convert to the centred root.
+	var visible:=get_viewport().get_visible_rect().size
+	var offset: float=root.position.x
+	if game.state not in ["combat","paused"]:
+		health_group.position=Vector2(22,18)
+		time_label.position=Vector2(645,17);wave_label.position=Vector2(620,59)
+		stats_label.position=Vector2(1100,24)
+		pause_button.position=Vector2(1220,60)
+		relic_strip.position=Vector2(22,128)
+		dash_label.position=Vector2(34,839)
+		controls_hint.position=Vector2(1180,829)
+		boss_bar.position=Vector2(470,92);boss_label.position=Vector2(580,104)
+		return
+	health_group.position=Vector2(visible.x-360-offset,visible.y-88)
+	time_label.position=Vector2(visible.x*.5-100-offset,visible.y-85)
+	time_label.size.x=200
+	wave_label.position=Vector2(visible.x*.5-100-offset,visible.y-44)
+	stats_label.position=Vector2(visible.x-360-offset,visible.y-113)
+	stats_label.add_theme_font_size_override("font_size",13)
+	pause_button.position=Vector2(visible.x-592-offset,visible.y-66)
+	relic_strip.position=Vector2(20-offset,visible.y-88)
+	dash_label.position=Vector2(20-offset,visible.y-42)
+	controls_hint.position=Vector2(210-offset,visible.y-42)
+	controls_hint.text="WASD 이동 · 자동 시전 · Tab 가방"
+	controls_hint.add_theme_font_size_override("font_size",13)
+	boss_bar.position=Vector2(visible.x*.5-250-offset,82)
+	boss_label.position=Vector2(visible.x*.5-140-offset,96)
 
 func _resize_modal_shade() -> void:
 	if not is_instance_valid(modal):
@@ -253,6 +288,7 @@ func bar(parent: Node, rect: Rect2, color: Color) -> ProgressBar:
 	return b
 
 func update_hud() -> void:
+	_layout_combat_hud()
 	if game.combat_rewards!=null:
 		experience_bar.value=float(game.combat_rewards.xp)/game.combat_rewards.required()*100
 		experience_label.text="Lv.%d · 경험치 %d / %d"%[game.combat_rewards.level,game.combat_rewards.xp,game.combat_rewards.required()]
@@ -267,6 +303,8 @@ func update_hud() -> void:
 	stats_label.text = "처치 %d  ·  위력 ×%.2f" % [game.kills,game.caster_power()]
 	shield_label.text = "보호막 %.0f / 10" % game.relics.shield if game.relics.has("soul_coat") else ""
 	refresh_relics()
+	pause_button.visible=game.state in ["combat","paused"] and not game.combat_rewards.paused()
+	stats_label.visible=game.state=="combat" and not game.combat_rewards.paused()
 	dash_label.text = "Space  회피 준비" if game.dash_cooldown <= 0 else "회피 충전  %.1f초" % game.dash_cooldown
 	dash_label.modulate.a = 1.0 if game.dash_cooldown <= 0 else 0.6
 	notice_label.text = game.notice if game.notice_left > 0 else ""
@@ -289,7 +327,7 @@ func update_hud() -> void:
 	if boss_alive: boss_bar.value = game.boss_ref.hp/game.boss_ref.max_hp*100
 	if game.state=="combat" and (not game.personal_tab.is_empty() or game.combat_rewards.paused()):
 		recipe_bar.visible=false
-		relic_strip.visible=false
+		relic_strip.visible=true
 		dash_label.visible=not game.combat_rewards.paused()
 		for hud_label in [notice_label,objective_label,encounter_hint,controls_hint]: hud_label.visible=false
 
@@ -301,13 +339,13 @@ func clear_children(node: Node) -> void:
 func rebuild_recipe() -> void:
 	game.ensure_orb_growth()
 	clear_children(recipe_bar)
-	var bag:=button(recipe_bar,"Tab  가방",Rect2(22,165,112,34),func():
+	var bag:=button(recipe_bar,"Tab  가방",Rect2(20-root.position.x,12,112,34),func():
 		if game.state=="combat": game.open_editor()
 	,false,16)
 	bag.focus_mode=Control.FOCUS_NONE
 	for index in game.orb_recipes.size():
 		var color: Color=MINT if index==0 else PINK
-		var orb:=button(recipe_bar,str(index+1),Rect2(22,208+index*45,40,40),func():
+		var orb:=button(recipe_bar,str(index+1),Rect2(20-root.position.x,58+index*45,40,40),func():
 			if game.state=="combat": game.open_editor();game.select_orb(index)
 		,false,18)
 		orb.name="ClosedOrb%d"%index

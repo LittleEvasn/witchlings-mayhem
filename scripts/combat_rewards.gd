@@ -171,11 +171,6 @@ func choose(reward_id: String, id: String, expected_revision: int) -> bool:
 func finish_award() -> void:
 	game.discover_owned()
 	game.ui.selected_item=view.get("output","") if game.Spells.has_part(view.get("output","")) else ""
-	if not game.ui.selected_item.is_empty() and game.remaining_part(game.ui.selected_item)>0:
-		var bag: Array=[]
-		for id in game.economy.inventory:
-			if game.remaining_part(id)>0: bag.append(id)
-		game.ui.compact_bag_page=int(bag.find(game.ui.selected_item)/12)
 	stage=""
 	if not pending.is_empty(): tick()
 	else:

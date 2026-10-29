@@ -153,7 +153,7 @@ func run() -> void:
 	g.resume_game();await settle()
 	check(g.combat_rewards.stage=="edit" and node("CompactInventory")!=null,"Pause menu returns to same editor")
 	g.combat_rewards.continue_combat()
-	# Four orbs/eight slots and a paged bag remain inside the viewport and away from choices.
+	# Four orbs/eight slots and a continuous bag remain inside the viewport and away from choices.
 	fresh()
 	g.state="shop";g.wave=3;g.elapsed=1080;g.economy.gold=2000
 	for i in 3: check(g.workshop_buy("orb",g.economy.revision),"Existing workshop can add orb")
@@ -170,9 +170,20 @@ func run() -> void:
 	for id in g.Spells.Progression.FUSIONS: g.economy.inventory[id]=1
 	levelup();await settle()
 	check(node("CompactOrb3")!=null and node("Socket_3_7")!=null,"All four orbs and eight slots render")
-	check(not node("BagNextPage").disabled,"Large bag has another page")
-	await click("BagNextPage");await settle()
-	check(g.ui.compact_bag_page==1,"Actual page button changes bag page")
+	check(node("BagNextPage")==null and node("BagPreviousPage")==null,"No bag pagination")
+	var bag_scroll: ScrollContainer=node("BagScroll")
+	check(bag_scroll!=null,"One continuous long bag")
+	for id in g.economy.inventory:
+		if g.remaining_part(id)>0: check(node("Bag_"+id)!=null,"Every spare spell exists in continuous bag "+id)
+	bag_scroll.scroll_horizontal=200
+	await settle()
+	check(bag_scroll.scroll_horizontal>0,"Overflow can scroll without changing inventory pages")
+	var last_spare: String=""
+	for id in g.economy.inventory:
+		if g.remaining_part(id)>0: last_spare=id
+	bag_scroll.reveal(node("Bag_"+last_spare));await settle()
+	await drag("Bag_"+last_spare,"Socket_3_7")
+	check(g.orb_drafts[3][7]==last_spare,"Can drag far end of continuous bag to exact orb slot")
 	for size in [Vector2i(1600,900),Vector2i(1280,720),Vector2i(1066,600)]:
 		root.size=size;await settle();g.ui.show_level_reward();await settle()
 		var inventory: Rect2=node("CompactInventory").get_global_rect()
@@ -180,7 +191,11 @@ func run() -> void:
 		# Godot canvas_items keeps1600x900 logical coordinates when the physical window shrinks.
 		var visible: Vector2=root.get_visible_rect().size
 		check(inventory.position.x>=0 and inventory.end.x<=visible.x,"Inventory stays in viewport "+str(size))
-		check(inventory.end.y<choices.position.y,"Inventory and cards do not overlap "+str(size))
+		check(inventory.position.y<=13 and inventory.end.y<choices.position.y,"Inventory and cards do not overlap "+str(size))
+		check(node("AcquisitionCard_"+g.combat_rewards.pending[0].options[0].replace(":","_")).size.y>=398,"Tall reward cards retained")
+		check(not inventory.intersects(g.ui.health_group.get_global_rect()) and g.ui.health_group.get_global_rect().position.y>=visible.y-90,"Health at lower right, outside editor")
+		check(g.ui.time_label.get_global_rect().position.y>=visible.y-90,"Clock at bottom")
+		check(not g.ui.pause_button.visible,"Pause button replaced by Resume during rewards")
 		check(choices.end.y<=visible.y-48 and node("ResumeRewardCombat").get_global_rect().end.y<=visible.y,"Cards and Resume fit "+str(size))
 	g.queue_free();await process_frame
 	print("RESULT: %d checks / %d failures"%[checks,failures]);quit(0 if failures==0 else 1)

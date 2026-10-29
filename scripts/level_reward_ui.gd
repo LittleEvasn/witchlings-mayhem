@@ -25,9 +25,10 @@ static func build(ui: CanvasLayer) -> void:
 	var gate:=Gate.new();gate.name="RewardInputGate";root.add_child(gate)
 	var first: Dictionary=r.pending[0] if not r.pending.is_empty() else {}
 	var height: float=ui.get_viewport().get_visible_rect().size.y
-	var width: float=minf(1120,ui.get_viewport().get_visible_rect().size.x-40)
-	var left: float=720-width*.5
-	var top: float=height-267
+	var count: int=first.get("options",[]).size() if r.stage=="choice" else 3
+	var width: float=count*280+(count-1)*16
+	var left: float=(ui.get_viewport().get_visible_rect().size.x-width)*.5-ui.root.position.x
+	var top: float=350
 	var title: String="조합 정리 · 준비되면 전투 재개"
 	if r.stage=="choice": title="레벨 %d · 하나를 골라요"%int(first.get("level",r.level))
 	elif r.stage in ["chest","opening"]: title="보상 상자 · 1 / 3 / 5개 자동 획득"
@@ -36,8 +37,8 @@ static func build(ui: CanvasLayer) -> void:
 	if r.stage=="choice":
 		var revision: int=r.revision
 		var row:=HBoxContainer.new();row.name="LevelChoices"
-		row.position=Vector2(left,top+34);row.size=Vector2(width,172)
-		row.add_theme_constant_override("separation",12);root.add_child(row)
+		row.position=Vector2(left,top+34);row.size=Vector2(width,398)
+		row.add_theme_constant_override("separation",16);root.add_child(row)
 		for id in first.options:
 			var model:=View.model(g,id,"level")
 			var card:=reward_card(ui,row,model,func():
@@ -82,42 +83,46 @@ static func build(ui: CanvasLayer) -> void:
 			var l:=View.label(ui,inside,result.text,16,Look.PAPER)
 			l.size_flags_horizontal=Control.SIZE_EXPAND_FILL;l.max_lines_visible=2;l.tooltip_text=result.text
 		Look.text(ui,root,"원하는 위치에 배치한 뒤 전투를 재개하세요.",Vector2(left,top+137),16,Look.PAPER,width-280)
-	var resume:=Look.button(ui,root,"전투 재개 →",Rect2(left+width-248,height-52,248,40),func():
+	var resume:=Look.button(ui,root,"전투 재개 →",Rect2(ui.get_viewport().get_visible_rect().size.x-592-ui.root.position.x,height-66,200,46),func():
 		if gate.allow(): r.continue_combat()
 	,true,22)
 	resume.name="ResumeRewardCombat"
 	if r.stage=="edit" and r.pending.is_empty(): gate.guard(resume);gate.preferred=resume
 	else: resume.disabled=true;resume.tooltip_text="남은 보상을 먼저 받아주세요."
-	if not r.pending.is_empty(): Look.text(ui,root,"남은 보상 %d · 선택 전에도 위쪽에서 편집할 수 있어요"%r.pending.size(),Vector2(left,height-48),15,Look.PAPER,width-270)
+	if not r.pending.is_empty(): Look.text(ui,root,"남은 보상 %d · 전투 정지"%r.pending.size(),Vector2(ui.get_viewport().get_visible_rect().size.x-592-ui.root.position.x,height-94),14,Look.PAPER,200)
 
 static func reward_card(ui: CanvasLayer, parent: Node, model: Dictionary, action: Callable) -> Control:
-	var card:=PanelContainer.new();card.name="AcquisitionCard_"+str(model.id).replace(":","_")
-	card.custom_minimum_size=Vector2(0,172);card.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	# Restore the tall card silhouette: a large icon, readable change and a fixed CTA.
+	var card:=Panel.new();card.name="AcquisitionCard_"+str(model.id).replace(":","_")
+	card.custom_minimum_size=Vector2(280,398)
 	var color: Color=View.COLOR.get(model.role,Look.LINE)
-	card.add_theme_stylebox_override("panel",Look.style(Look.PAPER,color,22,3))
+	card.add_theme_stylebox_override("panel",View.card_style(color,false))
 	card.tooltip_text=model.compare+"\n"+model.detail
 	parent.add_child(card)
-	var column:=VBoxContainer.new();column.add_theme_constant_override("separation",4);card.add_child(column)
-	var header:=HBoxContainer.new();header.add_theme_constant_override("separation",8);column.add_child(header)
-	var emblem:=Control.new();emblem.custom_minimum_size=Vector2(44,44);header.add_child(emblem)
-	if not model.get("icon","").is_empty(): Look.icon(ui,emblem,model.icon,Rect2(0,0,44,44))
-	else: Look.text(ui,emblem,model.get("glyph","✦"),Vector2.ZERO,32,Look.PURPLE,44,true)
-	var labels:=VBoxContainer.new();labels.size_flags_horizontal=Control.SIZE_EXPAND_FILL;header.add_child(labels)
-	View.label(ui,labels,model.badge,12,Look.PURPLE).name="RewardKind"
-	var title:=View.label(ui,labels,str(model.title).trim_suffix(" ✧"),20,Look.INK);title.name="RewardName";title.max_lines_visible=1
-	title.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
-	var desc:=View.label(ui,column,model.change,16,Look.INK);desc.name="RewardChange"
-	desc.max_lines_visible=3;desc.size_flags_vertical=Control.SIZE_EXPAND_FILL
+	var badge:=Look.text(ui,card,model.badge,Vector2(16,14),14,Look.PURPLE,248,true)
+	badge.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;badge.name="RewardKind"
+	if not model.get("icon","").is_empty(): Look.icon(ui,card,model.icon,Rect2(96,38,88,88))
+	else:
+		var emblem:=Look.text(ui,card,model.get("glyph","✦"),Vector2(16,38),62,Look.PURPLE,248,true)
+		emblem.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	var title:=Look.text(ui,card,str(model.title).trim_suffix(" ✧"),Vector2(16,136),24,Look.INK,248,true)
+	title.name="RewardName";title.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	title.max_lines_visible=2;title.clip_text=true;title.set_deferred("size",Vector2(248,60))
+	var desc:=Look.text(ui,card,model.change,Vector2(18,204),20,Look.INK,244,true)
+	desc.name="RewardChange";desc.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;desc.max_lines_visible=3;desc.clip_text=true;desc.set_deferred("size",Vector2(244,72))
 	if model.type=="fusion": desc.text=str(model.change).split("\n")[0]
-	if model.type=="upgrade": desc.text=model.change+"\n"+View.effect(model.output)
-	var b:=Button.new();b.name="Choose_"+str(model.id).replace(":","_")
-	b.text="합성하기" if model.type=="fusion" else "선택";b.custom_minimum_size=Vector2(0,32)
-	Look.decorate_button(b,true);b.add_theme_font_size_override("font_size",17)
-	b.pressed.connect(action);column.add_child(b)
+	var comparison: String=model.compare
+	if model.type=="fusion": comparison="소비: "+str(model.compare).trim_suffix(" → 완성")
+	var compare:=Look.text(ui,card,comparison,Vector2(18,282),14,Look.MUTED,244)
+	compare.name="RewardCompare";compare.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;compare.max_lines_visible=2;compare.clip_text=true;compare.set_deferred("size",Vector2(244,42))
+	compare.tooltip_text=model.compare+"\n"+model.get("placement",{}).get("text","")
+	var b:=Look.button(ui,card,"합성하기" if model.type=="fusion" else "선택",Rect2(16,338,248,44),action,true,20)
+	b.name="Choose_"+str(model.id).replace(":","_")
 	card.gui_input.connect(func(event):
-		if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed: action.call()
+		if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT and not event.pressed and Rect2(Vector2.ZERO,card.size).has_point(event.position): action.call()
 	)
-	b.focus_entered.connect(func():highlight(ui,model))
+	b.focus_entered.connect(func():highlight(ui,model);card.add_theme_stylebox_override("panel",View.card_style(Look.PURPLE,false,8)))
+	b.focus_exited.connect(func():card.add_theme_stylebox_override("panel",View.card_style(color,false)))
 	return card
 
 static func highlight(ui: CanvasLayer, model: Dictionary) -> void:

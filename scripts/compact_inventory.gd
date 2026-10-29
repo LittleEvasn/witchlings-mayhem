@@ -3,7 +3,7 @@ extends RefCounted
 const Look=preload("res://scripts/mayhem_skin.gd")
 const CELL:=44.0
 const GAP:=4
-const PAGE_SIZE:=12
+const BagScroll=preload("res://scripts/inventory_bag_scroll.gd")
 
 static func tray(ui: CanvasLayer, parent: Node, color: Color) -> HBoxContainer:
 	var panel:=PanelContainer.new()
@@ -23,7 +23,8 @@ static func build(ui: CanvasLayer, parent: Node, reward := false) -> Control:
 	var shell:=VBoxContainer.new()
 	shell.name="CompactInventory"
 	var scale_factor: float=minf(1,ui.get_viewport().get_visible_rect().size.y/900.0)
-	shell.position=Vector2(20-ui.root.position.x,142*scale_factor)
+	shell.position=Vector2(20-ui.root.position.x,12*scale_factor)
+	shell.custom_minimum_size.x=(ui.get_viewport().get_visible_rect().size.x-40)/scale_factor
 	shell.scale=Vector2.ONE*scale_factor
 	shell.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	shell.add_theme_constant_override("separation",5)
@@ -31,34 +32,35 @@ static func build(ui: CanvasLayer, parent: Node, reward := false) -> Control:
 	var bank: Array=[]
 	for id in g.economy.inventory:
 		if g.remaining_part(id)>0: bank.append(id)
-	var pages:=maxi(1,ceili(bank.size()/float(PAGE_SIZE)))
-	ui.compact_bag_page=clampi(ui.compact_bag_page,0,pages-1)
 	var bag:=tray(ui,shell,ui.MINT)
 	bag.name="CompactBagStrip"
+	bag.get_parent().size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	var badge:=Look.text(ui,bag,"가방",Vector2.ZERO,15,ui.MINT,44,true)
 	badge.custom_minimum_size=Vector2(44,CELL)
 	badge.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
-	# The entire empty bag strip accepts removing an equipped item, including blank slots.
+	# One continuous bag; all real items exist, overflow is scrolling, never a page.
+	var scroll:=BagScroll.new()
+	scroll.name="BagScroll";scroll.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	scroll.custom_minimum_size=Vector2(0,56)
+	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO
+	scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.follow_focus=true
+	bag.add_child(scroll)
 	var drop: Control=ui.Board.Slot.new()
 	drop.name="PersonalBagDropArea";drop.ui=ui;drop.inventory=true;drop.backdrop=true
-	drop.custom_minimum_size=Vector2(PAGE_SIZE*(CELL+GAP)-GAP,CELL)
-	bag.add_child(drop)
+	var slots: int=maxi(31,bank.size()+1)
+	drop.custom_minimum_size=Vector2(slots*(CELL+GAP)-GAP,CELL)
+	scroll.add_child(drop)
 	var cells:=HBoxContainer.new()
 	cells.add_theme_constant_override("separation",GAP)
 	cells.mouse_filter=Control.MOUSE_FILTER_PASS
 	drop.add_child(cells)
-	for i in PAGE_SIZE:
-		var index: int=ui.compact_bag_page*PAGE_SIZE+i
-		var token: String=bank[index] if index<bank.size() else ""
+	for i in slots:
+		var token: String=bank[i] if i<bank.size() else ""
 		var cell: Control=ui.Board.cell(ui,cells,token,Rect2(0,0,CELL,CELL),-1,-1,true,true)
 		cell.custom_minimum_size=Vector2.ONE*CELL
 		if token.is_empty(): cell.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	var previous:=Look.button(ui,bag,"‹",Rect2(0,0,28,CELL),func():ui.compact_bag_page-=1;ui.refresh_workbench.call_deferred(),false,21)
-	previous.name="BagPreviousPage";previous.custom_minimum_size=Vector2(28,CELL);previous.disabled=ui.compact_bag_page==0
-	var page:=Look.text(ui,bag,"%d/%d"%[ui.compact_bag_page+1,pages],Vector2.ZERO,12,ui.MUTED,26)
-	page.custom_minimum_size=Vector2(26,CELL);page.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
-	var next:=Look.button(ui,bag,"›",Rect2(0,0,28,CELL),func():ui.compact_bag_page+=1;ui.refresh_workbench.call_deferred(),false,21)
-	next.name="BagNextPage";next.custom_minimum_size=Vector2(28,CELL);next.disabled=ui.compact_bag_page>=pages-1
+		elif token==ui.selected_item: scroll.reveal.call_deferred(cell)
 	for orb in g.orb_drafts.size():
 		var parts: Array=g.orb_drafts[orb]
 		var color: Color=ui.MINT if orb==0 else ui.PINK
@@ -73,17 +75,6 @@ static func build(ui: CanvasLayer, parent: Node, reward := false) -> Control:
 			var cell: Control=ui.Board.cell(ui,row,parts[slot],Rect2(0,0,CELL,CELL),orb,slot,false,true)
 			cell.custom_minimum_size=Vector2.ONE*CELL
 			if ui.inspected_orb==orb and slot in g.Spells.affected_slots(parts,ui.inspected_slot): cell.set_meta("affected",true)
-	if not g.relics.owned.is_empty():
-		var row:=HBoxContainer.new()
-		row.name="CompactRelics";row.add_theme_constant_override("separation",4)
-		shell.add_child(row)
-		for id in g.relics.owned:
-			var relic: Dictionary=g.Relics.definition(id)
-			var b:=Button.new();b.text=relic.glyph;b.custom_minimum_size=Vector2(30,26)
-			b.tooltip_text=relic.name+"\n"+g.relics.tooltip(id,g.economy.gold)
-			b.add_theme_stylebox_override("normal",Look.style(Color(.055,.065,.105,.9),ui.BORDER,12))
-			b.mouse_default_cursor_shape=Control.CURSOR_HELP
-			row.add_child(b)
 	var footer:=HBoxContainer.new();footer.add_theme_constant_override("separation",8)
 	shell.add_child(footer)
 	var undo:=Look.button(ui,footer,"↶ 되돌리기",Rect2(0,0,112,28),g.undo_draft,false,15)
