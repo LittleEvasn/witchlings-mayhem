@@ -1,5 +1,5 @@
 extends RefCounted
-## Reward selection/editing freezes simulation; ordinary inventory does not.
+## Only reward selection freezes simulation; choosing immediately resumes/advances.
 const ALLOCATION := 0
 const OWNED_WEIGHT := 3.0
 const GOLD_REWARD := 10
@@ -155,20 +155,13 @@ func choose(reward_id: String, id: String, expected_revision: int) -> bool:
 		receipt=game.Spells.definition(acquired.output).name+(" 강화!" if acquired.upgraded else " 획득!")
 	pending.pop_front()
 	revision+=1
-	stage="ready"
-	game.discover_owned()
-	return true
-func edit() -> void:
-	if stage!="ready": return
-	stage="edit"
-	game.ui.close_modal()
-	game.open_personal("inventory")
-func continue_combat() -> void:
-	if stage!="ready": return
 	stage=""
+	game.discover_owned()
 	game.ui.close_modal()
 	game.invincible=maxf(game.invincible,.5)
+	game.announce(receipt,1.2)
 	tick()
+	return true
 func snapshot() -> Dictionary:
 	return {"level":level,"xp":xp,"total_xp":total_xp,"serial":serial}
 func restore(data: Dictionary) -> void:

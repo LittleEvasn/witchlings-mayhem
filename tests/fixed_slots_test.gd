@@ -65,8 +65,8 @@ func run() -> void:
 	var spaced:=S.compile(["fan","","bolt","impact","","bloom"])
 	check(spaced.ok and spaced.stages[0].slot==2 and spaced.stages[1].slot==5,"Sparse source indices retained")
 	check(spaced.stages[0].next.attack=="bloom" and S.roots(spaced.stages).size()==1,"Trigger skips gaps; child is not an independent root")
-	check(spaced.stages.all(func(stage):return stage.fan==1),"Existing all-right support scope unchanged")
-	check(S.affected_slots(["fan","","bolt","impact","","bloom"],0)==[2,5],"Support highlight uses actual positions")
+	check(spaced.stages[0].fan==1 and spaced.stages[1].fan==0,"Support stops at event connector")
+	check(S.affected_slots(["fan","","bolt","impact","","bloom"],0)==[2],"Support highlight stops at connector and retains actual indices")
 	for case in [ [["bolt","","bloom"],["bolt","bloom"]], [["bolt","impact"],["bolt"]], [["bolt","fan"],["bolt"]], [["impact","bolt","bloom"],["bolt","bloom"]], [["bolt","impact","expire","bloom","thunder"],["bolt","thunder"]], [["bolt","impact","expire","bloom","impact","thunder"],["bolt"]], [["bolt","unknown","bloom"],["bolt","bloom"]] ]:
 		check(roots_of(case[0])==case[1],"Recovery execution matches rule: "+str(case[0]))
 	var broken:=S.compile(["bolt","impact","expire","bloom","thunder"])

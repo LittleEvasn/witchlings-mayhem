@@ -21,7 +21,6 @@ const RunCheckpoint = preload("res://scripts/run_checkpoint.gd")
 const BossEncounter = preload("res://scripts/boss_encounter.gd")
 const AutoTargeting = preload("res://scripts/auto_targeting.gd")
 const CombatRewards = preload("res://scripts/combat_rewards.gd")
-const AutoEquip=preload("res://scripts/auto_equip.gd")
 const AcquisitionView=preload("res://scripts/acquisition_view.gd")
 const FieldEncounters = preload("res://scripts/field_encounters.gd")
 const FIELD := Rect2(0,0,4800,3600)
@@ -377,8 +376,7 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo: return
 	if combat_rewards.paused() and state=="combat":
-		if combat_rewards.stage=="edit" and (event.is_action_pressed("recipe") or event.is_action_pressed("pause_game")): close_personal()
-		elif event.is_action_pressed("pause_game"):
+		if event.is_action_pressed("pause_game"):
 			state="paused"
 			ui.show_pause()
 		return
@@ -756,11 +754,6 @@ func fusion_placement(id: String, bag_only := false) -> Dictionary:
 	for orb in edited.size():
 		var slot: int=edited[orb].find(id)
 		if slot>=0: placement={"orb":orb,"slot":slot,"text":"오브 %d · %d번 칸에서 합성"%[orb+1,slot+1]};break
-	if placement.orb<0 and profile.data.auto_equip and not bag_only:
-		placement=AutoEquip.plan(edited,applied,id,active_orb)
-		if placement.orb>=0:
-			applied[placement.orb][placement.slot]=id
-			edited[placement.orb][placement.slot]=id
 	if not Forge.valid(applied,quote.inventory,orb_capacities()) or not Forge.valid(edited,quote.inventory,orb_capacities()): return {"ok":false}
 	return {"ok":true,"quote":quote,"applied":applied,"edited":edited,"placement":placement}
 
@@ -1456,7 +1449,7 @@ func open_editor() -> void:
 
 func open_personal(tab := "inventory") -> void:
 	if not state in ["combat","shop"] or not tab in ["inventory","reward","relics"]: return
-	if state=="combat" and combat_rewards.paused() and combat_rewards.stage!="edit": return
+	if state=="combat" and combat_rewards.paused(): return
 	if tab=="reward":
 		combat_rewards.tick()
 		return
@@ -1482,9 +1475,6 @@ func close_personal() -> void:
 	personal_tab=""
 	edit_revision+=1
 	ui.close_personal_visual()
-	if combat_rewards!=null and combat_rewards.stage=="edit":
-		combat_rewards.stage="ready"
-		ui.show_level_reward.call_deferred()
 
 func claim_spell_reward(reward_id: String, id: String, revision: int) -> bool:
 	if not combat_rewards.choose(reward_id,id,revision):
@@ -1496,7 +1486,7 @@ func claim_spell_reward(reward_id: String, id: String, revision: int) -> bool:
 	ui.show_level_reward.call_deferred()
 	return true
 
-func apply_acquisition(receipt: Dictionary, bag_only := false) -> void:
+func apply_acquisition(receipt: Dictionary, _bag_only := false) -> void:
 	if not receipt.get("ok",false): return
 	_sync_orb()
 	var old: String=receipt.old
@@ -1507,12 +1497,7 @@ func apply_acquisition(receipt: Dictionary, bag_only := false) -> void:
 				for i in parts.size():
 					if parts[i]==old: parts[i]=output
 	var placement: Dictionary={"orb":-1,"slot":-1,"text":"가방에 보관"}
-	if old.is_empty() and profile.data.auto_equip and not bag_only and equipped_count(output)==0:
-		placement=AutoEquip.plan(orb_drafts,orb_recipes,output,active_orb)
-		if placement.orb>=0 and economy.remaining(output,reserved_parts())>0:
-			orb_recipes[placement.orb][placement.slot]=output
-			orb_drafts[placement.orb][placement.slot]=output
-	else:
+	if not old.is_empty():
 		for orb in orb_drafts.size():
 			var slot: int=orb_drafts[orb].find(output)
 			if slot>=0: placement={"orb":orb,"slot":slot,"text":"오브 %d · %d번 칸%s"%[orb+1,slot+1,"에서 강화" if not old.is_empty() else "에 장착"]};break

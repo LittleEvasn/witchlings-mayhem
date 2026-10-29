@@ -1,5 +1,8 @@
 # 에이전트 운영 · 2026-10-26
 
+## 2026-10-29 보상·연결 범위 사용자 피드백
+총괄 01a147a4-6927-7780-96fa-e03cf190cb9d gpt-6.1-sol/high 직접 편집/관련234검사/렌더링 프로세스의 실제 뷰포트 클릭·캡처/빌드. 독립 읽기 wm_scope_feedback_review 01a1858b-4ea6-7862-ba9b-b33e23b85a4d 요청/관찰 gpt-6.1-sol/high completed, 확정 결함 없음. 신규 빈칸 자동배치 제거와 합성 부모 자리 치환 유지를 구분해 설명. 재위임/회의/별도 조사 없음. Claw reward-scope-feedback-20261029 및 reward-scope-review-20261029 등록. MCP 연결0으로 CLI 렌더 점검 대체, 게임 종료/파란 데스크톱 제어 없음. docs/REWARD-FLOW-AND-CONNECTOR-SCOPES-v1.md. 사용량 시작5시간1%·주간44%, 마감전14%·46% 사용. 계정 전체 지표/정밀토큰·단독대비 미제공, 비용절감 미입증. 의미 있는 완성 묶음을 정상 커밋·푸시하고 원격 해시로 확인. 기존project.godot 보존/커밋 제외. 속도나 개편4는 섞지 않음.
+
 ## 2026-10-29 개편3 획득 UI·자동 장착
 총괄 01a147a4-6927-7780-96fa-e03cf190cb9d gpt-6.1-sol/high 직접 편집·검사·실제뷰포트입력/화면·빌드. 독립읽기 wm_acquisition_review 01a183a6-84b3-70e2-bd0a-f40fafa48bc8 요청/관찰 gpt-6.1-sol/high, completed. 같은 검토자에게 신규 합성 배치 트랜잭션만 추가 검토하여 가방 합성 후 연결 재지정1건 수정·회귀. 추가회의/아이디어/재위임 없음. Claw acquisition-ui-20261029 / acquisition-review-20261029 등록·결과 연결.
 관련52+296+59=407검사/0실패. 오래된 level_growth_test는 이전 초기2오브/짧은배열 기대값으로 실패하여 통과수에서 제외, 전체회귀 통과라 보고하지 않음. 점검 fixture 배열/들여쓰기 오류는 재실행 정리. 최종새프로세스 정상, 게임중지. 개편4미시작. 상세 docs/ACQUISITION-UI-IMPLEMENTATION-v1.md.

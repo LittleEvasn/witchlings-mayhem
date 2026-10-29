@@ -2,7 +2,6 @@ extends RefCounted
 ## One presentation contract for level/chest/craft/orb choices and receipts.
 const S=preload("res://scripts/spells.gd")
 const P=preload("res://scripts/spell_progression.gd")
-const Auto=preload("res://scripts/auto_equip.gd")
 const Look=preload("res://scripts/mayhem_skin.gd")
 const ROLE={"attack":"공격","modifier":"보조","connector":"연결"}
 const COLOR={"attack":Color("98cfd4"),"modifier":Color("cfb4eb"),"connector":Color("f1bc84"),"relic":Color("e8d08e"),"fusion":Color("f0adc4"),"orb":Color("b9d8b1")}
@@ -28,7 +27,7 @@ static func model(g: Node2D, id: String, source := "level", bag_only := false) -
 		if old.is_empty():
 			v.change=effect(output)
 			v.compare="기본 → +1 → +2 → +3" if not P.is_fused(id) else "완성형 · 추가 강화 없음"
-			v.placement={"orb":-1,"slot":-1,"text":"가방에만 보관"} if bag_only or not g.profile.data.auto_equip else Auto.plan(g.orb_drafts,g.orb_recipes,output,g.active_orb)
+			v.placement={"orb":-1,"slot":-1,"text":"가방에 보관 · 직접 장착"}
 		else:
 			v.change="+%d  →  +%d"%[P.rank(old),P.rank(output)]
 			v.compare=effect(old)+" → "+effect(output)

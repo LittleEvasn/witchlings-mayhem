@@ -1,7 +1,7 @@
 extends RefCounted
 const Progression = preload("res://scripts/spell_progression.gd")
 const Effects = preload("res://scripts/modifier_effects.gd")
-## Six-slot program: cumulative right-side modifiers, sequential roots and event chains.
+## Sparse program: right-side modifiers stop at each event connector.
 ## Compile once when the player changes their recipe, never for each projectile.
 const PARTS = {
 	"bolt": {"name":"별빛탄", "symbol":"✦", "kind":"attack", "color":Color("a8efe2"), "desc":"빠른 탄환 · 직접 맞힌 적에게 피해"},
@@ -99,7 +99,7 @@ static func definition(id: String) -> Dictionary:
 		d["kind"] = Progression.fusion_kind(id)
 		d.name += " ✧"
 		d.desc += "\n완성 합성 · 추가 강화 없음"
-		if d.kind=="modifier": d.desc += "\n같은 오브의 오른쪽 모든 공격에 적용"
+		if d.kind=="modifier": d.desc += "\n오른쪽 공격에 적용 · 연결 구체를 넘지 않음"
 		return d
 	var d: Dictionary = PARTS[Progression.base_id(id)].duplicate()
 	var level := Progression.rank(id)
@@ -108,7 +108,8 @@ static func definition(id: String) -> Dictionary:
 		d["hud_name"] = d.name
 	if d.kind=="modifier":
 		var base := Progression.base_id(id)
-		d.desc = MODIFIER_NOTES[base]+"\n"+modifier_token_text(id)+"\n같은 오브의 오른쪽 모든 공격에 적용\n중복: "+STACK_RULES[base].text
+		d.desc = MODIFIER_NOTES[base]+"\n"+modifier_token_text(id)+"\n오른쪽 공격에 적용 · 연결 구체를 넘지 않음\n중복: "+STACK_RULES[base].text
+		if base=="echo": d.desc += "\n반복한 공격은 후속 연결을 다시 발동하지 않음"
 	elif d.kind=="connector":
 		d.desc += "\n후속 주문 위력 %.0f%% · 직접 후속에만 적용"%(Progression.connector_power(id)*100)
 	else:
@@ -164,6 +165,7 @@ static func compile(recipe: Array) -> Dictionary:
 	if recipe.size()>MAX_SLOTS: return invalid("이 오브는 최대 8칸이야.",MAX_SLOTS)
 	var nodes: Array = []
 	var modifiers: Array = []
+	var all_modifiers: Array = []
 	var pending: Array = []
 	var last_attack := -1
 	var blocked_payload := false
@@ -185,7 +187,10 @@ static func compile(recipe: Array) -> Dictionary:
 			var record := Progression.modifier_record(id)
 			record["slot"] = index
 			modifiers.append(record)
+			all_modifiers.append(record)
 		elif kind=="connector":
+			# A connector starts a fresh modifier scope, even in an invalid draft.
+			modifiers.clear()
 			if last_attack<0:
 				add_diagnostic(diagnostics,index,"missing_source","연결 앞에 공격이 없어 이 연결은 발동하지 않아요.")
 			else: pending.append(index)
@@ -228,8 +233,8 @@ static func compile(recipe: Array) -> Dictionary:
 			nodes.append(stage)
 			last_attack = nodes.size()-1
 	for slot in pending: add_diagnostic(diagnostics,slot,"missing_payload","연결 뒤에 공격이 없어 이 연결은 발동하지 않아요.")
-	for entry in modifiers:
-		if not used_modifiers.has(entry.slot): add_diagnostic(diagnostics,entry.slot,"unused_modifier","오른쪽에 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.","inactive")
+	for entry in all_modifiers:
+		if not used_modifiers.has(entry.slot): add_diagnostic(diagnostics,entry.slot,"unused_modifier","다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.","inactive")
 	# Embed only the forward child; flat nodes retain their root flag for scheduling/UI.
 	for index in range(nodes.size()-1,-1,-1):
 		if links.has(index): nodes[index].next = nodes[links[index]].duplicate(true)
@@ -249,8 +254,8 @@ static func slot_diagnostic(result: Dictionary, slot: int) -> Dictionary:
 static func affected_slots(recipe: Array, modifier_slot: int) -> Array:
 	var affected: Array = []
 	if modifier_slot<0 or modifier_slot>=recipe.size() or not has_part(str(recipe[modifier_slot])) or definition(str(recipe[modifier_slot])).kind!="modifier": return affected
-	for i in range(modifier_slot+1,recipe.size()):
-		if has_part(str(recipe[i])) and definition(str(recipe[i])).kind=="attack": affected.append(i)
+	for stage in compile(recipe).stages:
+		if stage.modifiers.any(func(entry):return entry.slot==modifier_slot): affected.append(stage.slot)
 	return affected
 
 static func describe(recipe: Array) -> String:

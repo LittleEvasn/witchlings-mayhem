@@ -1,5 +1,4 @@
 extends SceneTree
-const Auto=preload("res://scripts/auto_equip.gd")
 const View=preload("res://scripts/acquisition_view.gd")
 const S=preload("res://scripts/spells.gd")
 const Profile=preload("res://scripts/player_profile.gd")
@@ -56,14 +55,6 @@ func click(name: String) -> void:
 	await process_frame
 func run() -> void:
 	root.size=Vector2i(1600,900)
-	check(Auto.safe(["","bolt","","","",""],"fan",0),"Modifier applies to right-hand attack")
-	check(not Auto.safe(["bolt","","","","",""],"fan",5),"Unused modifier never auto-installs")
-	check(Auto.safe(["bolt","","bloom","","",""],"impact",1),"Connector joins valid independent attacks")
-	check(not Auto.safe(["bolt","","impact","bloom","",""],"expire",1),"Do not form double connector")
-	check(not Auto.safe(["bolt","","impact","bloom","",""],"thunder",1),"Do not retarget existing child by inserting attack before edge")
-	check(not Auto.safe(["bolt","impact","","bloom","",""],"thunder",2),"Do not replace existing event payload")
-	check(not Auto.safe(["","impact","bolt","","",""],"bloom",0),"Do not turn a valid independent attack into a child")
-	check(not Auto.safe(["bolt","impact","expire","bloom","",""],"fan",4),"Do not enable unused modifier on broken chain")
 	g=load("res://scenes/main.tscn").instantiate()
 	g.record_runs=false
 	g.profile=Profile.new("user://acquisition-ui-test-profile.json")
@@ -75,31 +66,29 @@ func run() -> void:
 	g.sound_enabled=false
 	bank([["bolt"],[]])
 	var preview:=View.model(g,"bloom")
-	check(preview.placement.orb==1 and preview.placement.slot==0 and preview.type=="new","New attack preview prefers empty orb")
+	check(preview.placement.orb==-1 and "가방" in preview.placement.text and preview.type=="new","New attack preview explicitly says bag/manual equip")
 	var r: Dictionary=g.economy.acquire("bloom")
 	g.apply_acquisition(r)
-	check(g.orb_drafts[1][0]=="bloom" and g.orb_recipes[1][0]=="bloom" and g.remaining_part("bloom")==0,"New spell acquired once and auto-equipped in predicted position")
+	check(not S.has_content(g.orb_drafts[1]) and not S.has_content(g.orb_recipes[1]) and g.remaining_part("bloom")==1,"New spell stays in bag even with an empty orb")
 	check(g.orb_drafts[0][0]=="bolt" and g.orb_drafts[0][1]=="","Original positions unchanged")
+	bank([["bolt"],["","bloom"]])
 	r=g.economy.acquire("bloom")
 	g.apply_acquisition(r)
-	check(g.orb_drafts[1][0]=="bloom@1" and g.orb_drafts[1].count("bloom@1")==1,"Upgrade changes same actual token in place")
+	check(g.orb_drafts[1][1]=="bloom@1" and g.orb_drafts[1].count("bloom@1")==1,"Owned upgrade stays in exact existing slot")
 	check(r.placement.orb==1 and "강화" in r.placement.text,"Upgrade receipt reports original position")
 	bank([["bolt","","","","",""],[]])
 	g.profile.data.auto_equip=false
 	r=g.economy.acquire("bloom")
 	g.apply_acquisition(r)
-	check(g.remaining_part("bloom")==1 and not S.has_content(g.orb_drafts[1]),"Global automatic equip off keeps bag")
+	check(g.remaining_part("bloom")==1 and not S.has_content(g.orb_drafts[1]),"New item is manually equipped")
 	g.profile.data.auto_equip=true
 	r=g.economy.acquire("thorn")
-	g.apply_acquisition(r,true)
-	check(g.remaining_part("thorn")==1,"Per-choice bag-only overrides global auto on")
+	g.apply_acquisition(r)
+	check(g.remaining_part("thorn")==1,"Retired saved auto-equip preference cannot re-enable feature")
 	bank([["bolt","bloom","thunder","vortex","frost","satellite"]])
 	r=g.economy.acquire("thorn")
 	g.apply_acquisition(r)
 	check(g.remaining_part("thorn")==1 and r.placement.orb==-1,"Full orb never replaces existing item")
-	bank([["bolt","","bloom"]])
-	var edge:=Auto.plan(g.orb_drafts,g.orb_recipes,"impact")
-	check(edge.slot==1,"Connector preview identifies only useful gap")
 	bank([["bolt@3","","impact","thunder@3"]])
 	var fused:=View.model(g,"fuse:storm_spear","chest")
 	check(fused.type=="fusion" and "+3" in fused.compare,"Fusion card identifies both consumed parents")
@@ -118,7 +107,7 @@ func run() -> void:
 	g.draft=g.orb_drafts[0].duplicate()
 	var plan: Dictionary=g.fusion_placement("storm_spear")
 	check(plan.ok and g.claim_fusion("storm_spear") and g.Forge.valid(g.orb_recipes,g.economy.inventory) and g.Forge.valid(g.orb_drafts,g.economy.inventory),"Divergent edited/applied fusion cannot duplicate output")
-	check(g.orb_drafts[plan.placement.orb][plan.placement.slot]=="storm_spear","Fusion preview uses same transaction plan as receipt")
+	check(plan.placement.orb==-1 and g.remaining_part("storm_spear")==1,"Fusion without an equipped parent remains in bag")
 	bank([["bolt"]])
 	choice(["bolt","bloom","relic:crown"])
 	check(g.ui.modal.find_child("RewardKind",true,false)!=null and g.ui.modal.find_child("RewardOrbSummary",true,false)!=null,"Choice UI contains role badges and real orb summary")
@@ -144,15 +133,9 @@ func run() -> void:
 	check(g.claim_spell_reward(reward_id,"bloom",revision),"Production choice transaction accepted")
 	check(not g.claim_spell_reward(reward_id,"bloom",revision),"Duplicate/stale choice cannot grant twice")
 	await process_frame
-	check(g.combat_rewards.stage=="ready" and g.combat_rewards.paused(),"Receipt remains paused until Continue/edit")
-	check(g.ui.modal.find_child("AcquisitionReceipt",true,false)!=null,"Actual receipt UI displayed")
-	g.combat_rewards.edit()
-	await process_frame
-	check(g.combat_rewards.stage=="edit" and g.personal_tab=="inventory","Reward editing is optional and paused")
-	g.close_personal()
-	await process_frame
-	g.combat_rewards.continue_combat()
-	check(not g.combat_rewards.paused(),"Continue releases reward pause")
+	check(not g.combat_rewards.paused() and g.combat_rewards.stage=="","Selection immediately releases reward pause")
+	check(not is_instance_valid(g.ui.modal) or g.ui.modal.find_child("AcquisitionReceipt",true,false)==null,"No acquisition confirmation screen")
+	check(g.personal_tab.is_empty() and g.remaining_part("bloom")==1,"Selection does not force inventory or automatic equip")
 	g.open_personal("inventory")
 	check(not g.combat_rewards.paused(),"Ordinary inventory does not pause")
 	g.close_personal()
@@ -162,7 +145,6 @@ func run() -> void:
 	g.combat_rewards.pending.append({"id":"queued:second","source":"level","level":3,"options":["thorn","bolt","relic:crown"]})
 	check(g.claim_spell_reward(g.combat_rewards.pending[0].id,"bloom",g.combat_rewards.revision),"First queued reward grants once")
 	var queued_time: float=g.elapsed
-	g.combat_rewards.continue_combat()
 	g._physics_process(.5)
 	check(g.combat_rewards.stage=="choice" and g.elapsed==queued_time and g.combat_rewards.pending[0].id=="queued:second","Next queued choice opens without a combat frame")
 	g.combat_rewards.pending=[]
@@ -186,7 +168,7 @@ func run() -> void:
 	g.profile.data.quick_rewards=true
 	check(g.claim_spell_reward(first.id,first.options[0],g.combat_rewards.revision),"Quick reward still uses one transaction")
 	await create_timer(.35).timeout
-	check(not g.combat_rewards.paused(),"Quick receipt resumes without mandatory editor")
+	check(not g.combat_rewards.paused(),"Chest selection resumes without a receipt")
 	g.combat_rewards.queue_chest()
 	g.combat_rewards.tick()
 	check(g.combat_rewards.stage=="choice","Quick mode skips opening")
@@ -199,9 +181,9 @@ func run() -> void:
 	g.economy.roll(g.rng,g.recipe)
 	g.ui.craft_tab="craft"
 	g.ui.show_shop()
-	check(g.ui.modal.find_child("CraftAutoEquip",true,false)!=null,"Crafting exposes auto-equip preference")
+	check(g.ui.modal.find_child("CraftAutoEquip",true,false)==null,"Crafting has no auto-equip control")
 	g.ui.show_settings(true)
-	check(g.ui.modal.find_child("AutoEquipSetting",true,false)!=null,"Setting accessible outside reward")
+	check(g.ui.modal.find_child("AutoEquipSetting",true,false)==null,"Settings cannot re-enable removed automatic equip")
 	check(g.profile.save_profile(),"Preferences save")
 	var loaded:=Profile.new(g.profile.path)
 	loaded.load_profile()

@@ -151,14 +151,7 @@ static func grid(ui: CanvasLayer, key: String, rect: Rect2, columns: int) -> Gri
 static func offers(ui: CanvasLayer, x: float) -> void:
 	var g: Node2D=ui.game
 	var revision: int=g.economy.revision
-	var automatic:=CheckButton.new()
-	automatic.name="CraftAutoEquip"
-	automatic.text="새 마법 자동 장착 · 안전한 빈칸만"
-	automatic.position=Vector2(x+24,416)
-	automatic.button_pressed=g.profile.data.auto_equip
-	automatic.add_theme_color_override("font_color",Look.INK)
-	ui.modal.add_child(automatic)
-	automatic.toggled.connect(func(enabled):g.profile.data.auto_equip=enabled;g.save_settings();ui.show_shop())
+	Look.text(ui,ui.modal,"새 마법은 가방에 보관 · 원하는 칸에 직접 장착",Vector2(x+24,423),15,Look.MUTED,600)
 	var list:=grid(ui,"offers",Rect2(x+24,454,602,230),2)
 	for i in g.economy.offers.size():
 		var offer: Dictionary=g.economy.offers[i]

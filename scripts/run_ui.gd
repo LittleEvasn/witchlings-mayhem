@@ -45,7 +45,6 @@ static func settings(ui: CanvasLayer, from_title: bool) -> void:
 	ui.front_screen="settings_title" if from_title else "settings_pause"
 	ui.button(ui.modal,"효과음  "+("켜짐" if g.sound_enabled else "꺼짐"),Rect2(210,290,460,70),func():g.sound_enabled=not g.sound_enabled;g.save_settings();settings(ui,from_title),false,24)
 	ui.button(ui.modal,"배경 음악 · 준비 중",Rect2(210,385,460,70),func():pass,false,24).disabled=true
-	ui.button(ui.modal,"마법 자동 장착 · "+("켜짐" if g.profile.data.auto_equip else "꺼짐"),Rect2(720,290,470,70),func():g.profile.data.auto_equip=not g.profile.data.auto_equip;g.save_settings();settings(ui,from_title),false,22).name="AutoEquipSetting"
-	ui.button(ui.modal,"빠른 보상 · "+("켜짐" if g.profile.data.quick_rewards else "꺼짐"),Rect2(720,385,470,70),func():g.profile.data.quick_rewards=not g.profile.data.quick_rewards;g.save_settings();settings(ui,from_title),false,22).name="QuickRewardSetting"
+	ui.button(ui.modal,"상자 개봉 생략 · "+("켜짐" if g.profile.data.quick_rewards else "꺼짐"),Rect2(720,290,470,70),func():g.profile.data.quick_rewards=not g.profile.data.quick_rewards;g.save_settings();settings(ui,from_title),false,22).name="QuickRewardSetting"
 	ui.label(ui.modal,"현재 배경 음악은 없어요.\n효과음은 플레이 중 M으로도 바꿀 수 있어요.",Vector2(210,500),20,ui.MUTED,950)
 	ui.button(ui.modal,"돌아가기",Rect2(850,696,360,60),ui.show_title if from_title else ui.show_pause,true).grab_focus()

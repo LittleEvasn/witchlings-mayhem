@@ -107,7 +107,9 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 		var copy := stage.duplicate(true)
 		copy.echo = 0
 		copy["_echo_copy"] = true
-		echoes.append({"stage":copy,"origin":origin,"direction":direction,"follow":follow.duplicate(true),"factor":factor*float(pattern.primary)*float(repeats[repeat]),"power":power,"delay":0.18*(repeat+1),"meter_stage":meter_stage,"lineage":lineage,"generation":emitted_generation,"target_point":target_point})
+		copy.next = {}
+		copy.connector = ""
+		echoes.append({"stage":copy,"origin":origin,"direction":direction,"follow":{},"factor":factor*float(pattern.primary)*float(repeats[repeat]),"power":power,"delay":0.18*(repeat+1),"meter_stage":meter_stage,"lineage":lineage,"generation":emitted_generation,"target_point":target_point})
 		track("echoes_scheduled",source)
 	for repeat in pattern.copies:
 		if echoes.size()>=MAX_ECHOES:
@@ -116,8 +118,10 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 		var copy:=stage.duplicate(true)
 		copy.echo=0
 		copy["_echo_copy"]=true
+		copy.next={}
+		copy.connector=""
 		copy["_support_scale"]=float(stage.get("_support_scale",1.0))*repeat.scale
-		echoes.append({"stage":copy,"origin":origin,"direction":direction,"follow":follow.duplicate(true),"factor":factor*repeat.factor,"power":power,"delay":repeat.delay,"meter_stage":meter_stage,"lineage":lineage,"generation":emitted_generation,"target_point":target_point})
+		echoes.append({"stage":copy,"origin":origin,"direction":direction,"follow":{},"factor":factor*repeat.factor,"power":power,"delay":repeat.delay,"meter_stage":meter_stage,"lineage":lineage,"generation":emitted_generation,"target_point":target_point})
 		track("support_repeats_scheduled",source)
 	if not PROFILE.has(stage.attack):
 		behavior.special(ctx)

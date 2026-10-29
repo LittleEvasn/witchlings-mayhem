@@ -6,7 +6,7 @@ const Gate=preload("res://scripts/reward_input_gate.gd")
 static func build(ui: CanvasLayer) -> void:
 	var g: Node2D=ui.game
 	var r: RefCounted=g.combat_rewards
-	if g.state!="combat" or not r.paused() or r.stage=="edit": return
+	if g.state!="combat" or not r.paused(): return
 	ui.close_modal()
 	var root:=Control.new()
 	root.name="LevelRewardScreen"
@@ -25,9 +25,9 @@ static func build(ui: CanvasLayer) -> void:
 	gate.name="RewardInputGate"
 	root.add_child(gate)
 	var first: Dictionary=r.pending[0] if not r.pending.is_empty() else {}
-	var chest: bool=first.get("source","")=="chest" or r.view.get("source","")=="chest" and r.stage=="ready"
+	var chest: bool=first.get("source","")=="chest"
 	var title: String="상자 보상" if chest else "레벨 %d!"%int(first.get("level",r.level))
-	var heading:=Look.text(ui,root,"획득 완료!" if r.stage=="ready" else title,Vector2(200,110),38,Look.PAPER,1040,true)
+	var heading:=Look.text(ui,root,title,Vector2(200,110),38,Look.PAPER,1040,true)
 	heading.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	Look.chip(ui,root,"전투 정지 · 안심하고 골라요",Rect2(565,166,310,32),Look.LILAC)
 	if r.stage in ["chest","opening"]:
@@ -50,9 +50,6 @@ static func build(ui: CanvasLayer) -> void:
 			tween.tween_interval(.8)
 			tween.tween_callback(func():r.reveal_chest(receipt_id))
 		return
-	if r.stage=="ready":
-		ready(ui,root,gate)
-		return
 	if first.is_empty(): return
 	var revision: int=r.revision
 	var row:=HBoxContainer.new()
@@ -73,14 +70,16 @@ static func build(ui: CanvasLayer) -> void:
 		if row.get_child_count()==1: gate.preferred=b
 		card.modulate.a=0
 		card.create_tween().tween_property(card,"modulate:a",1.0,.18)
-	var bag:=CheckButton.new()
-	bag.name="RewardBagOnly"
-	bag.text="이번 보상은 가방에만"
-	bag.position=Vector2(200,682)
-	bag.button_pressed=r.bag_only
-	bag.add_theme_font_size_override("font_size",18)
-	root.add_child(bag)
-	bag.toggled.connect(func(value):r.bag_only=value;ui.show_level_reward())
+	if first.options.any(func(id):return str(id).begins_with("fuse:")):
+		var bag:=CheckButton.new()
+		bag.name="RewardBagOnly"
+		bag.text="합성 결과는 가방에만"
+		bag.position=Vector2(200,682)
+		bag.button_pressed=r.bag_only
+		bag.add_theme_font_size_override("font_size",18)
+		root.add_child(bag)
+		bag.toggled.connect(func(value):r.bag_only=value;ui.show_level_reward())
+	else: Look.text(ui,root,"새 마법은 가방에 보관 · 직접 장착",Vector2(200,689),17,Look.PAPER,520)
 	Look.text(ui,root,"← → 선택 · 클릭/Enter 확정 · 남은 보상 %d"%r.pending.size(),Vector2(750,689),17,Look.PAPER,490)
 	orb_strip(ui,root)
 
@@ -109,46 +108,6 @@ static func orb_strip(ui: CanvasLayer, parent: Node) -> void:
 			text.set_meta("original",text.text)
 			text.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 			text.tooltip_text="빈칸" if id=="" else g.Spells.definition(id).name
-
-static func ready(ui: CanvasLayer, root: Control, gate: Node) -> void:
-	var g: Node2D=ui.game
-	var r: RefCounted=g.combat_rewards
-	var v: Dictionary=r.view
-	Look.card(ui,root,Rect2(370,248,700,366),Look.PAPER,34).name="AcquisitionReceipt"
-	if not v.get("icon","").is_empty(): Look.icon(ui,root,v.icon,Rect2(650,266,140,140))
-	else: ui.Board.centered(ui,root,v.get("glyph","✦"),Rect2(650,270,140,116),65,Look.PURPLE)
-	var name:=Look.text(ui,root,v.get("badge","")+" · "+v.get("title",r.receipt),Vector2(398,423),30,Look.INK,644,true)
-	name.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	var note:=Look.text(ui,root,v.get("placement",{}).get("text",v.get("compare","바로 적용됐어요")),Vector2(400,485),20,Look.PURPLE,640)
-	note.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	note.max_lines_visible=2
-	var edit:=Look.button(ui,root,"조합 편집",Rect2(394,553,300,48),func():
-		if gate.allow(): r.edit()
-	,false,22)
-	edit.name="RewardEdit"
-	gate.guard(edit)
-	var go:=Look.button(ui,root,"다음 선택 →" if not r.pending.is_empty() else "계속 →",Rect2(712,553,336,48),func():
-		if gate.allow(): r.continue_combat()
-	,true,22)
-	go.name="RewardContinue"
-	gate.guard(go)
-	gate.preferred=go
-	var quick:=CheckButton.new()
-	quick.name="QuickRewards"
-	quick.text="빠른 획득 · 다음부터 개봉/확인 생략"
-	quick.position=Vector2(430,644)
-	quick.button_pressed=g.profile.data.quick_rewards
-	root.add_child(quick)
-	quick.toggled.connect(func(value):g.profile.data.quick_rewards=value;g.save_settings())
-	if g.profile.data.quick_rewards:
-		var serial: int=r.run_serial
-		var revision: int=r.revision
-		var tween:=root.create_tween()
-		tween.tween_interval(.25)
-		tween.tween_callback(func():
-			if g.profile.data.quick_rewards and g.state=="combat" and r.stage=="ready" and r.run_serial==serial and r.revision==revision: r.continue_combat())
-	orb_strip(ui,root)
-	highlight(ui,v.get("placement",{}))
 
 static func highlight(ui: CanvasLayer, placement: Dictionary) -> void:
 	if not is_instance_valid(ui.modal): return
