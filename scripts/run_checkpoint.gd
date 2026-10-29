@@ -155,12 +155,17 @@ static func valid(data: Variant) -> bool:
 		if data.has("growth"):
 			if not item is Dictionary or not item.get("id") is String or item.id in seen or not number(item.get("level"),1 if item.get("source","")=="chest" else 2,100000,true): return false
 			seen.append(item.id)
-			if not string_list(item.get("options"),3): return false
+			if not string_list(item.get("options"),4): return false
 			var unique_options: Array=[]
 			for id in item.options:
 				if id in unique_options: return false
 				unique_options.append(id)
-				if id not in Economy.PRICES and id not in ["gold","heal"] and not (id.begins_with("relic:") and id.trim_prefix("relic:") in Relics.DEFINITIONS) and not (item.get("source","")=="chest" and id.begins_with("fuse:") and id.trim_prefix("fuse:") in P.FUSIONS): return false
+				if id not in Economy.PRICES and id not in ["gold","heal"] and not (id.begins_with("relic:") and id.trim_prefix("relic:") in Relics.DEFINITIONS) and not (id.begins_with("fuse:") and id.trim_prefix("fuse:") in P.FUSIONS): return false
+			if item.get("source","")!="chest" and item.options.filter(func(id):return id.begins_with("fuse:")).size()>1: return false
+			if item.get("source","")!="chest" and item.options.size()==4 and not item.options[3].begins_with("fuse:"): return false
+			if item.get("source","")!="chest" and item.options.any(func(id):return id.begins_with("fuse:")) and (item.options.size()!=4 or not item.options[3].begins_with("fuse:")): return false
+			if item.has("fusion_locked") and not item.fusion_locked is bool: return false
+			if item.has("fusion_option") and (not item.fusion_option is String or (item.fusion_option!="" and not item.fusion_option in P.FUSIONS)): return false
 			continue
 		if not item is Dictionary or not number(item.get("wave"),1,data.wave,true) or not item.get("id") is String or item.id in seen: return false
 		seen.append(item.id)

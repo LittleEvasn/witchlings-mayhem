@@ -21,13 +21,14 @@ static func centered(ui: CanvasLayer, parent: Node, text: String, rect: Rect2, f
 	l.custom_minimum_size.y=rect.size.y
 	return l
 
-static func cell(ui: CanvasLayer, parent: Node, id: String, rect: Rect2, orb := -1, index := -1, inventory := false) -> Control:
+static func cell(ui: CanvasLayer, parent: Node, id: String, rect: Rect2, orb := -1, index := -1, inventory := false, compact := false) -> Control:
 	var c := Slot.new()
 	c.ui=ui
 	c.id=id
 	c.orb_index=orb
 	c.slot=index
 	c.inventory=inventory
+	c.set_meta("compact_slot",compact)
 	c.read_only=orb<0 and not inventory
 	c.position=rect.position
 	c.size=rect.size
@@ -39,17 +40,19 @@ static func cell(ui: CanvasLayer, parent: Node, id: String, rect: Rect2, orb := 
 		var part := Spells.definition(id)
 		var available: bool = not inventory or ui.game.remaining_part(id)>0
 		var color: Color = part.color if available else ui.MUTED.darkened(0.35)
-		Look.icon(ui,c,id,Rect2(rect.size.x*.5-rect.size.y*.29,3,rect.size.y*.58,rect.size.y*.58))
+		var icon_size: float=rect.size.y*(.74 if compact else .58)
+		Look.icon(ui,c,id,Rect2((rect.size.x-icon_size)*.5,3,icon_size,icon_size))
 		var light: bool=is_instance_valid(ui.modal) and ui.modal.get_meta("rounded_ui",false)
 		var name: Label = centered(ui,c,short_name(id),Rect2(2,rect.size.y-25,rect.size.x-4,23),12 if rect.size.x<90 else 13,Look.INK if light else (ui.TEXT if available else ui.MUTED))
 		name.add_theme_font_override("font",Look.FONT)
 		name.max_lines_visible=1
 		name.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+		name.visible=not compact
 		if Progression.rank(id)>0: ui.label(c,"+%d" % Progression.rank(id),Vector2(4,2),12,Look.PURPLE if light else ui.MINT)
 		if Progression.is_fused(id): ui.label(c,"✧",Vector2(4,2),12,Look.PURPLE if light else ui.MINT)
 		if inventory:
 			var count: int = ui.game.remaining_part(id)
-			var badge: Label = ui.label(c,str(count) if count>0 else "장착",Vector2(rect.size.x-32,3),11,Look.PURPLE if light else (ui.MINT if count>0 else ui.MUTED),29)
+			var badge: Label = ui.label(c,str(count) if count>1 else ("" if compact and count>0 else "장착" if count<=0 else "1"),Vector2(rect.size.x-32,3),11,Look.PURPLE if light else (ui.MINT if count>0 else ui.MUTED),29)
 			badge.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
 			if id==ui.game.purchased_orb:
 				var flash := c.create_tween()

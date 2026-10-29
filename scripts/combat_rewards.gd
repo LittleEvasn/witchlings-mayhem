@@ -1,5 +1,5 @@
 extends RefCounted
-## Only reward selection freezes simulation; choosing immediately resumes/advances.
+## One paused reward/editor session, released only by the explicit resume action.
 const ALLOCATION := 0
 const OWNED_WEIGHT := 3.0
 const GOLD_REWARD := 10
@@ -95,6 +95,7 @@ func tick() -> void:
 	stage=("opening" if game.profile.data.quick_rewards else "chest") if chest else "choice"
 	bag_only=false
 	game.close_personal()
+	game.personal_tab="inventory"
 	if not chest: refresh_options()
 	if chest and game.profile.data.quick_rewards: reveal_chest.call_deferred(str(pending[0].id))
 	else: game.ui.show_level_reward.call_deferred()
@@ -119,16 +120,9 @@ func reveal_chest(reward_id: String) -> void:
 		elif not pool.is_empty(): id=pool[rng.randi_range(0,pool.size()-1)]
 		if not grant_reward(id,"chest"):
 			grant_reward("gold","chest")
-		last_chest_results.append({"id":id,"text":receipt})
+		last_chest_results.append({"id":id,"text":receipt,"output":view.get("output",id)})
 	revision+=1
-	stage=""
-	game.discover_owned()
-	game.ui.close_modal()
-	game.invincible=maxf(game.invincible,.5)
-	var texts: Array=[]
-	for result in last_chest_results: texts.append(result.text)
-	game.announce("상자 · %d개 획득: %s"%[count," / ".join(texts)],3)
-	tick()
+	finish_award()
 
 func draw_chest_count() -> int:
 	# Initial local tuning (80/17/3), not a claim about VS's original probabilities.
@@ -149,7 +143,16 @@ func refresh_options() -> void:
 	if pending.is_empty(): return
 	var first: Dictionary=pending[0]
 	if first.get("source","")=="chest": return
-	var next:=fill_options(first.options,first.get("source","")=="chest")
+	var next:=fill_options(first.options.filter(func(id):return not str(id).begins_with("fuse:")))
+	# One draw per displayed levelup, including a locked 'none'. Editing cannot reroll it.
+	if not first.get("fusion_locked",false):
+		first["fusion_locked"]=true
+		var pool: Array=[]
+		for id in game.Spells.Progression.FUSIONS:
+			if game.economy.fusion_quote(id).ok: pool.append(id)
+		first["fusion_option"]="" if pool.is_empty() else pool[rng.randi_range(0,pool.size()-1)]
+	var fusion: String=first.get("fusion_option","")
+	if not fusion.is_empty() and game.economy.fusion_quote(fusion).ok: next.append("fuse:"+fusion)
 	if next==first.options: return
 	first.options=next
 	revision+=1
@@ -161,19 +164,39 @@ func choose(reward_id: String, id: String, expected_revision: int) -> bool:
 	if not grant_reward(id,"level"): return false
 	pending.pop_front()
 	revision+=1
-	stage=""
+	last_chest_results.clear()
+	finish_award()
+	return true
+
+func finish_award() -> void:
 	game.discover_owned()
+	game.ui.selected_item=view.get("output","") if game.Spells.has_part(view.get("output","")) else ""
+	if not game.ui.selected_item.is_empty() and game.remaining_part(game.ui.selected_item)>0:
+		var bag: Array=[]
+		for id in game.economy.inventory:
+			if game.remaining_part(id)>0: bag.append(id)
+		game.ui.compact_bag_page=int(bag.find(game.ui.selected_item)/12)
+	stage=""
+	if not pending.is_empty(): tick()
+	else:
+		stage="edit"
+		game.personal_tab="inventory"
+		game.ui.show_level_reward.call_deferred()
+
+func continue_combat() -> bool:
+	if game.state!="combat" or stage!="edit" or not pending.is_empty() or not game.valid_draft(): return false
+	game._commit_live_board()
+	stage=""
+	game.close_personal()
 	game.ui.close_modal()
 	game.invincible=maxf(game.invincible,.5)
-	game.announce(receipt,1.2)
-	tick()
 	return true
 
 func grant_reward(id: String, source: String) -> bool:
 	view=game.AcquisitionView.model(game,id,source,bag_only)
 	if id.begins_with("fuse:"):
 		var fused:=id.trim_prefix("fuse:")
-		if source!="chest" or not game.claim_fusion(fused,bag_only): return false
+		if source not in ["chest","level"] or not game.claim_fusion(fused,bag_only): return false
 		receipt=game.Spells.definition(fused).name+" 합성 완성!"
 	elif id=="gold":
 		game.economy.grant(GOLD_REWARD)

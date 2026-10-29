@@ -20,6 +20,7 @@ const PINK := Color("ff9cae")
 @export var crafting_theme: Theme
 var game: Node2D
 var root: Control
+var compact_bag_page:=0
 var modal: Control
 var hud: Control
 var recipe_bar: Control
@@ -95,7 +96,7 @@ func _ready() -> void:
 	theme.default_font_size = 18
 	root.theme = theme
 	add_child(root)
-	get_viewport().size_changed.connect(_resize_modal_shade)
+	get_viewport().size_changed.connect(_on_viewport_resized)
 	hud = Control.new()
 	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(hud)
@@ -142,8 +143,22 @@ func _ready() -> void:
 	rebuild_recipe()
 	update_hud()
 
+func _on_viewport_resized() -> void:
+	if is_instance_valid(modal) and modal.get_meta("combined_reward",false): show_level_reward.call_deferred()
+	elif not game.personal_tab.is_empty(): show_personal.call_deferred()
+	else: _resize_modal_shade()
+
 func _resize_modal_shade() -> void:
-	if not is_instance_valid(modal): return
+	if not is_instance_valid(modal):
+		if game!=null and not game.personal_tab.is_empty(): show_personal.call_deferred()
+		return
+	if modal.get_meta("combined_reward",false):
+		# The builder calls this once to size its shade; only viewport signals rebuild.
+		var combined_shade:=modal.get_node_or_null("ModalShade") as ColorRect
+		if combined_shade!=null:
+			combined_shade.position=-root.position
+			combined_shade.size=get_viewport().get_visible_rect().size
+		return
 	if modal.get_meta("craft_drawer",false):
 		refresh_workbench.call_deferred()
 		return
@@ -272,6 +287,11 @@ func update_hud() -> void:
 	boss_bar.visible = boss_alive
 	boss_label.visible = boss_alive
 	if boss_alive: boss_bar.value = game.boss_ref.hp/game.boss_ref.max_hp*100
+	if game.state=="combat" and (not game.personal_tab.is_empty() or game.combat_rewards.paused()):
+		recipe_bar.visible=false
+		relic_strip.visible=false
+		dash_label.visible=not game.combat_rewards.paused()
+		for hud_label in [notice_label,objective_label,encounter_hint,controls_hint]: hud_label.visible=false
 
 func clear_children(node: Node) -> void:
 	for child in node.get_children():
@@ -281,30 +301,19 @@ func clear_children(node: Node) -> void:
 func rebuild_recipe() -> void:
 	game.ensure_orb_growth()
 	clear_children(recipe_bar)
-	panel(recipe_bar,Rect2(240,788,1120,98),Color(0.08,0.10,0.16,0.96))
-	button(recipe_bar,"Tab  마법",Rect2(252,828,120,36),func():
+	var bag:=button(recipe_bar,"Tab  가방",Rect2(22,165,112,34),func():
 		if game.state=="combat": game.open_editor()
 	,false,16)
-	for i in game.orb_recipes.size():
-		var parts: Array = game.orb_recipes[i]
-		var x: int=390+(i%2)*480
-		var y: int=796+int(i/2)*43
-		var color: Color=MINT if i==0 else PINK
-		var result: Dictionary=Spells.compile(parts)
-		var invalid: bool=not result.ok
-		if invalid: color=PINK
-		var orb: Panel=panel(recipe_bar,Rect2(x,y,35,35))
-		orb.tooltip_text=Spells.describe(parts) if invalid else ("가장 가까운 적 집중 조준" if game.OrbGrowth.amount(game.orb_growth[i],"focus") else "%d번째 가까운 적 자동 조준"%[i+1])
-		orb.add_theme_stylebox_override("panel",box(Color("273040"),color,2,24))
-		Board.centered(self,orb,"!" if invalid else str(i+1),Rect2(0,0,35,35),16,color)
-		for n in parts.size():
-			var p:=Vector2(x+42+n*39,y)
-			panel(recipe_bar,Rect2(p,Vector2(35,36)),INK)
-			if n<parts.size() and not str(parts[n]).is_empty():
-				var id: String=parts[n]
-				var item: Label=Board.centered(self,recipe_bar,Board.glyph(id),Rect2(p,Vector2(35,36)),18,Spells.definition(id).color)
-				item.mouse_filter=Control.MOUSE_FILTER_STOP
-				item.tooltip_text=Spells.definition(id).name+"\n"+Spells.definition(id).desc
+	bag.focus_mode=Control.FOCUS_NONE
+	for index in game.orb_recipes.size():
+		var color: Color=MINT if index==0 else PINK
+		var orb:=button(recipe_bar,str(index+1),Rect2(22,208+index*45,40,40),func():
+			if game.state=="combat": game.open_editor();game.select_orb(index)
+		,false,18)
+		orb.name="ClosedOrb%d"%index
+		orb.focus_mode=Control.FOCUS_NONE
+		orb.add_theme_stylebox_override("normal",box(Color(.06,.08,.13,.9),color,2,24))
+		orb.tooltip_text="오브 %d · %s"%[index+1,Spells.describe(game.orb_recipes[index])]
 
 func close_modal() -> void:
 	front_screen=""
@@ -320,6 +329,8 @@ func close_modal() -> void:
 		modal.queue_free()
 	modal = null
 	hud.visible = true
+	relic_strip.visible=true
+	dash_label.visible=true
 	if is_instance_valid(recipe_bar): recipe_bar.visible = true
 	for hud_label in [stats_label,notice_label,objective_label,encounter_hint,controls_hint]:
 		if is_instance_valid(hud_label): hud_label.visible=true
@@ -449,6 +460,9 @@ func close_relics() -> void:
 	relic_resume=false
 
 func refresh_workbench() -> void:
+	if game.state=="combat" and game.combat_rewards.paused():
+		show_level_reward()
+		return
 	if game.state=="combat" and not game.personal_tab.is_empty():
 		show_personal()
 		return

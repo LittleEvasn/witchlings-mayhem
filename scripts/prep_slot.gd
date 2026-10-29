@@ -106,6 +106,7 @@ func _draw() -> void:
 			draw_circle(center,size.y*0.27,Color(color,0.12 if available else 0.04))
 			draw_arc(center,size.y*0.27,0,TAU,40,Color(color,0.4 if available else 0.1),1.0,true)
 	if get_meta("affected",false): draw_style_box(ui.box(Color(0.6,1,0.9,0.10),ui.MINT,3,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
+	if get_meta("reward_preview",false): draw_style_box(ui.box(Color(.9,.7,1,.08),Color("e6b9ff"),3,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
 	if get_meta("inactive",false): draw_style_box(ui.box(Color(0.25,0.25,0.3,0.35),ui.MUTED,2,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
 	if get_meta("invalid",false): draw_style_box(ui.box(Color(1,0.3,0.5,0.08),ui.PINK,3,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))
 	if marker==2: draw_style_box(ui.box(Color(0.6,1,0.9,0.12),ui.MINT,2,12),Rect2(Vector2.ONE,size-Vector2.ONE*2))

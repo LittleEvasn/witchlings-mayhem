@@ -68,6 +68,7 @@ func run() -> void:
 	check(g.economy.gold==gold+41 and g.combat_rewards.total_xp==0,"Pending chest/reentry does not repeat sweep or grant XP")
 	await process_frame
 	check(not g.combat_rewards.last_chest_results.is_empty(),"Earned chest is automatically paid")
+	g.combat_rewards.continue_combat()
 	g.complete_wave()
 	check(g.state=="shop" and g.economy.gold==gold+41+g.Economy.CLEAR_REWARD,"After chest, rest completes once")
 	fresh()

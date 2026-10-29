@@ -388,6 +388,7 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.echo: return
 	if combat_rewards.paused() and state=="combat":
+		if event.is_action_pressed("recipe"): return # Inventory is already visible; only Resume ends this session.
 		if event.is_action_pressed("pause_game"):
 			state="paused"
 			ui.show_pause()
@@ -1534,6 +1535,10 @@ func close_personal() -> void:
 	personal_tab=""
 	edit_revision+=1
 	ui.close_personal_visual()
+	if state=="combat" and not combat_rewards.paused():
+		for l in [ui.notice_label,ui.objective_label,ui.encounter_hint,ui.controls_hint]: l.visible=true
+		ui.relic_strip.visible=true;ui.dash_label.visible=true
+		ui.update_hud();ui.recipe_bar.visible=true
 
 func claim_spell_reward(reward_id: String, id: String, revision: int) -> bool:
 	if not combat_rewards.choose(reward_id,id,revision):

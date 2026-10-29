@@ -30,7 +30,7 @@ func chest(seed_value: int) -> void:
 	var money: int=g.economy.gold
 	g.combat_rewards.reveal_chest(id)
 	check(bank==g.economy.inventory and money==g.economy.gold,"Duplicate reveal cannot pay twice")
-	check(g.combat_rewards.stage=="" and g.combat_rewards.pending.is_empty(),"No chest receipt or choice screen")
+	check(g.combat_rewards.stage=="edit" and g.combat_rewards.pending.is_empty(),"Automatic chest stays in shared editor, no separate receipt")
 func run() -> void:
 	root.size=Vector2i(1600,900)
 	g=load("res://scenes/main.tscn").instantiate();g.record_runs=false
@@ -136,7 +136,7 @@ func run() -> void:
 	check(g.combat_rewards.pending.is_empty() and not g.combat_rewards.last_chest_results.is_empty(),"Quick chest auto pays")
 	fresh();g.gems=[{"pos":Vector2.ZERO,"value":41,"xp":99}];g.wave_time=360
 	g.profile.data.quick_rewards=true;g.drop_chest(g.player.position);g.complete_wave()
-	await process_frame;g.complete_wave()
+	await process_frame;g.combat_rewards.continue_combat();g.complete_wave()
 	check(g.state=="shop" and g.combat_rewards.total_xp==0,"Rest after chest/sweep advances without XP")
 	fresh();var enemy:=target(1);g.damage_enemy(enemy,50,Vector2.ZERO)
 	check(g.damage_numbers.entries[0].amount==50,"Overkill shows hit strength, not leftover1HP")
