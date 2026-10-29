@@ -1,5 +1,7 @@
 # 마법60종 교체 전 기술검토 — 2026-10-29
 
+> **정정 우선:** [MAGICRAFT-CORE-SOURCE-REVIEW-v3.md](MAGICRAFT-CORE-SOURCE-REVIEW-v3.md). 사용자가 찾아온 실제 PC 역컴파일 코드·모바일 VFX 자료를 대조했다. 아래의 원작 미확인 상태와 12개 권고 계약은 v3의 확인 결과/차이표와 함께 읽어야 한다. 우리 게임의 확정 규칙을 바꾼 것은 아니다.
+
 > 추가 조사: [MAGICRAFT-EVIDENCE-AND-CONTRACTS-v2.md](MAGICRAFT-EVIDENCE-AND-CONTRACTS-v2.md). 사용자 제공 자동조작 저장소, 번역 원문, 계산기, 실제 Magicraft 모드 코드를 추가 확인했다. 원작 이름·post 슬롯의 의미를 구분하며, 아래 12항목은 원작 복원 결과가 아닌 우리 권고 계약이다. 7번 잔불 이동거리의 주체는 추가 문서에서 시전자 이동으로 한정하는 안을 권고한다. 응축 보류/게임 미변경 유지.
 
 ## 결론과 범위

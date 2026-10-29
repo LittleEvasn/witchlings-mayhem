@@ -1,0 +1,359 @@
+{
+  "date": "2026-10-29",
+  "method": "Static text inspection and configuration/metadata parsing; no original game execution; no original runtime code or textures imported.",
+  "pc": {
+    "repository": "kav1982/_reverse_engineering",
+    "commit": "d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8",
+    "tree_truncated": false,
+    "assembly_cs_files": 3402,
+    "reviewed_methods": [
+      {
+        "path": "decompiled/Assembly-CSharp/SpellGroupParser.cs",
+        "blob": "ff0a3de5a9f6e61ab62ae2b7bb51b3b177f892c2",
+        "ranges": [
+          [
+            27,
+            49
+          ],
+          [
+            68,
+            132
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellGroupParser.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SlotData.cs",
+        "blob": "2b8261fa7178b8b63c460e7c6b44778ccfdac9f3",
+        "ranges": [
+          [
+            655,
+            674
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SlotData.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellShootData.cs",
+        "blob": "8487fd4c9008b2d7a8e6edf96fa77614730774b1",
+        "ranges": [
+          [
+            100,
+            115
+          ],
+          [
+            264,
+            295
+          ],
+          [
+            579,
+            602
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellShootData.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellShootDataExtend.cs",
+        "blob": "be5e464eb67c97e273c87c1489c55d14c9b9f82e",
+        "ranges": [
+          [
+            99,
+            117
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellShootDataExtend.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellInitialParameter.cs",
+        "blob": "eb2fada3e8246af163d498c1198304a0fb15d4ae",
+        "ranges": [
+          [
+            282,
+            374
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellInitialParameter.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/ShootSpellUtils.cs",
+        "blob": "a0dba59f85e7dfd06f73dd7f9de02665363e164a",
+        "ranges": [
+          [
+            140,
+            193
+          ],
+          [
+            196,
+            321
+          ],
+          [
+            435,
+            514
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/ShootSpellUtils.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellSpawnParamsStorage.cs",
+        "blob": "a46c71bdec8b38fcc65be98f84af33f8d4a92494",
+        "ranges": [
+          [
+            1,
+            58
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellSpawnParamsStorage.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellShootSystem.cs",
+        "blob": "036161baea99c532b1156014faa7383142dc6d68",
+        "ranges": [
+          [
+            213,
+            246
+          ],
+          [
+            260,
+            260
+          ],
+          [
+            375,
+            447
+          ],
+          [
+            461,
+            480
+          ],
+          [
+            616,
+            650
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellShootSystem.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellMoveJob.cs",
+        "blob": "54e9591b8ad451bd0259720b9b51c1eaba15fe0d",
+        "ranges": [
+          [
+            216,
+            272
+          ],
+          [
+            312,
+            358
+          ],
+          [
+            480,
+            556
+          ],
+          [
+            706,
+            719
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellMoveJob.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellDestroySystem.cs",
+        "blob": "097b05d79be85694cfc5b955583115c3c46eff7b",
+        "ranges": [
+          [
+            476,
+            584
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellDestroySystem.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellHitTriggerSystem.cs",
+        "blob": "40c4a2f6779fc100ee3f98eb0d30a66b3ca16815",
+        "ranges": [
+          [
+            170,
+            199
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellHitTriggerSystem.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellHitTriggerComponentData.cs",
+        "blob": "d30fa197cb6c6d0e176c8797a8590e4a2695f6bf",
+        "ranges": [
+          [
+            1,
+            27
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellHitTriggerComponentData.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellOverTriggerSystem.cs",
+        "blob": "0b2e683dd35b358db7e83f3f23172e39ff73317b",
+        "ranges": [
+          [
+            533,
+            638
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellOverTriggerSystem.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/Spell1004LaserJob.cs",
+        "blob": "ca6ac454a0a7213dde50be44dd5f92885d2d093f",
+        "ranges": [
+          [
+            186,
+            326
+          ],
+          [
+            594,
+            702
+          ],
+          [
+            781,
+            792
+          ],
+          [
+            979,
+            1050
+          ],
+          [
+            1336,
+            1427
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/Spell1004LaserJob.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellTools.cs",
+        "blob": "0733fc3521e15c456f0ff5210788649a380d0aa0",
+        "ranges": [
+          [
+            1881,
+            1948
+          ],
+          [
+            3250,
+            3260
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellTools.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/RadiusAttributeValue.cs",
+        "blob": "aa8a3e2dbb7def8c1d9d7aee5907786be65dbb77",
+        "ranges": [
+          [
+            1,
+            34
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/RadiusAttributeValue.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/ShootSpellBuffer.cs",
+        "blob": "047195d97c2f7e9778cb227c6ca48b2dc01f7253",
+        "ranges": [
+          [
+            1,
+            40
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/ShootSpellBuffer.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/TakeDamageInfo_Dots.cs",
+        "blob": "763a3841de056db87afae100ea98716a77aa6d77",
+        "ranges": [
+          [
+            149,
+            173
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/TakeDamageInfo_Dots.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellTakeDamageResultSystem.cs",
+        "blob": "ceab0410a28bad80c9cdc213e035ee2bf31d3a77",
+        "ranges": [
+          [
+            224,
+            248
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellTakeDamageResultSystem.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/Spell1007Job.cs",
+        "blob": "97d67cdedaeca4f873f55d7ad5e87c2a3888c6e3",
+        "ranges": [
+          [
+            176,
+            229
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/Spell1007Job.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellMoveTriggerSystem.cs",
+        "blob": "e74676954187d721f46ba8c34759ad1609cde5b2",
+        "ranges": [
+          [
+            223,
+            250
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellMoveTriggerSystem.cs"
+      },
+      {
+        "path": "decompiled/Assembly-CSharp/SpellTwineTriggerSystem.cs",
+        "blob": "f6159414b2abea40cc58adafe964eff3cfd9340c",
+        "ranges": [
+          [
+            208,
+            238
+          ]
+        ],
+        "url": "https://github.com/kav1982/_reverse_engineering/blob/d7f6cbe82dfd52ce2d71cf5f09dc393c86931ea8/decompiled/Assembly-CSharp/SpellTwineTriggerSystem.cs"
+      }
+    ],
+    "configs": {
+      "path": "assets_export/SpellConfig.json",
+      "blob": "d7b19ad754d4f8be59c6efb62553900290270840",
+      "examined_ids": [
+        10041,
+        10042,
+        10043,
+        10111,
+        30131,
+        30132,
+        30133,
+        31191,
+        31192,
+        31193,
+        32051,
+        32052,
+        32053
+      ]
+    }
+  },
+  "mobile": {
+    "repository": "kav1982/MFGY_Chick",
+    "commit": "0055918c0ac42b8c3933a2c7b5cd1a71f0a62f3a",
+    "tree_truncated": false,
+    "png_files": 1436,
+    "unique_metadata_keys": [
+      "sourceFile",
+      "sourcePathId"
+    ],
+    "metadata_counts": {
+      "abilities": 136,
+      "config_rows": 329,
+      "textures": 1408,
+      "materials": 854,
+      "particles": 1628
+    },
+    "coverage": "Full AllSkillEvidence.json parsed; metadata consistency only, not APK extraction or particle playback."
+  }
+}

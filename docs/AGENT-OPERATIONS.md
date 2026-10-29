@@ -1,5 +1,8 @@
 # 에이전트 운영 · 2026-10-26
 
+## 2026-10-29 실제 Magicraft 역컴파일·VFX 정정 조사
+Claw magicraft-core-source-audit-20261029 총괄 gpt-6.1-sol/high PC 관련메서드·설정·다른4저장소 확인·모바일6.4MB JSON직접검산·문서수정. 읽기조사 wm_magicraft_mobile_evidence 요청/관찰gpt-6-luna/high(01a187bb-fc65-7f40-a2c5-6cdecf131768),Claw magicraft-mobile-vfx-evidence-20261029: 모바일PNG·재현상태·PC광선VFX교차확인,파일수정/재위임/게임실행 없음. 실제참여2명,확인원문은 v3보고서/행근거JSON. 새마법구현·무관테스트·참고게임실행·외부코드PNG반입 없음. 시작계정5시간7%/주간76%,마감전25%/79%사용(공유한도),정밀토큰·단독비교없어비용절감미입증. 체크포인트 정상커밋/푸시 확인 후 보고.
+
 ## 2026-10-29 Magicraft 추가 조사
 Claw magicraft-evidence-followup-20261029. 총괄 관찰 gpt-6.1-sol/high 단독, 보조 없음. 중국어/영어 검색과 Turing 자동조작·myjung 번역 TSV·ZexAU 계산기·saix93 NoitaCraft 모드 관련 본문/목록 확인. 게임/원문/저장/사용자 project.godot 변경 없음. 12개 상호작용의 외부 근거 한계와 우리 권고를 분리. 기존 검사는 반복하지 않음. 결과 docs/MAGICRAFT-EVIDENCE-AND-CONTRACTS-v2.md. 시작 계정 5시간96%/주간75% 사용으로 문서 조사 범위만 완료·체크포인트 업로드, 신규 구현 미시작. 작업별 정밀 토큰·단독 대비 절감 미측정. 작업 중 사용자가 추가한 0a30620 Update project.godot 커밋도 그대로 보존.
 
