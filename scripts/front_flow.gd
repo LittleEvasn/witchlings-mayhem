@@ -85,10 +85,12 @@ static func title(ui: CanvasLayer) -> void:
 		order.append("Continue")
 	action(ui,"NewExperiment","새 실험 시작  →" if not has_save else "새로운 실험",Rect2(105,541 if has_save else 463,430,58 if has_save else 78),ui.show_kits,not has_save,25)
 	order.append("NewExperiment")
+	action(ui,"TrainingRoom","마법 훈련장  ·  자유 실험",Rect2(105,606,430,46),func():ui.game.get_tree().change_scene_to_file("res://scenes/training.tscn"),false,20)
+	order.append("TrainingRoom")
 	for i in 3:
 		var item: Array=[["Collection","발견 도감","charge"],["Records","실험 기록","expire"],["Settings","설정","giant"]][i]
 		var id: String=item[0]
-		var rect:=Rect2(105+i*148,638,134,105)
+		var rect:=Rect2(105+i*148,672,134,105)
 		var button:=action(ui,id,"",rect,func():
 			match id:
 				"Collection": ui.show_collection("title")

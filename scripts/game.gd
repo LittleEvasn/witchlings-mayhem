@@ -114,6 +114,7 @@ var checkpoint_loading := false
 var checkpoint_clock := 0.0
 var checkpoint_message := ""
 var run_id := ""
+var training_mode:=false
 var record_runs := DisplayServer.get_name()!="headless"
 var boss_encounter: RefCounted
 var boss_spawn_wait := 0.0

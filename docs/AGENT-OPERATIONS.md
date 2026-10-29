@@ -167,3 +167,6 @@ Claw magicraft-evidence-followup-20261029. 총괄 관찰 gpt-6.1-sol/high 단독
 - 총괄 기존 채팅(관찰 Sol6.1/high) 직접 구현·관련시험·빌드. 보조 wm_reviewer 요청Sol6.1/high, no-history/읽기/재위임금지/동시1명;5개실제결함제시·총괄수정. 결과 docs/MAGIC60-REVIEW-RESOLUTION-v1.md. 반환명만 제공되어 별도 UUID/실행모델 관찰은 미제공.
 - 1048 검사0실패,렌더7장,Windows빌드. 무관한전체테스트미실행. 초기구문·zone·카메라fixture오류를수정하고해당검사만재실행.
 - 계정사용량 시작primary32%/weekly80%, 중간primary65%/weekly85% 사용. 정확한 토큰 수/단독 대비 절감 실측은 미제공, 에이전트 비용절감은 미입증. 검증된기능단위 체크포인트를 업로드한다.
+
+## 2026-10-30 간단 훈련장
+총괄 Sol6.1/high 단독, 보조 없음. 관련15검사0실패·실제렌더·빌드, project.godot 보존. 시작primary89/weekly89%, 다음요청시primary0/weekly91%사용(창초기화·공유한도), 정확한 작업토큰/절감효과 미측정. 결과 docs/TRAINING-ROOM-v1.md.

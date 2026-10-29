@@ -530,7 +530,8 @@ func close_collection() -> void:
 	else: game.return_title()
 
 func show_trial() -> void:
-	Board.trial(self)
+	if game.training_mode: preload("res://scripts/training_room.gd").build(self)
+	else: Board.trial(self)
 
 func update_trial_stats() -> void:
 	if is_instance_valid(trial_stats_label):
