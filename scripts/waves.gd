@@ -1,5 +1,6 @@
 extends RefCounted
 const RunContent = preload("res://scripts/run_content.gd")
+const Tempo=preload("res://scripts/combat_tempo.gd")
 ## Two independent randomized streams: scattered arrivals and occasional local packs.
 ## Cadence is adapted to our five-wave arena; no fixed entrance or advance warning.
 const WAVES := [
@@ -15,11 +16,11 @@ const WAVES := [
 		"normal_interval":[3.5,4.8], "normal_count":[1,2], "weights":[10,72,8,10], "first_pack":[15.0,20.0], "pack_interval":[12.0,18.0], "pack_count":[20,28], "pack_swarm":0.7, "elite_chance":0.25, "escort_chance":0.35}
 ]
 const ENEMY_HEALTH := [0.0,25.0,34.0,180.0]
-const ENEMY_SPEED := [0.0,142.0,90.0,120.0]
-const SWARM_SPEED := 108.0
-const CHARGE_SECONDS := .95
-const CHARGE_SPEED := 345.0
-const CHARGE_RECOVERY := .65
+const ENEMY_SPEED = Tempo.ENEMY_SPEED
+const SWARM_SPEED = Tempo.SWARM_SPEED
+const CHARGE_SECONDS = Tempo.CHARGE_SECONDS
+const CHARGE_SPEED = Tempo.CHARGE_SPEED
+const CHARGE_RECOVERY = Tempo.CHARGE_RECOVERY
 const SWARM_HEALTH := 18.0
 const BOSS_HEALTH := 30000.0
 const SAFE_DISTANCE := 220.0

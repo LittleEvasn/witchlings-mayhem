@@ -1,4 +1,5 @@
 extends RefCounted
+const Tempo=preload("res://scripts/combat_tempo.gd")
 ## A dedicated encounter on the existing atlas. Tells freeze their targets before impact.
 var game: Node2D
 var clock := 0.0
@@ -23,8 +24,9 @@ func update(enemy: Node2D, delta: float) -> Vector2:
 		game.announce("모범답안 폭주 · 예고를 보고 빈틈으로 이동!",3)
 		game.play_sound("reward")
 	if dash_left>0:
+		var step:=minf(delta,dash_left)
 		dash_left=maxf(0,dash_left-delta)
-		return direction*360
+		return direction*Tempo.BOSS_DASH_SPEED*step/maxf(delta,.00001)
 	if windup>0:
 		windup=maxf(0,windup-delta)
 		enemy.windup=windup if attack=="dash" else 0
@@ -34,7 +36,7 @@ func update(enemy: Node2D, delta: float) -> Vector2:
 		attack=["fan","circles","dash"][index%3]
 		index+=1
 		direction=d
-		windup=1.15 if attack=="circles" else .95
+		windup=1.15 if attack=="circles" else (1.1 if attack=="dash" else .95)
 		circles.clear()
 		if attack=="circles":
 			circles.append(game.player.position)
@@ -52,7 +54,7 @@ func _release(enemy: Node2D) -> void:
 			var count:=7 if phase==2 else 5
 			for n in count:
 				if game.hostile_shots.size()>=80: break
-				game.hostile_shots.append({"pos":enemy.position,"vel":direction.rotated((n-(count-1)*.5)*.19)*190,"life":4.0})
+				game.hostile_shots.append({"pos":enemy.position,"vel":direction.rotated((n-(count-1)*.5)*.19)*Tempo.BOSS_SHOT_SPEED,"life":4.0})
 		"circles":
 			for point in circles.duplicate():
 				game.ring(point,80,Color("ff9cae"),.45)

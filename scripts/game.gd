@@ -6,6 +6,7 @@ const RoleMigration = preload("res://scripts/spell_role_migration.gd")
 const Spells = preload("res://scripts/spells.gd")
 const OrbGrowth = preload("res://scripts/orb_growth.gd")
 const Waves = preload("res://scripts/waves.gd")
+const Tempo=preload("res://scripts/combat_tempo.gd")
 const Economy = preload("res://scripts/economy.gd")
 const Relics = preload("res://scripts/relics.gd")
 const SHOP_SECONDS := 60.0
@@ -540,11 +541,7 @@ func _physics_process(delta: float) -> void:
 	var movement := Input.get_vector("move_left","move_right","move_up","move_down")
 	if movement.length_squared() > 0.01: last_move = movement
 	if Input.is_action_just_pressed("dash"): try_dash(movement)
-	if dash_left > 0:
-		dash_left -= delta
-		player.position += dash_direction * 750.0 * delta
-	else:
-		player.position += movement * 240.0 * relics.movement_multiplier() * delta
+	_move_player(delta,movement)
 	var walk := player_bounds()
 	player.position = player.position.clamp(walk.position,walk.end)
 	_sync_camera()
@@ -586,12 +583,19 @@ func _physics_process(delta: float) -> void:
 		ui_clock = 0
 		ui.update_hud()
 
+func _move_player(delta: float, movement: Vector2) -> void:
+	var step:=minf(delta,dash_left)
+	if step>0:
+		player.position+=dash_direction*Tempo.DASH_SPEED*step
+		dash_left=maxf(0,dash_left-step)
+	player.position+=movement*Tempo.PLAYER_SPEED*relics.movement_multiplier()*(delta-step)
+
 func try_dash(movement: Vector2) -> bool:
 	if combat_rewards.paused(): return false
 	if dash_cooldown > 0 or not state in ["combat","trial"]: return false
 	dash_direction = movement if movement.length_squared() > 0.01 else last_move
-	dash_left = 0.19
-	dash_cooldown = 1.7
+	dash_left = Tempo.DASH_SECONDS
+	dash_cooldown = Tempo.DASH_COOLDOWN
 	invincible = maxf(invincible,0.28)
 	ring(player.position,36,Color("dfb6f5"),0.3)
 	play_sound("dash")
@@ -822,12 +826,10 @@ func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, 
 	enemy.role = role
 	enemy.setup(art,kind,is_boss)
 	enemy.hp = (Waves.ENEMY_HEALTH[kind] if role != "swarm" else Waves.SWARM_HEALTH)*float(config.hp_scale)
-	enemy.speed = Waves.ENEMY_SPEED[kind]+wave*3
-	if role=="swarm": enemy.speed=Waves.SWARM_SPEED+wave*2
-	if role=="carrier": enemy.hp=85+wave*12; enemy.speed=185; enemy.radius=22
-	if role=="escort": enemy.hp=35*float(config.hp_scale); enemy.speed=145
-	if role=="sentinel": enemy.hp=(350+elapsed*1.5); enemy.speed=192+wave*3
-	if role == "line": enemy.speed += 8
+	enemy.speed = Tempo.enemy_speed(kind,role,wave,is_boss)
+	if role=="carrier": enemy.hp=85+wave*12; enemy.radius=22
+	if role=="escort": enemy.hp=35*float(config.hp_scale)
+	if role=="sentinel": enemy.hp=(350+elapsed*1.5)
 	if role!="carrier": enemy.radius = radius
 	enemy.cooldown = rng.randf_range(1.4,2.8)
 	if role in ["swarm","line"]: enemy.art_scale *= 0.85
@@ -884,7 +886,7 @@ func _update_enemies(delta: float) -> void:
 				enemy.shot_windup -= delta
 				if enemy.shot_windup <= 0:
 					if hostile_shots.size() < 100:
-						hostile_shots.append({"pos":enemy.position,"vel":enemy.shot_direction*165,"life":5.0})
+						hostile_shots.append({"pos":enemy.position,"vel":enemy.shot_direction*Tempo.SHOT_SPEED,"life":5.0})
 					enemy.cooldown = 2.7
 			elif enemy.cooldown <= 0 and distance < 650:
 				enemy.shot_windup = 0.7
@@ -907,9 +909,9 @@ func _update_enemies(delta: float) -> void:
 				enemy.recovery_left=maxf(0,enemy.recovery_left-delta)
 				velocity=Vector2.ZERO
 			elif enemy.cooldown <= 0:
-				enemy.windup = 0.8
+				enemy.windup = Tempo.CHARGE_WINDUP
 				enemy.charge_direction = direction
-				enemy.cooldown = 3.8
+				enemy.cooldown = Tempo.CHARGE_COOLDOWN
 		# Cache local steering at 10Hz; movement/attacks still simulate every physics tick.
 		enemy.separation_left-=delta
 		if enemy.separation_left<=0:
@@ -920,8 +922,8 @@ func _update_enemies(delta: float) -> void:
 				var offset: Vector2=enemy.position-other.position
 				var d2:=offset.length_squared()
 				if d2>.1 and d2<pow(enemy.radius+other.radius,2): separation+=offset.normalized()*35
-			enemy.separation_velocity=separation.limit_length(60)
-		enemy.position+=(velocity+enemy.separation_velocity)*delta*status_speed
+			enemy.separation_velocity=separation.limit_length(Tempo.SEPARATION_SPEED)
+		enemy.position+=Tempo.steered_velocity(velocity,enemy.separation_velocity,enemy.speed)*delta*status_speed
 		var bounds := enemy_bounds()
 		enemy.position = enemy.position.clamp(bounds.position,bounds.end)
 		enemy.moving = velocity.length_squared() > 1
@@ -1902,10 +1904,7 @@ func _update_trial(delta: float) -> void:
 	var movement := Input.get_vector("move_left","move_right","move_up","move_down")
 	dash_cooldown = maxf(0,dash_cooldown-delta)
 	if Input.is_action_just_pressed("dash"): try_dash(movement)
-	if dash_left>0:
-		dash_left -= delta
-		player.position += dash_direction*750*delta
-	else: player.position += movement*240*relics.movement_multiplier()*delta
+	_move_player(delta,movement)
 	player.position = player.position.clamp(Vector2(90,150),Vector2(1350,480))
 	player.moving = not movement.is_zero_approx()
 	_update_auto_aim()

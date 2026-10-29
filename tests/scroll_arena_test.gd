@@ -35,7 +35,7 @@ func run() -> void:
 	for frame in 300: g._physics_process(1.0/60)
 	Input.action_release("move_right")
 	Input.action_release("move_down")
-	check(absf(g.player.position.distance_to(start)-1200)<1,"Five seconds diagonal travel stays normalized at speed240")
+	check(absf(g.player.position.distance_to(start)-1000)<1,"Five seconds diagonal travel stays normalized at new speed200")
 	check(g.player.position.x>3000 and g.player.position.y>2500,"Player can leave the old one-screen field")
 	check(g.camera.get_screen_center_position().distance_to(g.player.position)<1,"Camera follows the real moving player")
 	check(g.ui.hp_label.get_global_transform_with_canvas().origin==hud,"HUD remains fixed during scroll")
