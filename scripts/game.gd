@@ -332,7 +332,7 @@ func set_arena_profile(profile: String) -> void:
 	camera.limit_top=int(rect.position.y)
 	camera.limit_right=int(rect.end.x)
 	camera.limit_bottom=int(rect.end.y)
-	camera.zoom=Vector2.ONE
+	camera.zoom=Vector2.ONE*(.8 if profile=="scroll" else 1.0)
 	_sync_camera()
 
 func logical_view_size() -> Vector2:
@@ -706,9 +706,10 @@ func damage_enemy(enemy: Node2D, amount: float, direction: Vector2, source := ""
 	if meter != null:
 		if shares.is_empty(): meter.damage(source,amount,enemy.hp,enemy.get_instance_id())
 		else: meter.damage_split(amount,enemy.hp,enemy.get_instance_id(),shares)
-	var effective:=minf(amount,maxf(0,enemy.hp))
 	enemy.hp -= amount
-	damage_numbers.add_hit(enemy,effective)
+	# Show the resolved hit (after shields), not the last few HP of an overkill.
+	# The meter separately retains effective HP damage and overkill.
+	damage_numbers.add_hit(enemy,amount)
 	enemy.flash = 0.1
 	metrics.hits += 1
 	if not enemy.boss: enemy.position += direction*(.6 if enemy.role=="sentinel" else 6.0)
@@ -723,7 +724,9 @@ func damage_enemy(enemy: Node2D, amount: float, direction: Vector2, source := ""
 		encounters.died(enemy)
 		if enemy.role=="sentinel": drop_chest(enemy.position)
 		var coins: int = 0 if enemy.role in ["carrier","escort"] else director.reward(enemy.kind)
-		if coins > 0: gems.append({"pos":enemy.position,"value":coins})
+		# Every kill leaves XP; currency retains its existing one-in-three cadence.
+		var experience: int=6 if enemy.role=="sentinel" else (2 if enemy.kind==3 else 1)
+		gems.append({"pos":enemy.position,"value":coins,"xp":experience})
 		burst(enemy.position,Color("dfb6f5"),5)
 		if enemy.boss: end_run(true)
 
@@ -846,7 +849,7 @@ func spawn_enemy(forced_kind := -1, is_boss := false, requested := Vector2.INF, 
 		point = Vector2(720,180)
 	if point == Vector2.INF:
 		point = director.random_spawn_point(radius)
-	if point == Vector2.INF or not director.available(point,radius,role in ["carrier","escort","sentinel"]): return null
+	if point == Vector2.INF or not director.available(point,radius,role in ["carrier","escort","sentinel","event_wall"]): return null
 	var enemy := Actor.new()
 	actors.add_child(enemy)
 	enemy.position = point
@@ -900,6 +903,9 @@ func _ensure_boss() -> bool:
 func _update_enemies(delta: float) -> void:
 	for enemy in enemies:
 		if enemy.dead: continue
+		if enemy.role.begins_with("event_") and elapsed>=float(enemy.tactics.get("event_until",INF)):
+			enemy.dead=true # Timed despawn grants no kill, XP, money or chest.
+			continue
 		var status_speed: float = magic.behavior.movement_factor(enemy)
 		if status_speed<=0:
 			enemy.moving = false
@@ -912,6 +918,10 @@ func _update_enemies(delta: float) -> void:
 		if enemy.boss:
 			velocity=boss_encounter.update(enemy,delta)
 			if state!="combat": return
+		elif enemy.role=="event_crossing":
+			velocity=enemy.tactics.get("event_direction",Vector2.RIGHT)*enemy.speed
+		elif enemy.role=="event_wall":
+			velocity=Vector2.ZERO
 		elif enemy.role in ["carrier","escort"]:
 			velocity=encounters.velocity(enemy)
 		elif enemy.monster_id in ["paper","ink","rabbit","book","candle"]:
@@ -963,6 +973,7 @@ func _update_enemies(delta: float) -> void:
 				var d2:=offset.length_squared()
 				if d2>.1 and d2<pow(enemy.radius+other.radius,2): separation+=offset.normalized()*35
 			enemy.separation_velocity=separation.limit_length(Tempo.SEPARATION_SPEED)
+		if enemy.role.begins_with("event_"): enemy.separation_velocity=Vector2.ZERO
 		enemy.position+=Tempo.steered_velocity(velocity,enemy.separation_velocity,enemy.speed)*delta*status_speed
 		var bounds := enemy_bounds()
 		enemy.position = enemy.position.clamp(bounds.position,bounds.end)
@@ -979,7 +990,7 @@ func _recycle_distant_enemies() -> void:
 	var relocated := 0
 	for enemy in enemies:
 		if relocated>=3: break
-		if enemy.dead or enemy.boss or enemy.role in ["carrier","escort","sentinel"] or keep.has_point(enemy.position): continue
+		if enemy.dead or enemy.boss or enemy.role.begins_with("event_") or enemy.role in ["carrier","escort","sentinel"] or keep.has_point(enemy.position): continue
 		var point: Vector2=director.random_spawn_point(enemy.radius)
 		if point==Vector2.INF: continue
 		enemy.position=point
@@ -1038,17 +1049,19 @@ func _update_gems(delta: float) -> void:
 		if distance < 145:
 			gem.pos = gem.pos.move_toward(player.position,(200+(145-distance)*5)*delta)
 		if distance < 20:
-			gain_money(gem.value,true)
+			gain_money(gem.value,true,false)
+			combat_rewards.gain_xp(int(gem.get("xp",int(gem.value)*combat_rewards.XP_PER_STONE)))
 			gems.remove_at(i)
 	# Merge old drops rather than accumulating unbounded collectible nodes.
 	if gems.size() > 200:
 		var first: Dictionary = gems.pop_front()
+		gems[0]["xp"]=int(gems[0].get("xp",int(gems[0].value)*combat_rewards.XP_PER_STONE))+int(first.get("xp",int(first.value)*combat_rewards.XP_PER_STONE))
 		gems[0].value += first.value
 
-func gain_money(value: int, combat_drop := false) -> void:
+func gain_money(value: int, combat_drop := false, legacy_xp := true) -> void:
 	if state=="trial": return
 	economy.grant(value)
-	if combat_drop and state=="combat": combat_rewards.gain_xp(value*combat_rewards.XP_PER_STONE)
+	if combat_drop and legacy_xp and state=="combat": combat_rewards.gain_xp(value*combat_rewards.XP_PER_STONE)
 	if combat_drop and state in ["combat","reward"]:
 		var healing := relics.collect(value)
 		if healing>0:

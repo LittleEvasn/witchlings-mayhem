@@ -63,11 +63,11 @@ func run() -> void:
 	g.drop_chest(g.player.position)
 	g.gems=[{"pos":Vector2.ZERO,"value":41}]
 	g.complete_wave()
-	check(g.combat_rewards.stage=="choice" and g.economy.gold==gold+41,"Chest selection at rest does not prevent money-only recovery")
+	check(g.combat_rewards.stage=="opening" and g.economy.gold==gold+41,"Automatic chest at rest does not prevent money-only recovery")
 	g.complete_wave()
 	check(g.economy.gold==gold+41 and g.combat_rewards.total_xp==0,"Pending chest/reentry does not repeat sweep or grant XP")
-	var r: Dictionary=g.combat_rewards.pending[0]
-	check(g.claim_spell_reward(r.id,r.options[0],g.combat_rewards.revision),"Earned chest remains claimable")
+	await process_frame
+	check(not g.combat_rewards.last_chest_results.is_empty(),"Earned chest is automatically paid")
 	g.complete_wave()
 	check(g.state=="shop" and g.economy.gold==gold+41+g.Economy.CLEAR_REWARD,"After chest, rest completes once")
 	fresh()
@@ -94,9 +94,9 @@ func run() -> void:
 	check(g.damage_numbers.entries.is_empty(),"All popups fade and expire")
 	e=target(10)
 	g.damage_enemy(e,50,Vector2.ZERO)
-	check(e.dead and g.damage_numbers.entries[0].amount==10,"Overkill displays health actually removed, not requested50")
+	check(e.dead and g.damage_numbers.entries[0].amount==50,"Overkill displays resolved hit50, not remaining HP10")
 	g.damage_enemy(e,50,Vector2.ZERO)
-	check(g.damage_numbers.entries[0].amount==10,"Dead target cannot display a second hit")
+	check(g.damage_numbers.entries[0].amount==50,"Dead target cannot display a second hit")
 	g.damage_numbers.clear()
 	e=target()
 	g.damage_enemy(e,0,Vector2.ZERO);g.damage_enemy(e,-1,Vector2.ZERO);g.damage_enemy(e,INF,Vector2.ZERO)
@@ -128,7 +128,7 @@ func run() -> void:
 	g.combat_rewards.stage=""
 	g.damage_numbers._process(.7)
 	check(g.damage_numbers.entries.is_empty(),"Resume expires old visual feedback")
-	check(Numbers.number_text(.04)=="0.04" and Numbers.number_text(.001)=="<0.01","Tiny positive hits do not misleadingly show zero")
+	check(Numbers.number_text(.04)=="1" and Numbers.number_text(.001)=="1","Compact display never rounds positive hits down to zero")
 	g.damage_enemy(target(),1,Vector2.ZERO)
 	g.clear_magic()
 	check(g.damage_numbers.entries.is_empty(),"Trial/recipe/run cleanup removes old numbers")

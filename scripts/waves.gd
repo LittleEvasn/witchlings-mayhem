@@ -2,6 +2,7 @@ extends RefCounted
 const RunContent = preload("res://scripts/run_content.gd")
 const Catalog=preload("res://scripts/monster_catalog.gd")
 const Tempo=preload("res://scripts/combat_tempo.gd")
+const Timeline=preload("res://scripts/survival_timeline.gd")
 ## Two independent randomized streams: scattered arrivals and occasional local packs.
 ## Cadence is adapted to our five-wave arena; no fixed entrance or advance warning.
 const WAVES := [
@@ -39,6 +40,7 @@ var potential := 0
 var drop_counter := 0
 var next_elite := 120.0
 var stats: Dictionary = {}
+var event_index:=0
 
 func _init(owner_game: Node2D) -> void:
 	game = owner_game
@@ -48,10 +50,7 @@ static func config(number: int) -> Dictionary:
 	return WAVES[clampi(number-1,0,4)].duplicate(true)
 
 static func population(seconds: float) -> int:
-	var t:=clampf(seconds,0,1800)
-	var points: Array=[15,70,140,210,270,300]
-	var index:=mini(4,int(t/360))
-	return roundi(lerpf(points[index],points[index+1],fmod(t,360)/360.0)) if t<1800 else 180
+	return Timeline.target(seconds)
 
 static func forecast(number: int) -> String:
 	var c := config(number)
@@ -62,12 +61,13 @@ func reset() -> void:
 	enabled = true
 	last_time = 0.0
 	next_normal = game.wave_time+0.5
-	next_elite=(floorf(game.elapsed/120.0)+1)*120.0
+	event_index=0
+	while event_index<Timeline.EVENTS.size() and Timeline.EVENTS[event_index].at<game.wave_time: event_index+=1
 	drop_counter=0
-	next_pack = game.wave_time+roll_range(config(game.wave).first_pack)
+	next_pack = INF # Named timeline events replace the old perpetual pack stream.
 	dropped = 0
 	potential = 0
-	stats = {"spawned":0,"skipped":0,"packs":0,"scattered":0,"grouped":0,"heavy":0,"ranged":0}
+	stats = {"spawned":0,"skipped":0,"packs":0,"scattered":0,"grouped":0,"heavy":0,"ranged":0,"events":[]}
 
 func clear() -> void:
 	pending.clear()
@@ -79,10 +79,7 @@ func roll_range(bounds: Array) -> float:
 	return game.rng.randf_range(float(bounds[0]),float(bounds[1]))
 
 func normal_interval() -> float:
-	var c := config(game.wave)
-	# Gentle pressure growth inside each wave, never a scheduled safe/attack phase.
-	var breath:=1.2 if fmod(game.wave_time,30.0)>23.0 else 1.0
-	return roll_range(c.normal_interval)*lerpf(1.1,0.85,clampf(game.wave_time/c.duration,0,1))*breath
+	return Timeline.interval(game.elapsed)*game.rng.randf_range(.9,1.1)
 
 func update() -> void:
 	if game.state != "combat": return
@@ -97,25 +94,24 @@ func update() -> void:
 		pending.clear()
 		if enabled:
 			next_normal = now+normal_interval()
-			next_pack = now+roll_range(c.pack_interval)
+		# Missed events are discarded, never released as a catch-up burst.
+		while event_index<Timeline.EVENTS.size() and Timeline.EVENTS[event_index].at<now: event_index+=1
 		last_time = now
 		return
 	last_time = now
-	if enabled and game.elapsed>=next_elite and not game.final_boss_started:
-		var elite: Node2D=game.spawn_enemy(3,false,Vector2.INF,"sentinel")
-		next_elite=game.elapsed+(120.0 if elite!=null else 1.0)
+	if enabled and event_index<Timeline.EVENTS.size() and now>=Timeline.EVENTS[event_index].at and not game.final_boss_started:
+		var event: Dictionary=Timeline.EVENTS[event_index]
+		event_index+=1
+		if now-event.at<=STALE_SECONDS: start_event(event.type)
 	if enabled and now >= next_normal:
-		var living: int=game.enemies.size()
+		var living: int=game.enemies.filter(func(e):return not e.dead).size()
 		var desired:=population(game.elapsed)
-		var count:=clampi(desired-living,1,10)
+		var count:=clampi(desired-living,0,Timeline.batch(game.elapsed))
 		if living>=int(c.cap): count=0
 		for i in count:
 			var choice:=choose_normal()
-			spawn(choice.kind,choice.role,Vector2.INF,false,Catalog.pick(game,choice.kind,choice.role))
-		next_normal=now+.25
-	if enabled and now >= next_pack:
-		schedule_pack()
-		next_pack = now+roll_range(c.pack_interval)
+			spawn(choice.kind,choice.role,Vector2.INF,false,choice.get("species",Catalog.pick(game,choice.kind,choice.role)))
+		next_normal=now+normal_interval()
 	for i in range(pending.size()-1,-1,-1):
 		var request: Dictionary = pending[i]
 		if now < request.at: continue
@@ -131,6 +127,10 @@ func update() -> void:
 		spawn(request.kind,request.role,point,true,request.get("species",""))
 
 func choose_normal() -> Dictionary:
+	# The opening has one readable threat; subsequent minutes introduce a new mix.
+	if game.elapsed<60: return {"kind":1,"role":"normal","species":"bat"}
+	if game.elapsed<120: return {"kind":1,"role":"normal","species":"paper" if game.rng.randf()<.6 else "bat"}
+	if game.elapsed<240: return {"kind":1,"role":"normal","species":"jelly" if game.rng.randf()<.7 else "paper"}
 	var weights: Array = config(game.wave).weights
 	var ticket: int = game.rng.randi_range(0,int(weights.reduce(func(a,b):return a+b))-1)
 	for i in weights.size():
@@ -138,6 +138,39 @@ func choose_normal() -> Dictionary:
 		if ticket < 0:
 			return {"kind":2 if i==2 else (3 if i==3 else 1),"role":"swarm" if i==1 else "normal"}
 	return {"kind":1,"role":"normal"}
+
+func start_event(type: String) -> void:
+	stats.events.append({"at":game.wave_time,"type":type})
+	if type=="elite":
+		game.spawn_enemy(3,false,Vector2.INF,"sentinel")
+		return
+	if type=="crossing":
+		var frame:=spawn_frame()
+		var edge: int=game.rng.randi_range(0,3)
+		var along: float=game.player.position.y if edge<2 else game.player.position.x
+		var center:=edge_point(edge,along,frame)
+		var direction: Vector2=center.direction_to(game.player.position)
+		for i in 18:
+			var at:=edge_point(edge,along+(i%6-2.5)*55,frame)-direction*floorf(i/6.0)*65
+			var enemy: Node2D=game.spawn_enemy(1,false,at,"event_crossing","bat")
+			if enemy!=null:
+				enemy.speed=170
+				enemy.tactics.event_direction=direction
+				enemy.tactics.event_until=game.elapsed+14
+		game.announce("박쥐 떼가 전장을 가로질러!",2)
+	elif type=="ring":
+		# Destructible, stationary perimeter with a visible escape gap; no instant contact.
+		var center: Vector2=game.player.position
+		var gap: int=game.rng.randi_range(0,23)
+		for i in 24:
+			if posmod(i-gap,24)<3: continue
+			var at:=center+Vector2.RIGHT.rotated(i*TAU/24)*370
+			var enemy: Node2D=game.spawn_enemy(1,false,at,"event_wall","jelly")
+			if enemy!=null:
+				enemy.hp=35*float(config(game.wave).hp_scale)
+				enemy.max_hp=enemy.hp
+				enemy.tactics.event_until=game.elapsed+18
+		game.announce("실패작이 둘러쌌어! 틈으로 빠져나가거나 뚫어봐.",2)
 
 func spawn(kind: int, role: String, point: Vector2, grouped: bool, species := "") -> void:
 	var enemy = game.spawn_enemy(kind,false,point,role,species)

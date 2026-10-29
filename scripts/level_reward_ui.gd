@@ -29,7 +29,7 @@ static func build(ui: CanvasLayer) -> void:
 	var title: String="상자 보상" if chest else "레벨 %d!"%int(first.get("level",r.level))
 	var heading:=Look.text(ui,root,title,Vector2(200,110),38,Look.PAPER,1040,true)
 	heading.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	Look.chip(ui,root,"전투 정지 · 안심하고 골라요",Rect2(565,166,310,32),Look.LILAC)
+	Look.chip(ui,root,"전투 정지 · 보상 자동 획득" if chest else "전투 정지 · 안심하고 골라요",Rect2(565,166,310,32),Look.LILAC)
 	if r.stage in ["chest","opening"]:
 		Look.card(ui,root,Rect2(460,255,520,360),Look.PAPER,36)
 		var seal:=Look.icon(ui,root,"charge",Rect2(650,286,140,140))
