@@ -1,0 +1,303 @@
+{
+	"active_category": "complete",
+	"catalog": {
+		"attacks": 36,
+		"connectors": 4,
+		"modifiers": 20,
+		"token_ids": [
+			"ball_lightning",
+			"bloom",
+			"bolt",
+			"boomerang",
+			"bounce",
+			"charge",
+			"chase_pierce",
+			"clock_satellite",
+			"cold_flame",
+			"collapse_vortex",
+			"devour_bounce",
+			"disintegration",
+			"dragon_breath",
+			"dual_event",
+			"echo",
+			"echo_return",
+			"element_fire",
+			"element_ice",
+			"element_lightning",
+			"element_poison",
+			"ember_path",
+			"expire",
+			"fall",
+			"fan",
+			"fireball",
+			"flamethrower",
+			"frost",
+			"giant",
+			"glitter_bomb",
+			"growing_echo",
+			"growing_firecore",
+			"impact",
+			"judgement",
+			"laser",
+			"meteor",
+			"meteor_thorn",
+			"mirror_trail",
+			"orbit",
+			"orbit_afterimage",
+			"orbit_vortex",
+			"pierce",
+			"plasma_beam",
+			"poison_flame",
+			"poison_mist",
+			"satellite",
+			"seek",
+			"shard_satellite",
+			"shining_spear",
+			"split",
+			"temperature",
+			"thermal_trail",
+			"thorn",
+			"thunder",
+			"thunder_seal",
+			"timed_thorn",
+			"timer",
+			"trail",
+			"triple_frost",
+			"twin_moons",
+			"vortex"
+		],
+		"total": 60
+	},
+	"counts": {
+		"attack_connector_attack": 5184,
+		"attack_modifier": 1440,
+		"double_modifiers": 28800,
+		"ordered_pairs": 3600,
+		"seeded_8_slots": 50000,
+		"triple_chain": 746496
+	},
+	"elapsed_ms": {
+		"attack_connector_attack": 7856.897,
+		"attack_modifier": 1170.036,
+		"double_modifiers": 6836.845,
+		"ordered_pairs": 984.646,
+		"seeded_8_slots": 286267.572,
+		"triple_chain": 270591.032
+	},
+	"errors": [
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"bounce"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"charge"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"chase_pierce"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"devour_bounce"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"echo"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"element_fire"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"element_ice"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"element_lightning"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"element_poison"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"fall"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"fan"
+			]
+		},
+		{
+			"category": "ordered_pairs",
+			"diagnostics": [
+				{
+					"code": "unused_modifier",
+					"reason": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+					"severity": "inactive",
+					"slot": 2
+				}
+			],
+			"error": "3번 칸: 다음 연결 전까지 실행 가능한 공격이 없어 이 보조는 적용되지 않아요.",
+			"recipe": [
+				"bolt",
+				"ball_lightning",
+				"giant"
+			]
+		}
+	],
+	"invalid": {
+		"attack_modifier": 540,
+		"double_modifiers": 11700,
+		"ordered_pairs": 1200,
+		"seeded_8_slots": 47534
+	},
+	"seed": 20261030,
+	"status": "complete",
+	"total_compile_calls": 835520,
+	"updated_unix": 1793296684.845
+}

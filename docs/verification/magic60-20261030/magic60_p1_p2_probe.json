@@ -1,0 +1,120 @@
+{
+	"cases": [
+		{
+			"data": {
+				"natural_contact": {
+					"clouds": 0,
+					"fusion_count": 1.0,
+					"jobs": 8,
+					"projects": 0,
+					"victim_hp_loss": 56.591999999946,
+					"zones": 0
+				},
+				"natural_expiry": {
+					"clouds": 0,
+					"fusion_count": 0,
+					"jobs": 0,
+					"projects_left": 0,
+					"zones": 0
+				}
+			},
+			"label": "P1-01 glitter_bomb"
+		},
+		{
+			"data": {
+				"natural_contact": {
+					"clouds": 1,
+					"fusion_count": 1.0,
+					"jobs": 0,
+					"projects": 0,
+					"victim_hp_loss": 36.0,
+					"zones": 0
+				},
+				"natural_expiry": {
+					"clouds": 0,
+					"fusion_count": 0,
+					"jobs": 0,
+					"projects_left": 0,
+					"zones": 0
+				}
+			},
+			"label": "P1-01 poison_mist"
+		},
+		{
+			"data": {
+				"after_contact_projectiles": 0,
+				"bounce_redirects": 0,
+				"fusion_twin_moons": 1.0,
+				"initial_projectiles": 1,
+				"target_hp_loss": 60.4799999999959,
+				"triggers": 0
+			},
+			"label": "P1-03 twin_moons_single_target"
+		},
+		{
+			"data": {
+				"actual": [
+					889.921875,
+					453.748901367188
+				],
+				"false_sweep_target": [
+					844.710998535156,
+					457.869232177734
+				],
+				"old": [
+					800.0,
+					450.0
+				],
+				"predicted": [
+					889.921875,
+					453.748901367188
+				],
+				"projectiles_left": 0,
+				"step_distance": 89.9999847412109,
+				"swept_collision_damage": 22.0
+			},
+			"label": "P1-04_05 orbit_bolt_first_step"
+		},
+		{
+			"data": {
+				"distance_to_aim": 200.0,
+				"distance_to_nearest": 0.0,
+				"explicit_target": [
+					1100.0,
+					450.0
+				],
+				"nearest_enemy": [
+					900.0,
+					450.0
+				],
+				"scheduled_landing": [
+					900.0,
+					450.0
+				]
+			},
+			"label": "P1-09 fall_target"
+		},
+		{
+			"data": {
+				"clock_lines": 1.0,
+				"damage_effective": 194.4,
+				"line_a": [
+					724.429565429688,
+					392.431701660156
+				],
+				"line_b": [
+					875.570434570313,
+					507.568298339844
+				],
+				"per_target_hp_loss": [
+					64.8000000000175,
+					64.8000000000175,
+					64.8000000000175
+				],
+				"target_count": 3
+			},
+			"label": "P2 clock_satellite_overlap"
+		}
+	],
+	"seed": 7301
+}

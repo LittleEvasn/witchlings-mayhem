@@ -1,0 +1,1387 @@
+{
+	"rows": [
+		{
+			"first_center_sample": {
+				"center": [
+					889.687683105469,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 90.7525939941406,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 90.7525939941406,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.687683105469,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 90.7525939941406,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 90.7525939941406,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.687683105469,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 90.7525939941406,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 90.7525939941406,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.687683105469,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 90.7525939941406,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 90.7525939941406,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.618286132813,
+					459.156066894531
+				],
+				"damage": 0.0,
+				"distance": 110.496055603027,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.496055603027,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.618286132813,
+					459.156066894531
+				],
+				"damage": 0.0,
+				"distance": 110.496055603027,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.496055603027,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.618286132813,
+					459.156066894531
+				],
+				"damage": 0.0,
+				"distance": 110.496055603027,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.496055603027,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.618286132813,
+					459.156066894531
+				],
+				"damage": 0.0,
+				"distance": 110.496055603027,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.496055603027,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.548889160156,
+					460.82080078125
+				],
+				"damage": 0.0,
+				"distance": 130.317794799805,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.317794799805,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.548889160156,
+					460.82080078125
+				],
+				"damage": 0.0,
+				"distance": 130.317794799805,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.317794799805,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.548889160156,
+					460.82080078125
+				],
+				"damage": 0.0,
+				"distance": 130.317794799805,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.317794799805,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.548889160156,
+					460.82080078125
+				],
+				"damage": 0.0,
+				"distance": 130.317794799805,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.317794799805,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.4794921875,
+					462.485534667969
+				],
+				"damage": 0.0,
+				"distance": 150.186752319336,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.186752319336,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.4794921875,
+					462.485534667969
+				],
+				"damage": 0.0,
+				"distance": 150.186752319336,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.186752319336,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.4794921875,
+					462.485534667969
+				],
+				"damage": 0.0,
+				"distance": 150.186752319336,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.186752319336,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.4794921875,
+					462.485534667969
+				],
+				"damage": 0.0,
+				"distance": 150.186752319336,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.186752319336,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.987670898438,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 111.227821350098,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					518.799987792969
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "variant",
+			"max_zone_path_distance": 111.227821350098,
+			"meter": {
+				"orb_0_slot_2": 1.0,
+				"path_patches": 3.0,
+				"stage_casts": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit",
+				"fan",
+				"ember_path"
+			],
+			"sampled_damage": 0.0,
+			"zones": 3
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.987670898438,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 91.0498428344727,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "variant",
+			"max_zone_path_distance": 91.0498428344727,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit",
+				"thermal_trail"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.987670898438,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 91.0498428344727,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "variant",
+			"max_zone_path_distance": 91.0498428344727,
+			"meter": {
+				"mirror_path_replays": 1.0,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit",
+				"mirror_trail"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.848876953125,
+					460.82080078125
+				],
+				"damage": 0.0,
+				"distance": 130.616729736328,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "variant",
+			"max_zone_path_distance": 130.616729736328,
+			"meter": {
+				"damage_effective": 2.4,
+				"damage_events": 2.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 2.4,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"trail_copies": 2.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit_afterimage",
+				"ember_path"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					989.687683105469,
+					457.491333007813
+				],
+				"damage": 0.0,
+				"distance": 142.771087646484,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					847.200012207031,
+					450.0
+				]
+			},
+			"frames": 60,
+			"hz": 60,
+			"label": "variant",
+			"max_zone_path_distance": 142.771087646484,
+			"meter": {
+				"damage_effective": 26.55,
+				"damage_events": 4.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 26.55,
+				"orb_0_slot_0": 1.0,
+				"orb_0_slot_3": 1.0,
+				"path_patches": 3.0,
+				"projectile_contacts": 1.0,
+				"projectiles_contacted": 1.0,
+				"projectiles_emitted": 1.0,
+				"projectiles_finished": 1.0,
+				"stage_casts": 2.0,
+				"trigger_impact": 1.0,
+				"triggers": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"bolt",
+				"impact",
+				"orbit",
+				"ember_path"
+			],
+			"sampled_damage": 0.0,
+			"zones": 3
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.921875,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 91.082405090332,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 91.082405090332,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.921875,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 91.082405090332,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 91.082405090332,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.921875,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 91.082405090332,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 91.082405090332,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					889.921875,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 91.082405090332,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 91.082405090332,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@0",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.904541015625,
+					454.582000732422
+				],
+				"damage": 0.0,
+				"distance": 110.827217102051,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.827217102051,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.904541015625,
+					454.582000732422
+				],
+				"damage": 0.0,
+				"distance": 110.827217102051,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.827217102051,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.904541015625,
+					454.582000732422
+				],
+				"damage": 0.0,
+				"distance": 110.827217102051,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.827217102051,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					909.904541015625,
+					454.582000732422
+				],
+				"damage": 0.0,
+				"distance": 110.827217102051,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 110.827217102051,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@1",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.88720703125,
+					455.415100097656
+				],
+				"damage": 0.0,
+				"distance": 130.649703979492,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.649703979492,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.88720703125,
+					455.415100097656
+				],
+				"damage": 0.0,
+				"distance": 130.649703979492,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.649703979492,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.88720703125,
+					455.415100097656
+				],
+				"damage": 0.0,
+				"distance": 130.649703979492,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.649703979492,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					929.88720703125,
+					455.415100097656
+				],
+				"damage": 0.0,
+				"distance": 130.649703979492,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 130.649703979492,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@2",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.869812011719,
+					456.248199462891
+				],
+				"damage": 0.0,
+				"distance": 150.519149780273,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.519149780273,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@0"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.869812011719,
+					456.248199462891
+				],
+				"damage": 0.0,
+				"distance": 150.519149780273,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.519149780273,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@1"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.869812011719,
+					456.248199462891
+				],
+				"damage": 0.0,
+				"distance": 150.519149780273,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.519149780273,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@2"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					949.869812011719,
+					456.248199462891
+				],
+				"damage": 0.0,
+				"distance": 150.519149780273,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "root_rank",
+			"max_zone_path_distance": 150.519149780273,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@3"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					890.221862792969,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 112.381187438965,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					518.799987792969
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "variant",
+			"max_zone_path_distance": 112.381187438965,
+			"meter": {
+				"orb_0_slot_2": 1.0,
+				"path_patches": 3.0,
+				"stage_casts": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit",
+				"fan",
+				"ember_path"
+			],
+			"sampled_damage": 0.0,
+			"zones": 3
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					890.221862792969,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 91.3787689208984,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "variant",
+			"max_zone_path_distance": 91.3787689208984,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit",
+				"thermal_trail"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					890.221862792969,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 91.3787689208984,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "variant",
+			"max_zone_path_distance": 91.3787689208984,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit",
+				"mirror_trail"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					930.187133789063,
+					455.415100097656
+				],
+				"damage": 0.0,
+				"distance": 130.948120117188,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					800.0,
+					466.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "variant",
+			"max_zone_path_distance": 130.948120117188,
+			"meter": {
+				"damage_effective": 1.2,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 1.2,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"trail_copies": 2.0
+			},
+			"moved": true,
+			"recipe": [
+				"orbit_afterimage",
+				"ember_path"
+			],
+			"sampled_damage": 0.0,
+			"zones": 1
+		},
+		{
+			"first_center_sample": {
+				"center": [
+					989.921875,
+					453.748901367188
+				],
+				"damage": 0.0,
+				"distance": 142.792770385742,
+				"frame": 1,
+				"geometric_hit": false,
+				"path": [
+					847.200012207031,
+					450.0
+				]
+			},
+			"frames": 60,
+			"hz": 120,
+			"label": "variant",
+			"max_zone_path_distance": 142.792770385742,
+			"meter": {
+				"damage_effective": 24.75,
+				"damage_events": 2.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 24.75,
+				"orb_0_slot_0": 1.0,
+				"orb_0_slot_3": 1.0,
+				"path_patches": 3.0,
+				"projectile_contacts": 1.0,
+				"projectiles_contacted": 1.0,
+				"projectiles_emitted": 1.0,
+				"projectiles_finished": 1.0,
+				"stage_casts": 2.0,
+				"trigger_impact": 1.0,
+				"triggers": 1.0
+			},
+			"moved": true,
+			"recipe": [
+				"bolt",
+				"impact",
+				"orbit",
+				"ember_path"
+			],
+			"sampled_damage": 0.0,
+			"zones": 3
+		}
+	]
+}

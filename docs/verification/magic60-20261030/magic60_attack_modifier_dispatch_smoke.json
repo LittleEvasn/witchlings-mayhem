@@ -1,0 +1,16 @@
+{
+	"catalog": {
+		"attacks": 36,
+		"modifiers": 20
+	},
+	"first_anomalies": [],
+	"totals": {
+		"attempted": 1440,
+		"cleanup_failures": 0,
+		"compiled": 1440,
+		"effective_damage_positive": 484,
+		"emitted": 1440,
+		"normal_end_observed": 836,
+		"unrunnable": 0
+	}
+}

@@ -1,0 +1,63 @@
+{
+	"rates": {
+		"120": {
+			"first_mismatch": {
+				"actual_damage": 0.0,
+				"distance": 91.3787689208984,
+				"enemy_radius": 18.0,
+				"frame": 1,
+				"geometric_hit": false,
+				"path_point": [
+					800.0,
+					466.0
+				],
+				"zone_damage": 5.5,
+				"zone_pos": [
+					890.221862792969,
+					453.748901367188
+				],
+				"zone_radius": 24.0
+			},
+			"frames": 60,
+			"last_zone_pos": [
+				745.896362304688,
+				503.862487792969
+			],
+			"max_zone_path_distance": 91.3787689208984,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			}
+		},
+		"60": {
+			"first_mismatch": {
+				"actual_damage": 0.0,
+				"distance": 91.0498428344727,
+				"enemy_radius": 18.0,
+				"frame": 1,
+				"geometric_hit": false,
+				"path_point": [
+					800.0,
+					466.0
+				],
+				"zone_damage": 5.5,
+				"zone_pos": [
+					889.987670898438,
+					457.491333007813
+				],
+				"zone_radius": 24.0
+			},
+			"frames": 60,
+			"last_zone_pos": null,
+			"max_zone_path_distance": 103.31078338623,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			}
+		}
+	},
+	"recipe": "[orbit, ember_path]",
+	"seed": 7301
+}

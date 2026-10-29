@@ -1,0 +1,518 @@
+{
+  "project": "C:/Users/user/Desktop/Witchlings' Mayhem/witchlings' mayhem",
+  "baseline_commit": "b5a8530b0be72707d7c9ddd0c12e028d4c6b21c2",
+  "tested_head_after_parent_metadata_commit": "71f9ec5 (parent-reported; project code unchanged)",
+  "engine": "Godot 4.6.2.stable.official.71f334935",
+  "scope": "Read-only audit. No game code, product tests, docs, or project settings modified. Test harnesses and evidence only under artifacts/.",
+  "catalog": {
+    "registered": 60,
+    "attacks": 36,
+    "modifiers": 20,
+    "connectors": 4,
+    "status": "pass"
+  },
+  "test_categories": {
+    "existing_magic60_test": {
+      "command": "python tools/run_tests.py magic60_test",
+      "attempted": 808,
+      "executed": 808,
+      "passed": 808,
+      "failed": 0,
+      "not_run": 0,
+      "result": "PASS"
+    },
+    "existing_connector_scope_test": {
+      "command": "python tools/run_tests.py connector_scope_test",
+      "attempted": 181,
+      "executed": 181,
+      "passed": 181,
+      "failed": 0,
+      "not_run": 0,
+      "result": "PASS"
+    },
+    "ordered_token_pairs_60x60": {
+      "attempted": 3600,
+      "executed": 3600,
+      "compiled_ok": 3600,
+      "failed": 0,
+      "not_run": 0,
+      "fixture": "Every ordered token pair embedded in [bolt, A, bloom, B, fireball]. First harness used trailing modifiers and marked 1200 warnings as failures; corrected fixture was rerun and passed 3600/3600.",
+      "duration_ms_cumulative": 1335.877
+    },
+    "attack_modifier_compile": {
+      "distinct_pairs": 720,
+      "base_inputs": 720,
+      "max_rank_inputs": 720,
+      "attempted": 1440,
+      "executed": 1440,
+      "compiled_ok": 1440,
+      "failed": 0,
+      "not_run": 0,
+      "rank_handling": "Rank 3 for upgradeable basic entries; completed fusions normalized to their valid unranked identity.",
+      "duration_ms_cumulative": 1557.498
+    },
+    "double_modifier_compile": {
+      "distinct_inputs": 14400,
+      "base_inputs": 14400,
+      "max_rank_inputs": 14400,
+      "attempted": 28800,
+      "executed": 28800,
+      "compiled_ok": 28800,
+      "failed": 0,
+      "not_run": 0,
+      "rank_handling": "Rank 3 for upgradeable basic entries; completed fusions normalized to their valid unranked identity.",
+      "duration_ms_cumulative": 8023.729
+    },
+    "attack_connector_attack_compile": {
+      "attempted": 5184,
+      "executed": 5184,
+      "compiled_ok": 5184,
+      "failed": 0,
+      "not_run": 0,
+      "duration_ms_cumulative": 7856.897
+    },
+    "attack_connector_attack_connector_attack_compile": {
+      "attempted": 746496,
+      "executed": 746496,
+      "compiled_ok_and_nested_3_stages": 746496,
+      "failed": 0,
+      "not_run": 0,
+      "duration_ms_cumulative": 270591.032,
+      "chunk_progress": "saved every 5000; console milestones every 50000"
+    },
+    "seeded_8_slot_compile": {
+      "attempted": 50000,
+      "executed": 50000,
+      "compiled_ok": 50000,
+      "failed": 0,
+      "not_run": 0,
+      "seed": 20261030,
+      "recipe_shape": "4 attacks / 3 connectors / 1 modifier",
+      "duration_ms_cumulative": 286267.572
+    },
+    "all_compile_matrix_inputs": {
+      "attempted": 835520,
+      "executed": 835520,
+      "passed": 835520,
+      "failed": 0,
+      "not_run": 0,
+      "note": "Sum of successful corrected Godot compile categories above; not damage/lifecycle passes."
+    },
+    "attack_modifier_real_lifecycle": {
+      "distinct_pairs": 720,
+      "rank_inputs": 1440,
+      "attempted": 1440,
+      "executed": 1440,
+      "compiled_and_emitted": 1440,
+      "positive_effective_damage": 1384,
+      "no_damage_observed": 56,
+      "normal_end_markers": 1022,
+      "objects_remaining_at_10_seconds": 1,
+      "forced_clear_failures_in_dispatch_smoke": 0,
+      "unrunnable": 0,
+      "not_run": 0,
+      "seed": 7301,
+      "duration_each": "10.0 simulated seconds at fixed 60 Hz; 864000 total simulation frames",
+      "no_damage_classification": "55 cases were ember_path/thermal_trail without targets near the footpath; a target-on-path recheck is below. One orbit_afterimage+frost target was outside the instantaneous cone. These are fixture misses, not product passes or confirmed product failures.",
+      "residual_classification": "[pierce@3, thorn@3] retained one valid thorn zone at 10.0 s (age 8.3 s, life 0.7 s); 12.5 s focused follow-up had no zones by 11.0 s.",
+      "forced_production_lifetime_changes": false
+    },
+    "p0_orbit_ember_reproduction": {
+      "attempted": 42,
+      "executed": 42,
+      "confirmed_center_path_mismatch": 42,
+      "failed_expected_alignment": 42,
+      "passed": 0,
+      "not_run": 0,
+      "cases": "16 orbit@0..3 × ember_path@0..3 combinations at both 60 and 120 Hz (32), plus fan, thermal_trail, mirror_trail, orbit_afterimage, and linked fixed-anchor variants at both rates (10).",
+      "observed_distance_px": "90.75 to 150.52",
+      "target": "radius 18 placed at displayed zone center",
+      "geometric_path_hit": false,
+      "effective_damage": 0,
+      "note": "Zone position moves while its path_points[0] remains at the installation coordinate."
+    },
+    "path_target_matrix": {
+      "attempted": 80,
+      "executed": 80,
+      "actual_damage_positive": 68,
+      "confirmed_p0_misses": 8,
+      "no_zone_in_one_tick_fall_fixture": 4,
+      "not_run": 0,
+      "note": "4 fall cases were rerun through actual scheduled landing below."
+    },
+    "fall_path_landing_followup": {
+      "attempted": 4,
+      "executed": 4,
+      "landed_events": 4,
+      "zones_created": 12,
+      "actual_damage_positive": 4,
+      "geometric_path_hit": true,
+      "failed": 0,
+      "not_run": 0,
+      "recipes": [
+        "fall + ember_path",
+        "fall@3 + ember_path@3",
+        "fall + thermal_trail",
+        "fall@3 + thermal_trail"
+      ]
+    },
+    "connector_event_injection": {
+      "sources_attempted": 5184,
+      "sources_executed": 5184,
+      "compile_failures": 0,
+      "events_injected": 6480,
+      "triggers_observed": 6480,
+      "mismatches": 0,
+      "passed": 6480,
+      "failed": 0,
+      "not_run": 0,
+      "classification": "Synthetic production runtime trigger injection only; not natural impact/expiry/timer occurrence."
+    },
+    "named_regressions": {
+      "attempted_cases": 6,
+      "executed_cases": 6,
+      "confirmed_findings": [
+        "P1-01 glitter_bomb natural expiry omits shard jobs; collision produces 8 jobs",
+        "P1-01 poison_mist natural expiry omits poison cloud; collision produces one cloud",
+        "P1-03 twin_moons branches on first collision with one target despite zero bounce_redirects",
+        "P1-04/05 orbit+bolt moves 90 px on first update; false swept segment contact deals 22 damage",
+        "P1-09 fall overwrites explicit target with nearest enemy",
+        "P2-01 clock_satellite overlap applies repeated area damage"
+      ],
+      "not_run": 0
+    },
+    "named_edge_probes": {
+      "attempted_cases": 11,
+      "executed_cases": 11,
+      "observations": [
+        "P1-04 orbit+boomerang follows orbit position exactly while Bezier counterfactual is 44.72 px away and leg_age also advances",
+        "P1-06 installed thorn/vortex zones keep kind==attack; speed field remains but no type error reproduced in two tested recipes",
+        "P1-07 orbit+frost is an immediate flash at x=890, deals 10 to the in-cone target; no projectile or active orbit",
+        "P2-03 stationary trail+frost creates two trail copies with zero player displacement",
+        "P2-04 giant@3 laser width=20, scale=2.5, length remains 480",
+        "P2-08 1.51s equal duration: 30/60/120Hz and 0.25s spikes cause 5 status hits/15hp; 0.5s spikes cause 4 hits/12hp"
+      ],
+      "not_run": 0
+    },
+    "thorn_lifetime_followup": {
+      "attempted": 1,
+      "executed": 1,
+      "simulated_seconds": 12.5,
+      "zone_remains_at_10s": true,
+      "zones_by_11s": 0,
+      "classified": "Late-installed finite thorn, not a leak."
+    },
+    "not_run_categories": [
+      "full natural event behavior for all 5184 connector sources",
+      "all attack/modifier pairs at native full duration beyond the specified 10s sample",
+      "30-minute fun/balance and rendered GPU FPS"
+    ],
+    "elapsed_ms_cumulative_semantics": "Matrix harness values are cumulative offsets from process start, not per-category durations. Supplement value 39480.466 ms is total supplement-process elapsed.",
+    "four_orb_stress": {
+      "batches_attempted": 9,
+      "batches_executed": 9,
+      "frames_per_batch": 240,
+      "stationary_enemies": 300,
+      "attacks_covered": 36,
+      "blocked_or_evicted_counters": 0,
+      "functional_assertions_failed": 0,
+      "functional_result": "pass_observed; all 9 batches executed without blocked/evicted counters",
+      "performance_budget_result": "fail_observed",
+      "performance_budget_threshold_cpu_ms": 16.667,
+      "worst_batch": {
+        "batch": 1,
+        "recipes": [
+          "echo@3 + split@3 + clock_satellite",
+          "echo@3 + split@3 + cold_flame",
+          "echo@3 + split@3 + collapse_vortex",
+          "echo@3 + split@3 + disintegration"
+        ],
+        "cpu_p95_ms": 189.331,
+        "cpu_max_ms": 315.961,
+        "max_objects": {
+          "beams": 17,
+          "clouds": 0,
+          "jobs": 5,
+          "orbits": 24,
+          "projectiles": 2,
+          "strikes": 0,
+          "zones": 40
+        }
+      },
+      "repeat_runs": [
+        {
+          "frames": 240,
+          "mean_ms": 61.6101166666667,
+          "p95_ms": 125.285,
+          "p99_ms": 195.381,
+          "max_ms": 233.338,
+          "frames_over_16_667_ms": 208,
+          "frames_over_33_333_ms": 179
+        },
+        {
+          "frames": 240,
+          "mean_ms": 72.4697083333333,
+          "p95_ms": 148.539,
+          "p99_ms": 275.445,
+          "max_ms": 323.647,
+          "frames_over_16_667_ms": 222,
+          "frames_over_33_333_ms": 193
+        }
+      ],
+      "measurement_limit": "Headless CPU time only; no rendered FPS claim."
+    },
+    "compile_harness_validity_note": "Initial compile pilot included invalid fused-token @3 rank fixtures in some inputs. Those warnings are not product failures and are excluded from pass/fail totals; corrected valid-rank supplemental matrices plus the valid triple-chain and A-C-A cases are the authoritative results."
+  },
+  "artifacts": [
+    "artifacts/magic60_compile_matrix.json",
+    "artifacts/magic60_compile_supplement.json",
+    "artifacts/magic60_attack_modifier_dispatch_smoke.json",
+    "artifacts/magic60_attack_modifier_lifecycle.json",
+    "artifacts/magic60_orbit_variant_probe.json",
+    "artifacts/magic60_path_target_matrix.json",
+    "artifacts/magic60_fall_path_probe.json",
+    "artifacts/magic60_connector_injection.json",
+    "artifacts/magic60_four_orb_stress.json",
+    "artifacts/magic60_stress_batch2_repeat.json",
+    "artifacts/magic60_p1_p2_probe.json",
+    "artifacts/magic60_named_edge_probes.json",
+    "artifacts/magic60_thorn_tail_probe.json",
+    "artifacts/magic60_unresolved_edge_probe.json",
+    "artifacts/magic60_cap_saturation_probe.json",
+    "artifacts/magic60_cap_saturation_probe.console.txt",
+    "artifacts/magic60_dual_event_damage_probe.json",
+    "artifacts/magic60_dual_event_damage_probe.gd",
+    "artifacts/magic60_dual_event_damage_probe.console.txt"
+  ],
+  "p1_02_damage_lifecycle": {
+    "attempted": 5,
+    "executed": 5,
+    "failed": 0,
+    "not_run": 0,
+    "root_event_injection": 1,
+    "descendant_lifecycle": "real Godot projectile collision and damage path",
+    "cases": [
+      {
+        "contact_events": 1.0,
+        "damage_field": 22.0,
+        "factor": 1.0,
+        "hp_loss": 22.0,
+        "label": "direct_bolt",
+        "potency": 1.0
+      },
+      {
+        "child_count": 1,
+        "contact_events": 1.0,
+        "damage_field": 11.0,
+        "factor": 0.5,
+        "hp_loss": 11.0,
+        "label": "dual_event_child_impact",
+        "new_projectiles": 0,
+        "potency": 1.0
+      },
+      {
+        "child_count": 0,
+        "contact_events": 2.0,
+        "damage_field": 11.0,
+        "factor": 0.5,
+        "hp_loss": 11.0,
+        "label": "dual_event_grandchild_impact",
+        "new_projectiles": -1,
+        "potency": 1.0
+      },
+      {
+        "child_count": 1,
+        "contact_events": 3.0,
+        "damage_field": 11.0,
+        "factor": 0.5,
+        "hp_loss": 11.0,
+        "label": "dual_event_child_expire",
+        "new_projectiles": 0,
+        "potency": 1.0
+      },
+      {
+        "child_count": 0,
+        "contact_events": 4.0,
+        "damage_field": 11.0,
+        "factor": 0.5,
+        "hp_loss": 11.0,
+        "label": "dual_event_grandchild_expire",
+        "new_projectiles": -1,
+        "potency": 1.0
+      },
+      {
+        "branches": 1,
+        "expected_per_descendant_from_doc": 11,
+        "interpretation": "synthetic root event injection; child and grandchild damage measured through actual engine projectile collision",
+        "label": "summary",
+        "program_compiles": true
+      }
+    ],
+    "interpretation": "impact and expire each produced an 11-damage direct child; impact@3 next-link grandchild also dealt 11. The dual-event branch budget persisted without multiplying the connector potency again."
+  },
+  "p2_followup_measurements": {
+    "attempted_cases": 5,
+    "executed_cases": 5,
+    "failed": 0,
+    "not_run": 0,
+    "observations": {
+      "P2-02_growing_firecore": {
+        "age": 1.0,
+        "base_primary_area_radius": 116.0,
+        "delayed_hp_loss": 50.3999999999942,
+        "immediate_hp_loss": 0.0,
+        "jobs_remaining": 0,
+        "projectile_hitbox_radius_after_growth": 19.72,
+        "secondary_job_area_radius": 162.4,
+        "target_distance": 140
+      },
+      "P2-05_lightning_split_false": {
+        "parent_hit_suppressed_for_split_case": false,
+        "recipe": [
+          "element_lightning@3",
+          "bolt"
+        ],
+        "shock_damage": 7.7,
+        "shock_remaining": 2.06666666666667,
+        "source_derived": false,
+        "source_factor": 1.0,
+        "source_proc_mass": null,
+        "split_children": 0,
+        "status_entries": 1,
+        "victim_hp_loss": 22.0
+      },
+      "P2-05_lightning_split_true": {
+        "parent_hit_suppressed_for_split_case": true,
+        "recipe": [
+          "split@3",
+          "element_lightning@3",
+          "bolt"
+        ],
+        "shock_damage": 0.09317,
+        "shock_remaining": 2.18333333333334,
+        "source_derived": true,
+        "source_factor": 0.11,
+        "source_proc_mass": 0.11,
+        "split_children": 5.0,
+        "status_entries": 1,
+        "victim_hp_loss": 2.41999999999825
+      },
+      "P2-06_poison_mist": {
+        "cloud_count": 1,
+        "kind": "poison",
+        "poison_status_entries": 0,
+        "poison_status_remaining": null,
+        "victim_hp_loss": 2.69999999999709
+      },
+      "P2-07_thunder_timer": {
+        "initial_timers": 1,
+        "projectiles_emitted": 0,
+        "strikes_left": 0,
+        "timed_left": 0,
+        "timer_fires": 0,
+        "triggers": 0
+      },
+      "P2-07_frost_timer": {
+        "initial_timers": 1,
+        "projectiles_emitted": 0,
+        "strikes_left": 0,
+        "timed_left": 0,
+        "timer_fires": 0,
+        "triggers": 0
+      },
+      "P2-10_orbit_afterimage_rejoin": {
+        "anchor": [
+          800.0,
+          450.0
+        ],
+        "children_seen": 1,
+        "min_distance_to_anchor": 27.3334083557129,
+        "projectiles_left": 0,
+        "target_hp_loss": 26.3999999999942,
+        "trail_copies": 1.0
+      },
+      "P1-02_dual_branch_and_next_link": {
+        "after_impact_and_expire_projectile_count": 3,
+        "child_connector_power": 0.5,
+        "child_factor": 0.5,
+        "expected_branch_budget_persists": true,
+        "grandchild_factor": 0.25,
+        "grandchild_potency": 0.5,
+        "program_compiles": true,
+        "source_events": {
+          "expire": true,
+          "impact": true
+        },
+        "classification": "Superseded interpretation: child_factor/grandchild_factor are branch-budget partitions, not measured damage ratios. Actual damage is in p1_02_damage_lifecycle.",
+        "effective_damage_verification": "child and grandchild each 11 damage in both injected event branches; see artifacts/magic60_dual_event_damage_probe.json"
+      }
+    }
+  },
+  "forced_capacity_saturation": {
+    "attempted": 8,
+    "executed": 8,
+    "functional_attempts": 8,
+    "blocked_or_evicted_observed": 8,
+    "failed": 0,
+    "not_run": 0,
+    "classification": "capacity reached by inert test fixtures; then one production emit/install attempt",
+    "cases": {
+      "cap_beams": {
+        "after": 48,
+        "before": 48,
+        "blocked_counter": 1.0,
+        "limit": 48,
+        "projectiles_emitted": 0,
+        "stage_casts": 1.0
+      },
+      "cap_strikes": {
+        "after": 128,
+        "before": 128,
+        "blocked_counter": 1.0,
+        "limit": 128,
+        "projectiles_emitted": 0,
+        "stage_casts": 1.0
+      },
+      "cap_orbits": {
+        "after": 128,
+        "before": 128,
+        "blocked_counter": 1.0,
+        "limit": 128,
+        "projectiles_emitted": 0,
+        "stage_casts": 1.0
+      },
+      "cap_projectiles": {
+        "after": 180,
+        "before": 180,
+        "blocked_counter": 1.0,
+        "limit": 180,
+        "projectiles_emitted": 0,
+        "stage_casts": 1.0
+      },
+      "cap_clouds": {
+        "after": 96,
+        "blocked": 1.0,
+        "limit": 96
+      },
+      "cap_jobs": {
+        "after": 128,
+        "blocked": 1.0,
+        "limit": 128
+      },
+      "cap_emits_per_tick": {
+        "emits_blocked": 1.0,
+        "limit": 64,
+        "objects": 64,
+        "stage_casts": 64.0
+      },
+      "cap_zones": {
+        "after": 256,
+        "limit": 256,
+        "newest_kind": "thorn",
+        "zones_created": 1.0,
+        "zones_evicted": 1.0
+      }
+    },
+    "limits_are": "inert fixtures forced to the documented capacities, followed by one production operation; this does not measure natural gameplay reachability or loss frequency"
+  }
+}

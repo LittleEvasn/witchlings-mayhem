@@ -1,0 +1,116 @@
+{
+	"cases": [
+		{
+			"data": {
+				"age": 1.0,
+				"base_primary_area_radius": 116.0,
+				"delayed_hp_loss": 50.3999999999942,
+				"immediate_hp_loss": 0.0,
+				"jobs_remaining": 0,
+				"projectile_hitbox_radius_after_growth": 19.72,
+				"secondary_job_area_radius": 162.4,
+				"target_distance": 140
+			},
+			"name": "P2-02_growing_firecore"
+		},
+		{
+			"data": {
+				"parent_hit_suppressed_for_split_case": false,
+				"recipe": [
+					"element_lightning@3",
+					"bolt"
+				],
+				"shock_damage": 7.7,
+				"shock_remaining": 2.06666666666667,
+				"source_derived": false,
+				"source_factor": 1.0,
+				"source_proc_mass": null,
+				"split_children": 0,
+				"status_entries": 1,
+				"victim_hp_loss": 22.0
+			},
+			"name": "P2-05_lightning_split_false"
+		},
+		{
+			"data": {
+				"parent_hit_suppressed_for_split_case": true,
+				"recipe": [
+					"split@3",
+					"element_lightning@3",
+					"bolt"
+				],
+				"shock_damage": 0.09317,
+				"shock_remaining": 2.18333333333334,
+				"source_derived": true,
+				"source_factor": 0.11,
+				"source_proc_mass": 0.11,
+				"split_children": 5.0,
+				"status_entries": 1,
+				"victim_hp_loss": 2.41999999999825
+			},
+			"name": "P2-05_lightning_split_true"
+		},
+		{
+			"data": {
+				"cloud_count": 1,
+				"kind": "poison",
+				"poison_status_entries": 0,
+				"poison_status_remaining": null,
+				"victim_hp_loss": 2.69999999999709
+			},
+			"name": "P2-06_poison_mist"
+		},
+		{
+			"data": {
+				"initial_timers": 1,
+				"projectiles_emitted": 0,
+				"strikes_left": 0,
+				"timed_left": 0,
+				"timer_fires": 0,
+				"triggers": 0
+			},
+			"name": "P2-07_thunder_timer"
+		},
+		{
+			"data": {
+				"initial_timers": 1,
+				"projectiles_emitted": 0,
+				"strikes_left": 0,
+				"timed_left": 0,
+				"timer_fires": 0,
+				"triggers": 0
+			},
+			"name": "P2-07_frost_timer"
+		},
+		{
+			"data": {
+				"anchor": [
+					800.0,
+					450.0
+				],
+				"children_seen": 1,
+				"min_distance_to_anchor": 27.3334083557129,
+				"projectiles_left": 0,
+				"target_hp_loss": 26.3999999999942,
+				"trail_copies": 1.0
+			},
+			"name": "P2-10_orbit_afterimage_rejoin"
+		},
+		{
+			"data": {
+				"after_impact_and_expire_projectile_count": 3,
+				"child_connector_power": 0.5,
+				"child_factor": 0.5,
+				"expected_branch_budget_persists": true,
+				"grandchild_factor": 0.25,
+				"grandchild_potency": 0.5,
+				"program_compiles": true,
+				"source_events": {
+					"expire": true,
+					"impact": true
+				}
+			},
+			"name": "P1-02_dual_branch_and_next_link"
+		}
+	]
+}

@@ -1,0 +1,120 @@
+{
+	"cases": [
+		{
+			"compile": true,
+			"damage_effective": 58.2,
+			"geometric_hit": true,
+			"hp_loss": 5.5,
+			"landed_events": 1.0,
+			"landing": [
+				1047.19995117188,
+				450.0
+			],
+			"path_anchor": [
+				1047.19995117188,
+				450.0
+			],
+			"recipe": [
+				"fall",
+				"ember_path"
+			],
+			"target": true,
+			"target_point": [
+				1100,
+				450
+			],
+			"visible_center": [
+				1047.19995117188,
+				450.0
+			],
+			"zones_created": 3.0
+		},
+		{
+			"compile": true,
+			"damage_effective": 87.4,
+			"geometric_hit": true,
+			"hp_loss": 5.5,
+			"landed_events": 1.0,
+			"landing": [
+				1007.59997558594,
+				450.0
+			],
+			"path_anchor": [
+				1007.59997558594,
+				450.0
+			],
+			"recipe": [
+				"fall@3",
+				"ember_path@3"
+			],
+			"target": true,
+			"target_point": [
+				1100,
+				450
+			],
+			"visible_center": [
+				1007.59997558594,
+				450.0
+			],
+			"zones_created": 3.0
+		},
+		{
+			"compile": true,
+			"damage_effective": 223.2,
+			"geometric_hit": true,
+			"hp_loss": 9.89999999999418,
+			"landed_events": 1.0,
+			"landing": [
+				992.815979003906,
+				450.0
+			],
+			"path_anchor": [
+				992.815979003906,
+				450.0
+			],
+			"recipe": [
+				"fall",
+				"thermal_trail"
+			],
+			"target": true,
+			"target_point": [
+				1100,
+				450
+			],
+			"visible_center": [
+				992.815979003906,
+				450.0
+			],
+			"zones_created": 3.0
+		},
+		{
+			"compile": true,
+			"damage_effective": 223.2,
+			"geometric_hit": true,
+			"hp_loss": 9.89999999999418,
+			"landed_events": 1.0,
+			"landing": [
+				992.815979003906,
+				450.0
+			],
+			"path_anchor": [
+				992.815979003906,
+				450.0
+			],
+			"recipe": [
+				"fall@3",
+				"thermal_trail"
+			],
+			"target": true,
+			"target_point": [
+				1100,
+				450
+			],
+			"visible_center": [
+				992.815979003906,
+				450.0
+			],
+			"zones_created": 3.0
+		}
+	]
+}

@@ -1,0 +1,762 @@
+{
+	"catalog": {
+		"attacks": 36,
+		"modifiers": 20
+	},
+	"classification": "fixed 60 Hz, 10.0 simulated seconds per one-shot recipe; no production duration edits",
+	"lingering_examples": [
+		{
+			"damage_effective": 195.0,
+			"meter": {
+				"damage_effective": 195.0,
+				"damage_events": 26.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 195.0,
+				"garden_merges": 1.0,
+				"orb_0_slot_1": 1.0,
+				"projectile_contacts": 2.0,
+				"projectiles_contacted": 1.0,
+				"projectiles_emitted": 1.0,
+				"projectiles_finished": 1.0,
+				"stage_casts": 1.0,
+				"trap_activations": 2.0,
+				"zones_created": 3.0
+			},
+			"objects_after_10s": {
+				"beams": 0,
+				"clouds": 0,
+				"jobs": 0,
+				"orbits": 0,
+				"projectiles": 0,
+				"strikes": 0,
+				"timed": 0,
+				"zones": 1
+			},
+			"recipe": [
+				"pierce@3",
+				"thorn@3"
+			],
+			"remaining_zones": [
+				{
+					"age": 8.29999999999999,
+					"fusion": "",
+					"kind": "thorn",
+					"life": 0.699999999999975,
+					"pos": [
+						1344.00158691406,
+						450.0
+					]
+				}
+			]
+		}
+	],
+	"no_damage_by_attack": {
+		"ember_path": 28,
+		"frost": 1,
+		"thermal_trail": 27
+	},
+	"no_damage_examples": [
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"bounce",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"bounce@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"charged_stages": 1.0,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"charge",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"devour_bounce",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"devour_bounce",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 1.0,
+				"echoes_scheduled": 1.0,
+				"orb_0_slot_1": 2.0,
+				"path_patches": 1.0,
+				"stage_casts": 2.0
+			},
+			"recipe": [
+				"echo",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 4.0,
+				"echoes_scheduled": 4.0,
+				"orb_0_slot_1": 5.0,
+				"path_patches": 1.0,
+				"stage_casts": 5.0
+			},
+			"recipe": [
+				"echo@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_fire",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_fire@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_ice",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_ice@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_lightning",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_lightning@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_poison",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_poison@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"giant",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 2.0,
+				"orb_0_slot_1": 3.0,
+				"path_patches": 1.0,
+				"stage_casts": 3.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"recipe": [
+				"growing_echo",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 2.0,
+				"orb_0_slot_1": 3.0,
+				"path_patches": 1.0,
+				"stage_casts": 3.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"recipe": [
+				"growing_echo",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"orbit",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"orbit@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"pierce",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"pierce@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"seek",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"seek@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"temperature",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"temperature",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"trail",
+				"ember_path"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"trail@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"orbit_afterimage",
+				"frost"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"bounce",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"bounce@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"charged_stages": 1.0,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"charge",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"devour_bounce",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"devour_bounce",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 1.0,
+				"echoes_scheduled": 1.0,
+				"orb_0_slot_1": 2.0,
+				"path_patches": 1.0,
+				"stage_casts": 2.0
+			},
+			"recipe": [
+				"echo",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 4.0,
+				"echoes_scheduled": 4.0,
+				"orb_0_slot_1": 5.0,
+				"path_patches": 1.0,
+				"stage_casts": 5.0
+			},
+			"recipe": [
+				"echo@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_fire",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_fire@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_ice",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_ice@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_lightning",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_lightning@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_poison",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"element_poison@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 2.0,
+				"orb_0_slot_1": 3.0,
+				"path_patches": 1.0,
+				"stage_casts": 3.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"recipe": [
+				"growing_echo",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"echoes_fired": 2.0,
+				"orb_0_slot_1": 3.0,
+				"path_patches": 1.0,
+				"stage_casts": 3.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"recipe": [
+				"growing_echo",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"orbit",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"orbit@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"pierce",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"pierce@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"seek",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"seek@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"temperature",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"temperature",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"trail",
+				"thermal_trail"
+			]
+		},
+		{
+			"damage_effective": 0.0,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"recipe": [
+				"trail@3",
+				"thermal_trail"
+			]
+		}
+	],
+	"totals": {
+		"attempted": 1440,
+		"cleanup_failures": 1,
+		"compiled": 1440,
+		"effective_damage_positive": 1384,
+		"emitted": 1440,
+		"fixed_hz": 60,
+		"no_damage_cases": 56,
+		"normal_end_observed": 1022,
+		"simulated_frames": 864000,
+		"simulated_seconds_per_case": 10.0,
+		"unrunnable": 0
+	}
+}

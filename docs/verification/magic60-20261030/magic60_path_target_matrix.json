@@ -1,0 +1,2417 @@
+{
+	"cases": 80,
+	"p0_center_path_mismatches": 8,
+	"positive_actual_damage": 68,
+	"rows": [
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"bounce",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"bounce@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 16.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 16.5,
+			"hz": 60,
+			"meter": {
+				"charged_stages": 1.0,
+				"damage_effective": 16.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 16.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"charge",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 16.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 16.5,
+			"hz": 60,
+			"meter": {
+				"charged_stages": 1.0,
+				"damage_effective": 16.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 16.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"charge@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"chase_pierce",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"chase_pierce",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"devour_bounce",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"devour_bounce",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"echoes_scheduled": 1.0,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"echo",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"echoes_scheduled": 4.0,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"echo@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_fire",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_fire@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"cold_added": 0.6,
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_ice",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.2,
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_ice@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_lightning",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_lightning@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_poison",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_poison@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"compile": true,
+			"no_zone": true,
+			"recipe": [
+				"fall",
+				"ember_path"
+			]
+		},
+		{
+			"compile": true,
+			"no_zone": true,
+			"recipe": [
+				"fall@3",
+				"ember_path@3"
+			]
+		},
+		{
+			"actual_hp_loss": 2.19999999999709,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				518.799987792969
+			],
+			"effective_damage_total": 2.2,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 2.2,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 2.2,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 3.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"fan",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				518.799987792969
+			],
+			"zone_count": 3
+		},
+		{
+			"actual_hp_loss": 1.15789473683981,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				697.0
+			],
+			"effective_damage_total": 1.15789473684211,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 1.15789473684211,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 1.15789473684211,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 6.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"fan@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				697.0
+			],
+			"zone_count": 6
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"giant",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"giant@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"growing_echo",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"growing_echo",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 90.7525939941406,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				889.921875,
+				453.748901367188
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 150.186752319336,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				949.869812011719,
+				456.248199462891
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 130.317794799805,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"trail_copies": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit_afterimage",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				929.88720703125,
+				455.415100097656
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 130.317794799805,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"trail_copies": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit_afterimage",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				929.88720703125,
+				455.415100097656
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"pierce",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"pierce@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"seek",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"seek@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"split",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"split@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"temperature",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"temperature",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"trail",
+				"ember_path"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 5.5,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 5.5,
+			"hz": 60,
+			"meter": {
+				"damage_effective": 5.5,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 5.5,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"trail@3",
+				"ember_path@3"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"bounce",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"bounce@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 29.6999999999971,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 29.7,
+			"hz": 60,
+			"meter": {
+				"charged_stages": 1.0,
+				"cold_added": 1.0,
+				"damage_effective": 29.7,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 29.7,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"charge",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 29.6999999999971,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 29.7,
+			"hz": 60,
+			"meter": {
+				"charged_stages": 1.0,
+				"cold_added": 1.0,
+				"damage_effective": 29.7,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 29.7,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"charge@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"chase_pierce",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"chase_pierce",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"devour_bounce",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"devour_bounce",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"echoes_scheduled": 1.0,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"echo",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"echoes_scheduled": 4.0,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"echo@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_fire",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_fire@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.6,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_ice",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 2.2,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_ice@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_lightning",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_lightning@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_poison",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"element_poison@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"compile": true,
+			"no_zone": true,
+			"recipe": [
+				"fall",
+				"thermal_trail"
+			]
+		},
+		{
+			"compile": true,
+			"no_zone": true,
+			"recipe": [
+				"fall@3",
+				"thermal_trail"
+			]
+		},
+		{
+			"actual_hp_loss": 3.9600000000064,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				573.184020996094
+			],
+			"effective_damage_total": 3.96,
+			"hz": 60,
+			"meter": {
+				"cold_added": 0.4,
+				"damage_effective": 3.96,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 3.96,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 3.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"fan",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				573.184020996094
+			],
+			"zone_count": 3
+		},
+		{
+			"actual_hp_loss": 2.08421052631456,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				733.9599609375
+			],
+			"effective_damage_total": 2.08421052631579,
+			"hz": 60,
+			"meter": {
+				"cold_added": 0.210526315789474,
+				"damage_effective": 2.08421052631579,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 2.08421052631579,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 6.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"fan@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				733.9599609375
+			],
+			"zone_count": 6
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"giant",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"giant@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"growing_echo",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"support_repeats_scheduled": 2.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"growing_echo",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 90.7525939941406,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				889.921875,
+				453.748901367188
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 150.186752319336,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				949.869812011719,
+				456.248199462891
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 130.317794799805,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"trail_copies": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit_afterimage",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				929.88720703125,
+				455.415100097656
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 0.0,
+			"center_path_distance": 130.317794799805,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 0,
+			"hz": 60,
+			"meter": {
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0,
+				"trail_copies": 1.0
+			},
+			"path_contains": false,
+			"player_moved": false,
+			"recipe": [
+				"orbit_afterimage",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				929.88720703125,
+				455.415100097656
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"pierce",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"pierce@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"seek",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"seek@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"split",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"split@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 2.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"temperature",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 2.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"temperature",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"trail",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		},
+		{
+			"actual_hp_loss": 9.89999999999418,
+			"center_path_distance": 0.0,
+			"collision_path_anchor": [
+				800.0,
+				466.0
+			],
+			"effective_damage_total": 9.9,
+			"hz": 60,
+			"meter": {
+				"cold_added": 1.0,
+				"damage_effective": 9.9,
+				"damage_events": 1.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9.9,
+				"orb_0_slot_1": 1.0,
+				"path_patches": 1.0,
+				"stage_casts": 1.0
+			},
+			"path_contains": true,
+			"player_moved": false,
+			"recipe": [
+				"trail@3",
+				"thermal_trail"
+			],
+			"victim_radius": 18.0,
+			"visible_candidate_center": [
+				800.0,
+				466.0
+			],
+			"zone_count": 1
+		}
+	]
+}

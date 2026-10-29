@@ -1,0 +1,84 @@
+{
+	"cases": [
+		{
+			"details": {
+				"after": 48,
+				"before": 48,
+				"blocked_counter": 1.0,
+				"limit": 48,
+				"projectiles_emitted": 0,
+				"stage_casts": 1.0
+			},
+			"name": "cap_beams"
+		},
+		{
+			"details": {
+				"after": 128,
+				"before": 128,
+				"blocked_counter": 1.0,
+				"limit": 128,
+				"projectiles_emitted": 0,
+				"stage_casts": 1.0
+			},
+			"name": "cap_strikes"
+		},
+		{
+			"details": {
+				"after": 128,
+				"before": 128,
+				"blocked_counter": 1.0,
+				"limit": 128,
+				"projectiles_emitted": 0,
+				"stage_casts": 1.0
+			},
+			"name": "cap_orbits"
+		},
+		{
+			"details": {
+				"after": 180,
+				"before": 180,
+				"blocked_counter": 1.0,
+				"limit": 180,
+				"projectiles_emitted": 0,
+				"stage_casts": 1.0
+			},
+			"name": "cap_projectiles"
+		},
+		{
+			"details": {
+				"after": 96,
+				"blocked": 1.0,
+				"limit": 96
+			},
+			"name": "cap_clouds"
+		},
+		{
+			"details": {
+				"after": 128,
+				"blocked": 1.0,
+				"limit": 128
+			},
+			"name": "cap_jobs"
+		},
+		{
+			"details": {
+				"emits_blocked": 1.0,
+				"limit": 64,
+				"objects": 64,
+				"stage_casts": 64.0
+			},
+			"name": "cap_emits_per_tick"
+		},
+		{
+			"details": {
+				"after": 256,
+				"limit": 256,
+				"newest_kind": "thorn",
+				"zones_created": 1.0,
+				"zones_evicted": 1.0
+			},
+			"name": "cap_zones"
+		}
+	],
+	"classification": "capacity reached by inert test fixtures; then one production emit/install attempt"
+}

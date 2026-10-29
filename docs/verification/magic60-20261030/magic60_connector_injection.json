@@ -1,0 +1,16 @@
+{
+	"catalog": {
+		"attacks": 36,
+		"connectors": 4
+	},
+	"classification": "synthetic runtime trigger injection only; not natural impact/expiry/timer occurrence",
+	"mismatch_examples": [],
+	"totals": {
+		"attempted_sources": 5184,
+		"compile_failures": 0,
+		"expected_events": 6480,
+		"injected_events": 6480,
+		"mismatches": 0,
+		"observed_triggers": 6480
+	}
+}

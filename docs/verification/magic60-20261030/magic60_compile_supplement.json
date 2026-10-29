@@ -1,0 +1,27 @@
+{
+	"catalog": {
+		"attacks": 36,
+		"connectors": 4,
+		"modifiers": 20,
+		"total": 60
+	},
+	"counts": {
+		"attack_modifier_base": 720,
+		"attack_modifier_rank3": 720,
+		"double_modifiers_base": 14400,
+		"double_modifiers_rank3": 14400,
+		"ordered_pairs": 3600,
+		"seeded_8_slots": 50000
+	},
+	"elapsed_ms": {
+		"attack_modifier": 1557.498,
+		"double_modifiers": 8023.729,
+		"ordered_pairs": 1335.877,
+		"seeded_8_slots": 39480.466
+	},
+	"failures": [],
+	"phase": "complete",
+	"seed": 20261030,
+	"status": "complete",
+	"total_compile_calls": 83840
+}

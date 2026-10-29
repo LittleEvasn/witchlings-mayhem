@@ -1,0 +1,146 @@
+{
+	"enemy_count": 300,
+	"recipes": [
+		[
+			"echo@3",
+			"split@3",
+			"clock_satellite"
+		],
+		[
+			"echo@3",
+			"split@3",
+			"cold_flame"
+		],
+		[
+			"echo@3",
+			"split@3",
+			"collapse_vortex"
+		],
+		[
+			"echo@3",
+			"split@3",
+			"disintegration"
+		]
+	],
+	"runs": [
+		{
+			"blocked_counters": {
+
+			},
+			"frames": 240,
+			"frames_over_16_667_ms": 208,
+			"frames_over_33_333_ms": 179,
+			"max_ms": 233.338,
+			"max_objects": {
+				"beams": 10,
+				"clouds": 0,
+				"jobs": 0,
+				"orbits": 13,
+				"projectiles": 0,
+				"zones": 40
+			},
+			"mean_ms": 61.6101166666667,
+			"meter": {
+				"beams_created": 40.0,
+				"clock_lines": 31.0,
+				"cold_added": 93.4800000000002,
+				"damage_effective": 243659.150999869,
+				"damage_events": 72118.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 243659.150999869,
+				"echoes_fired": 64.0,
+				"echoes_scheduled": 64.0,
+				"explosion_victims": 11222.0,
+				"explosions": 732.0,
+				"freezes": 5.0,
+				"frozen_enemy_seconds": 0.05,
+				"fusion_collapse_vortex": 19.0,
+				"fusion_disintegration": 16.0,
+				"garden_full": 1.0,
+				"garden_merges": 33.0,
+				"orb_0_slot_2": 40.0,
+				"orb_1_slot_2": 40.0,
+				"orb_2_slot_2": 40.0,
+				"orb_3_slot_2": 40.0,
+				"orbit_contacts": 10610.0,
+				"orbits_created": 40.0,
+				"projectile_contacts": 20.0,
+				"projectiles_contacted": 20.0,
+				"projectiles_emitted": 40.0,
+				"projectiles_finished": 20.0,
+				"pull_distance": 61530.0920775304,
+				"pull_enemy_seconds": 625.24999999976,
+				"shatters": 5.0,
+				"split_children": 80.0,
+				"stage_casts": 160.0,
+				"zone_pulses": 304.0,
+				"zones_created": 40.0
+			},
+			"p50_ms": 61.752,
+			"p95_ms": 125.285,
+			"p99_ms": 195.381,
+			"run": 1,
+			"warm_state": "same Godot process; no rendered FPS"
+		},
+		{
+			"blocked_counters": {
+
+			},
+			"frames": 240,
+			"frames_over_16_667_ms": 222,
+			"frames_over_33_333_ms": 193,
+			"max_ms": 323.647,
+			"max_objects": {
+				"beams": 10,
+				"clouds": 0,
+				"jobs": 0,
+				"orbits": 13,
+				"projectiles": 0,
+				"zones": 40
+			},
+			"mean_ms": 72.4697083333333,
+			"meter": {
+				"beams_created": 40.0,
+				"clock_lines": 31.0,
+				"cold_added": 42.3299999999999,
+				"damage_effective": 341459.541000063,
+				"damage_events": 87478.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 341459.541000063,
+				"echoes_fired": 64.0,
+				"echoes_scheduled": 64.0,
+				"explosion_victims": 15746.0,
+				"explosions": 474.0,
+				"freezes": 2.0,
+				"frozen_enemy_seconds": 0.05,
+				"fusion_collapse_vortex": 19.0,
+				"fusion_disintegration": 16.0,
+				"garden_full": 1.0,
+				"garden_merges": 36.0,
+				"orb_0_slot_2": 40.0,
+				"orb_1_slot_2": 40.0,
+				"orb_2_slot_2": 40.0,
+				"orb_3_slot_2": 40.0,
+				"orbit_contacts": 13789.0,
+				"orbits_created": 40.0,
+				"projectile_contacts": 20.0,
+				"projectiles_contacted": 20.0,
+				"projectiles_emitted": 40.0,
+				"projectiles_finished": 20.0,
+				"pull_distance": 71145.3532896345,
+				"pull_enemy_seconds": 727.016666666334,
+				"shatters": 2.0,
+				"split_children": 80.0,
+				"stage_casts": 160.0,
+				"zone_pulses": 312.0,
+				"zones_created": 40.0
+			},
+			"p50_ms": 66.833,
+			"p95_ms": 148.539,
+			"p99_ms": 275.445,
+			"run": 2,
+			"warm_state": "same Godot process; no rendered FPS"
+		}
+	],
+	"seed": 24061
+}

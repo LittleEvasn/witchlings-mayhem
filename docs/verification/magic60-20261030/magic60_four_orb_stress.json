@@ -1,0 +1,637 @@
+{
+	"attacks": [
+		"ball_lightning",
+		"bloom",
+		"bolt",
+		"boomerang",
+		"clock_satellite",
+		"cold_flame",
+		"collapse_vortex",
+		"disintegration",
+		"dragon_breath",
+		"echo_return",
+		"ember_path",
+		"fireball",
+		"flamethrower",
+		"frost",
+		"glitter_bomb",
+		"growing_firecore",
+		"judgement",
+		"laser",
+		"meteor",
+		"meteor_thorn",
+		"mirror_trail",
+		"orbit_vortex",
+		"plasma_beam",
+		"poison_flame",
+		"poison_mist",
+		"satellite",
+		"shard_satellite",
+		"shining_spear",
+		"thermal_trail",
+		"thorn",
+		"thunder",
+		"thunder_seal",
+		"timed_thorn",
+		"triple_frost",
+		"twin_moons",
+		"vortex"
+	],
+	"batches": [
+		{
+			"batch": 0,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 119.015,
+			"cpu_p95_ms": 49.453,
+			"damage_events": 9929.25991902832,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 0,
+				"clouds": 0,
+				"jobs": 0,
+				"orbits": 0,
+				"projectiles": 85,
+				"strikes": 0,
+				"zones": 0
+			},
+			"meter": {
+				"boomerang_returns": 24.0,
+				"boomerang_ricochets": 6.0,
+				"damage_effective": 9929.25991902832,
+				"damage_events": 2245.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 9929.25991902832,
+				"discharges": 65.0,
+				"explosion_victims": 2018.0,
+				"explosions": 15.0,
+				"fusion_ball_lightning": 24.0,
+				"orb_0_slot_2": 4.0,
+				"orb_1_slot_2": 4.0,
+				"orb_2_slot_2": 4.0,
+				"orb_3_slot_2": 4.0,
+				"projectile_contacts": 172.0,
+				"projectiles_contacted": 69.0,
+				"projectiles_emitted": 116.0,
+				"projectiles_finished": 56.0,
+				"projectiles_finished_without_contact": 16.0,
+				"stage_casts": 16.0
+			},
+			"recipes": [
+				[
+					"ball_lightning",
+					0
+				],
+				[
+					"bloom@3",
+					1
+				],
+				[
+					"bolt@3",
+					2
+				],
+				[
+					"boomerang@3",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 1,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 315.961,
+			"cpu_p95_ms": 189.331,
+			"damage_events": 368279.92800012,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 17,
+				"clouds": 0,
+				"jobs": 5,
+				"orbits": 24,
+				"projectiles": 2,
+				"strikes": 0,
+				"zones": 40
+			},
+			"meter": {
+				"beams_created": 40.0,
+				"clock_lines": 31.0,
+				"cold_added": 81.6800000000003,
+				"damage_effective": 368279.92800012,
+				"damage_events": 100870.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 368279.92800012,
+				"echoes_fired": 64.0,
+				"echoes_scheduled": 64.0,
+				"explosion_victims": 18946.0,
+				"explosions": 709.0,
+				"freezes": 3.0,
+				"frozen_enemy_seconds": 0.05,
+				"fusion_collapse_vortex": 19.0,
+				"fusion_disintegration": 19.0,
+				"garden_merges": 35.0,
+				"orb_0_slot_2": 40.0,
+				"orb_1_slot_2": 40.0,
+				"orb_2_slot_2": 40.0,
+				"orb_3_slot_2": 40.0,
+				"orbit_contacts": 18727.0,
+				"orbits_created": 40.0,
+				"projectile_contacts": 20.0,
+				"projectiles_contacted": 20.0,
+				"projectiles_emitted": 40.0,
+				"projectiles_finished": 20.0,
+				"pull_distance": 87770.2558296861,
+				"pull_enemy_seconds": 897.649999999512,
+				"shatters": 3.0,
+				"split_children": 80.0,
+				"stage_casts": 160.0,
+				"zone_pulses": 272.0,
+				"zones_created": 40.0
+			},
+			"recipes": [
+				[
+					"clock_satellite",
+					0
+				],
+				[
+					"cold_flame",
+					1
+				],
+				[
+					"collapse_vortex",
+					2
+				],
+				[
+					"disintegration",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 2,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 22.946,
+			"cpu_p95_ms": 14.544,
+			"damage_events": 25467.4000000008,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 2,
+				"clouds": 0,
+				"jobs": 1,
+				"orbits": 0,
+				"projectiles": 7,
+				"strikes": 0,
+				"zones": 1
+			},
+			"meter": {
+				"beams_created": 4.0,
+				"boomerang_returns": 19.0,
+				"boomerang_ricochets": 57.0,
+				"damage_effective": 25467.4000000008,
+				"damage_events": 2935.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 25467.4000000008,
+				"explosion_victims": 509.0,
+				"explosions": 15.0,
+				"fusion_dragon_breath": 4.0,
+				"fusion_echo_return": 4.0,
+				"orb_0_slot_2": 4.0,
+				"orb_1_slot_2": 22.0,
+				"orb_2_slot_2": 4.0,
+				"orb_3_slot_2": 12.0,
+				"path_patches": 1.0,
+				"projectile_contacts": 111.0,
+				"projectiles_contacted": 23.0,
+				"projectiles_emitted": 34.0,
+				"projectiles_finished": 31.0,
+				"projectiles_finished_without_contact": 8.0,
+				"stage_casts": 42.0,
+				"trail_copies": 26.0
+			},
+			"recipes": [
+				[
+					"dragon_breath",
+					0
+				],
+				[
+					"echo_return",
+					1
+				],
+				[
+					"ember_path@3",
+					2
+				],
+				[
+					"fireball@3",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 3,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 76.742,
+			"cpu_p95_ms": 13.756,
+			"damage_events": 98919.3726673372,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 2,
+				"clouds": 0,
+				"jobs": 10,
+				"orbits": 0,
+				"projectiles": 10,
+				"strikes": 0,
+				"zones": 0
+			},
+			"meter": {
+				"beams_created": 4.0,
+				"cold_added": 89.7999999999997,
+				"damage_effective": 98919.3726673372,
+				"damage_events": 4268.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 98919.3726673372,
+				"discharges": 1019.0,
+				"explosion_victims": 1779.0,
+				"explosions": 30.0,
+				"freezes": 7.0,
+				"frozen_enemy_seconds": 1.6,
+				"fusion_glitter_bomb": 3.0,
+				"fusion_growing_firecore": 3.0,
+				"orb_0_slot_2": 4.0,
+				"orb_1_slot_2": 4.0,
+				"orb_2_slot_2": 28.0,
+				"orb_3_slot_2": 4.0,
+				"projectile_contacts": 29.0,
+				"projectiles_contacted": 29.0,
+				"projectiles_emitted": 32.0,
+				"projectiles_finished": 29.0,
+				"shatters": 2.0,
+				"stage_casts": 40.0,
+				"status_spreads": 1019.0
+			},
+			"recipes": [
+				[
+					"flamethrower@3",
+					0
+				],
+				[
+					"frost@3",
+					1
+				],
+				[
+					"glitter_bomb",
+					2
+				],
+				[
+					"growing_firecore",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 4,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 11.176,
+			"cpu_p95_ms": 5.347,
+			"damage_events": 43223.0400000003,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 2,
+				"clouds": 0,
+				"jobs": 7,
+				"orbits": 0,
+				"projectiles": 0,
+				"strikes": 1,
+				"zones": 2
+			},
+			"meter": {
+				"beams_created": 4.0,
+				"damage_effective": 43223.0400000003,
+				"damage_events": 1872.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 43223.0400000003,
+				"explosion_victims": 435.0,
+				"explosions": 13.0,
+				"falls_landed": 16.0,
+				"falls_scheduled": 16.0,
+				"fusion_judgement": 2.0,
+				"fusion_meteor": 4.0,
+				"fusion_meteor_thorn": 4.0,
+				"lightning_pulses": 3.0,
+				"orb_0_slot_2": 4.0,
+				"orb_1_slot_2": 4.0,
+				"orb_2_slot_2": 4.0,
+				"orb_3_slot_2": 4.0,
+				"projectiles_emitted": 8.0,
+				"projectiles_finished": 4.0,
+				"projectiles_finished_without_contact": 4.0,
+				"special_pierce": 2.0,
+				"stage_casts": 16.0,
+				"strikes_scheduled": 4.0,
+				"trap_activations": 8.0,
+				"zones_created": 4.0
+			},
+			"recipes": [
+				[
+					"judgement",
+					0
+				],
+				[
+					"laser@3",
+					1
+				],
+				[
+					"meteor",
+					2
+				],
+				[
+					"meteor_thorn",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 5,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 12.719,
+			"cpu_p95_ms": 11.016,
+			"damage_events": 1399.68,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 14,
+				"clouds": 3,
+				"jobs": 1,
+				"orbits": 0,
+				"projectiles": 5,
+				"strikes": 0,
+				"zones": 33
+			},
+			"meter": {
+				"beams_created": 40.0,
+				"charged_projectiles_missed": 16.0,
+				"charged_stages": 80.0,
+				"damage_effective": 1399.68,
+				"damage_events": 76.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 1399.68,
+				"discharges": 4.0,
+				"echoes_fired": 64.0,
+				"echoes_scheduled": 64.0,
+				"fusion_plasma_beam": 4.0,
+				"mirror_path_replays": 16.0,
+				"orb_0_slot_2": 20.0,
+				"orb_1_slot_2": 20.0,
+				"orb_2_slot_2": 20.0,
+				"orb_3_slot_2": 20.0,
+				"path_patches": 2.0,
+				"projectiles_emitted": 20.0,
+				"projectiles_finished": 16.0,
+				"projectiles_finished_without_contact": 16.0,
+				"stage_casts": 80.0,
+				"zone_pulses": 192.0,
+				"zones_created": 16.0
+			},
+			"recipes": [
+				[
+					"mirror_trail",
+					0
+				],
+				[
+					"orbit_vortex",
+					1
+				],
+				[
+					"plasma_beam",
+					2
+				],
+				[
+					"poison_flame",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 6,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 128.896,
+			"cpu_p95_ms": 41.743,
+			"damage_events": 158220.703823142,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 0,
+				"clouds": 8,
+				"jobs": 0,
+				"orbits": 4,
+				"projectiles": 28,
+				"strikes": 0,
+				"zones": 0
+			},
+			"meter": {
+				"damage_effective": 158220.703823142,
+				"damage_events": 19105.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 158220.703823142,
+				"explosion_victims": 4907.0,
+				"explosions": 186.0,
+				"fusion_poison_mist": 14.0,
+				"fusion_shining_spear": 98.0,
+				"orb_0_slot_2": 4.0,
+				"orb_1_slot_2": 4.0,
+				"orb_2_slot_2": 56.0,
+				"orb_3_slot_2": 4.0,
+				"orbit_contacts": 6778.0,
+				"orbits_created": 8.0,
+				"projectile_contacts": 410.0,
+				"projectiles_contacted": 340.0,
+				"projectiles_emitted": 360.0,
+				"projectiles_finished": 348.0,
+				"projectiles_finished_without_contact": 8.0,
+				"satellite_shards": 52.0,
+				"stage_casts": 68.0
+			},
+			"recipes": [
+				[
+					"poison_mist",
+					0
+				],
+				[
+					"satellite@3",
+					1
+				],
+				[
+					"shard_satellite",
+					2
+				],
+				[
+					"shining_spear",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 7,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 14.684,
+			"cpu_p95_ms": 8.615,
+			"damage_events": 82135.8000000012,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 0,
+				"clouds": 2,
+				"jobs": 1,
+				"orbits": 0,
+				"projectiles": 1,
+				"strikes": 2,
+				"zones": 3
+			},
+			"meter": {
+				"cold_added": 995.280000000013,
+				"damage_effective": 82135.8000000012,
+				"damage_events": 1928.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 82135.8000000012,
+				"explosion_victims": 1205.0,
+				"explosions": 26.0,
+				"freezes": 280.0,
+				"frozen_enemy_seconds": 244.400000000087,
+				"fusion_thunder_seal": 3.0,
+				"lightning_pulses": 24.0,
+				"orb_0_slot_2": 4.0,
+				"orb_1_slot_2": 8.0,
+				"orb_2_slot_2": 4.0,
+				"orb_3_slot_2": 4.0,
+				"path_patches": 1.0,
+				"projectile_contacts": 4.0,
+				"projectiles_contacted": 4.0,
+				"projectiles_emitted": 8.0,
+				"projectiles_finished": 4.0,
+				"stage_casts": 20.0,
+				"strikes_scheduled": 8.0,
+				"trail_copies": 4.0,
+				"trap_activations": 8.0,
+				"zones_created": 8.0
+			},
+			"recipes": [
+				[
+					"thermal_trail",
+					0
+				],
+				[
+					"thorn@3",
+					1
+				],
+				[
+					"thunder@3",
+					2
+				],
+				[
+					"thunder_seal",
+					3
+				]
+			],
+			"seed": 24061
+		},
+		{
+			"batch": 8,
+			"blocked_counters": {
+
+			},
+			"cpu_max_ms": 144.069,
+			"cpu_p95_ms": 87.902,
+			"damage_events": 94870.4534999604,
+			"fps_model": "headless CPU only; no rendered FPS claim",
+			"frames": 240,
+			"max_objects": {
+				"beams": 0,
+				"clouds": 0,
+				"jobs": 15,
+				"orbits": 0,
+				"projectiles": 9,
+				"strikes": 0,
+				"zones": 44
+			},
+			"meter": {
+				"boomerang_returns": 27.0,
+				"boomerang_ricochets": 83.0,
+				"bounce_redirects": 170.0,
+				"cold_added": 72.65,
+				"damage_effective": 94870.4534999604,
+				"damage_events": 35212.0,
+				"damage_overkill": 0.0,
+				"damage_raw": 94870.4534999604,
+				"explosion_victims": 1455.0,
+				"explosions": 20.0,
+				"fusion_twin_moons": 4.0,
+				"garden_full": 2.0,
+				"garden_merges": 48.0,
+				"orb_0_slot_2": 24.0,
+				"orb_1_slot_2": 46.0,
+				"orb_2_slot_2": 28.0,
+				"orb_3_slot_2": 37.0,
+				"projectile_contacts": 379.0,
+				"projectiles_contacted": 34.0,
+				"projectiles_emitted": 89.0,
+				"projectiles_finished": 32.0,
+				"projectiles_finished_without_contact": 2.0,
+				"pull_distance": 49828.8973220265,
+				"pull_enemy_seconds": 506.816666666534,
+				"shape_redirects": 50.0,
+				"split_children": 65.0,
+				"stage_casts": 135.0,
+				"trap_activations": 15.0,
+				"zone_pulses": 226.0,
+				"zones_created": 61.0
+			},
+			"recipes": [
+				[
+					"timed_thorn",
+					0
+				],
+				[
+					"triple_frost",
+					1
+				],
+				[
+					"twin_moons",
+					2
+				],
+				[
+					"vortex@3",
+					3
+				]
+			],
+			"seed": 24061
+		}
+	],
+	"enemy_count": 300,
+	"seed": 24061
+}

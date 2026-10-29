@@ -1,0 +1,59 @@
+{
+	"cases": [
+		{
+			"contact_events": 1.0,
+			"damage_field": 22.0,
+			"factor": 1.0,
+			"hp_loss": 22.0,
+			"label": "direct_bolt",
+			"potency": 1.0
+		},
+		{
+			"child_count": 1,
+			"contact_events": 1.0,
+			"damage_field": 11.0,
+			"factor": 0.5,
+			"hp_loss": 11.0,
+			"label": "dual_event_child_impact",
+			"new_projectiles": 0,
+			"potency": 1.0
+		},
+		{
+			"child_count": 0,
+			"contact_events": 2.0,
+			"damage_field": 11.0,
+			"factor": 0.5,
+			"hp_loss": 11.0,
+			"label": "dual_event_grandchild_impact",
+			"new_projectiles": -1,
+			"potency": 1.0
+		},
+		{
+			"child_count": 1,
+			"contact_events": 3.0,
+			"damage_field": 11.0,
+			"factor": 0.5,
+			"hp_loss": 11.0,
+			"label": "dual_event_child_expire",
+			"new_projectiles": 0,
+			"potency": 1.0
+		},
+		{
+			"child_count": 0,
+			"contact_events": 4.0,
+			"damage_field": 11.0,
+			"factor": 0.5,
+			"hp_loss": 11.0,
+			"label": "dual_event_grandchild_expire",
+			"new_projectiles": -1,
+			"potency": 1.0
+		},
+		{
+			"branches": 1,
+			"expected_per_descendant_from_doc": 11,
+			"interpretation": "synthetic root event injection; child and grandchild damage measured through actual engine projectile collision",
+			"label": "summary",
+			"program_compiles": true
+		}
+	]
+}

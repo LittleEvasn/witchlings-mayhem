@@ -170,3 +170,6 @@ Claw magicraft-evidence-followup-20261029. 총괄 관찰 gpt-6.1-sol/high 단독
 
 ## 2026-10-30 간단 훈련장
 총괄 Sol6.1/high 단독, 보조 없음. 관련15검사0실패·실제렌더·빌드, project.godot 보존. 시작primary89/weekly89%, 다음요청시primary0/weekly91%사용(창초기화·공유한도), 정확한 작업토큰/절감효과 미측정. 결과 docs/TRAINING-ROOM-v1.md.
+
+## 2026-10-30 루나 마법60종 전수 진단
+사용자 명시 위임, wm_scout 역할 Luna/high 관찰 세션01a188c9-54a6-7900-9b64-940ec4247e76, 총괄 Sol6.1/high 결과 검토·보존. 재위임없음/동시보조1. 제품코드미변경, 관련989baseline·835520유효컴파일·1440전투·5184주입·9부하·소형회귀 수행. fixture 오류를 제품실패와 분리하고 합성rank입력/고정표적/틱경계 수정, 미타격표본과특수조건 재검증. 보고서 docs/MAGIC60-FIX-AND-TEST-REPORT.md. 사용량 시작primary0/weekly91%,중간17/94%사용(공유한도),정밀토큰·단독대비절감은미측정.

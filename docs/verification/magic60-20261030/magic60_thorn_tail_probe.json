@@ -1,0 +1,59 @@
+{
+	"recipe": [
+		"pierce@3",
+		"thorn@3"
+	],
+	"simulated_seconds": 12.5,
+	"snapshots": [
+		{
+			"finishes": 0,
+			"jobs": 0,
+			"projectiles": 1,
+			"seconds": 0.0166666666666667,
+			"zone_creations": 0,
+			"zones": []
+		},
+		{
+			"finishes": 1.0,
+			"jobs": 0,
+			"projectiles": 0,
+			"seconds": 10.0,
+			"zone_creations": 1.0,
+			"zones": [
+				{
+					"age": 8.29999999999999,
+					"kind": "thorn",
+					"life": 0.699999999999975,
+					"pos": [
+						1344.00158691406,
+						450.0
+					]
+				}
+			]
+		},
+		{
+			"finishes": 1.0,
+			"jobs": 0,
+			"projectiles": 0,
+			"seconds": 11.0,
+			"zone_creations": 1.0,
+			"zones": []
+		},
+		{
+			"finishes": 1.0,
+			"jobs": 0,
+			"projectiles": 0,
+			"seconds": 12.0,
+			"zone_creations": 1.0,
+			"zones": []
+		},
+		{
+			"finishes": 1.0,
+			"jobs": 0,
+			"projectiles": 0,
+			"seconds": 12.5,
+			"zone_creations": 1.0,
+			"zones": []
+		}
+	]
+}

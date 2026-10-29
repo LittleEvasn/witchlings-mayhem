@@ -1,0 +1,156 @@
+{
+	"cases": [
+		{
+			"data": {
+				"actual": [
+					889.921875,
+					453.748901367188
+				],
+				"bezier_counterfactual": [
+					847.510620117188,
+					467.929779052734
+				],
+				"distance_bezier_counterfactual": 44.7192573547363,
+				"distance_orbit_expected": 0.0,
+				"leg_age": 0.0166666666666667,
+				"motion": "orbit",
+				"old": [
+					800.0,
+					450.0
+				],
+				"orbit_expected": [
+					889.921875,
+					453.748901367188
+				]
+			},
+			"name": "P1-04_orbit_boomerang"
+		},
+		{
+			"data": {
+				"derived_projectiles": [],
+				"installed_zone": {
+					"attack": "vortex",
+					"has_speed": true,
+					"kind": "vortex",
+					"orbit_motion": "orbit",
+					"speed": 320.0,
+					"zone_count": 1
+				},
+				"jobs_after_end": 0,
+				"split_children": 2.0,
+				"zone_kinds_after_split": [
+					"vortex",
+					"vortex"
+				]
+			},
+			"name": "P1-06_installed_vortex"
+		},
+		{
+			"data": {
+				"derived_projectiles": [],
+				"installed_zone": {
+					"attack": "thorn",
+					"has_speed": true,
+					"kind": "thorn",
+					"orbit_motion": "orbit",
+					"speed": 320.0,
+					"zone_count": 1
+				},
+				"jobs_after_end": 0,
+				"split_children": 2.0,
+				"zone_kinds_after_split": [
+					"thorn",
+					"thorn"
+				]
+			},
+			"name": "P1-06_installed_thorn"
+		},
+		{
+			"data": {
+				"active_orbits": 0,
+				"emitted_projectiles": 0,
+				"instant_flash_pos": [
+					890.0,
+					450.0
+				],
+				"origin": [
+					800.0,
+					450.0
+				],
+				"target": [
+					911.0,
+					450.0
+				],
+				"target_hp_loss": 10.0
+			},
+			"name": "P1-07_orbit_frost"
+		},
+		{
+			"data": {
+				"jobs": 2,
+				"player_displacement": 0.0,
+				"trail_copies": 2.0
+			},
+			"name": "P2-03_stationary_frost_trail"
+		},
+		{
+			"data": {
+				"base_attack_radius": 8.0,
+				"length": 480.0,
+				"scale": 2.5,
+				"width": 20.0
+			},
+			"name": "P2-04_giant_laser"
+		},
+		{
+			"data": {
+				"burn_effective_hp_loss": 15.0,
+				"damage_events": 5.0,
+				"remaining_pulse": 0.29,
+				"simulated_seconds": 1.51,
+				"steps": 46
+			},
+			"name": "P2-08_status_30hz"
+		},
+		{
+			"data": {
+				"burn_effective_hp_loss": 15.0,
+				"damage_events": 5.0,
+				"remaining_pulse": 0.29,
+				"simulated_seconds": 1.51,
+				"steps": 91
+			},
+			"name": "P2-08_status_60hz"
+		},
+		{
+			"data": {
+				"burn_effective_hp_loss": 15.0,
+				"damage_events": 5.0,
+				"remaining_pulse": 0.289999999999999,
+				"simulated_seconds": 1.51,
+				"steps": 181
+			},
+			"name": "P2-08_status_120hz"
+		},
+		{
+			"data": {
+				"burn_effective_hp_loss": 15.0,
+				"damage_events": 5.0,
+				"remaining_pulse": 0.29,
+				"simulated_seconds": 1.51,
+				"steps": 7
+			},
+			"name": "P2-08_status_spike_025s"
+		},
+		{
+			"data": {
+				"burn_effective_hp_loss": 12.0,
+				"damage_events": 4.0,
+				"remaining_pulse": -0.0100000000000001,
+				"simulated_seconds": 1.51,
+				"steps": 4
+			},
+			"name": "P2-08_status_spike_05s"
+		}
+	]
+}
