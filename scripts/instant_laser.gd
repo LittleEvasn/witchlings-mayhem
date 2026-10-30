@@ -4,7 +4,7 @@ extends RefCounted
 const MAX_RANGE := 480.0
 const REFRACTION_SEARCH := 260.0
 const MAX_LEGS := 16
-const BASE_DAMAGE := 22.0
+const BASE_DAMAGE := 18.0
 const ORBIT_STEPS := 32
 
 static func fire(c: Dictionary, ext: RefCounted) -> void:
