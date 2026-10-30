@@ -27,7 +27,7 @@ static func _trace(c: Dictionary, ext: RefCounted, start: Vector2, initial_direc
 	var game: Node2D = ext.game
 	var cursor: Vector2 = start
 	var direction: Vector2 = initial_direction.normalized()
-	var distance_left := MAX_RANGE
+	var distance_left: float=float(c.get("length",MAX_RANGE))
 	var reflected := int(game.Spells.attack_data(c.stage).get("refractions",0))
 	# The independent bounce modifier adds to the native refracted paths.
 	reflected += int(game.Spells.Effects.profile(c.stage,"bounce").targets)
@@ -82,7 +82,7 @@ static func _trace(c: Dictionary, ext: RefCounted, start: Vector2, initial_direc
 			continue
 		break
 	# Split is a single event per cast, not per damage frame.
-	ext.split(c,c.get("_laser_end",start))
+	# Split after beam expiry; impact alone does not destroy the laser.
 
 static func _orbit(c: Dictionary, ext: RefCounted, aim: Vector2) -> void:
 	var game: Node2D=ext.game
@@ -108,7 +108,7 @@ static func _orbit(c: Dictionary, ext: RefCounted, aim: Vector2) -> void:
 			if not game.magic_active(): return
 		from=to
 	c["_laser_end"]=first
-	ext.split(c,first)
+	# Split after beam expiry, once the circular ray has resolved.
 
 static func _hit(c: Dictionary, ext: RefCounted, enemy: Node2D, direction: Vector2) -> void:
 	ext.runtime.track("laser_contacts",c.meter_source)
