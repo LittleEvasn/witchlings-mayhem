@@ -46,7 +46,7 @@ jobs:
           unzip -q /tmp/templates.tpz -d /tmp/godot-templates
           mkdir -p "$HOME/.local/share/godot/export_templates/${VERSION}.stable"
           cp -a /tmp/godot-templates/templates/. "$HOME/.local/share/godot/export_templates/${VERSION}.stable/"
-          godot --version
+          /tmp/godot-bin/godot --version
 
       - name: Static staging and export configuration checks
         run: python -m unittest discover -s tools -p web_lab_static_test.py -v
