@@ -422,7 +422,7 @@ func update_beams(delta: float) -> void:
 			var seen: Dictionary={}
 			var found:=targets(c.pos,c.length+50)
 			found.sort_custom(func(a,b):return (a.position-c.pos).dot(dir)<(b.position-c.pos).dot(dir))
-			var remaining: int=int(game.Spells.attack_data(c.stage).targets)+int(game.Spells.Effects.profile(c.stage,"pierce").targets)
+			var remaining: int=(9999 if c.stage.get("fusion","")=="disintegration" else int(game.Spells.attack_data(c.stage).targets))+int(game.Spells.Effects.profile(c.stage,"pierce").targets)
 			for e in found:
 				var offset: Vector2=e.position-c.pos
 				var inside: bool=offset.dot(dir)>=0 and offset.dot(dir)<=c.length and absf(offset.cross(dir))<=c.width+e.radius
