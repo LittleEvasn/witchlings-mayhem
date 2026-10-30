@@ -14,6 +14,8 @@ static func build(ui: CanvasLayer) -> void:
 	ui.trial_stats_label=ui.label(ui.modal,"",Vector2(32,100),18,ui.MINT,990)
 	ui.button(ui.modal,"피해·상태 초기화",Rect2(32,138,210,38),func():g.reset_training(),false,15).name="TrainingReset"
 	ui.button(ui.modal,"조합 모두 비우기",Rect2(252,138,210,38),func():g.reset_training(true),false,15).name="TrainingClear"
+	ui.button(ui.modal,"AI 자동 플레이 중단" if g.ai_running else "AI 자동 플레이 · 60초",Rect2(474,138,230,38),g.stop_ai_autoplay if g.ai_running else g.start_ai_autoplay,false,15).name="TrainingAiAutoplay"
+	ui.label(ui.modal,g.ai_status(),Vector2(32,187),15,ui.MINT,1000).name="AiAutoplayStatus"
 	ui.panel(ui.modal,Rect2(1074,82,342,777),ui.INK)
 	ui.label(ui.modal,"모든 마법 · 자유 장착",Vector2(1090,94),19,ui.MINT)
 	var picker:=OptionButton.new();picker.name="TrainingRank"
