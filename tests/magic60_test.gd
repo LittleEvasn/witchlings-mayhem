@@ -128,7 +128,7 @@ func run() -> void:
 	# 80% radius and 50% movement speed, and restarts its original lifetime.
 	for split_rank in 4:
 		fresh()
-		emit(["split@%d"%split_rank,"bolt"])
+		emit(["split" if split_rank==0 else "split@%d"%split_rank,"bolt"])
 		var parent: Dictionary=g.projectiles[0]
 		var original_damage: float=parent.damage
 		var original_radius: float=parent.radius
@@ -146,6 +146,17 @@ func run() -> void:
 	check(count("split_children")==0 and g.projectiles.size()==1,"Piercing hit does not prematurely split a live projectile")
 	g.projectiles[0].life=.001;step(.08)
 	check(count("split_children")==3,"Piercing spell splits when its actual lifetime ends")
+	# An airborne fireball clone must not inherit the parent's landing flag and burst instantly.
+	fresh();emit(["split","fireball"])
+	g.projectiles[0].life=.001;step(.08)
+	var fire_children: Array=g.projectiles.filter(func(p):return p.stage.get("_split_child",false))
+	check(fire_children.size()==3 and fire_children.all(func(p):return p.life>1.0),"Split fireball children fly instead of exploding instantly on creation")
+	# A Magicraft-style instant laser splits on actual beam expiry at the trace tip.
+	fresh();emit(["split","laser"]);step(.15)
+	check(count("split_children")==0,"Laser does not split on immediate trace resolution")
+	step(.12)
+	var laser_children: Array=g.magic.extensions.beams.filter(func(b):return b.stage.get("_split_child",false))
+	check(laser_children.size()==3 and laser_children.all(func(b):return is_equal_approx(b.length,240.0)),"Laser expires into three half-length child rays")
 	fresh();emit(["trail@3","bolt"]);step(2)
 	check(count("trail_copies")==5,"Distance trail exactly five finite copies")
 	fresh();emit(["bolt","timer","bloom"]);step(.7)
@@ -156,7 +167,7 @@ func run() -> void:
 	check(g.projectiles.is_empty() and count("triggers")==0,"Forced clear cancels queued falls without expiry")
 	for element in ["element_fire","element_ice","element_poison","element_lightning"]:
 		fresh();grid();emit([element+"@3","laser"]);step(1.2)
-		check(not g.magic.extensions.status.is_empty() or count("freezes")>0,"Element applied by continuous attack: "+element)
+		check((g.magic.behavior.statuses.values().any(func(s):return s.cold>0) or count("freezes")>0) if element=="element_ice" else (not g.magic.extensions.status.is_empty()),"Element applied by continuous attack: "+element)
 	# The five independently reviewed defects have explicit regression fixtures.
 	fresh();emit(["meteor_thorn"]);step(.6)
 	check(g.magic.zones.size()==2 and g.magic.zones.all(func(z):return z.get("kind","")=="thorn"),"F09 produces exactly two valid installed traps, no projectile in zone list")
