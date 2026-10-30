@@ -217,8 +217,9 @@ func split(c: Dictionary, at: Vector2) -> void:
 		child["_split_pierce"]=int(launch.get("pierce",c.get("pierce",0)))
 		child["_split_range"]=float(c.get("length",0.0))*.5
 		child["_linked"]=true
-		# A split fall repeats landing, unlike ordinary derived projectiles.
-		child["_landed"]=false if child.get("fall",0)>0 else true
+		# Split children start a fresh life: ordinary fireballs must not be
+		# treated as already-landed instant explosions. Fall repeats its landing.
+		child["_landed"]=false
 		# Preserve the original attack identity; disable one-time cast cloning.
 		child["fusion"]=str(c.stage.get("fusion",""))
 		child["fan"]=0
