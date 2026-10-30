@@ -47,3 +47,15 @@ Pages 작업이 막히면 GitHub의 **Settings → Pages → Build and deploymen
 
 ## 남은 검증
 Chrome/Firefox에서 화면/입력/오디오/60종 카탈로그/4오브/고정 표적을 실제로 확인해야 한다. 300명 적과 4오브 극한 조건은 웹 단일 스레드에서 별도 성능 측정. 검증되지 않은 조합이나 기존 마법 버그는 웹에서도 남는다.
+
+
+## 2026-10-30 실제 CI 검증 결과 (기록)
+
+- 성공한 [GitHub Actions 빌드 #41025713108](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41025713108): Godot v4.6.2.stable Linux 정식 에디터 및 공식 Web export templates 사용.
+- Python 임시 프로젝트 설정 검사 3건 **통과**.
+- 실제 Godot headless 60프레임 훈련장 부팅 **성공**.
+- Web 내보내기 **성공**: `index.html`, `index.js`, `index.wasm`, `index.pck` 포함.
+- [다운로드 가능한 웹 빌드 artifact](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41025713108/artifacts/12963104407) 생성 확인. 원래 파일은 GitHub Actions에 30일 보관 설정.
+- GitHub Pages 배포 **미완료**: `actions/configure-pages@v5`가 사이트 생성 중 `Resource not accessible by integration` 403 오류를 반환. GitHub 관리자 권한으로 저장소 **Settings → Pages → Build and deployment: GitHub Actions** 선택 후 다시 배포해야 함.
+- 브라우저 화면 수동 검증 **미수행**: 현재 검사 컨테이너의 Chromium에서 `http://127.0.0.1` 접속이 `ERR_BLOCKED_BY_ADMINISTRATOR`로 막힘. 게임 자체의 WebGL 오류로 해석하지 않는다.
+- 본게임 코드, 원본 `project.godot`, 마법 효과 60종은 변경하지 않음.
