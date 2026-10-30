@@ -91,6 +91,25 @@ func run() -> void:
 		# Yield so queued_free children from the previous test are released.
 		await process_frame
 	check(results.size()==60,"60 actual runtime sessions with recorded observations")
+	# Native Magicraft-style laser regression: one cast resolves a complete
+	# snapshot trace and upgrades redirect the beam on enemy contact.
+	var laser_ok: bool=runner.begin(["seek","laser@3"],"cluster",731,"nearest",5.0,1.0,1.0,"sigil",{"motion":"stationary","sandbox_loadout":true})
+	check(laser_ok,"Native refraction laser test starts")
+	if laser_ok:
+		var saw_instant: bool=false
+		var saw_segments: bool=false
+		while runner.active:
+			runner.step()
+			for beam in g.magic.extensions.beams:
+				if beam.get("_laser_instant",false):
+					saw_instant=true
+					if beam.get("segments",[]).size()>0: saw_segments=true
+		var laser_report: Dictionary=runner.report()
+		var laser_totals: Dictionary=laser_report.get("totals",{})
+		check(saw_instant and saw_segments,"Instant ray calculated full segment path on cast")
+		check(float(laser_totals.get("laser_contacts",0))>0,"Instant laser damages an enemy")
+		check(float(laser_totals.get("laser_refractions",0))>0,"Laser rank 3 refracts toward another target")
+		await process_frame
 	# A full 60-second AI-play scenario checks movement, dynamic enemies, damage and survival.
 	var long_ok: bool = runner.begin(["seek","fan","bolt","impact","bloom"],"pressure",739,"nearest",LONG_SECONDS,1.0,1.0,"sigil",{"motion":"orbit","sandbox_loadout":true})
 	check(long_ok,"Start 60-second moving AI scenario")
