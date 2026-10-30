@@ -1,12 +1,12 @@
 # MAGIC-SPLIT-2026-10-30-01 · 분열(3013) 원작식 코드 개편 + 0~3강 3·4·5·6개
 
-> **상태: IN_PROGRESS / GitHub 코드 반영·검증 테스트 추가 완료, 실제 Godot 엔진 실행 및 전투 확인 미실행.** 원작 완전 등가라고 판단하지 않음.
+> **상태: UNDER_REVIEW / GitHub 게임 코드 반영·Godot 4.6.2 헤드리스 Magic60 테스트 830/0 통과·AI 자동 플레이 263/0(경고 2) 확인.** 실제 화면 수동 확인·고부하/전체 상호작용 재검증 전이며, 원작 완전 등가라고 판단하지 않음.
 
 - 날짜: 2026-10-30
 - 프로젝트: `LittleEvasn/witchlings-mayhem`
 - 사용자 확정: [DEC-2026-10-30-10](../decisions/2026-10-30-magicraft-split-3-4-5-6.md)
 - 원작 참조: Magicraft `Split` ID 3013 (원본 3/5/8기본 3강). `kav1982/_reverse_engineering`의 `SpellDestroySystem.cs`, `SpellSpawnParamsStorage.cs`, `ShootSpellUtils.cs`, `SpellSystem.cs`, `分裂逆向分析.md`.
-- 이번 작업: **기존 게임 코드를 실제로 수정해 GitHub에 업로드**, 관련 테스트 수정. **로컬 Godot 실행기 없어서 테스트 실행 및 시각 확인은 하지 못함**.
+- 이번 작업: **실제 게임 코드 및 회귀 테스트를 GitHub main에 수정·업로드**. [GitHub Actions 검증 실행 #41073457834](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41073457834)의 **Godot 헤드리스 Magic60 테스트 830 checks / 0 failures**, 웹 빌드 측 AI 자동 플레이 **263 checks / 0 failures / 2 flagged cases** 확인. 로컬 대화 환경에 Godot 실행기가 없어 **사용자 시점의 화면·실제 조작·장시간 성능** 확인은 못함.
 
 ## 1. 원작과 관찰의 정합성
 
@@ -64,7 +64,7 @@
 - `split + vortex/thorn/satellite/ember_path/flamethrower`: 자식에게 실명중·원본 공격 성질·타이밍이 보존되는지 검증. 일부 타입은 분열 자식이 예산 제한으로 누락될 수 있으므로 계측.
 - 비정상 취소/게임 재시작 시 **분열 0**, 이전 세대의 예약 잡 유출 0. 30/60/120Hz와 큰 프레임 간격, 화면 경계·4오브·300적 성능 분리 검사.
 - 원본의 `SpellSpawnParamsStorage.ToSplit` → `SpellDestroySystem.Split` → `SpellShootSystem.SpawnSpellEntity`에 대응하는 코드/이벤트표를 비교해 생략 사항을 정리할 것.
-- **이번 보고서의 정적 확인은 실제 Godot 실행 통과를 뜻하지 않음**. 엔진 구문/실피해/실제 렌더/성능은 실행한 뒤 측정값으로 기록. 테스트가 실패하면 `VERIFIED`로 올리지 않는다.
+- **검증 증거:** GitHub Actions Godot 헤드리스 Magic60 회귀 테스트 **830개 성공·0실패**와 AI 자동 플레이 검사 **263개 성공·0실패·2 경고**를 실제 로그로 확인. 이 검사는 모든 분열 조합의 인터랙티브 렌더·사람 체감·최악 부하 성능을 입증하는 것은 아님. 나머지 결함은 실제 계측 후에만 완료 판정. 테스트가 실패하면 `VERIFIED`로 올리지 않는다.
 
 ## 6. 참고 코드
 
