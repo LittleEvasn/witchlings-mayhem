@@ -40,7 +40,7 @@ static func modifier_record(token: String) -> Dictionary:
 static func attack_profile(token: String) -> Dictionary:
 	var id: String = FUSIONS[token].base if is_fused(token) else base_id(token)
 	var r := 3 if is_fused(token) else clampi(rank(token),0,MAX_RANK)
-	var data := {"rank":r,"angles":[0.0],"radius":0.0,"life":0.0,"targets":1,"pulses":1,"bodies":1,"ricochets":0,"spread":60.0}
+	var data := {"rank":r,"angles":[0.0],"radius":0.0,"life":0.0,"targets":1,"pulses":1,"bodies":1,"ricochets":0,"refractions":0,"spread":60.0}
 	match id:
 		"bolt": data.angles = [[0.0],[0.0,150.0,210.0],[0.0,90.0,180.0,270.0],[0.0,60.0,120.0,180.0,240.0,300.0]][r]
 		"bloom": data.radius = [70.0,90.0,115.0,140.0][r]
@@ -65,9 +65,10 @@ static func attack_profile(token: String) -> Dictionary:
 			data.radius = [50.0,65.0,80.0,100.0][r]
 			data.life = [2.0,2.5,3.0,3.5][r]
 		"laser":
-			data.radius = [8.0,11.0,14.0,18.0][r]
-			data.life = [.7,.85,1.0,1.2][r]
-			data.targets = [1,2,3,4][r]
+			# Magicraft 1004: one instantaneous trace, upgrades grant refraction.
+			data.radius = [3.5,4.0,4.5,5.0][r]
+			data.life = 0.2
+			data.refractions = r
 		"flamethrower":
 			data.radius = [140.0,160.0,180.0,200.0][r]
 			data.life = [.7,.85,1.0,1.2][r]
@@ -89,7 +90,7 @@ static func attack_text(token: String) -> String:
 		"thunder": return "반경 %.0f · 같은 지점 %d회 낙뢰"%[d.radius,d.pulses]
 		"satellite": return "위성 %d개 공전"%d.bodies
 		"fireball": return "폭발 반경 %.0f · 화상 %.1f초"%[d.radius,d.life]
-		"laser": return "광선 폭 %.0f · %.1f초 · %d명 관통"%[d.radius*2,d.life,d.targets]
+		"laser": return "즉발 광선 · 명중 후 굴절 %d회 · 잔상 0.2초"%d.refractions
 		"flamethrower": return "%.0f거리 · %.0f도 · %.1f초 분사"%[d.radius,d.spread,d.life]
 	return "완성형 합성 · 추가 강화 없음"
 
