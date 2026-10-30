@@ -2,7 +2,7 @@
 
 - **작성일:** 2026-10-30
 - **상태:** **APPROVED (사용자 원고 등록 승인)** — 사용자가 개정본에 대해 “좋아 나쁘지 않아 그대로 보고서로 올려”라고 지시. 대사본의 추가 수정 없이 보존하며, 구현 승인은 별도.
-- **기준:** \`LittleEvasn/witchlings-mayhem\` \`main\`, [스토리 진행 순서 확정](../decisions/2026-10-30-story-main-flow-and-side-stories.md), [스토리 1 대사본](2026-10-30-story1-after-class-witches-dialogue-v1.md).
+- **기준:** `LittleEvasn/witchlings-mayhem` `main`, [스토리 진행 순서 확정](../decisions/2026-10-30-story-main-flow-and-side-stories.md), [스토리 1 대사본](2026-10-30-story1-after-class-witches-dialogue-v1.md).
 - **대상 구간:** 메인 스토리 2 / 일반 엔딩 4종. 공통 도입 → 선택한 마녀의 개별 결말 → 공통 마무리.
 - **구현 및 검증:** **보고서만 등록. Godot 게임 코드·컷신·대사 리소스 변경 없음. 실제 엔진 실행·스토리 분기·UI 표시 테스트 미수행.**
 
