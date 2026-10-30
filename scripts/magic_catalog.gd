@@ -25,7 +25,7 @@ const PARTS = {
 	"flamethrower":{"name":"화염방사기","symbol":"♨","kind":"attack","color":Color("ffb16b"),"desc":"짧은 부채꼴을 지속 분사 · 화상을 남김"},
 	"fall":{"name":"낙하","symbol":"↓","kind":"modifier","color":Color("d0c5ff"),"desc":"조준 지점 상공에서 예고 후 착지 · 착지 전 피해 없음"},
 	"orbit":{"name":"공전","symbol":"⟳","kind":"modifier","color":Color("c3bbff"),"desc":"공격의 위치가 기준점 주위를 공전 · 추적과 함께면 오른쪽 이동 보조 우선"},
-	"split":{"name":"분열","symbol":"⋈","kind":"modifier","color":Color("f8c39c"),"desc":"첫 명중 또는 정상 종료에 약한 자식 2개 · 1세대만 생성"},
+	"split":{"name":"분열","symbol":"⋈","kind":"modifier","color":Color("f8c39c"),"desc":"적중으로 소멸하거나 수명이 끝나면 자식 3~6개 생성 · 각각 피해 33% · 재분열 없음"},
 	"trail":{"name":"복제 궤적","symbol":"⋯","kind":"modifier","color":Color("acdfff"),"desc":"이동 거리마다 약한 잔상 · 한 주문 최대 2개 · 재복제 없음"},
 	"element_fire":{"name":"화염","symbol":"♨","kind":"modifier","color":Color("ff926c"),"desc":"명중한 적에게 화상 · 동결에 남은 화상 정산"},
 	"element_ice":{"name":"빙결","symbol":"❄","kind":"modifier","color":Color("b4eaff"),"desc":"냉기를 쌓아 둔화·동결 · 서리숨결의 냉기와는 큰 값만 적용"},
