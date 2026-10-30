@@ -29,8 +29,11 @@
 | MAGIC-THORN-2026-10-30-01 | 가시꽃 덫: **괴이한 지뢰처럼 굴러가는 씨앗 → 지연 후 원형 덫이 팍 전개** | **APPROVED** (사용자 방향 확정, 코드 미구현) | [구현 보고서](reports/2026-10-30-thorn-trap-magicraft-deceptive-mine-deployment.md) · [확정 결정](decisions/2026-10-30-thorn-trap-magicraft-deceptive-mine-deployment.md) | 원본 지뢰 굴림·감속·지연 이동을 대응 포팅하고 폭발 대신 원형 덫 전개, 합성/중첩 호환 검증 |
 | MAGIC-LASER-2026-10-30-01 | **레이저 → 마법공예 기본 광선(1004)**: 즉발 직선/굴절 광선, 분해 광선(1011)은 지속형 분리 | **UNDER_REVIEW** (Godot 263검사 성공·0실패, 웹 빌드 성공 / 브라우저 시각검증 전) | [구현·검증 보고서](reports/2026-10-30-laser-magicraft-1004-implementation.md) | [CI 263검사 성공](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41056392316), 브라우저에서 광선 시각·입력·보조 호환성 검증 |
 | MAGIC-FLAME-BURST-2026-10-30-01 | 화염방사기: **마법공예 원작 맹렬한 용의 숨결(1025)**의 전진 불꽃·사거리 확장을 **짧은 단발형 화염 버스트**로 개편 | **APPROVED** (사용자 방향 확정, 세부 수치 제안, 코드 미구현) | [상세 보고서](reports/2026-10-30-flamethrower-magicraft-1025-short-burst.md) · [확정 결정](decisions/2026-10-30-flamethrower-short-burst-dragon-breath-reference.md) | Codex: 별도 구현 요청 시 0.35~0.5초 버스트·전진 화염/VFX 일치·실제 타격/화상 검증; 우리 동명 합성 및 독염 분사 호환 확인 |
+| MAGIC-ORBIT-2026-10-30-01 | **공전(orbit) → 마법공예 공전 3009 방식**: 투사체 속도 기반 각속도·추가 수명/속도·반경 덮어쓰기·시작각도·충돌 정합 | **APPROVED** (동작 계약 사용자 확정, 우리 3강/px 환산은 제안·코드 미구현) | [정밀 포팅 보고서](reports/2026-10-30-orbit-magicraft-3009-source-port.md) · [확정 결정](decisions/2026-10-30-orbit-magicraft-3009-motion-contract.md) | Codex: 별도 구현 시 원작 3009 대응 포팅·공전+잔불 P0·원호 충돌·낙하/광선/연결 호환·실제 Godot 수명/피해 검증 |
 
 ## 검토·승인·구현 인계
+
+- [DEC-2026-10-30-09: 공전(orbit)을 마법공예 3009 이동·수명·반경 방식으로 통일](decisions/2026-10-30-orbit-magicraft-3009-motion-contract.md) **사용자 동작 계약 확정**. 4단계 수치·픽셀 환산은 제안/검증 전, 코드 미구현.
 
 - [DEC-2026-10-30-08: 화염방사기 → 원작 맹렬한 용의 숨결(1025) 기반 단발형 분출](decisions/2026-10-30-flamethrower-short-burst-dragon-breath-reference.md) **사용자 개편 방향 확정**. 세부 밸런스·합성 수정 범위 미확정, 게임 코드 미수정.
 
