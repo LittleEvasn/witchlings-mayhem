@@ -1,0 +1,84 @@
+name: Web Magic Lab
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/web-magic-lab.yml'
+      - 'tools/build_web_lab.py'
+      - 'tools/web_lab_static_test.py'
+      - 'export_presets.cfg'
+      - 'project.godot'
+      - 'scenes/**'
+      - 'scripts/**'
+      - 'assets/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: web-magic-lab
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot 4.6.2 and its official export templates
+        shell: bash
+        run: |
+          set -euxo pipefail
+          VERSION=4.6.2
+          RELEASE="4.6.2-stable"
+          BASE="https://github.com/godotengine/godot/releases/download/${RELEASE}"
+          curl -fL --retry 4 --retry-all-errors "${BASE}/Godot_v${RELEASE}_linux.x86_64.zip" -o /tmp/godot.zip
+          mkdir -p /tmp/godot-bin
+          unzip -q /tmp/godot.zip -d /tmp/godot-bin
+          chmod +x "/tmp/godot-bin/Godot_v${RELEASE}_linux.x86_64"
+          echo "/tmp/godot-bin" >> "$GITHUB_PATH"
+          ln -sf "/tmp/godot-bin/Godot_v${RELEASE}_linux.x86_64" /tmp/godot-bin/godot
+          curl -fL --retry 4 --retry-all-errors "${BASE}/Godot_v${RELEASE}_export_templates.tpz" -o /tmp/templates.tpz
+          unzip -q /tmp/templates.tpz -d /tmp/godot-templates
+          mkdir -p "$HOME/.local/share/godot/export_templates/${VERSION}.stable"
+          cp -a /tmp/godot-templates/templates/. "$HOME/.local/share/godot/export_templates/${VERSION}.stable/"
+          godot --version
+
+      - name: Static staging and export configuration checks
+        run: python -m unittest discover -s tools -p web_lab_static_test.py -v
+
+      - name: Import, boot-test and export actual training room to WebAssembly
+        run: python tools/build_web_lab.py --godot godot --output "${{ github.workspace }}/dist"
+
+      - name: Publish downloadable standalone web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: witchlings-web-magic-lab
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload Web export for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Deploy actual Godot Web build
+        id: deployment
+        uses: actions/deploy-pages@v4
