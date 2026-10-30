@@ -1,5 +1,6 @@
 extends CanvasLayer
 const Spells = preload("res://scripts/spells.gd")
+const WEB_UI_FONT = preload("res://assets/fonts/Jua-Regular.ttf")
 const Board = preload("res://scripts/prep_board.gd")
 const RelicUI = preload("res://scripts/relic_ui.gd")
 const RunUI = preload("res://scripts/run_ui.gd")
@@ -39,7 +40,7 @@ var objective_label: Label
 var boss_bar: ProgressBar
 var boss_label: Label
 var trial_stats_label: Label
-var font: SystemFont
+var font: Font
 var selected_item := ""
 var merge_material := ""
 var inspected_orb := -1
@@ -81,8 +82,14 @@ func inspect_item(id: String, orb_index := -1, slot := -1) -> void:
 
 func _ready() -> void:
 	layer = 10
-	font = SystemFont.new()
-	font.font_names = PackedStringArray(["Malgun Gothic","Noto Sans CJK KR","Arial"])
+	# Browsers do not expose Windows/CJK system fonts to Godot Web.
+	# Use our packaged Hangul font for every inherited UI control in the web build.
+	if OS.has_feature("web"):
+		font = WEB_UI_FONT
+	else:
+		var native_font := SystemFont.new()
+		native_font.font_names = PackedStringArray(["Malgun Gothic","Noto Sans CJK KR","Arial"])
+		font = native_font
 	root = Control.new()
 	# Keep the existing board's measured geometry in a centred safe area.
 	# The battlefield fills the wider 16:9 viewport; no non-uniform UI stretch.
