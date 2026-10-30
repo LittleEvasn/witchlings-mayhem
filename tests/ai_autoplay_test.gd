@@ -139,6 +139,24 @@ func run() -> void:
 	runner.stop()
 	g.queue_free()
 	await process_frame
+	# Validate the actual web-training UI trigger and restoration, not only scripted battle.
+	var training=load("res://scenes/training.tscn").instantiate()
+	root.add_child(training)
+	current_scene=training
+	await process_frame
+	training.set_physics_process(false)
+	var original: Array=training.orb_drafts.duplicate(true)
+	check(training.ui.modal.find_child("TrainingAiAutoplay",true,false)!=null,"AI button visible in training room")
+	training.start_ai_autoplay()
+	check(training.ai_running and training.enemies.size()==10,"AI button starts 10-target real training session")
+	check(training.orb_drafts.size()==4 and training.orb_drafts[3][1]=="frost","AI equipped four independent orbs")
+	training._update_trial(1.0/60.0)
+	check(training.ai_seconds>0 and training.ai_running,"AI automatic movement step executes")
+	training.stop_ai_autoplay()
+	check(not training.ai_running and training.enemies.size()==4,"Stopping AI restores four normal targets")
+	check(training.orb_drafts==original and not training.ai_report.is_empty(),"Stopping AI restores saved orb loadout and result")
+	training.queue_free()
+	await process_frame
 	print("AUTOPLAY_REPORT: "+path)
 	print("RESULT: %d checks / %d failures / %d flagged cases"%[checks,failures,warnings])
 	quit(0 if failures==0 else 1)
