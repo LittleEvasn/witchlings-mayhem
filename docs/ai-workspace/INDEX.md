@@ -11,6 +11,8 @@
 
 | UI-2026-10-30-01 | 전투 HUD·중앙 3~4택·편집 전환·보물상자 잭팟 UI 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-combat-hud-reward-chest-ui-proposal.md) | 사용자 UI 방향 검토·승인; 승인 이후 Codex 구현 및 Godot 화면·입력 검증 |
 
+| AI-AUTO-2026-10-30-01 | 실제 Godot 마법 60종 AI 자동 플레이 검사 및 미해결 2종 | **UNDER_REVIEW** (60종 실행·255검사 성공, 경고 2) | [실측 보고서](reports/2026-10-30-ai-autoplay-60-verification.md) | 천둥 인장·심판 낙뢰 5초 무피해 재현·원인 확인 |
+
 ## 검토·승인·구현 인계
 
 - 아직 이번 보고서에 대한 별도 논의 문서, 승인 결정 또는 구현 인계는 없다.
