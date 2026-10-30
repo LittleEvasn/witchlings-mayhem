@@ -25,8 +25,11 @@
 | MAGIC-VORTEX-2026-10-30-01 | 소용돌이 씨앗을 **마법공예 블랙홀 동작으로 교체**, 기존 소용돌이 간 **겹침·중첩 성장 삭제** | **APPROVED** (사용자 설계 확정, 코드 미구현) | [보고서](reports/2026-10-30-vortex-replace-with-magicraft-black-hole.md) · [확정 결정](decisions/2026-10-30-vortex-magicraft-black-hole-replacement.md) | 블랙홀 이동/흡입/틱 피해/시간 성장 원본 정밀 이식, 겹침 방지 정책·가시꽃 덫/합성 호환성 검증 |
 | MAGIC-THORN-2026-10-30-01 | 가시꽃 덫: **괴이한 지뢰처럼 굴러가는 씨앗 → 지연 후 원형 덫이 팍 전개** | **APPROVED** (사용자 방향 확정, 코드 미구현) | [구현 보고서](reports/2026-10-30-thorn-trap-magicraft-deceptive-mine-deployment.md) · [확정 결정](decisions/2026-10-30-thorn-trap-magicraft-deceptive-mine-deployment.md) | 원본 지뢰 굴림·감속·지연 이동을 대응 포팅하고 폭발 대신 원형 덫 전개, 합성/중첩 호환 검증 |
 | MAGIC-LASER-2026-10-30-01 | **레이저 → 마법공예 기본 광선(1004)**: 즉발 직선/굴절 광선, 분해 광선(1011)은 지속형 분리 | **UNDER_REVIEW** (Godot 263검사 성공·0실패, 웹 빌드 성공 / 브라우저 시각검증 전) | [구현·검증 보고서](reports/2026-10-30-laser-magicraft-1004-implementation.md) | [CI 263검사 성공](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41056392316), 브라우저에서 광선 시각·입력·보조 호환성 검증 |
+| MAGIC-FLAME-BURST-2026-10-30-01 | 화염방사기: **마법공예 원작 맹렬한 용의 숨결(1025)**의 전진 불꽃·사거리 확장을 **짧은 단발형 화염 버스트**로 개편 | **APPROVED** (사용자 방향 확정, 세부 수치 제안, 코드 미구현) | [상세 보고서](reports/2026-10-30-flamethrower-magicraft-1025-short-burst.md) · [확정 결정](decisions/2026-10-30-flamethrower-short-burst-dragon-breath-reference.md) | Codex: 별도 구현 요청 시 0.35~0.5초 버스트·전진 화염/VFX 일치·실제 타격/화상 검증; 우리 동명 합성 및 독염 분사 호환 확인 |
 
 ## 검토·승인·구현 인계
+
+- [DEC-2026-10-30-08: 화염방사기 → 원작 맹렬한 용의 숨결(1025) 기반 단발형 분출](decisions/2026-10-30-flamethrower-short-burst-dragon-breath-reference.md) **사용자 개편 방향 확정**. 세부 밸런스·합성 수정 범위 미확정, 게임 코드 미수정.
 
 - [DEC-2026-10-30-07: 가시꽃 덫을 괴이한 지뢰처럼 굴린 뒤 원형 전개](decisions/2026-10-30-thorn-trap-magicraft-deceptive-mine-deployment.md) **사용자 확정**. 코드 미수정, 물리 이동·전개·발동 분리 구현 및 검증 필요.
 
