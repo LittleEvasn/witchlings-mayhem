@@ -108,6 +108,9 @@ func attach(c: Dictionary) -> void:
 	if c.stage.get("fusion","")=="judgement":
 		c.life=.8;c.pulses_left=1;c.strike_radius=40*c.scale
 	if c.stage.get("fusion","")=="collapse_vortex": c["_captured"]={}
+	if not c.stage.get("_split_child",false):
+		c["_split_launch"]={"life":float(c.get("initial_life",c.get("life",0.0))),"speed":float(c.get("speed",0.0)),
+			"radius":float(c.get("radius",c.get("width",0.0))),"pierce":int(c.get("pierce",0))}
 
 func move(c: Dictionary, delta: float, old: Vector2) -> void:
 	c._motion_age+=delta
@@ -197,14 +200,36 @@ func split(c: Dictionary, at: Vector2) -> void:
 	if c.get("_split_fired",false) or c.stage.get("split",0)<=0 or c.stage.get("_derived",false) or c.stage.get("_echo_copy",false): return
 	c._split_fired=true
 	var count:=int(rank_value(c.stage,"split"))
+	var launch: Dictionary=c.get("_split_launch",{})
+	var radius: float=float(launch.get("radius",c.get("radius",c.get("width",0.0))))*.8
+	var first_angle: float=game.rng.randf()*TAU
 	for n in count:
-		var child:=derived(c,.55/maxi(1,count))
-		child.fan=0
-		child.modifiers=child.modifiers.filter(func(m):return m.id!="fan")
+		# Magicraft 3013: inherit launch-time buffs and full capacities.
+		# Only damage, physical size, speed and knockback shrink.
+		var child:=derived(c,1.0)
+		child["_split_child"]=true
+		child["_split_damage_ratio"]=.33
+		child["_split_knockback_scale"]=.5
+		child["_support_scale"]=float(child.get("_support_scale",1.0))*.8
+		child["_split_radius"]=radius
+		child["_split_speed"]=float(launch.get("speed",c.get("speed",0.0)))*.5
+		child["_split_life"]=float(launch.get("life",c.get("initial_life",c.get("life",0.0))))
+		child["_split_pierce"]=int(launch.get("pierce",c.get("pierce",0)))
+		child["_split_range"]=float(c.get("length",0.0))*.5
+		child["_linked"]=true
+		# A split fall repeats landing, unlike ordinary derived projectiles.
+		child["_landed"]=false if child.get("fall",0)>0 else true
+		# Preserve the original attack identity; disable one-time cast cloning.
+		child["fusion"]=str(c.stage.get("fusion",""))
+		child["fan"]=0
+		child["growing_echo"]=0
 		child["attack_profile"]=child.attack_profile.duplicate(true)
 		child.attack_profile.angles=[0.0]
+		child.modifiers=child.modifiers.filter(func(m):return m.id not in ["fan","growing_echo"])
 		child["modifier_effects"]=game.Spells.Effects.resolve(child)
-		schedule_cast(c,child,at,Vector2.RIGHT.rotated(TAU*n/count),0)
+		var direction: Vector2=Vector2.RIGHT.rotated(first_angle+TAU*float(n)/float(count))
+		var start: Vector2=at if child.get("fall",0)>0 else at+direction*maxf(radius,0.333)
+		schedule_cast(c,child,start,direction,0)
 	runtime.track("split_children",c.meter_source,count)
 
 func redirect(c: Dictionary, at: Vector2) -> bool:
@@ -224,7 +249,7 @@ func redirect(c: Dictionary, at: Vector2) -> bool:
 	return true
 
 func impact(c: Dictionary, at: Vector2) -> void:
-	split(c,at)
+	# Impacts only split when they destroy the source; finish() owns the event.
 	var fid: String=c.stage.get("fusion","")
 	var power: float=runtime.behavior.damage_scale(c)
 	if c.attack=="fireball" and not c.get("_fireball_exploded",false):
@@ -364,7 +389,7 @@ func special(c: Dictionary) -> bool:
 		c["_laser_instant"]=true
 		c["_laser_end"]=c.pos+c.dir*480.0
 		c["_beam_hit_ids"]={}
-		c["length"]=480.0
+		c["length"]=float(c.stage.get("_split_range",480.0)) if c.stage.get("_split_child",false) else 480.0
 		c["width"]=profile.radius*c.scale
 		attach(c)
 		beams.append(c)
