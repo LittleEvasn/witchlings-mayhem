@@ -57,7 +57,16 @@ func begin(recipe: Array, scenario: String, seed_value := 731, aim_mode := "repl
 		var parsed: Dictionary = game.Spells.compile(proposed[orb])
 		if not parsed.ok: return false
 		programs[orb] = parsed.stages
-	cost_plan = Cost.new().plan(proposed,kit,options.get("economy_route","merge"))
+	# Automated sandbox audits must test every fused ability without purchasing
+	# components. Ordinary measurement runs still replay the real economy.
+	if options.get("sandbox_loadout",false):
+		var inventory: Dictionary={}
+		for row in proposed:
+			for token in row:
+				inventory[token]=int(inventory.get(token,0))+1
+		cost_plan={"ok":true,"inventory":inventory,"spent":0,"route":"sandbox","ledger":[]}
+	else:
+		cost_plan = Cost.new().plan(proposed,kit,options.get("economy_route","merge"))
 	if not cost_plan.ok: return false
 	bank = proposed
 	game.meter = null
