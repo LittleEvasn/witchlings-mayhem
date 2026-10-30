@@ -91,6 +91,17 @@ func run() -> void:
 		# Yield so queued_free children from the previous test are released.
 		await process_frame
 	check(results.size()==60,"60 actual runtime sessions with recorded observations")
+	# Rank-0 laser must strike its single target only once per cast: the
+	# 0.2-second visual afterglow must never apply sustained damage.
+	var single_laser_ok: bool=runner.begin(["seek","laser"],"single",731,"nearest",3.0,1.0,1.0,"sigil",{"motion":"stationary","sandbox_loadout":true})
+	check(single_laser_ok,"Single-target native laser starts")
+	if single_laser_ok:
+		while runner.active: runner.step()
+		var single_laser_totals: Dictionary=runner.report().get("totals",{})
+		check(float(single_laser_totals.get("laser_contacts",0))>0,"Single-target laser hits")
+		check(float(single_laser_totals.get("laser_contacts",0))<=float(single_laser_totals.get("stage_casts",0)),"Laser afterglow does not tick damage")
+		check(float(single_laser_totals.get("laser_refractions",0))==0,"Unupgraded laser does not refract")
+		await process_frame
 	# Native Magicraft-style laser regression: one cast resolves a complete
 	# snapshot trace and upgrades redirect the beam on enemy contact.
 	var laser_ok: bool=runner.begin(["seek","laser@3"],"cluster",731,"nearest",5.0,1.0,1.0,"sigil",{"motion":"stationary","sandbox_loadout":true})
