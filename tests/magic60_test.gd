@@ -122,8 +122,30 @@ func run() -> void:
 	fresh();grid();emit(["bounce","bolt"]);step(1)
 	check(count("bounce_redirects")>0,"Bounce redirects actual projectile")
 	fresh();grid();emit(["split@3","echo","bolt","impact","laser"]);step(3)
-	check(count("split_children")==5,"Split exactly one generation despite echo and hit/expiry")
+	check(count("split_children")==6,"Split exactly one generation despite echo and hit/expiry")
 	check(count("triggers")<=1,"Derived split/echo do not fire user child chain")
+	# Magicraft split: 0..3 upgrades = 3/4/5/6; each child deals 33%, has
+	# 80% radius and 50% movement speed, and restarts its original lifetime.
+	for split_rank in 4:
+		fresh()
+		emit(["split@%d"%split_rank,"bolt"])
+		var parent: Dictionary=g.projectiles[0]
+		var original_damage: float=parent.damage
+		var original_radius: float=parent.radius
+		var original_speed: float=parent.speed
+		var original_life: float=parent.life
+		parent.life=.001
+		step(.08)
+		var children: Array=g.projectiles.filter(func(p):return p.stage.get("_split_child",false))
+		check(children.size()==split_rank+3 and count("split_children")==split_rank+3,"Split rank %d spawns exactly %d children"%[split_rank,split_rank+3])
+		check(children.all(func(p):return is_equal_approx(p.damage,original_damage*.33) and is_equal_approx(p.radius,original_radius*.8) and is_equal_approx(p.speed,original_speed*.5) and p.life>original_life-.25 and p.stage.get("split",0)==0),"Split rank %d retains damage/radius/speed/full life"%split_rank)
+	# A hit that destroys the parent splits; penetration preserves it until destruction.
+	fresh();enemy(Vector2(855,450));g._rebuild_grid();emit(["split","bolt"]);step(.18)
+	check(count("split_children")==3,"Nonpiercing bolt splits on enemy hit/destruction")
+	fresh();enemy(Vector2(855,450));g._rebuild_grid();emit(["split","pierce","bolt"]);step(.18)
+	check(count("split_children")==0 and g.projectiles.size()==1,"Piercing hit does not prematurely split a live projectile")
+	g.projectiles[0].life=.001;step(.08)
+	check(count("split_children")==3,"Piercing spell splits when its actual lifetime ends")
 	fresh();emit(["trail@3","bolt"]);step(2)
 	check(count("trail_copies")==5,"Distance trail exactly five finite copies")
 	fresh();emit(["bolt","timer","bloom"]);step(.7)
