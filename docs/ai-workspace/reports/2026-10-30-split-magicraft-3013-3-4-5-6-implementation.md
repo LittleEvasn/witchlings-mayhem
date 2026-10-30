@@ -6,7 +6,7 @@
 - 프로젝트: `LittleEvasn/witchlings-mayhem`
 - 사용자 확정: [DEC-2026-10-30-10](../decisions/2026-10-30-magicraft-split-3-4-5-6.md)
 - 원작 참조: Magicraft `Split` ID 3013 (원본 3/5/8기본 3강). `kav1982/_reverse_engineering`의 `SpellDestroySystem.cs`, `SpellSpawnParamsStorage.cs`, `ShootSpellUtils.cs`, `SpellSystem.cs`, `分裂逆向分析.md`.
-- 이번 작업: **실제 게임 코드 및 회귀 테스트를 GitHub main에 수정·업로드**. [GitHub Actions 검증 실행 #41073457834](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41073457834)의 **Godot 헤드리스 Magic60 테스트 830 checks / 0 failures**, 웹 빌드 측 AI 자동 플레이 **263 checks / 0 failures / 2 flagged cases** 확인. 로컬 대화 환경에 Godot 실행기가 없어 **사용자 시점의 화면·실제 조작·장시간 성능** 확인은 못함.
+- 이번 작업: **실제 게임 코드 및 회귀 테스트를 GitHub main에 수정·업로드**. [GitHub Actions 검증 실행 #41073457834](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41073457834)의 **Godot 헤드리스 Magic60 테스트 830 checks / 0 failures**, 웹 빌드 측 AI 자동 플레이 **263 checks / 0 failures / 2 flagged cases** 확인. 동일 CI 실행에서 **웹 WebAssembly 빌드 및 GitHub Pages 배포까지 success** 확인. 로컬 대화 환경에 Godot 실행기가 없어 **사용자 시점의 화면·실제 조작·장시간 성능** 확인은 못함.
 
 ## 1. 원작과 관찰의 정합성
 
