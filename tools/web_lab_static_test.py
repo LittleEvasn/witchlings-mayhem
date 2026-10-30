@@ -22,6 +22,15 @@ class WebLabTests(unittest.TestCase):
             self.assertTrue((target / "scripts/magic_catalog.gd").is_file())
             self.assertFalse((target / "addons").exists())
 
+
+    def test_browser_ui_has_packaged_hangul_font(self):
+        ui = (ROOT / "scripts/interface.gd").read_text(encoding="utf-8")
+        self.assertIn('preload("res://assets/fonts/Jua-Regular.ttf")', ui)
+        self.assertIn('OS.has_feature("web")', ui)
+        self.assertIn("font = WEB_UI_FONT", ui)
+        self.assertIn("theme.default_font = font", ui)
+        self.assertTrue((ROOT / "assets/fonts/Jua-Regular.ttf").is_file())
+
     def test_original_main_scene_preserved(self):
         p = (ROOT / "project.godot").read_text(encoding="utf-8")
         self.assertIn('run/main_scene="res://scenes/main.tscn"', p)
