@@ -349,7 +349,7 @@ func update_orbits(delta: float) -> void:
     c.hits[id] = clock
     hit(enemy,DIRECT_DAMAGE.satellite*damage_scale(c),Vector2.ZERO,c)
     if not game.magic_active(): return
-    runtime.extensions.split(c,enemy.position)
+    # Generic split waits for the satellite spell's actual end of life.
     if c.stage.get("fusion","")=="shard_satellite":
      if not c.has("_shard_bodies"): c["_shard_bodies"]={}
      if not c._shard_bodies.has(body_index):
