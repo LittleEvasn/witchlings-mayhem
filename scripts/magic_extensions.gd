@@ -483,7 +483,7 @@ func update_beams(delta: float) -> void:
 				c._exposure[id].seconds+=.1
 			if c.stage.get("fusion","")=="poison_flame" and not c.get("_gas",false):
 				c["_gas"]=true;cloud(c,c.pos+c.dir*c.length,65*c.scale,1.2,4*runtime.behavior.damage_scale(c),"gas")
-			if not contacts.is_empty(): split(c,contacts.values()[0].position)
+			# Beam contact alone must not trigger generic split before the beam ends.
 
 func update(delta: float) -> void:
 	clock+=delta
