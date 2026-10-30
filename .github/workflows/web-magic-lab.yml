@@ -12,6 +12,7 @@ on:
       - 'scenes/**'
       - 'scripts/**'
       - 'tests/ai_autoplay_test.gd'
+      - 'tests/magic60_test.gd'
       - 'assets/**'
   workflow_dispatch:
 
