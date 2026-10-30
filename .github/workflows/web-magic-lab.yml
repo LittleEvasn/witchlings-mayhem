@@ -43,10 +43,11 @@ jobs:
           echo "/tmp/godot-bin" >> "$GITHUB_PATH"
           ln -sf "/tmp/godot-bin/Godot_v${RELEASE}_linux.x86_64" /tmp/godot-bin/godot
           curl -fL --retry 4 --retry-all-errors "${BASE}/Godot_v${RELEASE}_export_templates.tpz" -o /tmp/templates.tpz
-          unzip -q /tmp/templates.tpz -d /tmp/godot-templates
+          unzip -q /tmp/templates.tpz 'templates/web*.zip' 'templates/version.txt' -d /tmp/godot-templates
           mkdir -p "$HOME/.local/share/godot/export_templates/${VERSION}.stable"
           cp -a /tmp/godot-templates/templates/. "$HOME/.local/share/godot/export_templates/${VERSION}.stable/"
           /tmp/godot-bin/godot --version
+          ls -lh "$HOME/.local/share/godot/export_templates/${VERSION}.stable"/*web*.zip
 
       - name: Static staging and export configuration checks
         run: python -m unittest discover -s tools -p web_lab_static_test.py -v
