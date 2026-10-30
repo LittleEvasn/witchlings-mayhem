@@ -22,9 +22,9 @@
 | UI-MAGIC-2026-10-30-02 | 마법 조합 상쇄 노란 경고 / 비작동 빨간 경고 UI | **PROPOSED** (색상 규칙은 사용자 확정, 기술 구현·테스트 대기) | [진단 UI 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) · [확정 결정](decisions/2026-10-30-magic-warning-severity.md) | Codex: 별도 구현 요청 시 기존 슬롯 진단을 확장, 노랑은 시전 차단 금지 |
 | STORY-TUTORIAL-2026-10-30-01 | 모카의 마법 조합 보충수업 · 튜토리얼 대사·장면·실습 완료 조건 | **PROPOSED** (방향 긍정 평가, 구현 승인·테스트 전) | [보고서](reports/2026-10-30-moka-magic-combination-tutorial-story-v1.md) | 사용자 대사·분량 검토; 확정 후 Godot 실습/장면전환 구현·검증 |
 | STORY-2026-10-30-01 | 메인 스토리 1 「방과 후의 마녀들」 수정 대사본 | **PROPOSED** (인형은 익숙한 존재·실습장 전환 없음: 사용자 확정) | [스토리 1](reports/2026-10-30-story1-after-class-witches-dialogue-v1.md) | 대본 검토 후 동일 화면에서 튜토리얼 T01로 연결, 중복 T00 재생 금지 |
-| STORY-2026-10-30-02 | 메인 스토리 2 「사고 수습 성공!」 일반 엔딩 4종 개정 대사본 | **APPROVED** (사용자 대사본 보고서 등록 승인, 게임 구현 전) | [스토리 2 개정본](reports/2026-10-30-story2-accident-resolved-general-endings-v2.md) | 이 원고 기준 공통 도입·캐릭터별 엔딩 4종·공통 마무리; 구현은 별도 요청 시 |
+| STORY-2026-10-30-02 | 메인 스토리 2 「사고 수습 성공!」 일반 엔딩 4종 (과거 승인 대본) | **APPROVED 당시 원고 / 일부 장면 SUPERSEDED** (교수님 등장 부분은 최신 지시로 제외) | [구 대사본](reports/2026-10-30-story2-accident-resolved-general-endings-v2.md) | **최신 일반 엔딩은 통합 개정본 STORY-2026-10-30-04 우선**; 교수님 미등장·‘이거 언제 치우지?’ 추가 |
 | STORY-2026-10-30-03 | 메인 스토리 3 「드디어 성공했어!」 공통 진엔딩: 실제 숙제 해결 후 마력 고갈·역소환 | **APPROVED** (사용자 원고 등록 승인, 게임 구현 전) | [진엔딩 대사본](reports/2026-10-30-story3-true-ending-mana-exhaustion-v2.md) | 기존 클리어 후 조건 분기, 별도 진엔딩 장면/보스/스테이지 없음·4명 공통·교수님 미등장 |
-| STORY-2026-10-30-04 | **통합 스토리 개정 v3** · 허수아비 표적을 네라의 인형들이 설치, 인과관계·대사·캐릭터성 재정리 | **PROPOSED** (사용자 설정 반영, 전체 대사 최종 확인 전) | [통합 개정본](reports/2026-10-30-story-integrated-rewrite-straw-targets-v3.md) | 사용자 대본 검토 후 스토리1·튜토리얼·프롤로그·일반/진엔딩의 구현 기준으로 채택, 구버전 혼용 금지 |
+| STORY-2026-10-30-04 | **통합 스토리 개정 v3** · 허수아비 표적 / 교수님은 게임 오버 문구로만 / 일반 엔딩 청소 대사 추가 | **PROPOSED** (사용자 세부 연출 확정, 전체 개정 대본 최종 검토 전) | [통합 개정본](reports/2026-10-30-story-integrated-rewrite-straw-targets-v3.md) | 최우선 대본 기준: 교수님 스토리 비등장, ‘이거 언제 치우지?’ 적용. Godot 미구현 |
 | MAGIC-BOOMERANG-2026-10-30-01 | 달빛 부메랑: 마법공예 회선검형 왕복 관통으로 개편, **기본 내장 도탄 삭제** | **APPROVED** (사용자 설계 확정, 코드 미구현) | [보고서](reports/2026-10-30-moon-boomerang-magicraft-reference-redesign.md) · [확정 결정](decisions/2026-10-30-boomerang-magicraft-reference-no-innate-bounce.md) | 향후 구현 시 회선 비행·왕복 타격·강화 도탄 삭제·쌍월륜/도탄 보조 호환성 테스트 |
 | MAGIC-ICE-SWORD-2026-10-30-01 | 서리숨결→**얼음검**: 마법공예 **파마의 검** 코드 기준 정확한 휘두르기 구현 (사용자 원문: **“그대로 코드 배껴”**) | **APPROVED** (사용자 기획 확정, 코드 미구현) | [정밀 구현 보고서](reports/2026-10-30-frost-to-ice-sword-magicraft-source-port.md) · [확정 결정](decisions/2026-10-30-ice-sword-exact-magicraft-parma-sword.md) | 원본 회전·타격 구현을 Godot 대응 포팅, 냉염숨결/빙정 삼중파 영향 검토, 실제 시각·히트박스 검증 |
 | MAGIC-VORTEX-2026-10-30-01 | 소용돌이 씨앗을 **마법공예 블랙홀 동작으로 교체**, 기존 소용돌이 간 **겹침·중첩 성장 삭제** | **APPROVED** (사용자 설계 확정, 코드 미구현) | [보고서](reports/2026-10-30-vortex-replace-with-magicraft-black-hole.md) · [확정 결정](decisions/2026-10-30-vortex-magicraft-black-hole-replacement.md) | 블랙홀 이동/흡입/틱 피해/시간 성장 원본 정밀 이식, 겹침 방지 정책·가시꽃 덫/합성 호환성 검증 |
@@ -49,6 +49,7 @@
 
 - [DEC-2026-10-30-02: 상쇄=노랑 / 비작동=빨강](decisions/2026-10-30-magic-warning-severity.md) **사용자 확정**. 세부 구현 방식은 [관련 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) 검토 후 진행.
 - [DEC-2026-10-30-03: 메인 스토리1 → 튜토리얼 → 프롤로그 → 일반 엔딩 → 진엔딩 / 일상 서브 스토리 2~3개](decisions/2026-10-30-story-main-flow-and-side-stories.md) **사용자 확정**. 튜토리얼 원고 T00/T01~05/T06~08의 재배치 기준이며 서브 스토리 세부 사건은 제안 단계.
+- [DEC-2026-10-30-03 후속: 교수님은 게임 오버에서만 ‘교수님에게 혼났다’ 텍스트로 언급 / 일반 엔딩에 ‘이거 언제 치우지?’ 추가](decisions/2026-10-30-story-main-flow-and-side-stories.md) **사용자 확정**. 최신 [통합 개정 스토리](reports/2026-10-30-story-integrated-rewrite-straw-targets-v3.md) 우선.
 - 다른 보고서는 명시적으로 결정되지 않았다. 기존 제안이 자동 승인되지는 않는다.
 - 보고서의 `PROPOSED`는 **사용자 승인·코드 반영·실제 엔진 검증을 의미하지 않는다**.
 
