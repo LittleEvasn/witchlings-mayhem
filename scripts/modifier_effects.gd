@@ -4,7 +4,7 @@ const P=preload("res://scripts/spell_progression.gd")
 const BALANCE_VERSION := "magic60-v1"
 const VALUES := {
 	"fan":[3,4,5,6],"seek":[0.35,0.55,0.8,1.05],"pierce":[2,3,4,5],
-	"bounce":[2,3,4,5],"giant":[1.6,1.9,2.2,2.5],"echo":[1,2,3,4],"charge":[1.0,1.1,1.2,1.35],"fall":[.5,.45,.4,.35],"orbit":[90,110,130,150],"split":[2,3,4,5],"trail":[2,3,4,5],"element_fire":[1,1.25,1.5,1.75],"element_ice":[.6,.8,1.0,1.2],"element_poison":[1,1.25,1.5,1.75],"element_lightning":[1,1.25,1.5,1.75]
+	"bounce":[2,3,4,5],"giant":[1.6,1.9,2.2,2.5],"echo":[1,2,3,4],"charge":[1.0,1.1,1.2,1.35],"fall":[.5,.45,.4,.35],"orbit":[90,110,130,150],"split":[3,4,5,6],"trail":[2,3,4,5],"element_fire":[1,1.25,1.5,1.75],"element_ice":[.6,.8,1.0,1.2],"element_poison":[1,1.25,1.5,1.75],"element_lightning":[1,1.25,1.5,1.75]
 }
 static func resolve(stage: Dictionary) -> Dictionary:
 	var result := {}
@@ -81,7 +81,7 @@ static func text(stage: Dictionary, id: String) -> String:
 		"charge": return "피해 ×%.2f · 크기 ×%.2f · 첫 밀침 %.0f · 대기 ×%.2f"%[e.value,e.size,e.knockback,e.cooldown]
 		"fall": return "착지까지 %.2f초 · 착지 전 무피해"%e.value
 		"orbit": return "공전 반경 %.0f · 오른쪽 추적/공전이 이동 방식 결정"%e.value
-		"split": return "약한 자식 %d개 · 합계 위력 55%% · 재분열/연결 없음"%e.value
+		"split": return "자식 %d개 · 각각 피해 33%% · 크기 80%% · 비낙하 속도 50%% · 소멸 시 분열 · 재분열/연결 없음"%int(e.value)
 		"trail": return "90거리마다 잔상 · 최대 %d개 · 각 20%% · 재복제 없음"%e.value
 		"element_fire": return "3초 화상 · 초당 기준 피해 ×%.2f"%(e.value*.12)
 		"element_ice": return "유효 명중 냉기 %.2f · 3 누적 동결"%e.value
