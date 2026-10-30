@@ -14,9 +14,12 @@
 
 | AI-AUTO-2026-10-30-01 | 실제 Godot 마법 60종 AI 자동 플레이 검사 및 미해결 2종 | **UNDER_REVIEW** (60종 실행·255검사 성공, 경고 2) | [실측 보고서](reports/2026-10-30-ai-autoplay-60-verification.md) | 천둥 인장·심판 낙뢰 5초 무피해 재현·원인 확인 |
 
+| UI-MAGIC-2026-10-30-02 | 마법 조합 상쇄 노란 경고 / 비작동 빨간 경고 UI | **PROPOSED** (색상 규칙은 사용자 확정, 기술 구현·테스트 대기) | [진단 UI 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) · [확정 결정](decisions/2026-10-30-magic-warning-severity.md) | Codex: 별도 구현 요청 시 기존 슬롯 진단을 확장, 노랑은 시전 차단 금지 |
+
 ## 검토·승인·구현 인계
 
-- 아직 이번 보고서에 대한 별도 논의 문서, 승인 결정 또는 구현 인계는 없다.
+- [DEC-2026-10-30-02: 상쇄=노랑 / 비작동=빨강](decisions/2026-10-30-magic-warning-severity.md) **사용자 확정**. 세부 구현 방식은 [관련 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) 검토 후 진행.
+- 다른 보고서는 명시적으로 결정되지 않았다. 기존 제안이 자동 승인되지는 않는다.
 - 보고서의 `PROPOSED`는 **사용자 승인·코드 반영·실제 엔진 검증을 의미하지 않는다**.
 
 ## 완료 보관
