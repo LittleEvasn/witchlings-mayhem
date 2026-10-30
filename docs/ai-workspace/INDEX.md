@@ -16,8 +16,11 @@
 | UI-MAGIC-2026-10-30-02 | 마법 조합 상쇄 노란 경고 / 비작동 빨간 경고 UI | **PROPOSED** (색상 규칙은 사용자 확정, 기술 구현·테스트 대기) | [진단 UI 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) · [확정 결정](decisions/2026-10-30-magic-warning-severity.md) | Codex: 별도 구현 요청 시 기존 슬롯 진단을 확장, 노랑은 시전 차단 금지 |
 | STORY-TUTORIAL-2026-10-30-01 | 모카의 마법 조합 보충수업 · 튜토리얼 대사·장면·실습 완료 조건 | **PROPOSED** (방향 긍정 평가, 구현 승인·테스트 전) | [보고서](reports/2026-10-30-moka-magic-combination-tutorial-story-v1.md) | 사용자 대사·분량 검토; 확정 후 Godot 실습/장면전환 구현·검증 |
 | MAGIC-BOOMERANG-2026-10-30-01 | 달빛 부메랑: 마법공예 회선검형 왕복 관통으로 개편, **기본 내장 도탄 삭제** | **APPROVED** (사용자 설계 확정, 코드 미구현) | [보고서](reports/2026-10-30-moon-boomerang-magicraft-reference-redesign.md) · [확정 결정](decisions/2026-10-30-boomerang-magicraft-reference-no-innate-bounce.md) | 향후 구현 시 회선 비행·왕복 타격·강화 도탄 삭제·쌍월륜/도탄 보조 호환성 테스트 |
+| MAGIC-ICE-SWORD-2026-10-30-01 | 서리숨결→**얼음검**: 마법공예 **파마의 검** 코드 기준 정확한 휘두르기 구현 (사용자 원문: **“그대로 코드 배껴”**) | **APPROVED** (사용자 기획 확정, 코드 미구현) | [정밀 구현 보고서](reports/2026-10-30-frost-to-ice-sword-magicraft-source-port.md) · [확정 결정](decisions/2026-10-30-ice-sword-exact-magicraft-parma-sword.md) | 원본 회전·타격 구현을 Godot 대응 포팅, 냉염숨결/빙정 삼중파 영향 검토, 실제 시각·히트박스 검증 |
 
 ## 검토·승인·구현 인계
+
+- [DEC-2026-10-30-05: 서리숨결 → 얼음검 / 마법공예 파마의 검 충실 구현](decisions/2026-10-30-ice-sword-exact-magicraft-parma-sword.md) **사용자 확정**. 원문 “그대로 코드 배껴” 명시. 실제 코드 미변경.
 
 - [DEC-2026-10-30-04: 달빛 부메랑을 마법공예 회선검형으로, 기본 내장 도탄 삭제](decisions/2026-10-30-boomerang-magicraft-reference-no-innate-bounce.md) **사용자 확정**. 보고서 등록만 완료; 코드 미변경.
 
