@@ -14,6 +14,7 @@
 | UI-2026-10-30-04 | 발견 도감 UI 레퍼런스·탭/필터·합성 관계 및 강화 비교 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md) | 사용자 도감 배치/6열/역할 필터/합성 관계/강화 정보 검토·승인, 승인 전 코드 구현 금지 |
 | UI-2026-10-30-05 | 상점·제작 작업대 UI 레퍼런스 조사 및 구매·오브·가방 통합형 레이아웃 제안 | **PROPOSED** | [보고서](reports/2026-10-30-crafting-shop-workbench-ui-research-proposal.md) | 사용자 B안 통합 레이아웃·작업대 폭·성장 탭·스킨 방향 검토; 승인 전 구현/구매 금지 |
 | UI-2026-10-30-06 | 승리·패배 결과 화면 레퍼런스·빌드 기록·승패 연출·재도전 UI 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) | 사용자 결과 화면 위계·표정·연출·빌드 표시 검토/승인; 승인 전 코드·아트 변경 금지 |
+| UI-2026-10-30-07 | ESC 일시정지 메뉴·설정 화면 레퍼런스·안전 확인창·옵션 분류 UI 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) | 사용자 ESC 구성·런 종료 확인·설정 3분류 검토, 승인 전 코드/에셋 변경 금지 |
 | AI-AUTO-2026-10-30-01 | 실제 Godot 마법 60종 AI 자동 플레이 검사 및 미해결 2종 | **UNDER_REVIEW** (60종 실행·255검사 성공, 경고 2) | [실측 보고서](reports/2026-10-30-ai-autoplay-60-verification.md) | 천둥 인장·심판 낙뢰 5초 무피해 재현·원인 확인 |
 | UI-MAGIC-2026-10-30-02 | 마법 조합 상쇄 노란 경고 / 비작동 빨간 경고 UI | **PROPOSED** (색상 규칙은 사용자 확정, 기술 구현·테스트 대기) | [진단 UI 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) · [확정 결정](decisions/2026-10-30-magic-warning-severity.md) | Codex: 별도 구현 요청 시 기존 슬롯 진단을 확장, 노랑은 시전 차단 금지 |
 | STORY-TUTORIAL-2026-10-30-01 | 모카의 마법 조합 보충수업 · 튜토리얼 대사·장면·실습 완료 조건 | **PROPOSED** (방향 긍정 평가, 구현 승인·테스트 전) | [보고서](reports/2026-10-30-moka-magic-combination-tutorial-story-v1.md) | 사용자 대사·분량 검토; 확정 후 Godot 실습/장면전환 구현·검증 |
