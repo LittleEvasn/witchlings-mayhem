@@ -33,7 +33,7 @@ func clear() -> void:
 func context(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictionary, factor: float, power: float, lane: String, echo: bool, lineage: int, generation: int) -> Dictionary:
  return {"hit_origin":"internal" if stage.get("_intrinsic",false) else "direct","owner_orb":stage.get("_orb",0),"tint":game.Spells.definition(stage.get("source_id",stage.attack)).color,"stage":stage.duplicate(),"attack":stage.attack,"pos":origin,"dir":direction,"original_dir":direction,"follow":follow.duplicate(),"triggered":false,"connector":stage.get("connector","impact"),"factor":factor,"power":power,"child_factor":factor*0.65,"cast_id":lineage,"generation":generation,"meter_source":runtime.source_for(stage,lane,echo),"meter_echo":echo,"lane":lane,"scale":game.Spells.scale(stage)}
 func damage_scale(c: Dictionary) -> float:
- return float(c.factor)*float(c.power)*float(c.stage.get("rank_power",1.0))*game.Spells.Effects.value(c.stage,"charge")*float(c.get("potency",1.0))
+ return float(c.factor)*float(c.power)*float(c.stage.get("rank_power",1.0))*game.Spells.Effects.value(c.stage,"charge")*float(c.get("potency",1.0))*float(c.stage.get("_split_damage_ratio",1.0))
 func state_for(enemy: Node2D) -> Dictionary:
  var id: int = enemy.get_instance_id()
  if not statuses.has(id): statuses[id] = {"enemy":enemy,"cold":0.0,"cold_weighted":0.0,"cold_sources":{},"shell_sources":{},"shell_power":1.0,"cold_until":0.0,"frozen_until":0.0,"immune_until":0.0,"marks":[],"mark_mass":0.0,"mark_until":0.0,"casts":{}}
@@ -134,7 +134,7 @@ func hit(enemy: Node2D, amount: float, direction: Vector2, c: Dictionary, cold :
     s.frozen_until = clock+(.6 if enemy.role=="sentinel" else 1.2)
     runtime.track("freezes",c.meter_source)
  if c.get("hit_origin","direct")=="direct":
-  var force: float = game.Spells.Effects.profile(c.stage,"charge").knockback
+  var force: float = game.Spells.Effects.profile(c.stage,"charge").knockback*float(c.stage.get("_split_knockback_scale",1.0))
   var force_key := "push_"+str(c.generation)+"_"+str(c.cast_id)
   if force>0 and not s.has(force_key):
    s[force_key] = clock
