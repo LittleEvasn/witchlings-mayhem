@@ -77,7 +77,7 @@ func run() -> void:
 		check(parsed.ok and not parsed.stages.is_empty(),"Valid recipe: "+id)
 		if not parsed.ok: continue
 		var scene := "cluster" if item.kind!="connector" else "single"
-		var started: bool = runner.begin(recipe,scene,731,"nearest",TEST_SECONDS,1.0,1.0,"sigil",{"motion":"orbit"})
+		var started: bool = runner.begin(recipe,scene,731,"nearest",TEST_SECONDS,1.0,1.0,"sigil",{"motion":"orbit","sandbox_loadout":true})
 		check(started,"Starts actual combat: "+id)
 		if not started: continue
 		while runner.active: runner.step()
@@ -92,7 +92,7 @@ func run() -> void:
 		await process_frame
 	check(results.size()==60,"60 actual runtime sessions with recorded observations")
 	# A full 60-second AI-play scenario checks movement, dynamic enemies, damage and survival.
-	var long_ok: bool = runner.begin(["seek","fan","bolt","impact","bloom"],"pressure",739,"nearest",LONG_SECONDS,1.0,1.0,"sigil",{"motion":"orbit"})
+	var long_ok: bool = runner.begin(["seek","fan","bolt","impact","bloom"],"pressure",739,"nearest",LONG_SECONDS,1.0,1.0,"sigil",{"motion":"orbit","sandbox_loadout":true})
 	check(long_ok,"Start 60-second moving AI scenario")
 	var extended := {}
 	if long_ok:
