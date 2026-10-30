@@ -1,6 +1,7 @@
 extends RefCounted
 ## Independent movement, finite derivations and elemental reactions for catalog v1.
 ## Every derived object consumes its spawn permissions; cancellation is not expiry.
+const InstantLaser = preload("res://scripts/instant_laser.gd")
 var owner_ref: WeakRef
 var runtime: RefCounted:
 	get: return owner_ref.get_ref()
@@ -353,6 +354,24 @@ func cold(c: Dictionary, native: float) -> float:
 func special(c: Dictionary) -> bool:
 	if c.attack not in ["laser","flamethrower"]: return false
 	if beams.size()>=48: runtime.track("beams_blocked",c.meter_source);return true
+	# Magicraft spell 1004: resolve the entire laser trace at cast time.
+	# Keep the separate disintegration fusion as a sustained spell (spell 1011).
+	if c.attack=="laser" and c.stage.get("fusion","")!="disintegration":
+		var profile: Dictionary=game.Spells.attack_data(c.stage)
+		c["life"]=0.20
+		c["age"]=0.0
+		c["segments"]=[]
+		c["_laser_instant"]=true
+		c["_laser_end"]=c.pos+c.dir*480.0
+		c["_beam_hit_ids"]={}
+		c["length"]=480.0
+		c["width"]=profile.radius*c.scale
+		attach(c)
+		beams.append(c)
+		runtime.track("beams_created",c.meter_source)
+		InstantLaser.fire(c,self)
+		return true
+	if beams.size()>=48: runtime.track("beams_blocked",c.meter_source);return true
 	var data: Dictionary=game.Spells.attack_data(c.stage)
 	c["life"]=data.life;c["age"]=0.0;c["pulse"]=0.0;c["segments"]=[];c["_exposure"]={};c["_beam_hit_ids"]={}
 	c["length"]=480.0 if c.attack=="laser" else data.radius
@@ -367,6 +386,16 @@ func special(c: Dictionary) -> bool:
 
 func update_beams(delta: float) -> void:
 	for c in beams.duplicate():
+		if c.get("_laser_instant",false):
+			# VFX persists briefly; hits and refraction never repeat on later frames.
+			c.life-=delta
+			c.age+=delta
+			if c.life<=0:
+				beams.erase(c)
+				var at: Vector2=c.get("_laser_end",c.pos)
+				finish(c,at)
+				runtime.trigger(c,at,"expire")
+			continue
 		if c.get("_charge_left",0)>0:
 			c._charge_left-=delta
 			continue
