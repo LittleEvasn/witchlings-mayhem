@@ -10,6 +10,7 @@
 | REF-2026-10-30-01 | 뱀서·마법공예 원작 역분석 공개 자료 링크 | **PROPOSED** (참고자료) | [자료 목록](reports/2026-10-30-vs-magicraft-reverse-engineering-sources.md) | 원작 코드·역분석 문서를 조사할 때 참고; 구현 승인 아님 |
 | UI-2026-10-30-01 | 전투 HUD·중앙 3~4택·편집 전환·보물상자 잭팟 UI 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-combat-hud-reward-chest-ui-proposal.md) | 사용자 UI 방향 검토·승인; 승인 이후 Codex 구현 및 Godot 화면·입력 검증 |
 | UI-2026-10-30-02 | 캐릭터 선택 UI 레퍼런스·레이아웃 및 시작 마법 선택 흐름 제안 | **PROPOSED** | [보고서](reports/2026-10-30-character-selection-ui-research-proposal.md) | 사용자 B+C안·선택 단계·미구현 캐릭터 표시 정책 검토 및 승인; 승인 전 구현 금지 |
+| UI-2026-10-30-03 | 게임 시작 화면·타이틀→전투 진입 흐름 조사 및 UI 개편 제안 (이미지 제외) | **PROPOSED** | [보고서](reports/2026-10-30-game-start-title-to-combat-ui-proposal.md) | 타이틀 구성·선택 단계·첫 진입 연출 사용자 검토; 승인 전 코드·그림 작업 금지 |
 | AI-AUTO-2026-10-30-01 | 실제 Godot 마법 60종 AI 자동 플레이 검사 및 미해결 2종 | **UNDER_REVIEW** (60종 실행·255검사 성공, 경고 2) | [실측 보고서](reports/2026-10-30-ai-autoplay-60-verification.md) | 천둥 인장·심판 낙뢰 5초 무피해 재현·원인 확인 |
 | UI-MAGIC-2026-10-30-02 | 마법 조합 상쇄 노란 경고 / 비작동 빨간 경고 UI | **PROPOSED** (색상 규칙은 사용자 확정, 기술 구현·테스트 대기) | [진단 UI 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) · [확정 결정](decisions/2026-10-30-magic-warning-severity.md) | Codex: 별도 구현 요청 시 기존 슬롯 진단을 확장, 노랑은 시전 차단 금지 |
 | STORY-TUTORIAL-2026-10-30-01 | 모카의 마법 조합 보충수업 · 튜토리얼 대사·장면·실습 완료 조건 | **PROPOSED** (방향 긍정 평가, 구현 승인·테스트 전) | [보고서](reports/2026-10-30-moka-magic-combination-tutorial-story-v1.md) | 사용자 대사·분량 검토; 확정 후 Godot 실습/장면전환 구현·검증 |
