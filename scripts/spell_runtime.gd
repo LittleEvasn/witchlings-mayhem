@@ -153,6 +153,12 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 			"meter_source":source,"meter_echo":meter_echo,"meter_contacted":false,
 			"age":0.0,"returning":false,"leg_hits":0,"leg_limit":1+int(game.Spells.Effects.profile(stage,"pierce").targets)},true)
 		extensions.attach(projectile)
+		if stage.get("_split_child",false):
+			# Full launch-time duration and pierce replace the depleted parent state.
+			projectile.speed=float(stage.get("_split_speed",projectile.speed*.5))
+			projectile.radius=float(stage.get("_split_radius",projectile.radius*.8))
+			if float(stage.get("_split_life",0.0))>0: projectile.life=float(stage._split_life)
+			projectile.pierce=int(stage.get("_split_pierce",projectile.pierce))
 		game.projectiles.append(projectile)
 		if stage.get("_landed",false) and stage.attack in ["thorn","vortex"]:
 			install(projectile)
@@ -166,6 +172,9 @@ func emit(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictio
 			var endpoint: Vector2 = target.position if target!=null else origin+dir*300
 			moon_leg(projectile,endpoint,target)
 		if stage.get("fusion","")=="storm_spear": projectile.pierce += 2
+		if not stage.get("_split_child",false):
+			projectile["_split_launch"]={"life":projectile.life,"speed":projectile.speed,
+				"radius":projectile.radius,"pierce":projectile.pierce}
 
 func update_echoes(delta: float) -> void:
 	behavior.update(delta)
@@ -276,6 +285,9 @@ func install(p: Dictionary, portions := 0) -> void:
 	if zones.size()>=MAX_ZONES: evict_zone(zones[0])
 	if p.has("_timer_left"): zone["_timer_remaining"]=p._timer_left
 	extensions.attach(zone)
+	if not zone.stage.get("_split_child",false):
+		zone["_split_launch"]={"life":zone.life,"speed":float(zone.get("speed",0.0)),
+			"radius":zone.radius,"pierce":int(zone.get("pierce",0))}
 	# The seed becomes the installed instance; its timer does not duplicate.
 	p["_ended"]=true
 	behavior.register_garden(zone)
