@@ -21,7 +21,7 @@ const PARTS = {
 	"satellite": {"name":"달무리 위성","kind":"attack","symbol":"✧","color":Color("b8c9ff"),"desc":"일정 거리를 도는 위성 · 궤도에서만 접촉 피해\n후속 주문이면 제자리에 공전"},
 	"ember_path": {"name":"잔불 발자국","kind":"attack","symbol":"✧","color":Color("ffc79f"),"desc":"걸음마다 발밑에 원형 불장판을 남김\n정지 시 중첩 설치 안 함 · 겹친 피해는 최강만 적용"},
 	"fireball":{"name":"화염구","symbol":"●","kind":"attack","color":Color("ff9863"),"desc":"폭발하는 화염탄 · 맞은 적에게 3초 화상"},
-	"laser":{"name":"레이저","symbol":"━","kind":"attack","color":Color("81e9ff"),"desc":"0.7초 동안 유지되는 직선 광선 · 0.1초마다 피해"},
+	"laser":{"name":"광선","symbol":"━","kind":"attack","color":Color("81e9ff"),"desc":"순간적으로 발사하는 직선 광선 · 명중 시 다른 적에게 굴절\n강화할수록 굴절 횟수 증가 · 잔상은 0.2초"},
 	"flamethrower":{"name":"화염방사기","symbol":"♨","kind":"attack","color":Color("ffb16b"),"desc":"짧은 부채꼴을 지속 분사 · 화상을 남김"},
 	"fall":{"name":"낙하","symbol":"↓","kind":"modifier","color":Color("d0c5ff"),"desc":"조준 지점 상공에서 예고 후 착지 · 착지 전 피해 없음"},
 	"orbit":{"name":"공전","symbol":"⟳","kind":"modifier","color":Color("c3bbff"),"desc":"공격의 위치가 기준점 주위를 공전 · 추적과 함께면 오른쪽 이동 보조 우선"},
