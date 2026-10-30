@@ -5,7 +5,7 @@ const Effects = preload("res://scripts/modifier_effects.gd")
 ## Compile once when the player changes their recipe, never for each projectile.
 const Catalog=preload("res://scripts/magic_catalog.gd")
 const PARTS = Catalog.PARTS
-const ATTACK_INTERVALS := {"bolt":0.48,"bloom":0.576,"boomerang":0.624,"vortex":0.864,"thorn":0.72,"frost":0.6,"thunder":0.9,"satellite":1.1,"ember_path":1.0,"fireball":0.8,"laser":1.1,"flamethrower":1.2}
+const ATTACK_INTERVALS := {"bolt":0.48,"bloom":0.576,"boomerang":0.624,"vortex":0.864,"thorn":0.72,"frost":0.6,"thunder":0.9,"satellite":1.1,"ember_path":1.0,"fireball":0.8,"laser":0.43,"flamethrower":1.2}
 
 # Counts select geometry/repeats; rank data selects efficiency. See modifier_effects.gd.
 const STACK_RULES := {
