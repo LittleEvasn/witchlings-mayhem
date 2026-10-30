@@ -59,3 +59,13 @@ Chrome/Firefox에서 화면/입력/오디오/60종 카탈로그/4오브/고정 �
 - GitHub Pages 배포 **미완료**: `actions/configure-pages@v5`가 사이트 생성 중 `Resource not accessible by integration` 403 오류를 반환. GitHub 관리자 권한으로 저장소 **Settings → Pages → Build and deployment: GitHub Actions** 선택 후 다시 배포해야 함.
 - 브라우저 화면 수동 검증 **미수행**: 현재 검사 컨테이너의 Chromium에서 `http://127.0.0.1` 접속이 `ERR_BLOCKED_BY_ADMINISTRATOR`로 막힘. 게임 자체의 WebGL 오류로 해석하지 않는다.
 - 본게임 코드, 원본 `project.godot`, 마법 효과 60종은 변경하지 않음.
+
+
+## 2026-10-30 GitHub Pages 활성화 후 재배포
+
+- 사용자가 저장소 GitHub Pages를 활성화한 뒤 [워크플로 실행 #41025713108, 재실행 2회차](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41025713108)에서 실패했던 deploy job만 재실행.
+- `Configure GitHub Pages`: **성공**.
+- `Deploy actual Godot Web build`: **성공**.
+- 결과: **GitHub Actions와 GitHub Pages 배포 모두 성공**. 공개 URL: https://littleevasn.github.io/witchlings-mayhem/
+- 웹 URL의 실제 브라우저 UI/입력/게임 플레이 검증은 이 대화 환경에서 진행되지 않았음. 사용자가 직접 Chrome/Edge에서 실행해 확인해야 함.
+- 앞서 기재한 'Pages 403 실패'는 **당시 기록**이며 현재는 해결됨.
