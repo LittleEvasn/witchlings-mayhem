@@ -52,7 +52,7 @@ func step(seconds: float, hz:=60) -> void:
 func count(key: String) -> float: return float(g.meter.totals.get(key,0))
 func run() -> void:
 	root.size=Vector2i(1920,1080)
-	check(S.PARTS.size()==30 and S.Progression.FUSIONS.size()==30,"Exactly 30 basic and 30 completed spells")
+	check(S.PARTS.size()==30 and S.Progression.FUSIONS.size()==29,"30 basics and 29 code-active completed spells after Growing Firecore removal")
 	var pairs: Dictionary={}
 	var partners: Dictionary={}
 	for id in S.PARTS:
@@ -75,7 +75,9 @@ func run() -> void:
 		check(quote.ok and quote.cost==0 and quote.inventory.size()==1 and quote.inventory.has(id) and econ.inventory.size()==2,"Free fusion quote consumes exactly two after commit, no preview consumption: "+id)
 		econ.fusion_history.append(id)
 		check(not econ.fusion_quote(id).ok,"Once per recipe per run: "+id)
-	for id in partners: check(partners[id]==2,"Every basic has two fusion partners: "+id)
+	for id in partners:
+		var expected: int=1 if id in ["fireball","giant"] else 2
+		check(partners[id]==expected,"Retired Growing Firecore leaves only its two parents with one active fusion partner: "+id)
 	check(not S.has_part("storm_spear") and not S.has_part("wave_split"),"Retired recipes no longer executable/rewarded")
 	var mods: Array=S.PARTS.keys().filter(func(id):return S.PARTS[id].kind=="modifier")
 	var attacks: Array=S.PARTS.keys().filter(func(id):return S.PARTS[id].kind=="attack")
@@ -229,6 +231,22 @@ func run() -> void:
 	fresh();g.power=1;emit(["fall","bolt"]);g.power=3;step(.55)
 	check(not g.projectiles.is_empty() and is_equal_approx(g.projectiles[0].damage,22),"Airborne reservation keeps launch power snapshot")
 	g.power=1
+	# Magicraft 1011: sustained 2 s piercing laser, 0.1 s damage ticks,
+	# no original Plasma Beam side arc, no old charged Disintegration timing.
+	check(not S.has_part("growing_firecore") and S.definition("growing_firecore").kind=="legacy","Growing Firecore removed from active rewards/recipes with legacy lookup")
+	check(S.definition("plasma_beam").name.begins_with("붕괴 광선"),"Plasma Beam now displays Collapse Ray")
+	fresh()
+	var ray_origin: Vector2=g.orb_position(0)
+	for index in 9: enemy(ray_origin+Vector2(55+index*38,0))
+	g._rebuild_grid()
+	emit(["plasma_beam"])
+	check(g.magic.extensions.beams.size()==1 and not g.magic.extensions.beams[0].get("_laser_instant",false) and is_equal_approx(g.magic.extensions.beams[0].life,2.0),"Collapse Ray starts as a real 2-second persistent beam, never instant laser")
+	step(.25)
+	var damaged_by_ray: int=g.enemies.filter(func(e):return e.hp<100000).size()
+	check(damaged_by_ray>=8 and count("damage_effective")>0,"Collapse Ray penetrates at least eight aligned targets over repeated hit intervals")
+	check(g.magic.extensions.beams.size()==1 and count("discharges")==0,"Collapse Ray persists without old Plasma Beam arc discharge")
+	step(2.1)
+	check(g.magic.extensions.beams.is_empty(),"Collapse Ray ends cleanly after continuous casting duration")
 	fresh();grid();emit(["disintegration"]);step(.2)
 	check(count("damage_effective")==0 and g.magic.extensions.beams[0].width<10,"F22 visibly charges a narrow beam without premature damage")
 	step(.5);check(count("damage_effective")>0,"F22 charge releases actual continuous damage")
