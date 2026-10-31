@@ -110,12 +110,26 @@ func run() -> void:
 		check(count("damage_effective")>0,"Production damage: "+id)
 		report.runtime[id]=g.meter.totals.duplicate()
 		g.clear_magic();step(.8)
-		check(g.magic.extensions.jobs.is_empty() and g.magic.extensions.timed.is_empty() and g.magic.extensions.beams.is_empty() and g.magic.extensions.clouds.is_empty() and g.magic.extensions.status.is_empty(),"Cleanup cancels all new objects: "+id)
+		check(g.magic.extensions.jobs.is_empty() and g.magic.extensions.meteors.is_empty() and g.magic.extensions.timed.is_empty() and g.magic.extensions.beams.is_empty() and g.magic.extensions.clouds.is_empty() and g.magic.extensions.status.is_empty(),"Cleanup cancels all new objects: "+id)
 	# Actual modifier behavior, not only descriptive data.
 	fresh();grid();emit(["fall","bolt"])
 	check(g.projectiles.is_empty() and g.magic.extensions.jobs.size()==1,"Fall waits above landing")
 	step(.3);check(count("damage_effective")==0,"No airborne hit")
 	step(.3);check(count("falls_landed")==1 and count("damage_effective")>0,"One actual landing then collision")
+	# Magicraft Spell1013: a mother and five individually descending mini meteors.
+	# Airborne objects must not do any damage or become expanding ring jobs.
+	fresh();grid();emit(["meteor"])
+	check(g.magic.extensions.meteors.size()==6,"Meteor casts one mother and five mini bodies")
+	check(g.magic.extensions.jobs.is_empty(),"Meteor does not schedule old expanding shockwave rings")
+	var first_meteor: Dictionary=g.magic.extensions.meteors[0]
+	var original_position: Vector2=first_meteor.pos
+	step(.2)
+	check(first_meteor.pos.distance_to(original_position)>1.0 and first_meteor.height>0.0 and count("damage_effective")==0,"Meteor bodies physically descend before impact without dealing airborne damage")
+	step(.9)
+	check(count("meteor_landed")==6 and count("meteor_mini_landed")==5,"Each of six meteor bodies lands separately")
+	check(count("explosions")==6 and count("damage_effective")>0 and g.magic.extensions.jobs.is_empty(),"Meteor produces six actual impact explosions and no ring pulses")
+	fresh();emit(["meteor"]);g.clear_magic();step(1.0)
+	check(g.magic.extensions.meteors.is_empty() and count("meteor_landed")==0,"Forced clear cancels every falling meteor without impact")
 	fresh();emit(["orbit","bolt"]);step(.3)
 	check(not g.projectiles.is_empty() and g.projectiles[0]._motion=="orbit" and g.projectiles[0].pos.distance_to(g.player.position)<160,"Orbit owns actual projectile position")
 	check(g.magic.extensions.motion(S.roots(S.compile(["orbit","seek","bolt"]).stages)[0])=="seek" and g.magic.extensions.motion(S.roots(S.compile(["seek","orbit","bolt"]).stages)[0])=="orbit","Rightmost movement wins")
