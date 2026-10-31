@@ -18,6 +18,8 @@
 10. **전투 HUD 최신 승인:** [UI-HUD-2026-10-31-01](reports/2026-10-31-combat-hud-revised-approved-v1.md)의 배치가 우선. 좌상단 가방/바로 아래 오브4/상단 중앙 시계(Tab 개방 시 가림)/우상단 유물 세로/좌하단 HP·보호막·마석/맨 아래 EXP, MP·보스 HP바 없음. 예전 UI 보고서는 구 참고안이다.
 11. 사용자가 “보고서 올려”라고 요청하면 **이 GitHub 저장소에 파일을 실제 커밋하고 `INDEX.md`를 업데이트**한다. 초안만 제출해서는 완료가 아니다. PNG 첨부 여부도 실제 바이너리 저장소 존재를 기준으로 구분한다.
 
+12. **보상 UI 최신 승인:** [UI-REWARD-2026-10-31-01](reports/2026-10-31-reward-ui-codefaithful-three-states-approved-v1.md)의 실제 코드 구조 기반 3상태를 따름. 보상 중앙 카드/Tab 전체 인벤 편집/획득 후 직접 재개. 가방 1줄·보유 오브 실제 수/6~8칸·가로 스크롤, 가짜 격자형 가방/우측 분리 장비 패널 금지. 보상 단계에서 Tab 2상태 전환은 아직 **미구현**이므로 문서 승인과 코드 구현을 혼동하지 않음. **보물상자 연출은 별도 미확정.**
+
 권장 상태: `PROPOSED` → `UNDER_REVIEW` → `APPROVED` → `IN_PROGRESS` → `VERIFIED` → `ARCHIVED`. 필요 시 `REJECTED` 또는 `SUPERSEDED`.
 
 마법 60종과 참고 게임을 다룰 때에는 현재 코드 버전과 `docs/PROJECT-HANDOFF.md`를 먼저 대조한다.
