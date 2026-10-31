@@ -60,6 +60,13 @@
 - **설정:** HoloCure형 큰 제목·옵션 아이콘·세로 행·오른쪽 ON/OFF 토글·선택 강조·스크롤. 실제 지원 중인 효과음/상자 개봉 생략/피해 숫자부터 적용. 목업의 BGM·키 설정은 **미지원 표시만** 하고 작동 기능/옵션 추가로 간주하지 않음.
 - **목업/실제 게임 구분:** HTML은 로컬 인터랙션 시연이고 설정 영구 저장·실제 재시작/타이틀 이동은 미연결. 실제 `다시 시작` 이동 목적지, ESC 입력 우선순위, 일시정지·보상 상태 보존, 체크포인트 규칙은 **기존 코드·최신 결정 기준으로 구현 시 검증**. **Godot 코드 미변경·실화면 미검증**, 최종 아트·픽셀 크기 미확정.
 
+## 실험 기록 UI 최신 채용 (2026-10-31)
+
+- **사용자 원안 승인:** [UI-2026-10-30-08 실험 기록 조사 보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) / [08번 승인 결정](decisions/2026-10-31-approved-experiment-run-history-ui-v1.md).
+- **구조:** 왼쪽 최근 **최대 10판** 수습/실패 필터·선택 목록 → 오른쪽 선택 판의 **실제 전투/제작 시간·처치·마석·도달 웨이브·시작 조합·종료 사유·최종 오브 마법 배열·유물** → 완료 웨이브의 접이식 복기. Slay the Spire Run History 기반, Hades식 실험 일지 분위기.
+- **06번 결과 화면과 컴포넌트 공유**, 단 결과 UI는 현재 런 메모리, 기록 UI는 영구 프로필에 보존된 정보만 사용. **플레이 날짜·오브 자체 성장 랭크·DPS 등 미저장 수치 가상 표기 금지**, 완료 웨이브의 마석은 완료 시점까지 누적값.
+- **UI 방향 승인 / 최종 아트·픽셀 구성 미확정 / 게임 코드 미변경·Godot 실입력·실렌더 미검증.** 기존 보고서 보존.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
@@ -78,7 +85,7 @@
 | UI-2026-10-30-05 / UI-WORKBENCH-2026-10-31-01 | **상점·제작 작업대 펼친 마법서 구조 사용자 채택** — 왼쪽 가방·오브 고정 / 오른쪽 상점·합성·성장 | **APPROVED 개념 방향 / 상세 디자인 PROPOSED** (게임 코드·Godot 미수정/미검증) | [기존 05번 보고서](reports/2026-10-30-crafting-shop-workbench-ui-research-proposal.md) · [책 구조 결정](decisions/2026-10-31-workbench-open-book-two-page-direction.md) | 화면 비율·메뉴 세부 구조·구매/드래그/합성 동선 HTML 목업 확인. 승인된 가방 1줄/보유 오브 행 재사용, 경제·제작 규칙 유지 |
 | UI-2026-10-30-06 / DEC-2026-10-31-RESULT-01 | **승리·패배 결과 UI 06번 원안 사용자 채용** — Brotato 빌드·통계 + HoloCure 승패 선언·재도전 + Hades 승리 강조 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 구체 아트·픽셀 배치·DPS 신규 계측 미승인) | [06번 원본 보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) · [확정 결정](decisions/2026-10-31-approved-victory-defeat-results-ui-v1.md) | 결말/결과 한 화면·최대 4오브·유물·실제 기록·재도전 유지. 최신 교수님 게임오버/일반 엔딩·UI 문구 반영, Godot 승패 입력 및 저장 검증 필요 |
 | UI-2026-10-30-07 / UI-ESC-SETTINGS-2026-10-31-02 | **ESC 4버튼 중앙 팝업 + HoloCure식 설정 화면** — 사용자 v2 HTML 목업 채용·원본 소스 첨부 | **LATEST / APPROVED UI 목업 v2** (실게임 Godot 미구현·미검증; 미지원 옵션은 시연 행) | [기존 07 보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) · [v2 승인 결정](decisions/2026-10-31-approved-esc-settings-holocure-mockup-v2.md) · [HTML v2 원본](mockups/2026-10-31-esc-settings-holocure-v2.html) | 현재 실험 상태 패널 삭제, ESC 4동작만 유지. 런 종료 확인창·설정 저장·재시작 경로/ESC 포커스·해상도 등 실제 기능은 코드 기준으로 구현·검증 필요 |
-| UI-2026-10-30-08 | 실험 기록 UI 레퍼런스·최근 런 선택 상세·오브/유물·웨이브 복기 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) | 사용자 2열 일지/필터/웨이브 펼침 검토; 승인 전 코드·저장 스키마 변경 금지 |
+| UI-2026-10-30-08 | **실험 기록 UI 원안 사용자 승인** — 왼쪽 최근 10판 목록/필터 + 오른쪽 선택 런 통계·오브·유물 + 완료 웨이브 펼침 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증, 미저장 기록 필드 추가 금지) | [08번 보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) · [승인 결정](decisions/2026-10-31-approved-experiment-run-history-ui-v1.md) | Slay the Spire 런 기록 구조+Hades 일지 분위기, 06번 결과 UI의 빌드 표현 재사용. 날짜·과거 오브 성장 랭크·DPS 가상 표시 금지, 기록 스키마 보존 |
 | UI-2026-10-30-09 | 마법·유물 상세 툴팁 레퍼런스 및 Magicraft형 공통 정보 카드·슬롯 연계 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-spell-relic-tooltip-ui-research-proposal.md) | 사용자 Magicraft형 카드·상황별 상세량·슬롯 강조 검토; 승인 전 코드/에셋 변경 금지 |
 | UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 비정지 배너/보스 인트로·경고 위치 검토; 실제 생성 연동 확인 후 별도 구현 승인 필요 |
 | UI-2026-10-30-11 | Slay the Spire식 유물 보유 아이콘·Magicraft식 상세 카드·실시간 상태 UI 조사 및 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) | 사용자 유물창 정지 정책·아이콘/상세 배치 검토; 유물 강화 시스템은 미구현으로 별도 결정, 승인 전 코드 변경 금지 |
