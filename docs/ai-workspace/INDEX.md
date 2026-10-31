@@ -40,14 +40,16 @@
 | MAGIC-ORBIT-2026-10-30-01 | **공전(orbit) → 마법공예 공전 3009 방식**: 투사체 속도 기반 각속도·추가 수명/속도·반경 덮어쓰기·시작각도·충돌 정합 | **APPROVED** (동작 계약 사용자 확정, 우리 3강/px 환산은 제안·코드 미구현) | [정밀 포팅 보고서](reports/2026-10-30-orbit-magicraft-3009-source-port.md) · [확정 결정](decisions/2026-10-30-orbit-magicraft-3009-motion-contract.md) | Codex: 별도 구현 시 원작 3009 대응 포팅·공전+잔불 P0·원호 충돌·낙하/광선/연결 호환·실제 Godot 수명/피해 검증 |
 | MAGIC-SPLIT-2026-10-30-01 | **분열(3013) 원작식 개편 + 0~3강 3·4·5·6발**: 부모 소멸 시 분열, 자식 각각 피해33%·크기80%·속도50%, 원본 관통/수명 복구 | **UNDER_REVIEW** (Godot Magic60 830/0·AI 자동 플레이 263/0·경고2, 실제 수동 화면/부하 미확인) | [구현·미검증 보고서](reports/2026-10-30-split-magicraft-3013-3-4-5-6-implementation.md) · [확정 결정](decisions/2026-10-30-magicraft-split-3-4-5-6.md) | Godot에서 3/4/5/6발 실제 분열·피해/원본 관통·수명·광선·고부하 확인 후 VERIFIED 판정 |
 
-| MAGIC-CHAIN-2026-10-31-01 | **[과거] 복제 궤적 → 마법공예 연쇄(3203)식 측면 자체 복제 발사 계획** | **SUPERSEDED** (2026-10-31 휘감기 기반 최신 결정으로 교체, 게임 코드 미수정) | [구안 이력](reports/2026-10-31-copy-trail-to-magicraft-chain-self-cast.md) | **구현 금지 — 최신 MAGIC-ENTANGLE-2026-10-31-01 및 DEC-2026-10-31-02를 우선** |
+| MAGIC-CHAIN-2026-10-31-01 | **복제 궤적(trail) → 마법공예 연쇄(3203) 기반 이동 중 자체 마법 복제 발사**. 노이타 Copy Trail이 최초 출처, A→A′ 발사·하위 B 불필요 | **APPROVED** (사용자 재확인·동작만 확정, 복제 횟수/피해/재복제 예외 미확정 · **게임 코드 미수정**) | [원작 근거·구현 계약](reports/2026-10-31-copy-trail-to-magicraft-chain-self-cast.md) · [최신 정정 보고서](reports/2026-10-31-trail-chain-timer-entangle-correction.md) | 별도 구현 요청 시 이동 중 실제 A′ 발사·피해/분열·합성 검증. **기존 trail→휘감기 공전 문서는 잘못된 대상** |
 
 | MAGIC-CONNECTORS-2026-10-31-01 | **소멸 후 → 마법공예 이중주식 종료 피해 전이 / 명중 후 → 마법공예 메아리식 쿨다운 반복 명중 연결** | **APPROVED** (사용자 동작 방향 확정 · 0~3강 수치/마나 대체 미확정 · **게임 코드 미수정**) | [원작 근거·교체 보고서](reports/2026-10-31-duet-echo-replace-expire-impact.md) · [확정 결정](decisions/2026-10-31-expire-duet-impact-echo-reference.md) | 별도 구현 지시 시 부모 현재 피해 가산·명중 재발동·중복/특수공격/완성합성/성능 검증; 원작 3레벨과 우리 4단계·마나 부재는 별도 계약 |
 
-| MAGIC-ENTANGLE-2026-10-31-01 | **복제 궤적(trail) → 마법공예 휘감기(3204) 기반 자체 복제·부모 중심 공전**: 강화 0/+1/+2/+3마다 **복제 2/3/4/5개**(부모 포함 3/4/5/6), 균등 간격·실제 타격 | **APPROVED** (핵심 동작·개수 사용자 확정 · 피해/반경/속도/합성 미확정 · **게임 코드 미수정**) | [정밀 보고서](reports/2026-10-31-copy-trail-to-magicraft-entangle-self-orbit.md) · [확정 결정](decisions/2026-10-31-trail-entangle-2-3-4-5-self-orbit.md) | 별도 구현 요청 시 부모별 균등 공전/실제 충돌·피해/재복제 차단/특수 공격 및 합성 검증. 과거 연쇄식 계획은 SUPERSEDED |
+| MAGIC-ENTANGLE-2026-10-31-01 | **[무효 이력] 복제 궤적(trail) → 마법공예 휘감기(3204)식 자체 복제·공전 및 복제 2/3/4/5개** | **SUPERSEDED** (사용자 적용 대상 정정, **게임 코드 미수정**) | [잘못된 적용 대상의 구안](reports/2026-10-31-copy-trail-to-magicraft-entangle-self-orbit.md) · [무효 결정문](decisions/2026-10-31-trail-entangle-2-3-4-5-self-orbit.md) | **이 계획 구현 금지. 휘감기 참고 대상은 시간 트리거(timer), 기존 연쇄 계획은 유효.** |
+| MAGIC-TRIGGER-CORRECTION-2026-10-31-01 | **마법 대상 정정**: 복제 궤적(trail)=**마법공예 연쇄 3203**·이동 중 자기복제 A→A′ / 시간 트리거(timer)=**마법공예 휘감기 3204**·후속 B 공전 | **APPROVED** (참고 메커니즘·대상 확정, 횟수·피해·강화/실행 예외 미확정 · **게임 코드 미수정**) | [최신 정정 보고서](reports/2026-10-31-trail-chain-timer-entangle-correction.md) · [최신 확정 결정](decisions/2026-10-31-correction-trail-chain-timer-entangle.md) | 두 기능을 혼동하지 말 것. 이전 trail→휘감기 및 2/3/4/5개 공전 구안은 SUPERSEDED. 별도 구현 요청 전 코드 변경 금지 |
 ## 검토·승인·구현 인계
 
-- [DEC-2026-10-31-02: 복제 궤적을 휘감기(3204)식 자체 복제·부모 공전으로 개편, 0~+3강 복제 2/3/4/5개](decisions/2026-10-31-trail-entangle-2-3-4-5-self-orbit.md) **사용자 확정 방향**. 이전 연쇄(3203)식 이동 중 발사는 SUPERSEDED, 구현 및 수치·합성 세부 조정 전.
+- [DEC-2026-10-31-03: 복제 궤적(trail)→연쇄(3203)식 자기복제 발사, 시간 트리거(timer)→휘감기(3204)식 후속 공전](decisions/2026-10-31-correction-trail-chain-timer-entangle.md) **최신 사용자 확정 기준**. 생성 수·피해율·수명 등 미확정, 게임 코드 미수정.
+- [DEC-2026-10-31-02: 과거 '복제 궤적→휘감기' 오작성](decisions/2026-10-31-trail-entangle-2-3-4-5-self-orbit.md) **SUPERSEDED / 무효 이력**. 구현 금지.
 
 - [DEC-2026-10-31-01: 소멸 후는 마법공예 이중주(3201)식 부모 피해 추가 / 명중 후는 메아리(3205)식 쿨다운 재발동](decisions/2026-10-31-expire-duet-impact-echo-reference.md) **사용자 확정 방향**. 세부 수치·마나 대체 미확정, 게임 코드 미수정.
 
