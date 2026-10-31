@@ -52,7 +52,7 @@ const FUSIONS = {
 	"clock_satellite":{"name":"시계 위성","parents":["satellite", "timer"],"base":"satellite","color":Color("c8b4ff"),"desc":"한 시전 중 두 번 위성을 정렬하고 전기선 타격","interval":1.6},
 	"thermal_trail":{"name":"열충격 발자국","parents":["ember_path", "element_ice"],"base":"ember_path","color":Color("c8b4ff"),"desc":"원형 잔불 유지 · 동결한 적 접촉에 한 번 열충격","interval":1.0},
 	"mirror_trail":{"name":"거울 잔불","parents":["ember_path", "trail"],"base":"ember_path","color":Color("c8b4ff"),"desc":"지나온 잔불 경로를 역순으로 두 약한 거울 길이 재생","interval":1.0},
-	"meteor":{"name":"운석","parents":["fireball", "fall"],"base":"fireball","color":Color("c8b4ff"),"desc":"상공에서 낙하 · 착탄 뒤 외곽으로 순차 충격파","interval":1.0},
+	"meteor":{"name":"운석","parents":["fireball", "fall"],"base":"fireball","color":Color("c8b4ff"),"desc":"마법공예 1013식: 본체 운석과 소형 운석 5개가 각각 날아와 착탄 폭발\n확장 충격파 없음 · 각 운석의 실제 낙하·독립 명중","interval":1.0},
 	"growing_firecore":{"name":"팽창하는 화염핵","parents":["fireball", "giant"],"base":"fireball","color":Color("c8b4ff"),"desc":"비행 중 실제 팽창 · 충돌에서 2단 폭발","interval":1.0},
 	"plasma_beam":{"name":"플라즈마 빔","parents":["laser", "element_lightning"],"base":"laser","color":Color("c8b4ff"),"desc":"지속 광선 · 첫 접촉에서 주변 적 하나로 전기 가지","interval":1.2},
 	"disintegration":{"name":"분해 광선","parents":["laser", "charge"],"base":"laser","color":Color("c8b4ff"),"desc":"좁은 충전 광선 · 연속 노출한 적에 균열을 쌓고 종료 폭발","interval":1.2},
