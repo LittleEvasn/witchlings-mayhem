@@ -133,7 +133,7 @@ func update_meteors(delta: float) -> void:
 			continue
 		m.age+=delta
 		var t: float=minf(1.0,m.age/m.travel)
-		m.pos=m.from.lerp(m.target,t)
+		m.pos=m["from"].lerp(m.target,t)
 		m.height=maxf(0.0,m.initial_height+m.velocity_z*m.age+0.5*m.gravity*m.age*m.age)
 		if t<1.0: continue
 		meteors.remove_at(i)
