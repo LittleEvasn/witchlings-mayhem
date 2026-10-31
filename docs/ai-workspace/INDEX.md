@@ -46,6 +46,13 @@
 - 기존 [보상 UI 승인안](reports/2026-10-31-reward-ui-codefaithful-three-states-approved-v1.md)의 **가방 수평 한 줄 가로 스크롤·실제 보유 오브 수만큼 슬롯 행** 구조와 충돌하지 않도록 한다.
 - **개념 방향만 승인.** 두 페이지의 실제 폭·아트·상세 탭·클릭 흐름·해상도 대응·HTML 목업·Godot 구현/검증은 미확정/미실시. 과거 05번 B안 도식과 충돌하면 최신 책 구조가 우선.
 
+## 승리·패배 결과 UI 최신 채용 (2026-10-31)
+
+- **사용자 원안 채용:** [UI-2026-10-30-06 승리·패배 결과 조사·개편 보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) / [DEC-2026-10-31-RESULT-01 승인 결정](decisions/2026-10-31-approved-victory-defeat-results-ui-v1.md).
+- **참고 구조:** **Brotato**의 실제 런 통계·오브/유물 빌드, **HoloCure**의 큰 승패 표시·간결한 재도전, **Hades**의 승리 강조. 승패 공통 한 화면에서 결과 제목·캐릭터 반응/결말·실제 전투 시간/편집 시간/처치/마석·도달 웨이브·오브 1~4/유물·재도전/타이틀을 보여주는 방향.
+- **확정 스토리·문체 우선:** 게임 오버는 `GAME OVER` / `교수님에게 혼났다.` (교수님 직접 등장 금지), 일반 승리는 `사고 수습 완료`와 최신 엔딩 대사. 오래된 결과 화면의 교수님 등장 대사·유치한 시스템 문구 재사용 금지.
+- **승인은 UI 구조 방향에 한정.** 승패 전용 캐릭터 그림·VFX·전장 프리즈 오버레이/최종 아트·DPS/오브별 피해 데이터는 미승인 또는 미구현. **Godot UI 코드 미변경 / 신규 화면·입력 검증 미실시**.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
@@ -62,7 +69,7 @@
 | UI-2026-10-30-03 | 게임 시작 화면·타이틀→전투 진입 흐름 조사 및 UI 개편 제안 (이미지 제외) | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-game-start-title-to-combat-ui-proposal.md) | 타이틀 구성·선택 단계·첫 진입 연출 사용자 검토; 승인 전 코드·그림 작업 금지 |
 | UI-2026-10-30-04 | **발견 도감 UI 기존 보고서 원안 채용** · 주문/완성합성/유물 탭·역할 필터·좌측 6열 아이콘 초기 시제품/우측 상세·강화 비교·재료↔합성 링크 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 6열 픽셀 수치/최종 아트 미확정) | [원본 보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md) · [사용자 승인 결정](decisions/2026-10-31-approved-collection-codex-ui-structure-v1.md) | 기존 발견 기록·미발견 재료 힌트·탐색 보존. 최종 합성 기획 **11생존/19폐기** vs 구 코드 활성29 불일치 해결 후 현재 데이터 기반 총수 확인·실제 Godot UI 검증 |
 | UI-2026-10-30-05 / UI-WORKBENCH-2026-10-31-01 | **상점·제작 작업대 펼친 마법서 구조 사용자 채택** — 왼쪽 가방·오브 고정 / 오른쪽 상점·합성·성장 | **APPROVED 개념 방향 / 상세 디자인 PROPOSED** (게임 코드·Godot 미수정/미검증) | [기존 05번 보고서](reports/2026-10-30-crafting-shop-workbench-ui-research-proposal.md) · [책 구조 결정](decisions/2026-10-31-workbench-open-book-two-page-direction.md) | 화면 비율·메뉴 세부 구조·구매/드래그/합성 동선 HTML 목업 확인. 승인된 가방 1줄/보유 오브 행 재사용, 경제·제작 규칙 유지 |
-| UI-2026-10-30-06 | 승리·패배 결과 화면 레퍼런스·빌드 기록·승패 연출·재도전 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) | 사용자 결과 화면 위계·표정·연출·빌드 표시 검토/승인; 승인 전 코드·아트 변경 금지 |
+| UI-2026-10-30-06 / DEC-2026-10-31-RESULT-01 | **승리·패배 결과 UI 06번 원안 사용자 채용** — Brotato 빌드·통계 + HoloCure 승패 선언·재도전 + Hades 승리 강조 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 구체 아트·픽셀 배치·DPS 신규 계측 미승인) | [06번 원본 보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) · [확정 결정](decisions/2026-10-31-approved-victory-defeat-results-ui-v1.md) | 결말/결과 한 화면·최대 4오브·유물·실제 기록·재도전 유지. 최신 교수님 게임오버/일반 엔딩·UI 문구 반영, Godot 승패 입력 및 저장 검증 필요 |
 | UI-2026-10-30-07 | ESC 일시정지 메뉴·설정 화면 레퍼런스·안전 확인창·옵션 분류 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) | 사용자 ESC 구성·런 종료 확인·설정 3분류 검토, 승인 전 코드/에셋 변경 금지 |
 | UI-2026-10-30-08 | 실험 기록 UI 레퍼런스·최근 런 선택 상세·오브/유물·웨이브 복기 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) | 사용자 2열 일지/필터/웨이브 펼침 검토; 승인 전 코드·저장 스키마 변경 금지 |
 | UI-2026-10-30-09 | 마법·유물 상세 툴팁 레퍼런스 및 Magicraft형 공통 정보 카드·슬롯 연계 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-spell-relic-tooltip-ui-research-proposal.md) | 사용자 Magicraft형 카드·상황별 상세량·슬롯 강조 검토; 승인 전 코드/에셋 변경 금지 |
