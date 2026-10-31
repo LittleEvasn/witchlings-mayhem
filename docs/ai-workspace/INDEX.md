@@ -49,7 +49,11 @@
 | MAGIC-ENTANGLE-2026-10-31-01 | **[무효 이력] 복제 궤적(trail) → 마법공예 휘감기(3204)식 자체 복제·공전 및 복제 2/3/4/5개** | **SUPERSEDED** (사용자 적용 대상 정정, **게임 코드 미수정**) | [잘못된 적용 대상의 구안](reports/2026-10-31-copy-trail-to-magicraft-entangle-self-orbit.md) · [무효 결정문](decisions/2026-10-31-trail-entangle-2-3-4-5-self-orbit.md) | **이 계획 구현 금지. 휘감기 참고 대상은 시간 트리거(timer), 기존 연쇄 계획은 유효.** |
 | MAGIC-TRIGGER-CORRECTION-2026-10-31-01 | **마법 대상 정정**: 복제 궤적(trail)=**마법공예 연쇄 3203**·이동 중 자기복제 A→A′ / 시간 트리거(timer)=**마법공예 휘감기 3204**·후속 B 공전 | **APPROVED** (참고 메커니즘·대상 확정, 횟수·피해·강화/실행 예외 미확정 · **게임 코드 미수정**) | [최신 정정 보고서](reports/2026-10-31-trail-chain-timer-entangle-correction.md) · [최신 확정 결정](decisions/2026-10-31-correction-trail-chain-timer-entangle.md) | 두 기능을 혼동하지 말 것. 이전 trail→휘감기 및 2/3/4/5개 공전 구안은 SUPERSEDED. 별도 구현 요청 전 코드 변경 금지 |
 | MAGIC-BOLT-SPEAR-2026-10-31-01 | **별빛탄 0~+3강 1/2/3/4발(+1강 전방·후방) + 빛나는 창(별빛탄+관통) 4갈래·무한 적 관통·명중 적 중심 원형 범위 피해** | **APPROVED** (사용자 핵심 규칙 확정, +2/+3/합성 각도·범위 피해·반경·중복 타격 미확정 · **게임 코드 미수정**) | [정밀 개편 보고서](reports/2026-10-31-starlight-bolt-shining-spear-piercing-aoe-redesign.md) · [확정 결정](decisions/2026-10-31-bolt-1-2-3-4-shining-spear-4way-infinite-pierce-aoe.md) | 별도 구현 요청 시 실제 발사수/전후방/무한 관통/피격 적 중심 범위 실피해 검증. 기존 측면 2원 제거, 미확정 피해·각도는 별도 결정 |
+| MAGIC-GLITTER-CHAIN-2026-10-31-01 | **반짝이 폭탄(꽃폭탄+분열)**: 기존 파편형 대신 피해 적 매개 **전염 범위 폭발**, 추가 전염 **6회 전체 공유**, 연쇄가 깊어질수록 피해 감소 | **APPROVED** (사용자 동작·6회·감쇠 방향 확정, 비율/반경/시간/분기 미확정 · **게임 코드 미수정**) | [상세 보고서](reports/2026-10-31-glitter-bomb-six-infections-damage-falloff.md) · [결정](decisions/2026-10-31-glitter-chain-six-damage-decay.md) | 최초 1회 + 추가 최대 6회, 가지마다 6회 초기화 금지. 별도 구현 요청 시 피격 적 중심·단계별 피해 감소 검증 |
+
 ## 검토·승인·구현 인계
+
+- [DEC-2026-10-31-GLITTER-01: 반짝이 폭탄 전염 폭발 6회 공유·연쇄 단계별 피해 감소](decisions/2026-10-31-glitter-chain-six-damage-decay.md) **사용자 확정**. 피해율·범위·시간차·분기 수 미확정, 게임 코드 미수정.
 
 - [DEC-2026-10-31-02: **게임 UI 문구는 건조하고 간결한 기능 라벨 사용 / 유아용 구어체·감탄·포위·박쥐 등 중계성 전투 안내 금지**](decisions/2026-10-31-battle-ui-copy-tone-no-cutesy-dialogue.md) **사용자 확정 문체 규칙**. 자세한 적용 시안은 [UI-COPY-2026-10-31-01](reports/2026-10-31-game-ui-short-copy-overhaul-v1.md). 실제 코드 미수정.
 
