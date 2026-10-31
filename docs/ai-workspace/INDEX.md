@@ -47,7 +47,10 @@
 
 | MAGIC-ENTANGLE-2026-10-31-01 | **[무효 이력] 복제 궤적(trail) → 마법공예 휘감기(3204)식 자체 복제·공전 및 복제 2/3/4/5개** | **SUPERSEDED** (사용자 적용 대상 정정, **게임 코드 미수정**) | [잘못된 적용 대상의 구안](reports/2026-10-31-copy-trail-to-magicraft-entangle-self-orbit.md) · [무효 결정문](decisions/2026-10-31-trail-entangle-2-3-4-5-self-orbit.md) | **이 계획 구현 금지. 휘감기 참고 대상은 시간 트리거(timer), 기존 연쇄 계획은 유효.** |
 | MAGIC-TRIGGER-CORRECTION-2026-10-31-01 | **마법 대상 정정**: 복제 궤적(trail)=**마법공예 연쇄 3203**·이동 중 자기복제 A→A′ / 시간 트리거(timer)=**마법공예 휘감기 3204**·후속 B 공전 | **APPROVED** (참고 메커니즘·대상 확정, 횟수·피해·강화/실행 예외 미확정 · **게임 코드 미수정**) | [최신 정정 보고서](reports/2026-10-31-trail-chain-timer-entangle-correction.md) · [최신 확정 결정](decisions/2026-10-31-correction-trail-chain-timer-entangle.md) | 두 기능을 혼동하지 말 것. 이전 trail→휘감기 및 2/3/4/5개 공전 구안은 SUPERSEDED. 별도 구현 요청 전 코드 변경 금지 |
+| MAGIC-BOLT-SPEAR-2026-10-31-01 | **별빛탄 0~+3강 1/2/3/4발(+1강 전방·후방) + 빛나는 창(별빛탄+관통) 4갈래·무한 적 관통·명중 적 중심 원형 범위 피해** | **APPROVED** (사용자 핵심 규칙 확정, +2/+3/합성 각도·범위 피해·반경·중복 타격 미확정 · **게임 코드 미수정**) | [정밀 개편 보고서](reports/2026-10-31-starlight-bolt-shining-spear-piercing-aoe-redesign.md) · [확정 결정](decisions/2026-10-31-bolt-1-2-3-4-shining-spear-4way-infinite-pierce-aoe.md) | 별도 구현 요청 시 실제 발사수/전후방/무한 관통/피격 적 중심 범위 실피해 검증. 기존 측면 2원 제거, 미확정 피해·각도는 별도 결정 |
 ## 검토·승인·구현 인계
+
+- [DEC-2026-10-31-04: 별빛탄 1/2/3/4발과 빛나는 창 4갈래·무한 관통·명중 대상 중심 원형 피해](decisions/2026-10-31-bolt-1-2-3-4-shining-spear-4way-infinite-pierce-aoe.md) **사용자 확정 방향**. 세부 발사 각도·범위 수치/중복 피해 규칙 미확정, 게임 코드 미수정.
 
 - [DEC-2026-10-31-03: 복제 궤적(trail)→연쇄(3203)식 자기복제 발사, 시간 트리거(timer)→휘감기(3204)식 후속 공전](decisions/2026-10-31-correction-trail-chain-timer-entangle.md) **최신 사용자 확정 기준**. 생성 수·피해율·수명 등 미확정, 게임 코드 미수정.
 - [DEC-2026-10-31-02: 과거 '복제 궤적→휘감기' 오작성](decisions/2026-10-31-trail-entangle-2-3-4-5-self-orbit.md) **SUPERSEDED / 무효 이력**. 구현 금지.
