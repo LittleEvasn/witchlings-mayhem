@@ -3,7 +3,7 @@
 - **작성일:** 2026-10-31
 - **상태:** **APPROVED — 화염구 유지 / 잔불 발자국의 불장판을 플레이어 이동 시 독장판으로 변경**. **PENDING DESIGN — 화염방사기는 변경할 예정이지만 교체할 새 공격과 동작은 아직 지정하지 않음.** 게임 코드·테스트 미수정.
 - **대상 저장소:** `LittleEvasn/witchlings-mayhem`
-- **정적 확인:** `scripts/magic_catalog.gd`, `scripts/spell_behaviors.gd`, `scripts/spell_runtime.gd`, `scripts/magic_extensions.gd` 원격 main; 설계 작성 시 대략 `main@a93bfd0d1ad8a9b8ad8c90cc611e13102d3ff432`의 INDEX 및 최신 브랜치 HEAD `7d01909d0d5dc8b5f9f5667abdf0d61a46af234b` 확인. 메인 브랜치 동시 변경 가능성 있으므로 코덱스는 구현 전에 최신 파일 재조회 필수.
+- **정적 확인:** `scripts/magic_catalog.gd`, `scripts/spell_behaviors.gd`, `scripts/spell_runtime.gd`, `scripts/magic_extensions.gd` 원격 main; 작업 중 확인한 원격 브랜치 HEAD `7d01909d0d5dc8b5f9f5667abdf0d61a46af234b`. 메인 브랜치 동시 변경 가능성 있으므로 코덱스는 구현 전에 최신 파일 재조회 필수.
 - **사용자 원문:** “그것만 수정하자. 화염구를 살리고 화염방사랑 화염걸음? 이 두개를 바꿀꺼거든? 화염걸음? 암튼 불장판 생기는거 그걸 독장판 깔리는걸로 바꿀래”
 - **범위:** Codex 인계 **설계 변경만 기록**, 실제 Godot 소스나 저장·도감·미술 리소스를 이 보고서 작성만으로 교체하지 않는다.
 
