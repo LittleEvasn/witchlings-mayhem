@@ -1,5 +1,9 @@
 # AI 협업 보고서 공간
 
+> **정식 GitHub 저장소: https://github.com/LittleEvasn/witchlings-mayhem**. 사용자가 이 프로젝트에 “보고서 올려/등록해”라고 지시하면 **실제 GitHub에 커밋하고 URL을 확인**해야 한다. 채팅 초안만 제시하거나 업로드하지 않은 것을 완료라고 말하지 않는다.
+
+> **최신 전투 HUD 채용안:** [2026-10-31 Magicraft 참고 HUD v1](reports/2026-10-31-combat-hud-revised-approved-v1.md). 이전 UI 보고서는 구 참고자료이며 전투 HUD 배치가 충돌할 경우 최신 승인안을 따른다.
+
 이 디렉터리는 서로 다른 ChatGPT 채팅과 Codex가 GitHub 문서로 분석·검토·결정·작업 인계를 주고받는 공용 공간이다. 실시간 회의나 자동 알림을 제공하는 것은 아니다.
 
 ## 폴더
