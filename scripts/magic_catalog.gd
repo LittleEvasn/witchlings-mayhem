@@ -53,8 +53,7 @@ const FUSIONS = {
 	"thermal_trail":{"name":"열충격 발자국","parents":["ember_path", "element_ice"],"base":"ember_path","color":Color("c8b4ff"),"desc":"원형 잔불 유지 · 동결한 적 접촉에 한 번 열충격","interval":1.0},
 	"mirror_trail":{"name":"거울 잔불","parents":["ember_path", "trail"],"base":"ember_path","color":Color("c8b4ff"),"desc":"지나온 잔불 경로를 역순으로 두 약한 거울 길이 재생","interval":1.0},
 	"meteor":{"name":"운석","parents":["fireball", "fall"],"base":"fireball","color":Color("c8b4ff"),"desc":"마법공예 1013식: 본체 운석과 소형 운석 5개가 각각 날아와 착탄 폭발\n확장 충격파 없음 · 각 운석의 실제 낙하·독립 명중","interval":1.0},
-	"growing_firecore":{"name":"팽창하는 화염핵","parents":["fireball", "giant"],"base":"fireball","color":Color("c8b4ff"),"desc":"비행 중 실제 팽창 · 충돌에서 2단 폭발","interval":1.0},
-	"plasma_beam":{"name":"플라즈마 빔","parents":["laser", "element_lightning"],"base":"laser","color":Color("c8b4ff"),"desc":"지속 광선 · 첫 접촉에서 주변 적 하나로 전기 가지","interval":1.2},
+	"plasma_beam":{"name":"붕괴 광선","parents":["laser", "element_lightning"],"base":"laser","color":Color("c8b4ff"),"desc":"마법공예 1011식 지속 관통 광선 · 2초 동안 0.1초 간격으로 경로상 적을 반복 타격\n하나의 광선이 여러 적을 끝까지 관통","interval":1.2},
 	"disintegration":{"name":"분해 광선","parents":["laser", "charge"],"base":"laser","color":Color("c8b4ff"),"desc":"좁은 충전 광선 · 연속 노출한 적에 균열을 쌓고 종료 폭발","interval":1.2},
 	"dragon_breath":{"name":"맹렬한 용의 숨결","parents":["flamethrower", "fan"],"base":"flamethrower","color":Color("c8b4ff"),"desc":"세 분사가 점차 중앙으로 수렴 · 끝에 화염파","interval":1.3},
 	"poison_flame":{"name":"독염 분사","parents":["flamethrower", "element_poison"],"base":"flamethrower","color":Color("c8b4ff"),"desc":"분사 끝에 독가스 · 잠시 뒤 한 번 점화","interval":1.3},
@@ -66,4 +65,4 @@ const FUSIONS = {
 	"dual_event":{"name":"이중 사건","parents":["impact", "expire"],"base":"impact","color":Color("c8b4ff"),"desc":"첫 명중과 정상 소멸에 후속을 각각 50%로 한 번","kind":"connector"}
 }
 
-const RETIRED = {"storm_spear":"뇌광창","nova_garden":"초신성 정원","moon_ring":"귀환의 달고리","frost_blossom":"빙결화","firework_trail":"불꽃 행진","frost_gate":"별서리 관문","thunder_trap":"천둥꽃 덫","moon_vortex":"달무리 소용돌이","petal_return":"꽃잎 귀환","wave_split":"파상 분열","swarm_seek":"군집 추적","leap_pierce":"도약 관통","compressed_star":"압축 거성","echo_chain":"잔향 연쇄","delayed_ignition":"지연 점화"}
+const RETIRED = {"growing_firecore":"팽창하는 화염핵", "storm_spear":"뇌광창","nova_garden":"초신성 정원","moon_ring":"귀환의 달고리","frost_blossom":"빙결화","firework_trail":"불꽃 행진","frost_gate":"별서리 관문","thunder_trap":"천둥꽃 덫","moon_vortex":"달무리 소용돌이","petal_return":"꽃잎 귀환","wave_split":"파상 분열","swarm_seek":"군집 추적","leap_pierce":"도약 관통","compressed_star":"압축 거성","echo_chain":"잔향 연쇄","delayed_ignition":"지연 점화"}
