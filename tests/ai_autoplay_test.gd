@@ -56,7 +56,8 @@ func report_for(raw: Dictionary, id: String, kind: String, recipe: Array, scenar
 
 func run() -> void:
 	var cases: Array = all_cases()
-	check(cases.size()==60,"All 30 base and 30 fusion items covered")
+	var expected_cases: int=Catalog.PARTS.size()+Spells.Progression.FUSIONS.size()
+	check(cases.size()==expected_cases,"Every currently active basic and fusion spell covered")
 	var ids := {}
 	var g: Node2D=load("res://scenes/main.tscn").instantiate()
 	g.record_runs = false
@@ -90,7 +91,7 @@ func run() -> void:
 			print("WARN: %s %s"%[id,JSON.stringify(row.warnings)])
 		# Yield so queued_free children from the previous test are released.
 		await process_frame
-	check(results.size()==60,"60 actual runtime sessions with recorded observations")
+	check(results.size()==expected_cases,"Every active spell receives an actual runtime session and observations")
 	# Rank-0 laser must strike its single target only once per cast: the
 	# 0.2-second visual afterglow must never apply sustained damage.
 	var single_laser_ok: bool=runner.begin(["seek","laser"],"single",731,"nearest",3.0,1.0,1.0,"sigil",{"motion":"stationary","sandbox_loadout":true})
