@@ -53,6 +53,13 @@
 - **확정 스토리·문체 우선:** 게임 오버는 `GAME OVER` / `교수님에게 혼났다.` (교수님 직접 등장 금지), 일반 승리는 `사고 수습 완료`와 최신 엔딩 대사. 오래된 결과 화면의 교수님 등장 대사·유치한 시스템 문구 재사용 금지.
 - **승인은 UI 구조 방향에 한정.** 승패 전용 캐릭터 그림·VFX·전장 프리즈 오버레이/최종 아트·DPS/오브별 피해 데이터는 미승인 또는 미구현. **Godot UI 코드 미변경 / 신규 화면·입력 검증 미실시**.
 
+## ESC·설정 UI 최신 결정 (2026-10-31)
+
+- **설정 화면만 사용자 승인:** [UI-2026-10-30-07 기존 ESC·설정 보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) / [UI-SETTINGS-2026-10-31-01 HoloCure 기준 채용 결정](decisions/2026-10-31-approved-settings-holocure-style-v1.md). **HoloCure 0.5 시기 실제 옵션 UI**의 큰 제목, **아이콘+라벨** 세로 옵션 행, 오른쪽 체크박스/상태/토글, 선택 강조, 필요 시 세로 스크롤을 참고.
+- 실제 코드의 **효과음/상자 개봉 생략/피해 숫자 On·Off**를 먼저 표현. BGM/음량·키 재설정·새 화면 옵션은 미구현 상태로 구분. 원작의 파란색·픽셀아트·원본 에셋 직접 복제 금지. **왼쪽 아이콘은 캡처에서 각 행별 아이콘이지 카테고리 레일이 아님**.
+- **ESC 일시정지 자체의 새 배치와 종료 확인창은 여전히 제안(PROPOSED)**. 설정에서 ESC 복귀는 타이틀 출처면 타이틀, 일시정지 출처면 일시정지 유지.
+- **디자인 방향 승인 / 목업·Godot 코드·실화면 미변경·미검증**. 구 UI 통합본의 다른 설정 스타일 권고와 충돌하면 최신 사용자 선택 우선.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
@@ -70,7 +77,7 @@
 | UI-2026-10-30-04 | **발견 도감 UI 기존 보고서 원안 채용** · 주문/완성합성/유물 탭·역할 필터·좌측 6열 아이콘 초기 시제품/우측 상세·강화 비교·재료↔합성 링크 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 6열 픽셀 수치/최종 아트 미확정) | [원본 보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md) · [사용자 승인 결정](decisions/2026-10-31-approved-collection-codex-ui-structure-v1.md) | 기존 발견 기록·미발견 재료 힌트·탐색 보존. 최종 합성 기획 **11생존/19폐기** vs 구 코드 활성29 불일치 해결 후 현재 데이터 기반 총수 확인·실제 Godot UI 검증 |
 | UI-2026-10-30-05 / UI-WORKBENCH-2026-10-31-01 | **상점·제작 작업대 펼친 마법서 구조 사용자 채택** — 왼쪽 가방·오브 고정 / 오른쪽 상점·합성·성장 | **APPROVED 개념 방향 / 상세 디자인 PROPOSED** (게임 코드·Godot 미수정/미검증) | [기존 05번 보고서](reports/2026-10-30-crafting-shop-workbench-ui-research-proposal.md) · [책 구조 결정](decisions/2026-10-31-workbench-open-book-two-page-direction.md) | 화면 비율·메뉴 세부 구조·구매/드래그/합성 동선 HTML 목업 확인. 승인된 가방 1줄/보유 오브 행 재사용, 경제·제작 규칙 유지 |
 | UI-2026-10-30-06 / DEC-2026-10-31-RESULT-01 | **승리·패배 결과 UI 06번 원안 사용자 채용** — Brotato 빌드·통계 + HoloCure 승패 선언·재도전 + Hades 승리 강조 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 구체 아트·픽셀 배치·DPS 신규 계측 미승인) | [06번 원본 보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) · [확정 결정](decisions/2026-10-31-approved-victory-defeat-results-ui-v1.md) | 결말/결과 한 화면·최대 4오브·유물·실제 기록·재도전 유지. 최신 교수님 게임오버/일반 엔딩·UI 문구 반영, Godot 승패 입력 및 저장 검증 필요 |
-| UI-2026-10-30-07 | ESC 일시정지 메뉴·설정 화면 레퍼런스·안전 확인창·옵션 분류 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) | 사용자 ESC 구성·런 종료 확인·설정 3분류 검토, 승인 전 코드/에셋 변경 금지 |
+| UI-2026-10-30-07 / UI-SETTINGS-2026-10-31-01 | **설정 화면 HoloCure식 구성 사용자 채용** — 상단 제목/옵션별 아이콘/세로 행/오른쪽 토글·체크/선택 강조·스크롤 | **설정 디자인 APPROVED / ESC 팝업·런 종료 확인창 PROPOSED** (Godot 미수정·미검증) | [07번 원본 보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) · [설정 UI 채택 결정](decisions/2026-10-31-approved-settings-holocure-style-v1.md) | 지원 중인 설정 3종만 우선 노출. HoloCure 0.5 캡처의 개별 항목 아이콘 참고; 새로운 옵션/카테고리 레일 억지 추가 금지. ESC 복귀/설정 저장 실동작과 해상도 검증 필요 |
 | UI-2026-10-30-08 | 실험 기록 UI 레퍼런스·최근 런 선택 상세·오브/유물·웨이브 복기 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) | 사용자 2열 일지/필터/웨이브 펼침 검토; 승인 전 코드·저장 스키마 변경 금지 |
 | UI-2026-10-30-09 | 마법·유물 상세 툴팁 레퍼런스 및 Magicraft형 공통 정보 카드·슬롯 연계 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-spell-relic-tooltip-ui-research-proposal.md) | 사용자 Magicraft형 카드·상황별 상세량·슬롯 강조 검토; 승인 전 코드/에셋 변경 금지 |
 | UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 비정지 배너/보스 인트로·경고 위치 검토; 실제 생성 연동 확인 후 별도 구현 승인 필요 |
