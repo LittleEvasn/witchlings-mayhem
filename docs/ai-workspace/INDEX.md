@@ -22,6 +22,7 @@
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
 |---|---|---|---|---|
+| UI-CHEST-2026-10-31-01 | **보물상자 개봉·잭팟 UI 재검토 v1** — HoloCure식 개봉 반응 + Vampire Survivors식 릴/1·3·5개 공개, 5개 2차 확장 | **PROPOSED** (제안안 등록, 최종 아트/코드 미승인 · Godot 미검증) | [상자 전용 신규 보고서](reports/2026-10-31-treasure-chest-opening-jackpot-ui-proposal-v1.md) | 1/3/5 공개 강약·미리 수량 감추기·수동 전투 재개 및 기존 보상 로직 보호; 실제 PNG 검토·최종 승인 후 구현 |
 | UI-REWARD-2026-10-31-01 | **보상 선택/Tab 인벤토리/획득 후 정리 3상태 사용자 채용 목업** · 실제 가방 1줄/보유 오브별 슬롯 구현 기준 | **LATEST / APPROVED 디자인** (코드 미수정, Godot 미검증) | [최신 보고서](reports/2026-10-31-reward-ui-codefaithful-three-states-approved-v1.md) · [확정 결정](decisions/2026-10-31-approved-reward-ui-inventory-three-state-flow.md) | 중앙 3택/조건부4택, Tab 인벤 편집, 직접 전투 재개. **상자 연출 별도 미확정** |
 | UI-HUD-2026-10-31-01 | **전투 HUD 최신 승인 배치 v1** (Magicraft 중심, 사용자 일반 전투 HUD 목업 채용) | **LATEST / APPROVED 디자인** (구현 전) | [보고서](reports/2026-10-31-combat-hud-revised-approved-v1.md) · [확정](decisions/2026-10-31-approved-combat-hud-magicraft-layout-v1.md) | 기존 UI-01~12 및 통합 v0.2의 과거 전투 HUD 배치보다 우선 |
 | BAL-2026-10-30-01 | 뱀파이어 서바이버즈 대비 마법 발사 템포 밸런스 제안 | **PROPOSED** | [보고서](reports/2026-10-30-vs-fire-rate-balance.md) | 사용자 수치 검토·승인, 승인 후 Codex 구현과 실제 Godot A/B 테스트 |
