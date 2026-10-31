@@ -166,6 +166,20 @@ func _draw_specials() -> void:
 
 func _draw_extensions() -> void:
 	var x: RefCounted=game.magic.extensions
+	# Magicraft 1013: draw every falling body at its simulated position.
+	# The ring is the future impact footprint; the sprite moves independently.
+	for m in x.meteors:
+		var at: Vector2=m.target
+		var radius: float=m.radius
+		var approach: float=clampf(1.0-m.height/m.initial_height,0.0,1.0)
+		draw_circle(at,radius,Color(1.0,0.48,0.24,0.035+approach*0.09))
+		draw_arc(at,radius,0,TAU,32,Color(1.0,0.66,0.38,0.32+approach*0.45),1.8,true)
+		var airborne: Vector2=m.pos-Vector2(0,m.height)
+		var body_size: float=maxf(14.0,radius*0.66)
+		draw_line(airborne-Vector2(5,16),airborne+Vector2(4,8),Color(1.0,0.52,0.22,0.25),maxf(5.0,radius*0.16),true)
+		vfx.draw(self,"fire",airborne,body_size*2.2,m.age,Color.WHITE,0,0,true)
+		draw_circle(airborne,maxf(5.0,radius*0.22),Color("f07743"))
+		draw_circle(airborne-Vector2(2,2),maxf(2.0,radius*0.085),Color("ffe6ab"))
 	for job in x.jobs:
 		if job.kind!="land": continue
 		var at: Vector2=job.pos
