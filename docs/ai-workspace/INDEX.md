@@ -10,10 +10,19 @@
 - 기존 UI 01~12 / 통합 설계 v0.2 / 시각 보드 v0.1 = **구 보고서(LEGACY REFERENCE)**. 보상·상자·그 외 화면은 미승인 기존 제안으로 보존하며 최신 전투 HUD 배치와 충돌하는 권고는 무효.
 - **디자인 승인이지 코드 구현 완료가 아니다.** PNG 원본은 아직 GitHub에 별도 바이너리로 올리지 않았음.
 
+## 보상 UI 최신 채용 (2026-10-31)
+
+- **최신 기준:** [UI-REWARD-2026-10-31-01 보상 UI 3상태 승인안](reports/2026-10-31-reward-ui-codefaithful-three-states-approved-v1.md) / [승인 결정](decisions/2026-10-31-approved-reward-ui-inventory-three-state-flow.md).
+- **실제 인벤:** 가방 수평 1줄(최소 31칸, 가로 스크롤), 현재 보유 오브만 1~4행·각 6~8칸. 임의 격자 가방·별도 장비창 금지.
+- **보상 선택:** 중앙 카드 3/4택, 카드가 오브 일부를 가려도 됨. Tab → 전체 인벤 편집 → Tab → 동일 후보 복귀. 선택 후 정리 시간 제한 없고 **전투 재개 버튼**으로만 재개.
+- **이전 레벨업 보상 UI 배치 제안은 구 기준**; **보물상자 1/3/5개 연출은 본 승인 대상이 아님**.
+- **코드 미수정 / Godot 미검증 / 채팅 승인 PNG 원본은 GitHub 바이너리 첨부 전**. 자세한 원본 파일명·SHA-256은 보고서에 기록.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
 |---|---|---|---|---|
+| UI-REWARD-2026-10-31-01 | **보상 선택/Tab 인벤토리/획득 후 정리 3상태 사용자 채용 목업** · 실제 가방 1줄/보유 오브별 슬롯 구현 기준 | **LATEST / APPROVED 디자인** (코드 미수정, Godot 미검증) | [최신 보고서](reports/2026-10-31-reward-ui-codefaithful-three-states-approved-v1.md) · [확정 결정](decisions/2026-10-31-approved-reward-ui-inventory-three-state-flow.md) | 중앙 3택/조건부4택, Tab 인벤 편집, 직접 전투 재개. **상자 연출 별도 미확정** |
 | UI-HUD-2026-10-31-01 | **전투 HUD 최신 승인 배치 v1** (Magicraft 중심, 사용자 일반 전투 HUD 목업 채용) | **LATEST / APPROVED 디자인** (구현 전) | [보고서](reports/2026-10-31-combat-hud-revised-approved-v1.md) · [확정](decisions/2026-10-31-approved-combat-hud-magicraft-layout-v1.md) | 기존 UI-01~12 및 통합 v0.2의 과거 전투 HUD 배치보다 우선 |
 | BAL-2026-10-30-01 | 뱀파이어 서바이버즈 대비 마법 발사 템포 밸런스 제안 | **PROPOSED** | [보고서](reports/2026-10-30-vs-fire-rate-balance.md) | 사용자 수치 검토·승인, 승인 후 Codex 구현과 실제 Godot A/B 테스트 |
 | REF-2026-10-30-01 | 뱀서·마법공예 원작 역분석 공개 자료 링크 | **PROPOSED** (참고자료) | [자료 목록](reports/2026-10-30-vs-magicraft-reverse-engineering-sources.md) | 원작 코드·역분석 문서를 조사할 때 참고; 구현 승인 아님 |
