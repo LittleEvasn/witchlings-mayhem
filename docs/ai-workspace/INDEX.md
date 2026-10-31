@@ -2,27 +2,36 @@
 
 이 저장소를 연 새로운 ChatGPT/Codex는 `README.md` → `AGENTS.md` → 아래 활성 보고서 순서로 확인한다.
 
+## 전투 HUD 최신 채용 (2026-10-31)
+
+**정식 저장소:** https://github.com/LittleEvasn/witchlings-mayhem
+
+- **최신 단일 기준:** [UI-HUD-2026-10-31-01 전투 HUD 승인 v1](reports/2026-10-31-combat-hud-revised-approved-v1.md) / [사용자 확정 결정](decisions/2026-10-31-approved-combat-hud-magicraft-layout-v1.md).
+- 기존 UI 01~12 / 통합 설계 v0.2 / 시각 보드 v0.1 = **구 보고서(LEGACY REFERENCE)**. 보상·상자·그 외 화면은 미승인 기존 제안으로 보존하며 최신 전투 HUD 배치와 충돌하는 권고는 무효.
+- **디자인 승인이지 코드 구현 완료가 아니다.** PNG 원본은 아직 GitHub에 별도 바이너리로 올리지 않았음.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
 |---|---|---|---|---|
+| UI-HUD-2026-10-31-01 | **전투 HUD 최신 승인 배치 v1** (Magicraft 중심, 사용자 일반 전투 HUD 목업 채용) | **LATEST / APPROVED 디자인** (구현 전) | [보고서](reports/2026-10-31-combat-hud-revised-approved-v1.md) · [확정](decisions/2026-10-31-approved-combat-hud-magicraft-layout-v1.md) | 기존 UI-01~12 및 통합 v0.2의 과거 전투 HUD 배치보다 우선 |
 | BAL-2026-10-30-01 | 뱀파이어 서바이버즈 대비 마법 발사 템포 밸런스 제안 | **PROPOSED** | [보고서](reports/2026-10-30-vs-fire-rate-balance.md) | 사용자 수치 검토·승인, 승인 후 Codex 구현과 실제 Godot A/B 테스트 |
 | REF-2026-10-30-01 | 뱀서·마법공예 원작 역분석 공개 자료 링크 | **PROPOSED** (참고자료) | [자료 목록](reports/2026-10-30-vs-magicraft-reverse-engineering-sources.md) | 원작 코드·역분석 문서를 조사할 때 참고; 구현 승인 아님 |
-| UI-2026-10-30-01 | 전투 HUD·중앙 3~4택·편집 전환·보물상자 잭팟 UI 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-combat-hud-reward-chest-ui-proposal.md) | 사용자 UI 방향 검토·승인; 승인 이후 Codex 구현 및 Godot 화면·입력 검증 |
-| UI-2026-10-30-02 | 캐릭터 선택 UI 레퍼런스·레이아웃 및 시작 마법 선택 흐름 제안 | **PROPOSED** | [보고서](reports/2026-10-30-character-selection-ui-research-proposal.md) | 사용자 B+C안·선택 단계·미구현 캐릭터 표시 정책 검토 및 승인; 승인 전 구현 금지 |
-| UI-2026-10-30-03 | 게임 시작 화면·타이틀→전투 진입 흐름 조사 및 UI 개편 제안 (이미지 제외) | **PROPOSED** | [보고서](reports/2026-10-30-game-start-title-to-combat-ui-proposal.md) | 타이틀 구성·선택 단계·첫 진입 연출 사용자 검토; 승인 전 코드·그림 작업 금지 |
-| UI-2026-10-30-04 | 발견 도감 UI 레퍼런스·탭/필터·합성 관계 및 강화 비교 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md) | 사용자 도감 배치/6열/역할 필터/합성 관계/강화 정보 검토·승인, 승인 전 코드 구현 금지 |
-| UI-2026-10-30-05 | 상점·제작 작업대 UI 레퍼런스 조사 및 구매·오브·가방 통합형 레이아웃 제안 | **PROPOSED** | [보고서](reports/2026-10-30-crafting-shop-workbench-ui-research-proposal.md) | 사용자 B안 통합 레이아웃·작업대 폭·성장 탭·스킨 방향 검토; 승인 전 구현/구매 금지 |
-| UI-2026-10-30-06 | 승리·패배 결과 화면 레퍼런스·빌드 기록·승패 연출·재도전 UI 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) | 사용자 결과 화면 위계·표정·연출·빌드 표시 검토/승인; 승인 전 코드·아트 변경 금지 |
-| UI-2026-10-30-07 | ESC 일시정지 메뉴·설정 화면 레퍼런스·안전 확인창·옵션 분류 UI 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) | 사용자 ESC 구성·런 종료 확인·설정 3분류 검토, 승인 전 코드/에셋 변경 금지 |
-| UI-2026-10-30-08 | 실험 기록 UI 레퍼런스·최근 런 선택 상세·오브/유물·웨이브 복기 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) | 사용자 2열 일지/필터/웨이브 펼침 검토; 승인 전 코드·저장 스키마 변경 금지 |
-| UI-2026-10-30-09 | 마법·유물 상세 툴팁 레퍼런스 및 Magicraft형 공통 정보 카드·슬롯 연계 제안 | **PROPOSED** | [보고서](reports/2026-10-30-spell-relic-tooltip-ui-research-proposal.md) | 사용자 Magicraft형 카드·상황별 상세량·슬롯 강조 검토; 승인 전 코드/에셋 변경 금지 |
-| UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **PROPOSED** | [보고서](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 비정지 배너/보스 인트로·경고 위치 검토; 실제 생성 연동 확인 후 별도 구현 승인 필요 |
-| UI-2026-10-30-11 | Slay the Spire식 유물 보유 아이콘·Magicraft식 상세 카드·실시간 상태 UI 조사 및 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) | 사용자 유물창 정지 정책·아이콘/상세 배치 검토; 유물 강화 시스템은 미구현으로 별도 결정, 승인 전 코드 변경 금지 |
-| UI-2026-10-30-12 | 마법·완성 합성·유물 첫 발견 알림 레퍼런스와 비정지 토스트·도감 NEW 표시 제안 | **PROPOSED** | [보고서](reports/2026-10-30-new-discovery-notification-ui-research-proposal.md) | 사용자 일반/합성 연출 강도·도감 NEW 지속 정책 검토, 프로필 신규 ID/알림 큐 설계는 승인 후; 게임 코드 미수정 |
+| UI-2026-10-30-01 | 전투 HUD·중앙 3~4택·편집 전환·보물상자 잭팟 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-combat-hud-reward-chest-ui-proposal.md) | 사용자 UI 방향 검토·승인; 승인 이후 Codex 구현 및 Godot 화면·입력 검증 |
+| UI-2026-10-30-02 | 캐릭터 선택 UI 레퍼런스·레이아웃 및 시작 마법 선택 흐름 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-character-selection-ui-research-proposal.md) | 사용자 B+C안·선택 단계·미구현 캐릭터 표시 정책 검토 및 승인; 승인 전 구현 금지 |
+| UI-2026-10-30-03 | 게임 시작 화면·타이틀→전투 진입 흐름 조사 및 UI 개편 제안 (이미지 제외) | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-game-start-title-to-combat-ui-proposal.md) | 타이틀 구성·선택 단계·첫 진입 연출 사용자 검토; 승인 전 코드·그림 작업 금지 |
+| UI-2026-10-30-04 | 발견 도감 UI 레퍼런스·탭/필터·합성 관계 및 강화 비교 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md) | 사용자 도감 배치/6열/역할 필터/합성 관계/강화 정보 검토·승인, 승인 전 코드 구현 금지 |
+| UI-2026-10-30-05 | 상점·제작 작업대 UI 레퍼런스 조사 및 구매·오브·가방 통합형 레이아웃 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-crafting-shop-workbench-ui-research-proposal.md) | 사용자 B안 통합 레이아웃·작업대 폭·성장 탭·스킨 방향 검토; 승인 전 구현/구매 금지 |
+| UI-2026-10-30-06 | 승리·패배 결과 화면 레퍼런스·빌드 기록·승패 연출·재도전 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) | 사용자 결과 화면 위계·표정·연출·빌드 표시 검토/승인; 승인 전 코드·아트 변경 금지 |
+| UI-2026-10-30-07 | ESC 일시정지 메뉴·설정 화면 레퍼런스·안전 확인창·옵션 분류 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) | 사용자 ESC 구성·런 종료 확인·설정 3분류 검토, 승인 전 코드/에셋 변경 금지 |
+| UI-2026-10-30-08 | 실험 기록 UI 레퍼런스·최근 런 선택 상세·오브/유물·웨이브 복기 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) | 사용자 2열 일지/필터/웨이브 펼침 검토; 승인 전 코드·저장 스키마 변경 금지 |
+| UI-2026-10-30-09 | 마법·유물 상세 툴팁 레퍼런스 및 Magicraft형 공통 정보 카드·슬롯 연계 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-spell-relic-tooltip-ui-research-proposal.md) | 사용자 Magicraft형 카드·상황별 상세량·슬롯 강조 검토; 승인 전 코드/에셋 변경 금지 |
+| UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 비정지 배너/보스 인트로·경고 위치 검토; 실제 생성 연동 확인 후 별도 구현 승인 필요 |
+| UI-2026-10-30-11 | Slay the Spire식 유물 보유 아이콘·Magicraft식 상세 카드·실시간 상태 UI 조사 및 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) | 사용자 유물창 정지 정책·아이콘/상세 배치 검토; 유물 강화 시스템은 미구현으로 별도 결정, 승인 전 코드 변경 금지 |
+| UI-2026-10-30-12 | 마법·완성 합성·유물 첫 발견 알림 레퍼런스와 비정지 토스트·도감 NEW 표시 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-new-discovery-notification-ui-research-proposal.md) | 사용자 일반/합성 연출 강도·도감 NEW 지속 정책 검토, 프로필 신규 ID/알림 큐 설계는 승인 후; 게임 코드 미수정 |
 | UI-COPY-2026-10-31-01 | **게임 내 짧은 문구 전면 개편** — 무문구 전투 위험·상자/첫 발견/승패 정보형 카피·실제 코드 교체 대상 | **PROPOSED** (개별 문구·구현 미확정) / **톤 정책 APPROVED** | [전면 수정 보고서](reports/2026-10-31-game-ui-short-copy-overhaul-v1.md) · [확정 문체 규칙](decisions/2026-10-31-battle-ui-copy-tone-no-cutesy-dialogue.md) | 유치한 구어체·감탄·중계형 경고 금지. Godot 문자열 교체는 별도 구현/검증 후 진행 |
-| UI-2026-10-31-01 | **UI 통합 설계서 v0.2** · 기존 UI 01~12 통합, 화면별 참고 게임·참고 요소·시각 시안/검증 기준 | **PROPOSED** (통합 상위 제안; 개별 UI 보고서 01~12 유지) | [통합 설계서](reports/2026-10-31-ui-integrated-design-v02.md) | 개별 원문 보존, 참고 UI 실제 캡처·주석 보드·우리 16:9 목표 배치 이미지 확보 후 사용자 검토; 승인 전 구현 금지 |
-| UI-VIS-2026-10-31-01 | **UI 시각 레퍼런스 보드 v0.1** · 원작 UI 스크린샷 출처 링크 + 우리 게임 PNG 4종 첨부 | **PROPOSED** (원작 이미지 외부 링크, 프로젝트 자체 PNG는 저장소에 포함) | [이미지 보드](reports/2026-10-31-ui-visual-reference-board-v01.md) | 4개 대표 화면의 공개 이미지 근거 확보; 주석 PNG·현재 Godot 캡처·16:9 목표 배치 시안 제작 및 사용자 검토 필요 |
+| UI-2026-10-31-01 | **UI 통합 설계서 v0.2** · 기존 UI 01~12 통합, 화면별 참고 게임·참고 요소·시각 시안/검증 기준 | **LEGACY REFERENCE / PROPOSED** (통합 상위 제안; 개별 UI 보고서 01~12 유지) | [통합 설계서](reports/2026-10-31-ui-integrated-design-v02.md) | 개별 원문 보존, 참고 UI 실제 캡처·주석 보드·우리 16:9 목표 배치 이미지 확보 후 사용자 검토; 승인 전 구현 금지 |
+| UI-VIS-2026-10-31-01 | **UI 시각 레퍼런스 보드 v0.1** · 원작 UI 스크린샷 출처 링크 + 우리 게임 PNG 4종 첨부 | **LEGACY REFERENCE / PROPOSED** (원작 이미지 외부 링크, 프로젝트 자체 PNG는 저장소에 포함) | [이미지 보드](reports/2026-10-31-ui-visual-reference-board-v01.md) | 4개 대표 화면의 공개 이미지 근거 확보; 주석 PNG·현재 Godot 캡처·16:9 목표 배치 시안 제작 및 사용자 검토 필요 |
 | AI-AUTO-2026-10-30-01 | 실제 Godot 마법 60종 AI 자동 플레이 검사 및 미해결 2종 | **UNDER_REVIEW** (60종 실행·255검사 성공, 경고 2) | [실측 보고서](reports/2026-10-30-ai-autoplay-60-verification.md) | 천둥 인장·심판 낙뢰 5초 무피해 재현·원인 확인 |
 | UI-MAGIC-2026-10-30-02 | 마법 조합 상쇄 노란 경고 / 비작동 빨간 경고 UI | **PROPOSED** (색상 규칙은 사용자 확정, 기술 구현·테스트 대기) | [진단 UI 보고서](reports/2026-10-30-magic-suppression-slot-diagnostics.md) · [확정 결정](decisions/2026-10-30-magic-warning-severity.md) | Codex: 별도 구현 요청 시 기존 슬롯 진단을 확장, 노랑은 시전 차단 금지 |
 | STORY-TUTORIAL-2026-10-30-01 | 모카의 마법 조합 보충수업 · 튜토리얼 대사·장면·실습 완료 조건 | **PROPOSED** (방향 긍정 평가, 구현 승인·테스트 전) | [보고서](reports/2026-10-30-moka-magic-combination-tutorial-story-v1.md) | 사용자 대사·분량 검토; 확정 후 Godot 실습/장면전환 구현·검증 |
