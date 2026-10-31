@@ -2,11 +2,14 @@ extends RefCounted
 ## Independent movement, finite derivations and elemental reactions for catalog v1.
 ## Every derived object consumes its spawn permissions; cancellation is not expiry.
 const InstantLaser = preload("res://scripts/instant_laser.gd")
+# Magicraft Spell1013Meteor: parent plus separately falling miniature meteors.
+const MAX_METEORS := 96
 var owner_ref: WeakRef
 var runtime: RefCounted:
 	get: return owner_ref.get_ref()
 var game: Node2D
 var jobs: Array=[]
+var meteors: Array=[]
 var timed: Array=[]
 var beams: Array=[]
 var clouds: Array=[]
@@ -19,7 +22,7 @@ func _init(owner_runtime: RefCounted) -> void:
 	game=owner_runtime.game
 
 func clear() -> void:
-	jobs.clear();timed.clear();beams.clear();clouds.clear();replays.clear();status.clear()
+	jobs.clear();meteors.clear();timed.clear();beams.clear();clouds.clear();replays.clear();status.clear()
 
 func rank_value(stage: Dictionary, id: String) -> float:
 	return game.Spells.Effects.value(stage,id) if stage.get(id,0)>0 else 0.0
@@ -41,7 +44,11 @@ func schedule(job: Dictionary) -> void:
 
 func intercept(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictionary, factor: float, power: float, lane: String, echo: bool, lineage: int, generation: int, point: Vector2) -> bool:
 	var fid: String=stage.get("fusion","")
-	if (stage.get("fall",0)>0 or fid in ["meteor","meteor_thorn"]) and not stage.get("_landed",false):
+	# A Magicraft meteor is an airborne body, not a delayed fireball plus rings.
+	if fid=="meteor" and not stage.get("_landed",false):
+		launch_meteor(stage,origin,direction,follow,factor,power,lane,echo,lineage,point)
+		return true
+	if (stage.get("fall",0)>0 or fid=="meteor_thorn") and not stage.get("_landed",false):
 		var target:=point if point!=Vector2.INF else origin+direction*200
 		if not stage.get("_linked",false):
 			var enemy: Node2D=game.nearest_enemy(origin,360)
@@ -55,6 +62,100 @@ func intercept(stage: Dictionary, origin: Vector2, direction: Vector2, follow: D
 		runtime.track("falls_scheduled")
 		return true
 	return false
+
+func launch_meteor(stage: Dictionary, origin: Vector2, direction: Vector2, follow: Dictionary, factor: float, power: float, lane: String, echo: bool, lineage: int, point: Vector2) -> void:
+	# Source: Magicraft Spell1013MeteorSystem.Execute / BuildMiniMeteor.
+	# Rank mapping: Magicraft 1/2/3 = 0/2/5 mini meteors.
+	# Our completed fusion is fixed at rank 3, mapped to the third pattern (5).
+	var rank: int=clampi(int(game.Spells.attack_data(stage).rank),0,3)
+	var mini_count: int=[0,2,5,5][rank]
+	if meteors.size()+mini_count+1>MAX_METEORS:
+		runtime.track("meteors_blocked",runtime.source_for(stage,lane,echo),mini_count+1)
+		return
+	var target: Vector2=point if point!=Vector2.INF else origin+direction*200.0
+	if not stage.get("_linked",false):
+		var enemy: Node2D=game.nearest_enemy(origin,360)
+		if enemy!=null: target=enemy.position
+		target=origin.move_toward(target,360.0)
+	var bounds: Rect2=game.projectile_bounds()
+	target=target.clamp(bounds.position+Vector2(24,24),bounds.end-Vector2(24,24))
+	var landed_stage: Dictionary=stage.duplicate(true)
+	landed_stage["_landed"]=true
+	landed_stage["_landing_anchor"]=target
+	if lineage<0:
+		runtime.behavior.cast_serial+=1
+		lineage=runtime.behavior.cast_serial
+	var source: String=runtime.source_for(stage,lane,echo)
+	var ctx: Dictionary=runtime.behavior.context(landed_stage,origin,direction,follow,factor,power,lane,echo,lineage,runtime.generation)
+	ctx["meter_source"]=source
+	ctx["child_factor"]=factor
+	ctx["scale"]=game.Spells.scale(landed_stage)
+	ctx["age"]=0.0
+	ctx["meter_contacted"]=false
+	runtime.track("stage_casts",source)
+	var full_radius: float=game.Spells.attack_data(stage).radius*ctx.scale
+	var full_damage: float=28.0*runtime.behavior.damage_scale(ctx)
+	var travel: float=0.58
+	add_meteor_body(ctx,target,direction,190.0,travel,full_radius,full_damage,false,0)
+	# Children spawn alongside the mother on cast, never on her explosion.
+	# Small-body size/damage and time offsets are Godot tuning values because
+	# original prefab tinyMeteor* serialized floats are not in public source.
+	var phase: float=game.rng.randf()*TAU
+	for i in mini_count:
+		var angle: float=phase+TAU*float(i)/float(mini_count)
+		var radius: float=full_radius*(0.52+game.rng.randf_range(-0.13,0.22))
+		var child_target: Vector2=(target+Vector2.RIGHT.rotated(angle)*radius).clamp(bounds.position+Vector2(24,24),bounds.end-Vector2(24,24))
+		var child: Dictionary=ctx.duplicate(true)
+		child["follow"]={}
+		child["connector"]=""
+		child["triggered"]=false
+		child["meter_source"]=source+"/mini"
+		add_meteor_body(child,child_target,direction,205.0+float(i)*18.0,0.64+float(i)*0.055,full_radius*0.48,full_damage*0.28,true,i+1)
+	runtime.track("meteor_bodies_spawned",source,mini_count+1)
+
+func add_meteor_body(source: Dictionary, target: Vector2, direction: Vector2, height: float, travel: float, radius: float, damage: float, mini: bool, serial: int) -> void:
+	var dir: Vector2=direction.normalized() if direction.length_squared()>0.001 else Vector2.RIGHT
+	var side: Vector2=dir.orthogonal()*float(serial%3-1)*22.0
+	var from: Vector2=target-dir*(80.0+float(serial)*8.0)+side
+	var gravity: float=180.0
+	var vertical_speed: float=-height/travel-0.5*gravity*travel
+	meteors.append({"source":source,"target":target,"pos":from,"from":from,"height":height,
+		"initial_height":height,"velocity_z":vertical_speed,"gravity":gravity,"age":0.0,
+		"travel":travel,"radius":radius,"damage":damage,"mini":mini,
+		"serial":serial,"generation":runtime.generation})
+	runtime.track("meteor_falls_scheduled",source.meter_source)
+
+func update_meteors(delta: float) -> void:
+	for i in range(meteors.size()-1,-1,-1):
+		var m: Dictionary=meteors[i]
+		if m.generation!=runtime.generation:
+			meteors.remove_at(i)
+			continue
+		m.age+=delta
+		var t: float=minf(1.0,m.age/m.travel)
+		m.pos=m.from.lerp(m.target,t)
+		m.height=maxf(0.0,m.initial_height+m.velocity_z*m.age+0.5*m.gravity*m.age*m.age)
+		if t<1.0: continue
+		meteors.remove_at(i)
+		meteor_impact(m)
+		if not game.magic_active(): return
+
+func meteor_impact(m: Dictionary) -> void:
+	var source: Dictionary=m.source
+	var target: Vector2=m.target
+	var victims: int=runtime.behavior.area(source,target,m.damage,m.radius)
+	runtime.behavior.flash({"kind":"vfx","effect":"explosion","pos":target,
+		"diameter":m.radius*2.6,"life":0.4,"total":0.4})
+	runtime.track("meteor_landed",source.meter_source)
+	if m.mini:
+		runtime.track("meteor_mini_landed",source.meter_source)
+		return
+	if victims>0: runtime.trigger(source,target,"impact")
+	if not game.magic_active(): return
+	finish(source,target)
+	runtime.trigger(source,target,"expire")
+	if not game.magic_active(): return
+	runtime.support.terminal(source,target)
 
 func attach(c: Dictionary) -> void:
 	c["_ended"]=false
@@ -277,8 +378,7 @@ func impact(c: Dictionary, at: Vector2) -> void:
 		"thunder_seal": cloud(c,at,45*c.scale,2.5,32*power,"seal")
 		"judgement":
 			for n in 3: schedule({"kind":"area","delay":.1+n*.12,"source":c,"pos":at,"damage":18*power,"radius":(65+n*35)*c.scale})
-		"meteor":
-			for n in 4: schedule({"kind":"area","delay":n*.12,"source":c,"pos":at,"damage":16*power,"radius":(45+n*30)*c.scale,"annulus":true})
+		# Meteor impacts are handled by separate real airborne bodies in update_meteors().
 		"growing_firecore": schedule({"kind":"area","delay":.22,"source":c,"pos":at,"damage":28*power,"radius":140*c.scale})
 		"plasma_beam": arc(c,at,180,24*power,c.get("_beam_hit_ids",{}))
 	if not fid.is_empty(): runtime.track("fusion_"+fid,c.meter_source)
@@ -487,6 +587,8 @@ func update_beams(delta: float) -> void:
 
 func update(delta: float) -> void:
 	clock+=delta
+	update_meteors(delta)
+	if not game.magic_active(): return
 	for c in timed.duplicate():
 		if c.get("_ended",false) or c.generation!=runtime.generation:
 			timed.erase(c);continue
