@@ -20,6 +20,7 @@
 | UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **PROPOSED** | [보고서](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 비정지 배너/보스 인트로·경고 위치 검토; 실제 생성 연동 확인 후 별도 구현 승인 필요 |
 | UI-2026-10-30-11 | Slay the Spire식 유물 보유 아이콘·Magicraft식 상세 카드·실시간 상태 UI 조사 및 개편 제안 | **PROPOSED** | [보고서](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) | 사용자 유물창 정지 정책·아이콘/상세 배치 검토; 유물 강화 시스템은 미구현으로 별도 결정, 승인 전 코드 변경 금지 |
 | UI-2026-10-30-12 | 마법·완성 합성·유물 첫 발견 알림 레퍼런스와 비정지 토스트·도감 NEW 표시 제안 | **PROPOSED** | [보고서](reports/2026-10-30-new-discovery-notification-ui-research-proposal.md) | 사용자 일반/합성 연출 강도·도감 NEW 지속 정책 검토, 프로필 신규 ID/알림 큐 설계는 승인 후; 게임 코드 미수정 |
+| UI-COPY-2026-10-31-01 | **게임 내 짧은 문구 전면 개편** — 무문구 전투 위험·상자/첫 발견/승패 정보형 카피·실제 코드 교체 대상 | **PROPOSED** (개별 문구·구현 미확정) / **톤 정책 APPROVED** | [전면 수정 보고서](reports/2026-10-31-game-ui-short-copy-overhaul-v1.md) · [확정 문체 규칙](decisions/2026-10-31-battle-ui-copy-tone-no-cutesy-dialogue.md) | 유치한 구어체·감탄·중계형 경고 금지. Godot 문자열 교체는 별도 구현/검증 후 진행 |
 | UI-2026-10-31-01 | **UI 통합 설계서 v0.2** · 기존 UI 01~12 통합, 화면별 참고 게임·참고 요소·시각 시안/검증 기준 | **PROPOSED** (통합 상위 제안; 개별 UI 보고서 01~12 유지) | [통합 설계서](reports/2026-10-31-ui-integrated-design-v02.md) | 개별 원문 보존, 참고 UI 실제 캡처·주석 보드·우리 16:9 목표 배치 이미지 확보 후 사용자 검토; 승인 전 구현 금지 |
 | UI-VIS-2026-10-31-01 | **UI 시각 레퍼런스 보드 v0.1** · 원작 UI 스크린샷 출처 링크 + 우리 게임 PNG 4종 첨부 | **PROPOSED** (원작 이미지 외부 링크, 프로젝트 자체 PNG는 저장소에 포함) | [이미지 보드](reports/2026-10-31-ui-visual-reference-board-v01.md) | 4개 대표 화면의 공개 이미지 근거 확보; 주석 PNG·현재 Godot 캡처·16:9 목표 배치 시안 제작 및 사용자 검토 필요 |
 | AI-AUTO-2026-10-30-01 | 실제 Godot 마법 60종 AI 자동 플레이 검사 및 미해결 2종 | **UNDER_REVIEW** (60종 실행·255검사 성공, 경고 2) | [실측 보고서](reports/2026-10-30-ai-autoplay-60-verification.md) | 천둥 인장·심판 낙뢰 5초 무피해 재현·원인 확인 |
@@ -49,6 +50,8 @@
 | MAGIC-TRIGGER-CORRECTION-2026-10-31-01 | **마법 대상 정정**: 복제 궤적(trail)=**마법공예 연쇄 3203**·이동 중 자기복제 A→A′ / 시간 트리거(timer)=**마법공예 휘감기 3204**·후속 B 공전 | **APPROVED** (참고 메커니즘·대상 확정, 횟수·피해·강화/실행 예외 미확정 · **게임 코드 미수정**) | [최신 정정 보고서](reports/2026-10-31-trail-chain-timer-entangle-correction.md) · [최신 확정 결정](decisions/2026-10-31-correction-trail-chain-timer-entangle.md) | 두 기능을 혼동하지 말 것. 이전 trail→휘감기 및 2/3/4/5개 공전 구안은 SUPERSEDED. 별도 구현 요청 전 코드 변경 금지 |
 | MAGIC-BOLT-SPEAR-2026-10-31-01 | **별빛탄 0~+3강 1/2/3/4발(+1강 전방·후방) + 빛나는 창(별빛탄+관통) 4갈래·무한 적 관통·명중 적 중심 원형 범위 피해** | **APPROVED** (사용자 핵심 규칙 확정, +2/+3/합성 각도·범위 피해·반경·중복 타격 미확정 · **게임 코드 미수정**) | [정밀 개편 보고서](reports/2026-10-31-starlight-bolt-shining-spear-piercing-aoe-redesign.md) · [확정 결정](decisions/2026-10-31-bolt-1-2-3-4-shining-spear-4way-infinite-pierce-aoe.md) | 별도 구현 요청 시 실제 발사수/전후방/무한 관통/피격 적 중심 범위 실피해 검증. 기존 측면 2원 제거, 미확정 피해·각도는 별도 결정 |
 ## 검토·승인·구현 인계
+
+- [DEC-2026-10-31-02: **게임 UI 문구는 건조하고 간결한 기능 라벨 사용 / 유아용 구어체·감탄·포위·박쥐 등 중계성 전투 안내 금지**](decisions/2026-10-31-battle-ui-copy-tone-no-cutesy-dialogue.md) **사용자 확정 문체 규칙**. 자세한 적용 시안은 [UI-COPY-2026-10-31-01](reports/2026-10-31-game-ui-short-copy-overhaul-v1.md). 실제 코드 미수정.
 
 - [DEC-2026-10-31-04: 별빛탄 1/2/3/4발과 빛나는 창 4갈래·무한 관통·명중 대상 중심 원형 피해](decisions/2026-10-31-bolt-1-2-3-4-shining-spear-4way-infinite-pierce-aoe.md) **사용자 확정 방향**. 세부 발사 각도·범위 수치/중복 피해 규칙 미확정, 게임 코드 미수정.
 
