@@ -36,6 +36,7 @@
 | MAGIC-BOOMERANG-2026-10-30-01 | 달빛 부메랑: 마법공예 회선검형 왕복 관통으로 개편, **기본 내장 도탄 삭제** | **APPROVED** (사용자 설계 확정, 코드 미구현) | [보고서](reports/2026-10-30-moon-boomerang-magicraft-reference-redesign.md) · [확정 결정](decisions/2026-10-30-boomerang-magicraft-reference-no-innate-bounce.md) | 향후 구현 시 회선 비행·왕복 타격·강화 도탄 삭제·쌍월륜/도탄 보조 호환성 테스트 |
 | MAGIC-ICE-SWORD-2026-10-30-01 | 서리숨결→**얼음검**: 마법공예 **파마의 검** 코드 기준 정확한 휘두르기 구현 (사용자 원문: **“그대로 코드 배껴”**) | **APPROVED** (사용자 기획 확정, 코드 미구현) | [정밀 구현 보고서](reports/2026-10-30-frost-to-ice-sword-magicraft-source-port.md) · [확정 결정](decisions/2026-10-30-ice-sword-exact-magicraft-parma-sword.md) | 원본 회전·타격 구현을 Godot 대응 포팅, 냉염숨결/빙정 삼중파 영향 검토, 실제 시각·히트박스 검증 |
 | MAGIC-VORTEX-2026-10-30-01 | 소용돌이 씨앗을 **마법공예 블랙홀 동작으로 교체**, 기존 소용돌이 간 **겹침·중첩 성장 삭제** | **APPROVED** (사용자 설계 확정, 코드 미구현) | [보고서](reports/2026-10-30-vortex-replace-with-magicraft-black-hole.md) · [확정 결정](decisions/2026-10-30-vortex-magicraft-black-hole-replacement.md) | 블랙홀 이동/흡입/틱 피해/시간 성장 원본 정밀 이식, 겹침 방지 정책·가시꽃 덫/합성 호환성 검증 |
+| MAGIC-WHITE-HOLE-2026-10-31-01 | **공전 소용돌이(orbit_vortex) → 화이트홀**: 블랙홀과 동일하게 단일 개체 발사·이동, **흡인 대신 방사형 반발**, 쌍핵 공전·적 반대편 순간이동 폐기 | **APPROVED** (사용자 방향 확정; 반발 강도·피해·세부 수치 미확정 · **게임 코드 미수정**) | [개편 보고서](reports/2026-10-31-orbit-vortex-to-white-hole-replacement.md) · [확정 결정](decisions/2026-10-31-orbit-vortex-white-hole-replacement.md) | 레시피 소용돌이 씨앗+공전 유지; 블랙홀 개편과 동작 호환 후 실제 반발/틱피해/단일 개체 검증 |
 | MAGIC-THORN-2026-10-30-01 | 가시꽃 덫: **괴이한 지뢰처럼 굴러가는 씨앗 → 지연 후 원형 덫이 팍 전개** | **APPROVED** (사용자 방향 확정, 코드 미구현) | [구현 보고서](reports/2026-10-30-thorn-trap-magicraft-deceptive-mine-deployment.md) · [확정 결정](decisions/2026-10-30-thorn-trap-magicraft-deceptive-mine-deployment.md) | 원본 지뢰 굴림·감속·지연 이동을 대응 포팅하고 폭발 대신 원형 덫 전개, 합성/중첩 호환 검증 |
 | MAGIC-LASER-2026-10-30-01 | **레이저 → 마법공예 기본 광선(1004)**: 즉발 직선/굴절 광선, 분해 광선(1011)은 지속형 분리 | **UNDER_REVIEW** (Godot 263검사 성공·0실패, 웹 빌드 성공 / 브라우저 시각검증 전) | [구현·검증 보고서](reports/2026-10-30-laser-magicraft-1004-implementation.md) | [CI 263검사 성공](https://github.com/LittleEvasn/witchlings-mayhem/actions/runs/41056392316), 브라우저에서 광선 시각·입력·보조 호환성 검증 |
 | MAGIC-FLAME-BURST-2026-10-30-01 | 화염방사기: **마법공예 원작 맹렬한 용의 숨결(1025)**의 전진 불꽃·사거리 확장을 **짧은 단발형 화염 버스트**로 개편 | **APPROVED** (사용자 방향 확정, 세부 수치 제안, 코드 미구현) | [상세 보고서](reports/2026-10-30-flamethrower-magicraft-1025-short-burst.md) · [확정 결정](decisions/2026-10-30-flamethrower-short-burst-dragon-breath-reference.md) | Codex: 별도 구현 요청 시 0.35~0.5초 버스트·전진 화염/VFX 일치·실제 타격/화상 검증; 우리 동명 합성 및 독염 분사 호환 확인 |
@@ -52,6 +53,8 @@
 | MAGIC-GLITTER-CHAIN-2026-10-31-01 | **반짝이 폭탄(꽃폭탄+분열)**: 기존 파편형 대신 피해 적 매개 **전염 범위 폭발**, 추가 전염 **6회 전체 공유**, 연쇄가 깊어질수록 피해 감소 | **APPROVED** (사용자 동작·6회·감쇠 방향 확정, 비율/반경/시간/분기 미확정 · **게임 코드 미수정**) | [상세 보고서](reports/2026-10-31-glitter-bomb-six-infections-damage-falloff.md) · [결정](decisions/2026-10-31-glitter-chain-six-damage-decay.md) | 최초 1회 + 추가 최대 6회, 가지마다 6회 초기화 금지. 별도 구현 요청 시 피격 적 중심·단계별 피해 감소 검증 |
 
 ## 검토·승인·구현 인계
+
+- [DEC-2026-10-31-WHITE-HOLE-01: 공전 소용돌이 → 화이트홀](decisions/2026-10-31-orbit-vortex-white-hole-replacement.md) **사용자 확정**. 블랙홀과 동일 발사, 흡인→반발, 쌍핵 공전·적 이송 삭제, 코드 미수정.
 
 - [DEC-2026-10-31-GLITTER-01: 반짝이 폭탄 전염 폭발 6회 공유·연쇄 단계별 피해 감소](decisions/2026-10-31-glitter-chain-six-damage-decay.md) **사용자 확정**. 피해율·범위·시간차·분기 수 미확정, 게임 코드 미수정.
 
