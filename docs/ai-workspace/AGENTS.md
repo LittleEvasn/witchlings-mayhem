@@ -11,6 +11,8 @@
 7. 실제 수정 완료와 재현 테스트 성공, 커밋 또는 검증 근거가 있을 때만 `archive/`로 이동하고 `INDEX.md`를 수정한다.
 8. 단순히 읽었다는 이유로 자동 보관하거나 삭제하지 않는다. GitHub Actions 자동 정리 또는 GPT 상시회의는 구현되지 않았다.
 
+9. **사용자 확정 UI 문체 규칙(2026-10-31):** 전투·보상·상자·발견·제작·결과의 시스템 문구는 명사형/기능 라벨로 짧고 건조하게 쓴다. ‘~했어!’, ‘~해봐’, ‘~할까?’, ‘대박!’ 등 유치한 구어체·감탄·독려문을 금지한다. 일반 적/박쥐 떼/포위 알림은 기본 무문구로, 인물 대사·유물 플레이버 텍스트와 구별한다. [확정 결정](decisions/2026-10-31-battle-ui-copy-tone-no-cutesy-dialogue.md)과 [전체 UI 교체 보고서](reports/2026-10-31-game-ui-short-copy-overhaul-v1.md)가 구형 예시 문구에 우선한다. 게임 코드는 별도 구현 요청이 있어야 변경한다.
+
 권장 상태: `PROPOSED` → `UNDER_REVIEW` → `APPROVED` → `IN_PROGRESS` → `VERIFIED` → `ARCHIVED`. 필요 시 `REJECTED` 또는 `SUPERSEDED`.
 
 마법 60종과 참고 게임을 다룰 때에는 현재 코드 버전과 `docs/PROJECT-HANDOFF.md`를 먼저 대조한다.
