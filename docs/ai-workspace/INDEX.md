@@ -75,6 +75,13 @@
 - **기존 경고 색상 규칙 유지:** 노랑=상쇄, 빨강=비작동; 툴팁에서 원인·실제 유지 효과 안내. 현재 런 유물의 동적 수치(마석·복제·보호막 등)를 과거 실험 기록/도감에 당시 값처럼 표시 금지. 미승인 유물 플레이버 28종 초안은 효과·획득 여부로 오인 금지.
 - **승인 범위는 UI 정보 구조·표현 방향.** 실제 Godot 코드·최종 툴팁 스킨·PNG/HTML·실입력·해상도 테스트는 미수행. 기존 연구 보고서 보존.
 
+## 유물 보유·상세 UI 11번 최신 채용 (2026-10-31)
+
+- **사용자 수정 승인:** [11번 기존 보고서(수정본)](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) / [승인 결정문](decisions/2026-10-31-approved-owned-relics-details-ui-revised-v1.md).
+- **전투 HUD:** [기존 확정 HUD](reports/2026-10-31-combat-hud-revised-approved-v1.md)대로 **오른쪽 상단 세로 보유 유물 아이콘**. 11번 구 연구의 **왼쪽 아래 가로줄 배치 폐기**. Slay the Spire는 작은 보유 아이콘과 즉시 호버의 방식만 참고.
+- **09번 공통 툴팁 재사용:** 호버는 짧은 실제 효과·수치·조건, `유물 N` 선택 시 **아이콘 보유 목록 + 선택한 유물의 Magicraft식 큰 상세 카드**. 현재 코드의 3열 긴 카드 대신 목록·선택 상세 구조. 보유하지 않은 유물·장착/해제·강화·희귀도·중복 획득 기능 임의 추가 금지.
+- **구현·검증:** 현재 실제 유물 12종, 능력·동적 상태는 `relics.gd` 기준. `personal_window.gd`의 `personal_tab="inventory"` 재지정으로 유물 버튼이 가방을 여는 결함 후보는 **실제 클릭 확인 후 수정**. **전체 유물창 정지/비정지 정책, 최종 아이콘 아트/크기/세로열 스크롤은 미확정.** 이번은 UI 수정 승인이고 Godot 코드·실렌더·실입력 미수정/미검증.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
@@ -95,8 +102,8 @@
 | UI-2026-10-30-07 / UI-ESC-SETTINGS-2026-10-31-02 | **ESC 4버튼 중앙 팝업 + HoloCure식 설정 화면** — 사용자 v2 HTML 목업 채용·원본 소스 첨부 | **LATEST / APPROVED UI 목업 v2** (실게임 Godot 미구현·미검증; 미지원 옵션은 시연 행) | [기존 07 보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) · [v2 승인 결정](decisions/2026-10-31-approved-esc-settings-holocure-mockup-v2.md) · [HTML v2 원본](mockups/2026-10-31-esc-settings-holocure-v2.html) | 현재 실험 상태 패널 삭제, ESC 4동작만 유지. 런 종료 확인창·설정 저장·재시작 경로/ESC 포커스·해상도 등 실제 기능은 코드 기준으로 구현·검증 필요 |
 | UI-2026-10-30-08 | **실험 기록 UI 원안 사용자 승인** — 왼쪽 최근 10판 목록/필터 + 오른쪽 선택 런 통계·오브·유물 + 완료 웨이브 펼침 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증, 미저장 기록 필드 추가 금지) | [08번 보고서](reports/2026-10-30-experiment-run-history-ui-research-proposal.md) · [승인 결정](decisions/2026-10-31-approved-experiment-run-history-ui-v1.md) | Slay the Spire 런 기록 구조+Hades 일지 분위기, 06번 결과 UI의 빌드 표현 재사용. 날짜·과거 오브 성장 랭크·DPS 가상 표시 금지, 기록 스키마 보존 |
 | UI-2026-10-30-09 / DEC-2026-10-31-TOOLTIP-01 | **마법·유물 공통 툴팁 원안 채용** — Magicraft식 효과·수치·조건 카드 + 짧은 호버/긴 상세·동적값 분리 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 슬롯 강조는 후속 구현 가능) | [09번 원본 보고서](reports/2026-10-30-spell-relic-tooltip-ui-research-proposal.md) · [승인 결정](decisions/2026-10-31-approved-spell-relic-tooltip-magicraft-ui-v1.md) | 실제 마법·유물 데이터 기준, 경고 노랑/빨강 및 05·04·06·08·11 화면 정보 일치. 최종 아트·슬롯 강조·툴팁 화면 경계/입력은 구현 시 검증 |
-| UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 비정지 배너/보스 인트로·경고 위치 검토; 실제 생성 연동 확인 후 별도 구현 승인 필요 |
-| UI-2026-10-30-11 | Slay the Spire식 유물 보유 아이콘·Magicraft식 상세 카드·실시간 상태 UI 조사 및 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) | 사용자 유물창 정지 정책·아이콘/상세 배치 검토; 유물 강화 시스템은 미구현으로 별도 결정, 승인 전 코드 변경 금지 |
+| UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **DEFERRED / SKIPPED — 사용자 2026-10-31 보류** (미승인) | [기존 조사](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 “10번은 스킵, 굳이?” 판단으로 10번 신규 연출 구현 우선순위 제외. 기존 확정 UI 문체/전투 HUD 규칙은 유지, 재검토 별도 요청 전까지 추가 연출 승인으로 해석 금지 |
+| UI-2026-10-30-11 / DEC-2026-10-31-RELIC-UI-11-01 | **유물 보유·상세 UI 수정 승인** — 오른쪽 상단 세로 아이콘 + 09번 Magicraft식 호버/상세 + 작은 보유 목록·선택 상세 | **LATEST / APPROVED UI 구조** (게임 코드·Godot 미구현·미검증) | [수정 보고서](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) · [승인 결정문](decisions/2026-10-31-approved-owned-relics-details-ui-revised-v1.md) | 구 왼쪽 아래 가로 유물줄 폐기, 실제 보유 유물만; 버튼→가방 결함 후보 실검증 필요. 유물창 정지 정책·정식 아이콘/스크롤은 미확정, 유물 강화/등급 추가 금지 |
 | UI-2026-10-30-12 | 마법·완성 합성·유물 첫 발견 알림 레퍼런스와 비정지 토스트·도감 NEW 표시 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-new-discovery-notification-ui-research-proposal.md) | 사용자 일반/합성 연출 강도·도감 NEW 지속 정책 검토, 프로필 신규 ID/알림 큐 설계는 승인 후; 게임 코드 미수정 |
 | UI-COPY-2026-10-31-01 | **게임 내 짧은 문구 전면 개편** — 무문구 전투 위험·상자/첫 발견/승패 정보형 카피·실제 코드 교체 대상 | **PROPOSED** (개별 문구·구현 미확정) / **톤 정책 APPROVED** | [전면 수정 보고서](reports/2026-10-31-game-ui-short-copy-overhaul-v1.md) · [확정 문체 규칙](decisions/2026-10-31-battle-ui-copy-tone-no-cutesy-dialogue.md) | 유치한 구어체·감탄·중계형 경고 금지. Godot 문자열 교체는 별도 구현/검증 후 진행 |
 | UI-2026-10-31-01 | **UI 통합 설계서 v0.2** · 기존 UI 01~12 통합, 화면별 참고 게임·참고 요소·시각 시안/검증 기준 | **LEGACY REFERENCE / PROPOSED** (통합 상위 제안; 개별 UI 보고서 01~12 유지) | [통합 설계서](reports/2026-10-31-ui-integrated-design-v02.md) | 개별 원문 보존, 참고 UI 실제 캡처·주석 보드·우리 16:9 목표 배치 이미지 확보 후 사용자 검토; 승인 전 구현 금지 |
