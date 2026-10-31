@@ -88,12 +88,19 @@
 - **새 독립 토스트·전체화면 생성 대신 기존 지급 카드 통합:** 프로필 기준 영구 첫 발견한 **기본 마법은 `신규 마법`**, **유물은 `신규 유물`** 배지를 기존 획득/보상 UI에 표시. **완성 합성 최초 발견만** 기존 합성·상자 보상 연출에서 큰 아이콘과 짧은 강조·반짝임 사용. 강화 +1~+3, 재획득, 후보 미리보기, 체크포인트 복원·이관·훈련에서는 신규 알림 없음.
 - **도감 `NEW` 미열람 상태는 별도 후순위**(저장 필드·마이그레이션 승인 전 표시 금지). `PlayerProfile.discover()`의 bool 반환을 실제 새 ID 식별로 보완하고, 중복 메시지·전투/보상 입력 방해 금지. **디자인 방향 승인만, 코드·엔진·최종 아트 미구현/미검증.**
 
+## 보물상자 개봉 '마법 폭주' 시연 임시 채용 (2026-10-31)
+
+- **현재 설계 기준:** [UI-CHEST-2026-10-31-01 상자 보고서(임시 채용 반영)](reports/2026-10-31-treasure-chest-opening-jackpot-ui-proposal-v1.md) / [사용자 임시 채용 결정](decisions/2026-10-31-provisionally-approved-magic-overload-chest-opening-v1.md).
+- **시연 기본 리듬:** 공통 **상자 흔들림→봉인 풀림→개봉**, 1개는 짧게 단발 공개, 3개는 중앙 보상 뒤 양옆 2개 추가, **5개는 3개에서 끝나는 듯 잠시 멎었다가 2차 마법 폭주로 추가 2개 공개**. HoloCure의 물리 반응 + Vampire Survivors의 잭팟 리듬 참고. **보상 수량은 개봉 전 숨기고 1·3·5개 강제 선택 버튼은 시연용**.
+- **이번 결정은 '당분간' 임시 승인**, 최종 UI PNG/아트·Godot 코드·SFX·정확한 지연 시간은 미승인/미검증. 전달된 로컬 HTML 파일 `chest_opening_magic_overload_mockup.html`의 SHA-256은 `9142765190f096998ad2a4517075deca94c7dbc0d34c5eb19c108dbf77539631`이며 **GitHub에는 아직 해당 HTML 원본을 첨부하지 않았음**.
+- **게임 계약 유지:** 실제 `combat_rewards.gd`의 1/3/5 수량/보상 지급·합성 소비·재평가 로직 유지, 개봉 중 정지/건너뛰기·획득 후 수동 전투 재개, 12번 첫 발견 연출 중복 방지.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
 |---|---|---|---|---|
 | UI-TITLE-2026-10-31-01 | **타이틀 HTML 목업 v2 채용** — 《Little Witch in the Woods》 단독 참고, 전체 풍경/오른쪽 로고/오른쪽 세로 텍스트 메뉴/▶ 선택 커서 | **LATEST / APPROVED UI 배치** (게임 코드·Godot 미변경, HTML 원본 GitHub 미첨부) | [최신 승인 보고서](reports/2026-10-31-title-little-witch-reference-approved-v2.md) · [결정](decisions/2026-10-31-approved-title-little-witch-reference-v2.md) | 기존 좌측 박스/우측 캐릭터 패널 타이틀안 폐기, 저장 상태·키 입력·02번 선택 화면 연결·해상도 실제 검증 필요 |
-| UI-CHEST-2026-10-31-01 | **보물상자 개봉·잭팟 UI 재검토 v1** — HoloCure식 개봉 반응 + Vampire Survivors식 릴/1·3·5개 공개, 5개 2차 확장 | **PROPOSED** (제안안 등록, 최종 아트/코드 미승인 · Godot 미검증) | [상자 전용 신규 보고서](reports/2026-10-31-treasure-chest-opening-jackpot-ui-proposal-v1.md) | 1/3/5 공개 강약·미리 수량 감추기·수동 전투 재개 및 기존 보상 로직 보호; 실제 PNG 검토·최종 승인 후 구현 |
+| UI-CHEST-2026-10-31-01 / DEC-2026-10-31-CHEST-01 | **보물상자 '마법 폭주' 인터랙티브 HTML 연출 콘셉트 사용자 임시 채용** — 1개 단발 / 3개 양옆 확장 / 5개 가짜 종료→2차 폭주+추가 2개 | **PROVISIONALLY APPROVED / 당분간 채용** (최종 아트·게임 코드·Godot 미승인/미검증) | [보고서](reports/2026-10-31-treasure-chest-opening-jackpot-ui-proposal-v1.md) · [채용 결정](decisions/2026-10-31-provisionally-approved-magic-overload-chest-opening-v1.md) | 시연 HTML은 대화의 로컬 파일(원본 GitHub 미첨부), 실제 지급·확률 변경 없음; 스킵·수동 전투 재개·12번 첫 발견 중복 방지 유지, 1/3/5 강제 선택은 데모 전용 |
 | UI-CHAR-2026-10-31-01 | **캐릭터 선택 와이어프레임 v1 사용자 채용** · 4인 초상화/큰 인물/오른쪽 정보·시작마법 4가로 카드/분리된 타이틀로/실험 시작 | **LATEST / APPROVED 배치** (코드 미수정, Godot 미검증, GitHub PNG 미첨부) | [최신 보고서](reports/2026-10-31-character-selection-wireframe-approved-v1.md) · [확정 결정](decisions/2026-10-31-approved-character-selection-wireframe-v1.md) | 실제 4인 플레이 구현·시작 키트 데이터 대조 후 16:9 UI로 반영. 플레이스홀더를 정식 아트로 오인 금지 |
 | UI-REWARD-2026-10-31-01 | **보상 선택/Tab 인벤토리/획득 후 정리 3상태 사용자 채용 목업** · 실제 가방 1줄/보유 오브별 슬롯 구현 기준 | **LATEST / APPROVED 디자인** (코드 미수정, Godot 미검증) | [최신 보고서](reports/2026-10-31-reward-ui-codefaithful-three-states-approved-v1.md) · [확정 결정](decisions/2026-10-31-approved-reward-ui-inventory-three-state-flow.md) | 중앙 3택/조건부4택, Tab 인벤 편집, 직접 전투 재개. **상자 연출 별도 미확정** |
 | UI-HUD-2026-10-31-01 | **전투 HUD 최신 승인 배치 v1** (Magicraft 중심, 사용자 일반 전투 HUD 목업 채용) | **LATEST / APPROVED 디자인** (구현 전) | [보고서](reports/2026-10-31-combat-hud-revised-approved-v1.md) · [확정](decisions/2026-10-31-approved-combat-hud-magicraft-layout-v1.md) | 기존 UI-01~12 및 통합 v0.2의 과거 전투 HUD 배치보다 우선 |
