@@ -24,10 +24,18 @@
 - **한 화면 구조:** 왼쪽 큰 인물과 아래 네라·루미·모카·세라 4인 초상화 / 오른쪽 위 소개·스타일 / 오른쪽 중단 시작 마법 4종 가로 카드 / 오른쪽 아래 실험 시작. **타이틀로는 오른쪽 위 독립 버튼**.
 - **승인은 배치·정보 위계에 한정.** 캐릭터 4명 실제 플레이 가능 여부·고유 능력·아트/문구/수치·Godot 구현은 미확정. 채팅 와이어프레임 원본은 1672×941 PNG, **GitHub PNG 바이너리는 아직 미첨부**.
 
+## 타이틀 화면 최신 채용 (2026-10-31)
+
+- **최종 레퍼런스: Little Witch in the Woods 단독.** [UI-TITLE-2026-10-31-01 타이틀 HTML 목업 v2 승인 보고서](reports/2026-10-31-title-little-witch-reference-approved-v2.md) / [사용자 확정 결정](decisions/2026-10-31-approved-title-little-witch-reference-v2.md).
+- **확정 UI 구조:** 배경 전체 화면, 오른쪽 위 로고, **오른쪽 중하단의 텍스트만 있는 세로 메뉴**, **메뉴 박스·패널 없음**, 현재 항목 왼쪽 삼각형 ▶ 하나, 왼쪽 하단 작은 조작 안내.
+- **메뉴:** 이어하기·새 실험(주요) / 마법 훈련장·발견 도감·실험 기록·설정·종료(보조). HTML v2는 10,022 bytes의 클릭/방향키 반응 **시연 목업**; 실제 화면 전환·저장·Godot 구현 아님. HTML 원본 GitHub 직접 업로드 전.
+- **기존 좌측 로고/좌측 박스 메뉴/우측 대형 캐릭터 패널 타이틀안은 폐기.** 캐릭터 선택은 [02번 승인 와이어프레임](reports/2026-10-31-character-selection-wireframe-approved-v1.md)이 별도로 우선.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
 |---|---|---|---|---|
+| UI-TITLE-2026-10-31-01 | **타이틀 HTML 목업 v2 채용** — 《Little Witch in the Woods》 단독 참고, 전체 풍경/오른쪽 로고/오른쪽 세로 텍스트 메뉴/▶ 선택 커서 | **LATEST / APPROVED UI 배치** (게임 코드·Godot 미변경, HTML 원본 GitHub 미첨부) | [최신 승인 보고서](reports/2026-10-31-title-little-witch-reference-approved-v2.md) · [결정](decisions/2026-10-31-approved-title-little-witch-reference-v2.md) | 기존 좌측 박스/우측 캐릭터 패널 타이틀안 폐기, 저장 상태·키 입력·02번 선택 화면 연결·해상도 실제 검증 필요 |
 | UI-CHEST-2026-10-31-01 | **보물상자 개봉·잭팟 UI 재검토 v1** — HoloCure식 개봉 반응 + Vampire Survivors식 릴/1·3·5개 공개, 5개 2차 확장 | **PROPOSED** (제안안 등록, 최종 아트/코드 미승인 · Godot 미검증) | [상자 전용 신규 보고서](reports/2026-10-31-treasure-chest-opening-jackpot-ui-proposal-v1.md) | 1/3/5 공개 강약·미리 수량 감추기·수동 전투 재개 및 기존 보상 로직 보호; 실제 PNG 검토·최종 승인 후 구현 |
 | UI-CHAR-2026-10-31-01 | **캐릭터 선택 와이어프레임 v1 사용자 채용** · 4인 초상화/큰 인물/오른쪽 정보·시작마법 4가로 카드/분리된 타이틀로/실험 시작 | **LATEST / APPROVED 배치** (코드 미수정, Godot 미검증, GitHub PNG 미첨부) | [최신 보고서](reports/2026-10-31-character-selection-wireframe-approved-v1.md) · [확정 결정](decisions/2026-10-31-approved-character-selection-wireframe-v1.md) | 실제 4인 플레이 구현·시작 키트 데이터 대조 후 16:9 UI로 반영. 플레이스홀더를 정식 아트로 오인 금지 |
 | UI-REWARD-2026-10-31-01 | **보상 선택/Tab 인벤토리/획득 후 정리 3상태 사용자 채용 목업** · 실제 가방 1줄/보유 오브별 슬롯 구현 기준 | **LATEST / APPROVED 디자인** (코드 미수정, Godot 미검증) | [최신 보고서](reports/2026-10-31-reward-ui-codefaithful-three-states-approved-v1.md) · [확정 결정](decisions/2026-10-31-approved-reward-ui-inventory-three-state-flow.md) | 중앙 3택/조건부4택, Tab 인벤 편집, 직접 전투 재개. **상자 연출 별도 미확정** |
