@@ -31,6 +31,14 @@
 - **메뉴:** 이어하기·새 실험(주요) / 마법 훈련장·발견 도감·실험 기록·설정·종료(보조). HTML v2는 10,022 bytes의 클릭/방향키 반응 **시연 목업**; 실제 화면 전환·저장·Godot 구현 아님. HTML 원본 GitHub 직접 업로드 전.
 - **기존 좌측 로고/좌측 박스 메뉴/우측 대형 캐릭터 패널 타이틀안은 폐기.** 캐릭터 선택은 [02번 승인 와이어프레임](reports/2026-10-31-character-selection-wireframe-approved-v1.md)이 별도로 우선.
 
+## 발견 도감 UI 최신 채용 (2026-10-31)
+
+- **기준:** [UI-2026-10-30-04 기존 도감 조사·제안 보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md)를 사용자 요청대로 **원안 채택**. [DEC-2026-10-31-CODEX-01 사용자 승인 결정문](decisions/2026-10-31-approved-collection-codex-ui-structure-v1.md) 우선.
+- **채용 구조:** 상위 `주문/완성 합성/유물` 탭, 주문·합성의 `전체/공격/보조/연결` 필터, **왼쪽 6열 아이콘 초기 시제품 + 오른쪽 선택 상세**, 기본~+3 단계 비교, **재료 A+3 + 재료 B+3 → 완성 합성** 왕복 링크, 기존 미발견 `?`·합성 재료 힌트 및 스크롤/포커스 보존.
+- **미술 참고:** Magicraft 서적·책갈피 인상 + Vampire Survivors 아이콘 수집 + Slay the Spire 단계 비교(각 요소만 참고). 실제 아이콘/최종 스킨·픽셀 크기 확정 아님.
+- **기획/코드 수량 주의:** 구 04 보고서의 합성 30종은 당시 작성 기준. **최신 기획 11종 유지·개편/19종 폐기**, 당시 코드 관찰은 활성 29종(미반영)으로 다름. 도감 실제 수는 구현 시 승인 콘텐츠·카탈로그 재대조, 임의 보충 금지.
+- **디자인 방향 승인이지 구현 완료가 아님.** Godot 코드·UI 입력·렌더 미변경/미검증. 최신 04 채용은 구 통합 UI v0.2의 미확정 내용에 우선.
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
@@ -45,7 +53,7 @@
 | UI-2026-10-30-01 | 전투 HUD·중앙 3~4택·편집 전환·보물상자 잭팟 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-combat-hud-reward-chest-ui-proposal.md) | 사용자 UI 방향 검토·승인; 승인 이후 Codex 구현 및 Godot 화면·입력 검증 |
 | UI-2026-10-30-02 | 캐릭터 선택 UI 레퍼런스·레이아웃 및 시작 마법 선택 흐름 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-character-selection-ui-research-proposal.md) | 사용자 B+C안·선택 단계·미구현 캐릭터 표시 정책 검토 및 승인; 승인 전 구현 금지 |
 | UI-2026-10-30-03 | 게임 시작 화면·타이틀→전투 진입 흐름 조사 및 UI 개편 제안 (이미지 제외) | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-game-start-title-to-combat-ui-proposal.md) | 타이틀 구성·선택 단계·첫 진입 연출 사용자 검토; 승인 전 코드·그림 작업 금지 |
-| UI-2026-10-30-04 | 발견 도감 UI 레퍼런스·탭/필터·합성 관계 및 강화 비교 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md) | 사용자 도감 배치/6열/역할 필터/합성 관계/강화 정보 검토·승인, 승인 전 코드 구현 금지 |
+| UI-2026-10-30-04 | **발견 도감 UI 기존 보고서 원안 채용** · 주문/완성합성/유물 탭·역할 필터·좌측 6열 아이콘 초기 시제품/우측 상세·강화 비교·재료↔합성 링크 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 6열 픽셀 수치/최종 아트 미확정) | [원본 보고서](reports/2026-10-30-collection-codex-ui-research-proposal.md) · [사용자 승인 결정](decisions/2026-10-31-approved-collection-codex-ui-structure-v1.md) | 기존 발견 기록·미발견 재료 힌트·탐색 보존. 최종 합성 기획 **11생존/19폐기** vs 구 코드 활성29 불일치 해결 후 현재 데이터 기반 총수 확인·실제 Godot UI 검증 |
 | UI-2026-10-30-05 | 상점·제작 작업대 UI 레퍼런스 조사 및 구매·오브·가방 통합형 레이아웃 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-crafting-shop-workbench-ui-research-proposal.md) | 사용자 B안 통합 레이아웃·작업대 폭·성장 탭·스킨 방향 검토; 승인 전 구현/구매 금지 |
 | UI-2026-10-30-06 | 승리·패배 결과 화면 레퍼런스·빌드 기록·승패 연출·재도전 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-victory-defeat-results-ui-research-proposal.md) | 사용자 결과 화면 위계·표정·연출·빌드 표시 검토/승인; 승인 전 코드·아트 변경 금지 |
 | UI-2026-10-30-07 | ESC 일시정지 메뉴·설정 화면 레퍼런스·안전 확인창·옵션 분류 UI 개편 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-escape-pause-settings-ui-research-proposal.md) | 사용자 ESC 구성·런 종료 확인·설정 3분류 검토, 승인 전 코드/에셋 변경 금지 |
