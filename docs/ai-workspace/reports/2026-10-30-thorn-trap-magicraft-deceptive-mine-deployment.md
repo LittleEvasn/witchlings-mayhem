@@ -33,6 +33,30 @@
 
 **미확정 구현 상세안:** 씨앗을 얼마나 오래 굴릴지, 적과 접촉하면 즉시 펼쳐질지, 원형 덫이 열린 순간 자체에 공격 판정이 있는지, 열리는 애니메이션을 몇 프레임 쓸지는 **사용자가 아직 결정하지 않음**. 우선 지연 전개, 이후 적 접근 발동이라는 구조를 유지한다.
 
+### B-1. 추가 검증: 공통 이동 Job까지 추적한 정확한 물리 처리 (2026-10-31)
+
+기존 보고서의 `Spell1012TrickMineSystem.cs` 초기화값만 보고 바닥 운동을 독자적으로 재구성해서는 안 된다. 현재 ECS 구현의 이동·충돌은 **`SpellMoveJob.cs`의 `TrickMine_Fall()`**을 반드시 함께 읽어야 한다. 대상은 **비낙하(non-falling) `FireBall` / 지뢰** 분기이며, 낙하형은 `Normal_Fall()` 분기를 사용한다. `Spell1012TrickMine.cs`의 `slotdownRatio` 기반 처리는 이전 구현이므로 ECS 계수와 한 모델로 섞지 않는다.
+
+**실제 호출 흐름:**
+
+1. `SpellSpawnParamsProcessor.cs`의 `FireBall` 처리는 일반 발사체의 `ReboundCount`에 15를 추가한다. 이후 `Spell1012TrickMineSystem.cs`가 일반 지뢰 초기화에서 `ReboundCount=100`, `ReboundAddTime=0`, `Gravity=15`, `CurrentFallSpeed=-4`, `FallingReboundForceRatio=0.33`으로 덮어쓴다.
+2. 동시에 `SpellConfigComponentData.Float3`에 발사 방향의 x부호에 따라 **+15 또는 -15**를 저장하고, 이펙트에는 초기 임의 회전을 적용한다.
+3. `SpellMoveJob.Normal_Common()`이 `PhysicsVelocity.Linear = normalize(Direction) * Speed`를 설정하므로 평면 이동은 Unity 물리 속도로 처리된다. 기본 `SpellConfig.json`의 지뢰 속도는 **8**.
+4. 같은 Job의 `TrickMine_Fall()`은 `CurrentFallSpeed += Gravity*dt`로 수직 속도를 적분한다. 바닥 조건 `Position.z >= -0.01 && CurrentFallSpeed > 0`이면 `Position.z=0`으로 보정한 뒤 다음을 동시에 수행한다.
+
+   - 수직 반발: `CurrentFallSpeed *= -FallingReboundForceRatio * 1.6` = **기존 속도 × -0.528**
+   - 수평 감쇠: `Movement.Speed *= 0.66`
+   - 이펙트 회전 감쇠: `Config.Float3 *= 0.66`
+   - 정지: `abs(CurrentFallSpeed) <= 0.2 || Movement.Speed <= 0.2`이면 수평속도·중력·수직속도·회전을 모두 0으로, 이동 타입은 `Normal`로 변경
+5. Job 종료 시 `Position.z += CurrentFallSpeed*dt`로 수직 위치를 갱신하고 `z<=0`으로 제한한다.
+6. `Spell1012TrickMineSystem`은 이펙트를 `quaternion.Euler(0,0, Float3*dt)`로 회전시킨다. Unity.Mathematics의 `quaternion.Euler` 입력은 **라디안**이므로, **15라디안/초(약 859도/초) 초기 회전**이다. 과거에 15도/초라고 설명한 것은 오류다. 바닥 충돌 시 이 값도 0.66배 감소한다.
+
+**결론:** 현재 ECS 원본에는 별도의 `GROUND_ROLL`/독립 지수 마찰 단계가 없다. 작은 바운스의 반복, 지속하는 평면 운동, 회전의 동시 감쇠가 사용자에게 **굴러가는 씨앗**으로 보이는 운동을 만든다. **0.33을 평면 속도에 곱하거나 마지막 충돌에서 곧바로 정지시키면 원작과 달라진다.** 반대로 별도 무한 굴림을 추가하는 것도 원작 재현은 아니다.
+
+**미확정·구별:** 원작 `SpellConfig.json`의 비낙하 지뢰 수명은 **3.5초**이나, 우리 **전개 지연 시간은 확정된 적이 없다**. 원작 Unity 월드 단위의 Godot 화면 픽셀 환산, 지형 충돌/절벽 감지와 시간 스케일, 공중 높이 투영은 별도 검증이 필요하다. 원작 지뢰의 적 접근 조기 폭발·인접 연쇄 폭발은 우리 원형 덫의 **설치 후 접근 발동**과 무관하므로 임의로 복제하지 않는다.
+
+소스: [SpellMoveJob.cs](https://github.com/kav1982/_reverse_engineering/blob/main/decompiled/Assembly-CSharp/SpellMoveJob.cs), [Spell1012TrickMineSystem.cs](https://github.com/kav1982/_reverse_engineering/blob/main/decompiled/Assembly-CSharp/Spell1012TrickMineSystem.cs), [SpellSpawnParamsProcessor.cs](https://github.com/kav1982/_reverse_engineering/blob/main/decompiled/Assembly-CSharp/SpellSpawnParamsProcessor.cs), [Unity.Mathematics quaternion.Euler](https://docs.unity.com/en-us/engine/6000.5/script-reference/unity/mathematics/quaternion/euler).
+
 ## C. 현행 게임 코드와 문제점
 
 - [`scripts/spell_runtime.gd`](../../../scripts/spell_runtime.gd) `PROFILE["thorn"]`: 속도 **320 픽셀/초**, 탄환 수명 **0.85초**, 현재 **직선 이동 `p.pos += p.dir*p.speed*delta`**.
