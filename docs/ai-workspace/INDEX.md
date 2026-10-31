@@ -82,6 +82,12 @@
 - **09번 공통 툴팁 재사용:** 호버는 짧은 실제 효과·수치·조건, `유물 N` 선택 시 **아이콘 보유 목록 + 선택한 유물의 Magicraft식 큰 상세 카드**. 현재 코드의 3열 긴 카드 대신 목록·선택 상세 구조. 보유하지 않은 유물·장착/해제·강화·희귀도·중복 획득 기능 임의 추가 금지.
 - **구현·검증:** 현재 실제 유물 12종, 능력·동적 상태는 `relics.gd` 기준. `personal_window.gd`의 `personal_tab="inventory"` 재지정으로 유물 버튼이 가방을 여는 결함 후보는 **실제 클릭 확인 후 수정**. **전체 유물창 정지/비정지 정책, 최종 아이콘 아트/크기/세로열 스크롤은 미확정.** 이번은 UI 수정 승인이고 Godot 코드·실렌더·실입력 미수정/미검증.
 
+## 새로운 발견 알림 UI 12번 간소화 채용 (2026-10-31)
+
+- **사용자 간소화안 승인:** [12번 원본 보고서(수정 안내 포함)](reports/2026-10-30-new-discovery-notification-ui-research-proposal.md) / [승인 결정](decisions/2026-10-31-approved-first-discovery-notification-integrated-v1.md).
+- **새 독립 토스트·전체화면 생성 대신 기존 지급 카드 통합:** 프로필 기준 영구 첫 발견한 **기본 마법은 `신규 마법`**, **유물은 `신규 유물`** 배지를 기존 획득/보상 UI에 표시. **완성 합성 최초 발견만** 기존 합성·상자 보상 연출에서 큰 아이콘과 짧은 강조·반짝임 사용. 강화 +1~+3, 재획득, 후보 미리보기, 체크포인트 복원·이관·훈련에서는 신규 알림 없음.
+- **도감 `NEW` 미열람 상태는 별도 후순위**(저장 필드·마이그레이션 승인 전 표시 금지). `PlayerProfile.discover()`의 bool 반환을 실제 새 ID 식별로 보완하고, 중복 메시지·전투/보상 입력 방해 금지. **디자인 방향 승인만, 코드·엔진·최종 아트 미구현/미검증.**
+
 ## 활성 보고서
 
 | 보고서 ID | 제목 | 상태 | 문서 | 다음 행동 |
@@ -104,7 +110,7 @@
 | UI-2026-10-30-09 / DEC-2026-10-31-TOOLTIP-01 | **마법·유물 공통 툴팁 원안 채용** — Magicraft식 효과·수치·조건 카드 + 짧은 호버/긴 상세·동적값 분리 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증; 슬롯 강조는 후속 구현 가능) | [09번 원본 보고서](reports/2026-10-30-spell-relic-tooltip-ui-research-proposal.md) · [승인 결정](decisions/2026-10-31-approved-spell-relic-tooltip-magicraft-ui-v1.md) | 실제 마법·유물 데이터 기준, 경고 노랑/빨강 및 05·04·06·08·11 화면 정보 일치. 최종 아트·슬롯 강조·툴팁 화면 경계/입력은 구현 시 검증 |
 | UI-2026-10-30-10 | 웨이브 전환·정예/위험 이벤트 경고·최종 보스 등장 UI 레퍼런스 및 연출 제안 | **DEFERRED / SKIPPED — 사용자 2026-10-31 보류** (미승인) | [기존 조사](reports/2026-10-30-wave-transition-boss-intro-ui-research-proposal.md) | 사용자 “10번은 스킵, 굳이?” 판단으로 10번 신규 연출 구현 우선순위 제외. 기존 확정 UI 문체/전투 HUD 규칙은 유지, 재검토 별도 요청 전까지 추가 연출 승인으로 해석 금지 |
 | UI-2026-10-30-11 / DEC-2026-10-31-RELIC-UI-11-01 | **유물 보유·상세 UI 수정 승인** — 오른쪽 상단 세로 아이콘 + 09번 Magicraft식 호버/상세 + 작은 보유 목록·선택 상세 | **LATEST / APPROVED UI 구조** (게임 코드·Godot 미구현·미검증) | [수정 보고서](reports/2026-10-30-owned-relics-details-ui-research-proposal.md) · [승인 결정문](decisions/2026-10-31-approved-owned-relics-details-ui-revised-v1.md) | 구 왼쪽 아래 가로 유물줄 폐기, 실제 보유 유물만; 버튼→가방 결함 후보 실검증 필요. 유물창 정지 정책·정식 아이콘/스크롤은 미확정, 유물 강화/등급 추가 금지 |
-| UI-2026-10-30-12 | 마법·완성 합성·유물 첫 발견 알림 레퍼런스와 비정지 토스트·도감 NEW 표시 제안 | **LEGACY REFERENCE / PROPOSED** | [보고서](reports/2026-10-30-new-discovery-notification-ui-research-proposal.md) | 사용자 일반/합성 연출 강도·도감 NEW 지속 정책 검토, 프로필 신규 ID/알림 큐 설계는 승인 후; 게임 코드 미수정 |
+| UI-2026-10-30-12 / DEC-2026-10-31-DISCOVERY-01 | **새로운 발견 알림 간소화안 채용** — 일반 마법·유물 최초 발견은 기존 획득 카드에 작은 배지, 완성 합성 최초 발견만 기존 공개 연출에서 짧게 강조 | **LATEST / APPROVED UI 방향** (Godot 미구현·미검증, 도감 미열람 NEW 후순위) | [수정 보고서](reports/2026-10-30-new-discovery-notification-ui-research-proposal.md) · [승인 결정](decisions/2026-10-31-approved-first-discovery-notification-integrated-v1.md) | 프로필 기준 영구 첫 발견만; 강화·재획득·미리보기·복원 시 알림 없음. 별도 팝업·강제 정지·중복 메시지 신설 금지, 실제 새 ID 추출은 구현 때 |
 | UI-COPY-2026-10-31-01 | **게임 내 짧은 문구 전면 개편** — 무문구 전투 위험·상자/첫 발견/승패 정보형 카피·실제 코드 교체 대상 | **PROPOSED** (개별 문구·구현 미확정) / **톤 정책 APPROVED** | [전면 수정 보고서](reports/2026-10-31-game-ui-short-copy-overhaul-v1.md) · [확정 문체 규칙](decisions/2026-10-31-battle-ui-copy-tone-no-cutesy-dialogue.md) | 유치한 구어체·감탄·중계형 경고 금지. Godot 문자열 교체는 별도 구현/검증 후 진행 |
 | UI-2026-10-31-01 | **UI 통합 설계서 v0.2** · 기존 UI 01~12 통합, 화면별 참고 게임·참고 요소·시각 시안/검증 기준 | **LEGACY REFERENCE / PROPOSED** (통합 상위 제안; 개별 UI 보고서 01~12 유지) | [통합 설계서](reports/2026-10-31-ui-integrated-design-v02.md) | 개별 원문 보존, 참고 UI 실제 캡처·주석 보드·우리 16:9 목표 배치 이미지 확보 후 사용자 검토; 승인 전 구현 금지 |
 | UI-VIS-2026-10-31-01 | **UI 시각 레퍼런스 보드 v0.1** · 원작 UI 스크린샷 출처 링크 + 우리 게임 PNG 4종 첨부 | **LEGACY REFERENCE / PROPOSED** (원작 이미지 외부 링크, 프로젝트 자체 PNG는 저장소에 포함) | [이미지 보드](reports/2026-10-31-ui-visual-reference-board-v01.md) | 4개 대표 화면의 공개 이미지 근거 확보; 주석 PNG·현재 Godot 캡처·16:9 목표 배치 시안 제작 및 사용자 검토 필요 |
