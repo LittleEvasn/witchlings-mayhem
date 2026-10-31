@@ -181,7 +181,6 @@ func attach(c: Dictionary) -> void:
 		c["pierce"]=3
 		c["_discharge_left"]=.4
 	if c.stage.get("fusion","")=="shining_spear": c["pierce"]=5
-	if c.stage.get("fusion","")=="growing_firecore": c["_base_radius"]=c.get("radius",10.0)
 	if c.stage.get("_landed",false) and c.attack=="fireball":
 		impact(c,c.pos)
 		c["life"]=0.0
@@ -225,9 +224,6 @@ func move(c: Dictionary, delta: float, old: Vector2) -> void:
 		c.dir=Vector2.RIGHT.rotated(angle+PI/2)
 		# A local orbit is a movement mode, not another independently growing spell.
 		if c.has("speed"): c.speed=maxf(c.speed,150)
-	if c.stage.get("fusion","")=="growing_firecore":
-		c.radius=c._base_radius*(1+minf(2,c._motion_age)*.7)
-		c["_growth_damage"]=1+minf(2,c._motion_age)*.35
 	if c.stage.get("fusion","")=="echo_return" and c.has("speed"):
 		c._history_clock-=delta
 		if c._history_clock<=0 and c._history.size()<96:
@@ -379,8 +375,6 @@ func impact(c: Dictionary, at: Vector2) -> void:
 		"judgement":
 			for n in 3: schedule({"kind":"area","delay":.1+n*.12,"source":c,"pos":at,"damage":18*power,"radius":(65+n*35)*c.scale})
 		# Meteor impacts are handled by separate real airborne bodies in update_meteors().
-		"growing_firecore": schedule({"kind":"area","delay":.22,"source":c,"pos":at,"damage":28*power,"radius":140*c.scale})
-		"plasma_beam": arc(c,at,180,24*power,c.get("_beam_hit_ids",{}))
 	if not fid.is_empty(): runtime.track("fusion_"+fid,c.meter_source)
 
 func finish(c: Dictionary, at: Vector2, normal:=true) -> void:
@@ -480,9 +474,9 @@ func cold(c: Dictionary, native: float) -> float:
 func special(c: Dictionary) -> bool:
 	if c.attack not in ["laser","flamethrower"]: return false
 	if beams.size()>=48: runtime.track("beams_blocked",c.meter_source);return true
-	# Magicraft spell 1004: resolve the entire laser trace at cast time.
-	# Keep the separate disintegration fusion as a sustained spell (spell 1011).
-	if c.attack=="laser" and c.stage.get("fusion","")!="disintegration":
+	# Magicraft 1004 is instantaneous, but Magicraft 1011 Ray of Disintegration
+	# is a duration-based piercing ray. Preserve our separate charged fusion.
+	if c.attack=="laser" and c.stage.get("fusion","") not in ["plasma_beam","disintegration"]:
 		var profile: Dictionary=game.Spells.attack_data(c.stage)
 		c["life"]=0.20
 		c["age"]=0.0
@@ -504,6 +498,10 @@ func special(c: Dictionary) -> bool:
 	c["width"]=data.radius*c.scale if c.attack=="laser" else 0.0
 	if c.stage.get("fusion","")=="disintegration":
 		c.life=.9;c.width=6*c.scale;c["_charge_left"]=.35
+	elif c.stage.get("fusion","")=="plasma_beam":
+		# Magicraft 1011, all three tiers: 2.0 s continuous cast,
+		# DPSDamageInterval 0.1 s; no enemy-count penetration cap.
+		c.life=2.0;c.width=8*c.scale;c["pulse"]=0.0
 	c["initial_life"]=c.life
 	attach(c)
 	beams.append(c)
@@ -527,6 +525,9 @@ func update_beams(delta: float) -> void:
 			continue
 		c.life-=delta;c.age+=delta;c.pulse-=delta
 		if not c.stage.get("_linked",false) and not c.stage.get("_landed",false): c.pos=game.orb_position(c.owner_orb)
+		# Keep the sustained ray anchored to its caster and aimed during casting.
+		if c.stage.get("fusion","")=="plasma_beam" and not c.stage.get("_linked",false) and c._motion!="seek":
+			if game.aim.length_squared()>0.001: c.dir=game.aim.normalized()
 		move(c,delta,c.pos)
 		if c._motion=="seek":
 			var target: Node2D=game.nearest_enemy(c.pos,c.length)
@@ -548,7 +549,8 @@ func update_beams(delta: float) -> void:
 			var seen: Dictionary={}
 			var found:=targets(c.pos,c.length+50)
 			found.sort_custom(func(a,b):return (a.position-c.pos).dot(dir)<(b.position-c.pos).dot(dir))
-			var remaining: int=(9999 if c.stage.get("fusion","")=="disintegration" else int(game.Spells.attack_data(c.stage).targets))+int(game.Spells.Effects.profile(c.stage,"pierce").targets)
+			var unlimited: bool=c.stage.get("fusion","") in ["plasma_beam","disintegration"]
+			var remaining: int=(9999 if unlimited else int(game.Spells.attack_data(c.stage).targets))+int(game.Spells.Effects.profile(c.stage,"pierce").targets)
 			for e in found:
 				var offset: Vector2=e.position-c.pos
 				var inside: bool=offset.dot(dir)>=0 and offset.dot(dir)<=c.length and absf(offset.cross(dir))<=c.width+e.radius
